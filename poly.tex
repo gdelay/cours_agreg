@@ -135,15 +135,155 @@ avec $d=1,2,3$.
 Les \'equations elliptiques apparaissent principalement dans deux contextes que nous
 allons maintenant aborder.
 Le premier est le cas o\`u des particules circulent dans un domaine.
+Ce probl\`eme est repr\'esent\'e sur la figure \ref{fig:flux}.
+Dans la partie droite de cette figure, nous nous int\'eressons \`a un probl\`eme
+o\`u des particules circulent dans un milieu unidimensionnel. La position est
+rep\'er\'ee par la coordonn\'ee d'espace $x$. On note $u(x)$ la densit\'e
+de particules en $x$. Certaines particules entrent ou sortent du domaine
+en $x$, on les note $f(x)$ le terme source les repr\'esentant.
+De plus, les particules se d\'eplacent \`a travers le domaine,
+on note $q(x)$ le flux de particules en $x$
+(le nombre de particules qui traversent l'axe vertical d'abscisse $x$).
+Ce flux est n\'egatif si les particules vont vers la gauche ($x$ d\'ecroissants)
+et positif si elles vont vers la droite ($x$ croissants).
 
+\begin{figure}
 \begin{tikzpicture}[scale = 3]
   \input{flux.tex}
 \end{tikzpicture}
 \begin{tikzpicture}[scale = 2.5]
   \input{flux_dx.tex}
 \end{tikzpicture}
+\caption{Un flux de particules. Gauche: repr\'esentation du probl\`eme.
+  Droite: \'equilibre des flux.}
+\label{fig:flux}
+\end{figure}
 
 
+On s'int\'eresse au cas o\`u les flux sont \`a l'\'equilibre, il n'y
+a donc pas d'accumulation de particules en aucun point de l'espace.
+Le probl\`eme ne d\'epend pas du temps.
+
+
+Si l'on consid\`ere un \'el\'ement du domaine de taille $\delta x$ comme
+sur la droite de la figure \ref{fig:flux}, le nombre de particules doit
+rester constant au cours du temps.
+On obtient donc la relation de conservation
+$q(x) - q(x+\delta x) + f(x) \delta x = 0$,
+ce qui donne
+\begin{align}
+  \label{eq:eq_flux}
+  \dfrac{\partial q}{\partial x} = f .
+\end{align}
+
+De plus, on consid\`ere que les particules fuient les zones de forte densit\'e:
+le flux $q(x)$ est orient\'e dans le sens inverse du gradient de $u$.
+On note donc 
+\begin{align}
+  \label{eq:def_flux}
+  q(x) = - k(x) \dfrac{\partial u}{\partial x}(x) . 
+\end{align}
+Ici $k$ est un coefficient positif qui peut d\'ependre de l'espace.
+Il traduit le rapport de proportionnalit\'e entre le gradient de la densit\'e
+et le flux qui en r\'esulte. Ainsi, pour une densit\'e fix\'ee,
+si $k$ est grand alors les particules circuleront facilement et le flux sera important;
+\`a l'inverse, un $k$ petit traduit le fait que les particules ont du mal \`a circuler dans
+le milieu. On dit que $k$ est un coeeficient de diffusion.
+
+L'\'equation finale sur $u$ est donc
+\begin{align*}
+  - \dfrac{\partial}{\partial x} \left(k \dfrac{\partial u}{\partial x} \right) = f .
+\end{align*}
+
+Si l'on consid\`ere plusieurs dimensions d'espace, cette \'equation devient
+\begin{align*}
+  - \DIV \left(k \GRAD u \right) = f ,
+\end{align*}
+o\`u $\DIV$ et $\GRAD$ sont respectivement les op\'erateurs divergence et gradient.
+
+
+En pratique les particules peuvent r\'eellement repr\'esenter des particules physiques,
+dans ce cas $u$ sera une densit\'e de particules, $q$ un flux de particules, 
+$f$ un terme repr\'esentant l'apparition ou la disparition de particules et
+$k$ sera un coefficient de diffusion des particules.
+On peut aussi dire que les particules repr\'esentent de l'\'energie thermique.
+Dans ce cas, $u$ sera la temp\'erature, $q$ un flux thermique, $f$ une source
+ou un puit de chaleur et $k$ un coefficient de diffusion thermique.
+Nous citerons une derni\`ere possibilit\'e selon laquelle les particules sont des
+individus (humains ou animaux).
+Dans ce cas, $u$ correspond \`a une densit\'e de population,
+$q$ \`a un flux de population, $f$ repr\'esente des naissances ou des morts
+dans la population et $k$ est un coefficient de diffusion repr\'esentant la
+facilit\'e avec laquelle la population peut se d\'eplacer. 
+
+
+!! TABLEAU !!
+
+
+!! CONDITIONS FRONTIERES !!
+
+Un autre cas o\`u ces \'equations apparaissent est le cas d'un mat\'eriau 
+soumis \`a des contraintes m\'ecaniques.
+Par exemple, on repr\'esente sur la figure \ref{fig:barre} une barre \'elastique
+en \'equilibre.
+
+
+\begin{figure}
+\begin{tikzpicture}[scale = 1.5]
+  \input{barre.tex}
+\end{tikzpicture}
+\begin{tikzpicture}[scale = 2]
+  \input{barre_dx.tex}
+\end{tikzpicture}
+\caption{Un flux de particules. Gauche: repr\'esentation du probl\`eme.
+  Droite: \'equilibre des flux.}
+\label{fig:barre}
+\end{figure}
+
+
+La barre dans son \'etat initial est repr\'esent\'ee en pointill\'es.
+Sous l'effet d'une force lin\'eique $f$, cette barre s'allonge
+et atteint l'\'etat d'\'equilibre repr\'esent\'e en bas de la figure.
+On note $u(x)$ le d\'eplacement de mati\`ere qui a eu lieu entre
+l'\'etat sous la charge $f$ et l'\'etat de r\'ef\'erence en pointill\'es.
+
+
+On consid\`ere que la barre est \`a l'\'equilibre m\'ecanique.
+On note $q(x)$ la force qu'exerce la section de gauche sur la section de droite
+en $x$. En faisant un bilan de force comme sur la partie droite de la figure \ref{fig:flux},
+les forces s'exer\c{c}ant sur une portion infinit\'esimale de barre sont
+la force $q(x)$ \`a gauche, la force $-q(x+\delta x)$ \`a droite
+et la force lin\'eique $f(x) \delta x$. La barre \'etant \`a l'\'equilibre la somme de ces forces
+est nulle. On retrouve donc \eqref{eq:eq_flux}.
+
+
+De plus, la force s'exer\c{c}ant en $x$ \`a travers la section de la barre est 
+proportionnelle \`a l'\'elongation de la barre et s'oppose au mouvement impos\'e.
+Ceci est intuitif, pensez \`a un \'elastique si vous l'allongez il s'exerce une force
+qui tend \`a le faire revenir vers sa position initiale. De plus, plus l'\'elongation
+est importante, plus l'intensit\'e de la force est grande.
+On obtient donc la loi d'\'elasticit\'e \eqref{eq:def_flux}
+o\`u $k$ est un coefficient de raideur:
+plus $k$ est grand, plus la barre est raide, plus il faut forcer pour la d\'eformer.
+En pratique, le coefficient de raideur d\'epend du mat\'eriau choisi et
+de la g\'eom\'etrie de la section de la barre.
+
+Notons que dans \eqref{eq:def_flux}, la d\'eriv\'ee en espace correspond \`a 
+l'\'elongation de la barre en $x$. Pour s'en convaincre, on regardera la 
+partie droite de la figure \ref{fig:barre}. Un \'el\'ement de mati\`ere de longueur
+$\delta x$ dans sa position de r\'ef\'erence a pour longueur 
+$x + \delta x + u(x+\delta x) - u(x) - x$ sous charge $f$.
+La nouvelle longueur est donc de $\delta x + u(x+\delta x) - u(x) 
+\simeq \left(1 + \dfrac{\partial u}{\partial x} \right) \delta x$
+et la d\'eriv\'ee partielle en $x$ est donc bien une \'elongation lin\'eique.
+
+
+!! CONDITIONS FRONTIERES !!
+La partie hachur\'ee \`a gauche du dessin repr\'esente le fait que la barre est encastr\'ee
+dans un mur. Ainsi son d\'eplacement est forc\'ement nul \`a gauche.
+
+
+!! EDP elliptique !! A faire en exo !!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation de transport}
 

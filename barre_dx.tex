@@ -1,0 +1,27 @@
+\def\h{0.1}
+\def\N{11.0}
+
+%% rectangle 1
+\draw[dashed] (-0.8,1.0) -- (1.2,1.0) -- (1.2,1.5) -- (-0.8,1.5) -- (-0.8,1.0);
+
+%% rectangle 2
+\draw (0,0) -- (2,0) -- (2,0.5) -- (0,0.5) -- (0,0);
+
+%% axe des abscisses 1
+\draw[dashed,->] (-1.2,0.9) -- (1.8,0.9);
+\draw[dashed] (-0.8, 0.9) -- (-0.8, 0.8);
+\draw (-0.8, 0.7) node{$x$};
+\draw[dashed] (1.2, 0.9) -- (1.2, 0.8);
+\draw (1.2, 0.7) node{$x+\delta x$};
+
+%% axe des abscisses 2
+\draw[->] (-0.4,-0.1) -- (2.3,-0.1);
+\draw (0.0, -0.1) -- (0.0, -0.2);
+\draw (0.0, -0.3) node{$x+u(x)$};
+\draw (2.0, -0.1) -- (2.0, -0.2);
+\draw (2.0, -0.3) node{$x + \delta x + u(x+\delta x)$};
+
+
+%% autres traits
+\draw[dashed] (-0.8,1.0) -- (0,0.5);
+\draw[dashed] (1.2,1.0) -- (2,0.5);
