@@ -1,0 +1,108 @@
+\documentclass[12pt,a4paper,twoside]{article}
+\addtolength{\textheight}{80pt} \addtolength{\topmargin}{-50pt}
+\textwidth 164mm \oddsidemargin -2.25mm \evensidemargin -2.25mm
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc} 
+\usepackage[francais]{babel}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{xcolor}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Ni}[1]{{\left\|#1\right\|}_\infty}
+\input{def.tex}
+% \noindent
+% {\rule{\textwidth}{.2mm}}\\
+% \renewcommand{\labelenumi}{(\alph{enumi})}
+% \input{entete}
+% {\rule{\textwidth}{.2mm}}\\
+
+\begin{center}
+{\bf \Huge Introduction aux \'equations aux d\'eriv\'ees partielles}
+\end{center}
+
+% \title{Introduction aux \'equations aux d\'eriv\'ees partielles}
+
+%\vfill
+%===================================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Avant-propos}
+
+Le but de ce cours est de vous proposer une introduction \`a la th\'eorie
+des \'equations aux d\'eriv\'ees partielles (EDP dans la suite).
+Nous \'etudierons plusieurs \'equations ainsi que leur discr\'etisation
+par la m\'ethode des diff\'erences finies.
+
+Dans le cadre du programme officiel de la pr\'eparation \`a l'agr\'egation
+de math\'ematiques (\'epreuve de mod\'elisation), nous aborderons notamment:
+\begin{itemize}
+\item des notions \'el\'ementaires portant sur les EDP classiques en dimension 1,
+\item l'\'equation de transport lin\'eaire avec la m\'ethode des caract\'eristiques,
+\item l'\'equation des ondes et de la chaleur; une r\'esolution par s\'erie de Fourier
+  et transform\'ee de Fourier sera propos\'ee ainsi qu'une m\'ethode de s\'eparation
+  des variables.
+  Les aspects qualitatifs seront abord\'es.
+\item les \'equations elliptiques avec l'utilisation du th\'eor\`eme de Lax--Milgram
+\item des exemples de discr\'etisation des EDP en dimension 1 avec la m\'ethode des
+  diff\'erences finies. L'\'etude des propri\'et\'es de ces discr\'etisations
+  sera propos\'ee : notions de consistance, stabilit\'e, convergence et d'ordre.
+\end{itemize}
+
+
+Vous \^etes par ailleurs invit\'es \`a lire le rapport du jury (disponible sur internet).
+Vous vous rendrez compte que le jury insiste notamment sur le fait que :
+\begin{itemize}
+\item l'\'epreuve de mod\'elisation, comme les autres, requiert de la rigueur math\'ematique,
+\item il faut \'equilibrer sa pr\'esentation entre une pr\'esentation du mod\`ele \'etudi\'e,
+  des preuves math\'ematiques rigoureuses, des illustrations informatiques,
+\item il attend une prise de recul de la part des candidats.
+  Il faudra donc notamment \^etre capable de critiquer les limites du mod\`ele pr\'esent\'e
+  dans le texte, d'expliquer le comportement qualitatif de celui-ci 
+  (par exemple expliquer ce qu'il se passe quand la valeur d'un param\`etre change)
+  et \^etre capable de conclure sur la probl\'ematique de d\'epart.
+\end{itemize}
+
+
+Ce cours sera compos\'e de
+\begin{itemize}
+\item cinq s\'eances de cours de deux heures chacune,
+\item une s\'eance de programmation de deux heures.
+\end{itemize}
+Dans une premi\`ere partie, nous pr\'esenterons les \'equations \'etudi\'ees
+dans ce cours en donnant une id\'ee des probl\`emes physiques associ\'es.
+Chacune des parties suivantes sera consacr\'ee \`a l'\'etude plus approfondie
+d'une EDP. Nous y traiterons notamment les principales caract\'eristiques de cette EDP,
+les outils utilis\'es pour mener des preuves ainsi qu'une discr\'etisation par diff\'erences finies.
+Les EDP \'etudi\'ees dans la suite seront les \'equations elliptiques,
+l'\'equation de transport, l'\'equation de la chaleur et enfin
+l'\'equation des ondes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\'Equations elliptiques}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{L'\'equation de transport}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{L'\'equation de la chaleur}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{L'\'equation des ondes}
+
+
+%===================================================================================
+
+\end{document}
