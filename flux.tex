@@ -1,0 +1,47 @@
+\def\h{0.1}
+\def\N{11.0}
+\newcounter{itx}
+\newcounter{ity}
+
+%% pente
+\forloop{itx}{0}{\value{itx} < \N}{
+\forloop{ity}{1}{\value{ity} < \value{itx} }{
+\draw (\arabic{itx}*\h,\arabic{ity}*\h) node{$\circ$};
+}
+}
+
+%% plateau
+\forloop{itx}{0}{\value{itx} < 9.0}{
+\forloop{ity}{1}{\value{ity} < 11.0 }{
+\draw (1.0+\h+\arabic{itx}*\h,\arabic{ity}*\h) node{$\circ$};
+}
+}
+
+%% axe des x
+\draw[->] (0.0,0.0) -- (2.5 , 0.0);
+\draw (2.5,-0.1) node{$x$};
+
+%% terme source 1
+\forloop{itx}{0}{\value{itx} < 4.0}{
+\draw[->] (1.2 + 2*\h * \arabic{itx}, 1.5) -- (1.2 + 2*\h * \arabic{itx}, 1.1);
+\draw (1.2 + 2*\h * \arabic{itx}, 1.3) node{$\circ$};
+\draw (1.2 + 2*\h * \arabic{itx}, 1.5) node{$\circ$};
+}
+\draw (2.0, 1.3) node{$f(x)$};
+
+%% terme source 2
+\forloop{itx}{0}{\value{itx} < 2.0}{
+\draw[->] (0.2 + 2*\h * \arabic{itx}, 0.4) -- (0.2 + 2*\h * \arabic{itx}, 0.8);
+\draw (0.2 + 2*\h * \arabic{itx}, 0.6) node{$\circ$};
+\draw (0.2 + 2*\h * \arabic{itx}, 0.4) node{$\circ$};
+}
+\draw (0.0, 0.6) node{$f(x)$};
+
+
+%% densite u
+\draw[<->] (2.0, \h/2.0) -- (2.0, 1.05);
+\draw (2.2, 0.6) node{$u(x)$};
+
+%% flux q
+\draw[->] (0.95, 0.9) -- (0.6, 0.9);
+\draw (0.8, 1.0) node{$q(x)$};

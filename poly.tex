@@ -12,6 +12,10 @@
 \usepackage{comment}
 \usepackage{xcolor}
 
+%% pour les figures
+\usepackage{tikz}
+\usepackage{forloop}
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -128,7 +132,17 @@ avec $d=1,2,3$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equations elliptiques}
 
-Les \'equations elliptiques 
+Les \'equations elliptiques apparaissent principalement dans deux contextes que nous
+allons maintenant aborder.
+Le premier est le cas o\`u des particules circulent dans un domaine.
+
+\begin{tikzpicture}[scale = 3]
+  \input{flux.tex}
+\end{tikzpicture}
+\begin{tikzpicture}[scale = 2.5]
+  \input{flux_dx.tex}
+\end{tikzpicture}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation de transport}

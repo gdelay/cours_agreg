@@ -1,0 +1,25 @@
+\def\h{0.1}
+\def\N{11.0}
+
+%% rectangle
+\draw (0,0) -- (2,0) -- (2,1) -- (0,1) -- (0,0);
+\draw (1.0, 0.5) node{$u(x)$};
+
+%% source term
+\forloop{itx}{0}{\value{itx} < 9.0}{
+\draw[->] (0.2 + 2*\h * \arabic{itx}, 1.5) -- (0.2 + 2*\h * \arabic{itx}, 1.1);
+}
+\draw (2.0, 1.3) node{$f(x)$};
+
+%% flux
+\draw[->] (-0.6,0.5) -- (-0.1,0.5);
+\draw (-0.4, 0.3) node{$q(x)$};
+\draw[->] (2.1,0.5) -- (2.8,0.5);
+\draw (2.5, 0.3) node{$q(x+\delta x)$};
+
+%% axe des abscisses
+\draw[->] (-0.4,-0.1) -- (2.3,-0.1);
+\draw (0.0, -0.1) -- (0.0, -0.2);
+\draw (0.0, -0.3) node{$x$};
+\draw (2.0, -0.1) -- (2.0, -0.2);
+\draw (2.0, -0.3) node{$x+\delta x$};
