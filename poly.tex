@@ -578,10 +578,175 @@ Nous avons donc \'etabli la proposition suivante
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Discr\'etisation par la m\'ethode des diff\'erences finies}
 
-Le but de la m\'ethode des diff\'erences finies est de 
+Le but de la m\'ethode des diff\'erences finies est d'approcher la solution 
+d'une EDO (\'equation aux d\'eriv\'ees ordinaires) ou EDP
+(\'equation aux d\'eriv\'ees partielles) par des valeurs cens\'ees repr\'esenter
+cette fonction en certains points. Dans toutes les discr\'etisations abord\'ees dans ce cours,
+nous ne consid\'ererons que le cas de probl\`emes \`a une dimension en espace
+(les probl\`emes instationnaires auront une deuxi\`eme dimension correspondant au temps).
+
+Par exemple, int\'eressons nous au probl\`eme \eqref{eq:ell_Dir} avec $\Omega = (0,1)$
+et $k = 1$.
+Notre probl\`eme est donc
+\begin{equation}
+  \label{eq:ell_1d}
+  \left\{
+    \begin{array}{l}
+      - \dfrac{\!\deriv^2 u}{\!\deriv x^2} = f \dans (0,1) ,
+      \\
+      u(0) = u(1) = 0 .
+    \end{array}
+  \right.
+\end{equation}
+
+Nous discr\'etisons l'intervalle $(0,1)$ en $N>0$ sous-intervalles.
+On d\'efinit donc les points $x_j = j h$ ($0 \leq j \leq N$) o\`u $h = 1/N$.
+On a bien $x_0 = 0$ et $x_N = 1$ (voir figure \ref{fig:disc_x}).
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale=1]
+\newcounter{it}
+% intervalle
+\draw (0,0) -- (10,0);
+\forloop{it}{0}{\value{it} < 11}{
+\draw (\arabic{it},-0.3) -- (\arabic{it},0.3);
+}
+
+% temps
+\draw (0,-0.6) node {$0$};
+\draw (10,-0.6) node {$1$};
+\draw (0,0.6) node {$x_0$};
+\draw (1,0.6) node {$x_1$};
+\draw (10,0.6) node {$x_N$};
+\draw (5,0.6) node {$.......$};
+\end{tikzpicture} 
+\caption{Repr\'esentation de la discr\'etisation de l'intervalle $(0,1)$.}
+\label{fig:disc_x}
+\end{figure}
+
+
+\'Etant donn\'e que nous ne disposons que de valeurs en certains points, on ne peut
+pas d\'efinir de d\'eriv\'ees au sens usuel. On utilise donc des d\'eriv\'ees discr\`etes.
+Pour cela, on rappelle qu'une d\'eriv\'ee est la limite d'un taux d'accroissement.
+Par exemple, on peut montrer que 
+$\dfrac{\!\deriv^2 u}{\!\deriv x^2}(x) 
+= \lim\limits_{h \to 0} \dfrac{u(x+h) - 2 u(x) + u(x-h)}{h^2}$.
+Avec les notations introduites pr\'ec\'edemment, cela signifie que,
+pour $h$ suffisamment petit, 
+\begin{align}
+  \label{eq:dx2}
+  \dfrac{\!\deriv^2 u}{\!\deriv x^2}(x_j) \simeq \dfrac{u(x_{j+1}) - 2 u(x_j) + u(x_{j-1})}{h^2} .
+\end{align}
+La m\'ethode des diff\'erences finies consiste donc \`a d\'efinir une suite $(u_j)_{0\leq j \leq N}$
+qui reprenne les \'el\'ements du probl\`eme \eqref{eq:ell_1d}. En particulier, il faut remplacer
+les d\'eriv\'ees continues par des d\'eriv\'ees discr\`etes.
+Il existe plusieurs fa\c{c}ons de d\'efinir la suite $(u_j)_{0\leq j \leq N}$ et toutes
+n'ont pas les m\^emes propri\'et\'es. La propri\'et\'e la plus importante est la convergence:
+on veut que $\lim\limits_{N \to +\infty} \max_{0 \leq j \leq N} | u(x_j) - u_j | = 0$.
+Nous aborderons plus en d\'etails ces aspects dans la section \ref{subsec:transport_DF}.
+
+
+Nous proposons maintenant de discr\'etiser le prob\`eme \eqref{eq:ell_1d}
+en utilisant \eqref{eq:dx2}.
+La suite ainsi obtenue v\'erifie
+\begin{equation}
+  \label{eq:ell_DF}
+  \left\{
+    \begin{array}{l}
+      \forall 1 \leq j \leq N-1 , - \dfrac{u_{j+1} - 2 u_j + u_{j-1}}{h^2} = f(x_j) ,
+      \\
+      u_0 = u_N = 0 .
+    \end{array}
+  \right.
+\end{equation}
+
+\begin{proposition}
+  La relation \eqref{eq:ell_DF} d\'efinit une unique suite $(u_j)_{0\leq j \leq N}$ dont les valeurs
+  peuvent \^etre d\'etermin\'ees en r\'esolvant le syst\`eme lin\'eaire
+  $A U = F$, avec 
+  \begin{equation}
+    \label{eq:mat_DF_Laplacien}
+    A = \dfrac{1}{h^2} 
+    \begin{pmatrix} 
+      2 & -1 & 0 & \cdots
+      \\
+      -1 & 2 & -1 & 0 & \cdots
+      \\
+      0 & -1 & 2 & \ddots &
+      \\
+      \vdots & & \ddots & \ddots & \ddots
+      \\
+      & & &  \ddots & 2 & -1
+      \\
+      & &  & & -1 & 2
+    \end{pmatrix} , \qquad U = 
+    \begin{pmatrix}
+      u_1 \\ u_2 \\ \vdots \\ u_{N-1}
+    \end{pmatrix} , \qquad F = 
+    \begin{pmatrix}
+      f(x_1) \\ f(x_2) \\ \vdots \\ f(x_{N-1})
+    \end{pmatrix} .
+  \end{equation}
+\end{proposition}
+
+\begin{proof}
+  La relation \eqref{eq:ell_DF} est \'equivalente au syst\`eme lin\'eaire $AU = F$.
+  Pour prouver cela, on \'ecrit les \'equations discr\`etes
+  \begin{align*}
+    &\dfrac{-u_0 + 2 u_1 - u_2}{h^2} = f(x_1) ,
+    \\
+    &\dfrac{-u_1 + 2 u_2 - u_3}{h^2} = f(x_2) ,
+    \\
+    &\dfrac{-u_2 + 2 u_3 - u_4}{h^2} = f(x_3) ,
+    \\
+    & \qquad \qquad \vdots
+    \\
+    &\dfrac{-u_{N-2} + 2 u_{N-1} - u_N}{h^2} = f(x_{N-1}) .
+  \end{align*}
+  En prenant en compte $u_0 = u_N = 0$, on obtient bien $AU = F$.
+  La r\'eciproque se prouve de mani\`ere similaire.
+
+  Maintenant, le fait que ce syst\`eme admet une unique solution vient de l'inversibilit\'e
+  de la matrice $A$ qui est une cons\'equence de la proposition \ref{prop:matSDP}.
+\end{proof}
+
+
+\begin{remark}
+  La matrice $A$ doit absolument \^etre connue par c\oe{}ur.
+  En effet, ceci est exigible et le jury du concours se plaint dans ses rapports
+  que beaucoup trop de candidats ne connaissent pas cette matrice.
+\end{remark}
+
+\begin{proposition}
+  \label{prop:matSDP}
+  La matrice $A$ est sym\'etrique d\'efinie positive.
+\end{proposition}
+
+
+!! Ajouter resultats de simulations !!
+
+!! Ajouter exercice avec le probl\`eme de Neumann !!
+
+!! La preuve des caracteristiques de la matrice $A$ en exercice ??
+
+!! trouver une solution pour prouver la convergence de ce sch\'ema sans
+introduire stabilit\'e et consistance !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de transport}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Propri\'et\'es g\'en\'erales}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{M\'ethode des caract\'eristiques}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Discr\'etisation de l'\'equation de transport 
+  par les diff\'erences finies}
+\label{subsec:transport_DF}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de la chaleur}
@@ -593,6 +758,8 @@ Le but de la m\'ethode des diff\'erences finies est de
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Pour aller plus loin}
 
+!! Ecrire tous les exercices au fur et \`a mesure et les reporter
+dans une section \`a la fin du poly !!
 
 %===================================================================================
 
