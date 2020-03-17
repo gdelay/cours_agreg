@@ -3,6 +3,7 @@
 \textwidth 164mm \oddsidemargin -2.25mm \evensidemargin -2.25mm
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{amsthm} % theoremes
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc} 
 \usepackage[francais]{babel}
@@ -334,6 +335,8 @@ Si $a$ est positif, le sable bouge vers la droite; si $a$ est n\'egatif,
 le sable bouge vers la gauche; plus $a$ est grand en valeur absolue, 
 plus le mouvement est rapide.
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation de la chaleur}
 
@@ -380,6 +383,9 @@ cette l'\'equation de la chaleur, en plus de repr\'esenter l'\'evolution de la t
 dans un milieu peut aussi repr\'esenter l'\'evolution de la densit\'e d'une population
 ou encore l'\'evolution d'une concentration chimique d'une esp\`ece au sein d'un diluant.
 
+
+!! rappel sur les conditions fronti\`eres !!
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation des ondes}
 
@@ -421,17 +427,171 @@ des ondes dans ce milieu.
 
 !! autres physiques : electromagnetisme, corde !!
 
+!! rappel sur les conditions fronti\`eres !!
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equations elliptiques}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{L'\'equation de transport}
+Comme \'evoqu\'e pr\'ec\'edemment, on s'int\'eresse au probl\`eme
+\begin{equation}
+  \label{eq:ell_Dir}
+  \left\{
+    \begin{array}{l}
+      - \DIV (k \GRAD u) = f \dans \Omega ,
+      \\
+      u = 0 \sur \partial \Omega ,
+    \end{array}
+  \right.
+\end{equation}
+avec $0 < k_0 \leq k(x) \leq k_1$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Propri\'et\'es g\'en\'erales de l'\'equation}
+
+\begin{theorem}[Existence et unicit\'e de la solution]
+  \label{thm:ell_existence}
+  Si $f \in C^0(\Omega)$, alors il existe une unique solution
+  $u \in C^2(\Omega)$ au probl\`eme \eqref{eq:ell_Dir}.
+  De plus, pour $\ell \in \N$, si $f \in C^{\ell}(\Omega)$, alors
+  $u \in C^{\ell+2}(\Omega)$.
+\end{theorem}
+
+!! commenter + donner lien vers preuve !!
+
+\begin{proposition}[Principe du maximum]
+  On se place dans le cadre du th\'eor\`eme \ref{thm:ell_existence}.
+  Si $f \leq 0$, alors $u \leq 0$. En particulier,
+  $\max_{x\in \Omega} u(x) = \max_{x\in \partial \Omega} u(x) = 0$.
+  Si de plus il existe $m\in \Omega$ tel que $u(m) = 0$,
+  alors $\forall x \in \Omega$, $u(x) = 0$ 
+  (principe du maximum fort).
+\end{proposition}
+
+!! commenter + ref livre !!
+
+\begin{remark}
+  D'autres conditions fronti\`ere sont possibles.
+  Condition de Neumann, de Robin, conditions mixtes, conditions de Dirichlet non homog\`enes.
+\end{remark}
+
+!! expliquer le principe d'un rel\`evement !!
+
+\begin{definition}[Fonction harmonique]
+  Si $u \in C^2(\Omega)$ et $- \Delta u = 0$ dans $\Omega$,
+  on dit que $u$ est une fonction harmonique.
+\end{definition}
+
+!! lien avec les fonctions holomorphes !!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Formulation variationnelle, th\'eor\`eme de Lax--Milgram}
+
+Le but de cette section est de pr\'esenter une preuve du th\'eor\`eme \ref{thm:ell_existence}
+en utilisant le th\'eor\`eme de Lax--Milgram.
+
+\begin{theorem}[Lax--Milgram]
+  \label{thm:Lax-Milgram}
+  On fait les hypoth\`eses suivantes.
+  \begin{itemize}
+  \item Soit $V$ un espace de Hilbert.
+  \item Soit $\ell$ une forme lin\'eaire continue sur $V$
+    (il existe $C_{\ell} > 0$ tel que $\forall v \in V, |\ell(v)| \leq C_{\ell} \| v \|_{V}$).
+  \item Soit $a$ une forme bilin\'eaire continue sur $V$
+    (il existe $C_{a} > 0$ tel que $\forall v,w \in V, |a(v,w)| \leq C_{a} \| v \|_{V} \| w \|_{V}$).
+  \item On suppose de plus que $a$ est coercive:
+    il existe $\alpha > 0$ tel que $\forall v \in V, a(v,v) \geq \alpha \| v \|_{V}^2$.
+  \end{itemize}
+  Sous ces hypoth\`eses le probl\`eme suivant est bien pos\'e:
+  \begin{equation}
+    \label{eq:Lax-Milgram}
+    \text{Trouver $u \in V$, tel que $\forall v \in V$, } a(u,v) = \ell(v) .
+  \end{equation}
+  Ceci signifie que le probl\`eme \eqref{eq:Lax-Milgram} admet une unique solution $u \in V$
+  et que celle-ci v\'erifie $\| u \|_{V} \leq \dfrac{C_{\ell}}{\alpha}$.
+\end{theorem}
+
+!! lien vers un livre !!
+
+Pour utiliser ce th\'eor\`eme, \'ecrivons le probl\`eme \eqref{eq:ell_Dir} sous
+sa forme variationnelle.
+On introduit l'espace de Sobolev
+\begin{align}
+  H_0^1(\Omega) := \{ v \in L^2(\Omega) \st \GRAD v \in L^2(\Omega) 
+  \text{ et } v_{| \partial \Omega} = 0 \sur \partial \Omega \} ,
+\end{align}
+o\`u $\GRAD v$ est d\'efini au sens des distributions et $v_{\partial \Omega}$
+est la trace de $v$ sur le bord du domaine.
+
+
+Si $u$ est une solution de \eqref{eq:ell_Dir}, alors pour tout $v \in H^1_0(\Omega)$
+on peut \'ecrire
+\begin{align*}
+  \int_{\Omega} - \DIV (k \GRAD u) v \deriv x = \int_{\Omega} f v \deriv x .
+\end{align*}
+En int\'egrant par parties on obtient 
+\begin{align*}
+  \int_{\Omega} k \GRAD u : \GRAD v \deriv x 
+  - \int_{\partial \Omega} k (\GRAD u \SCAL n) v \deriv s = \int_{\Omega} f v \deriv x .
+\end{align*}
+Puisque $v_{\partial \Omega} = 0$, le deuxi\`eme terme de cette expression est nul.
+Nous avons donc \'etabli la proposition suivante 
+(la r\'eciproque utilise des arguments similaires).
+\begin{proposition}
+  Le probl\`eme \eqref{eq:ell_Dir} est \'equivalent au probl\`eme suivant.
+  \begin{equation}
+    \label{eq:LM2}
+    \text{Trouver $u \in H_0^1(\Omega)$, tel que $\forall v \in H_0^1(\Omega)$, } 
+    \int_{\Omega} k \GRAD v : \GRAD v \deriv x = \int_{\Omega} f v \deriv x .
+  \end{equation}
+\end{proposition}
+
+\begin{proposition}
+  Le probl\`eme \eqref{eq:LM2} est bien pos\'e.
+\end{proposition}
+\begin{proof}
+  Le probl\`eme \eqref{eq:LM2} correspond au probl\`eme \eqref{eq:Lax-Milgram}
+  avec $V = H_0^1(\Omega)$, 
+  $\forall v, w \in H_0^1(\Omega), a(v,w) = \int_{\Omega} k \GRAD v : \GRAD v \deriv x$
+  et $\ell(v) = \int_{\Omega} f v \deriv x$.
+  Nous allons montrer que toutes les hypoth\`eses du th\'eor\`eme de Lax--Milgram
+  sont v\'erifi\'ees.
+  On admet le fait que $H_0^1(\Omega)$ \'equip\'e de la norme 
+  $\| v \|_{H_0^1(\Omega)} := (\int_{\Omega} v^2 + \GRAD v : \GRAD v \deriv x)^{1/2}$ 
+  est un espace de Hilbert (se reporter \`a un cours sur les distributions).
+  D'apr\`es l'in\'egalit\'e de Cauchy--Schwarz, on a 
+  $|\ell(v)| \leq (\int_{\Omega} f^2 \deriv x)^{1/2} (\int_{\Omega} v^2 \deriv x)^{1/2}
+  \leq (\int_{\Omega} f^2 \deriv x)^{1/2} \| v \|_{H_0^1(\Omega)}$.
+  La forme lin\'eaire $\ell$ est donc continue. 
+  De la m\^eme fa\c{c}on, l'in\'egalit\'e de Cauchy--Schwarz permet de prouver
+  que la forme bilin\'eaire $a$ est continue.
+  Pour finir, nous utilisons l'in\'egalit\'e de Poincar\'e: il existe $c>0$
+  tel que $\forall v \in H_0^1(\Omega), 
+  \int_{\Omega} v^2 \deriv x \leq c \int_{\Omega} \GRAD v : \GRAD v \deriv x$.
+  Avec cette in\'egalit\'e, on peut prouver que $a$ est coercive.
+  Toutes les hypoth\`eses du th\'eor\`eme de Lax--Milgram sont r\'eunies,
+  le probl\`eme \eqref{eq:LM2} est donc bien pos\'e.
+\end{proof}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Discr\'etisation par la m\'ethode des diff\'erences finies}
+
+Le but de la m\'ethode des diff\'erences finies est de 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{L'\'equation de la chaleur}
+\section{\'Equation de transport}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{L'\'equation des ondes}
+\section{\'Equation de la chaleur}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\'Equation des ondes}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Pour aller plus loin}
 
 
 %===================================================================================
