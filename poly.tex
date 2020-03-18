@@ -577,6 +577,7 @@ Nous avons donc \'etabli la proposition suivante
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Discr\'etisation par la m\'ethode des diff\'erences finies}
+\label{subsec:ell_DF}
 
 Le but de la m\'ethode des diff\'erences finies est d'approcher la solution 
 d'une EDO (\'equation aux d\'eriv\'ees ordinaires) ou EDP
@@ -809,7 +810,7 @@ ces courbes peuvent \^etre plus complexes (voir la section \ref{subsec:transport
 
 \begin{figure}
 \centering
-\begin{tikzpicture}[scale = 10]
+\begin{tikzpicture}[scale = 9]
   \input{D_carac.tex}
 \end{tikzpicture}
 \caption{Les droites caract\'eristiques de l'\'equation de transport
@@ -832,6 +833,8 @@ $t$ et $x$, soit sur la condition initiale, soit sur la donn\'ee de Dirichlet
 Nous retrouvons donc l'expression de la solution donn\'ee en (...).
 
 
+!! preuve de l'unicit\'e ??
+
 Pour montrer la r\'eversibilit\'e de l'\'equation, il suffit de parcourir ces droites 
 caract\'eristiques dans l'autre sens (...)
 
@@ -842,7 +845,80 @@ caract\'eristiques dans l'autre sens (...)
 
 Nous cherchons maintenant \`a discr\'etiser le probl\`eme \eqref{eq:transport}
 par la m\'ethode des diff\'erences finies.
+Dans la section \ref{subsec:ell_DF}, pour approcher l'\'equation de Poisson,
+nous avons discr\'etis\'e l'espace $(0,1)$ et nous avons approch\'e la solution
+$u(x)$ par une suite de terme g\'en\'eral $u_j$.
 
+Dans le cas pr\'esent, la solution d\'epend de deux variables $t$ et $x$,
+il faut donc discr\'etiser les deux dimensions.
+On d\'ecoupe l'intervalle de temps $[0,T]$ en $N$ sous-intervalles $[t_n , t_{n+1}]$
+avec pour tout $0\leq n \leq N$,  $t_n = n h_t$ et $h_t = T/N$.
+De m\^eme, on d\'ecoupe l'intervalle d'espace $[0,1]$ en $M$ sous-intervalles
+$[x_j , x_{j+1}]$ avec pour tout $0 \leq j \leq M$, $x_j = j h_x$ et $h_x = 1/M$. 
+De plus, nous allons approcher la fonction $u(t,x)$ par une suite
+$(u_j^n)_{\substack{0 \leq n \leq N \\ 0 \leq j \leq M}}$.
+Ici, l'indice $j$ donne la position en espace et l'exposant $n$
+donne le temps consid\'er\'e. Ainsi, $u_j^n$ devra \^etre une approximation
+de $u(t_n, x_j)$.
+
+
+La m\'ethode consiste donc \`a approcher les d\'eriv\'ees partielles
+(en temps et en espace) par des taux d'accroissement.
+Cependant, cette m\'ethode n'est pas suffisante pour assurer un bon comportement 
+du sch\'ema ainsi obtenu.
+Par exemple, si l'on approche les deux d\'eriv\'ees partielles par
+\begin{align*}
+  \dfrac{\partial u}{\partial t}(t_n,x_j) \simeq \dfrac{u(t_{n+1},x_j) - u(t_n,x_j)}{h_t} ,
+  \qquad \qquad 
+  \dfrac{\partial u}{\partial x}(t_n,x_j) \simeq \dfrac{u(t_n,x_{j+1}) - u(t_n,x_{j-1})}{2 h_x} ,
+\end{align*}
+on obtient le sch\'ema num\'erique
+\begin{align}
+  \label{eq:transport_DF_centre}
+  \left\{
+  \begin{array}{l}
+    \forall 0 \leq j \leq M , 
+    u_j^0 = u_0(x_j) ,
+    \\
+    \forall 1 \leq n \leq N, u_0^n = \alpha(t_n) ,
+    \\
+    \forall 1 \leq n \leq N, \forall 1 \leq j \leq M,
+    u_j^n = u_j^{n-1} - \dfrac{a h_t}{2 h_x} (u_{j+1}^{n-1} - u_{j-1}^{n-1}) ,
+    \\
+    \forall 1 \leq n \leq N,
+    u_M^n = u_M^{n-1} - \dfrac{a h_t}{h_x} ( u_M^{n-1} - u_{M-1}^{n-1} ) .
+  \end{array}
+  \right.
+\end{align}
+Notons que le fait que $u_{M+1}^n$ ne soit pas d\'efini nous a pouss\'e \`a utiliser 
+la d\'eriv\'ee discr\`ete suivante en $x_M=1$: 
+$\frac{\partial u}{\partial x}(t_n,x_M) \simeq \frac{u(t_n,x_M) - u(t_n, x_{M-1})}{h_x}$
+au lieu de 
+$\frac{\partial u}{\partial x}(t_n,x_M) \simeq \frac{u(t_n,x_{M+1}) - u(t_n, x_{M-1})}{2h_x}$.
+
+Les r\'esultats obtenus avec le sch\'ema \eqref{eq:transport_DF_centre}
+sont report\'es en figure (...).
+On voit que la solution obtenue n'est pas satisfaisante puisqu'elle n'approche
+pas la solution exacte.
+
+
+En fait, il ne suffit pas de remplacer les d\'eriv\'ees partielles par des taux d'accroissement
+pour \^etre s\^ur que le sch\'ema ainsi obtenu sera satisfaisant.
+Pour assurer une bonne qualit\'e du sch\'ema, il faut montrer que celui-ci est
+stable et consistant.
+Nous d\'efinissons maintenant ces deux termes.
+
+\begin{definition}[Stabilit\'e]
+  On dit qu'un sch\'ema num\'erique est stable si ...
+\end{definition}
+
+\begin{definition}[Consistance]
+  On dit qu'un sch\'ema num\'erique est consistant si ...
+\end{definition}
+
+\begin{definition}[Convergence]
+  On dit qu'un sch\'ema num\'erique converge (ou est convergent) si ...
+\end{definition}
 
 !! comparer les r\'esultats avec ceux de l'intro !!
 
