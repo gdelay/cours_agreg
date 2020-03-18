@@ -1,0 +1,36 @@
+%% temps final
+\def\T{0.9};
+
+%% repere
+\draw[->] (-0.05,0) -- (1.1,0);
+\draw (1.1,-0.05) node{$x$};
+\draw[->] (0,0.0) -- (0,\T+0.1);
+\draw (-0.05,\T+0.1) node{$t$};
+
+%% domaine
+\draw[line width=1mm] (0,0) -- (1,0);
+\draw (1,-0.05) node{$1$};
+\draw (0.0,-0.05) node{$0$};
+\draw[line width=1mm] (0,0) -- (0,\T);
+\draw (-0.05, \T) node{$T$};
+\draw[dashed] (1,0) -- (1,\T);
+\draw[dashed] (0,\T) -- (1,\T);
+
+%% courbes caract\'eristiques
+\draw (0.75,0) -- (1,0.25);
+\draw (0.5,0) -- (1,0.5);
+\draw (0.25,0) -- (1,0.75);
+\draw (0,0) -- (\T,\T);
+\draw (0,0.25) -- (\T-0.25,\T);
+\draw (0,0.5) -- (\T-0.5,\T);
+\draw (0,0.75) -- (\T-0.75,\T);
+
+%% ronds
+\def\r{0.02};
+\draw (0.75+\r,0) arc(0:360:\r);
+\draw (0.5+\r,0) arc(0:360:\r);
+\draw (0.25+\r,0) arc(0:360:\r);
+\draw (\r,0) arc(0:360:\r);
+\draw (\r,0.25) arc(0:360:\r);
+\draw (\r,0.5) arc(0:360:\r);
+\draw (\r,0.75) arc(0:360:\r);

@@ -733,20 +733,118 @@ La suite ainsi obtenue v\'erifie
 !! trouver une solution pour prouver la convergence de ce sch\'ema sans
 introduire stabilit\'e et consistance !!
 
+
+!! exercice : prendre $k$ constant et faire des simus avec ---- retrouver les 
+r\'esultats de simu de la section 1 !!
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de transport}
 
+Nous \'etudions ici l'\'equation de transport dans un espace \`a une dimension.
+Le probl\`eme d\'ependra donc d'une variable d'espace $x \in [0,1]$ et d'une variable de temps
+$t \in [0,T]$.
+Nous consid\'erons le probl\`eme
+\begin{equation}
+  \label{eq:transport}
+  \left\{
+    \begin{array}{l}
+     \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = 0 
+      \dans (0,T) \times (0,1),
+      \\
+      \forall t \in (0,T), u(t,0) = \alpha(t) ,
+      \\
+      \forall x \in (0,1), u(0,x) = u_0(x) ,
+    \end{array}
+  \right.
+\end{equation}
+o\`u $a \geq 0$ correspond \`a la vitesse de transport de l'\'equation,
+$\alpha(t)$ est la donn\'ee de Dirichlet \`a gauche
+et $u_0$ est la donn\'ee initiale.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
 
+Le probl\`eme \eqref{eq:transport} admet une unique solution $u$.
+Cette solution est obtenue en "d\'epla\c{c}ant" la donn\'ee initiale
+vers la droite et en "faisant entrer" la donn\'ee de Dirichlet dans le domaine.
+De mani\`ere plus rigoureuse, nous avons le th\'eor\`eme suivant.
+
+\begin{theorem}
+  Le probl\`eme \eqref{eq:transport} admet une unique solution donn\'ee par
+  (...)
+\end{theorem}
+
+\begin{remark}
+  On n'a besoin d'une donn\'ee de Dirichlet que d'un seul c\^ot\'e du domaine.
+  Puisque l'on a choisi $a \geq 0$, il faut fixer la donn\'ee de Dirichlet \`a gauche.
+  On aurait aussi pu prendre $a \leq 0$ et utiliser la condition de Dirichlet
+  $u(t,1) = \alpha(t)$.
+\end{remark}
+
+
+Nous allons maintenant \'evoquer une autre propri\'et\'e int\'eressante de l'\'equation
+de transport: la r\'eversibilit\'e de l'\'equation.
+Cela signifie qu'en utilisant la solution au temps final, on peut reconstituer la solution
+initiale.
+Dans le cas pr\'esent, en utilisant la solution au temps final et la solution en sortie 
+du domaine ($x=1$), on peut reconstituer la valeur de la solution \`a l'instant initial
+ainsi que la valeur de la donn\'ee de Dirichlet $\alpha(t)$ en tout temps $t \in [0,T]$.
+
+\begin{proposition}[R\'eversibilit\'e de l'\'equation de transport]
+  (...)
+\end{proposition}
+
+Cette propri\'et\'e signifie que l'information est conserv\'ee au cours du temps:
+le comportement de l'\'equation ne d\'egrade pas cette information.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{M\'ethode des caract\'eristiques}
+
+La m\'ethode des caract\'eristiques consiste \`a montrer que la solution
+se conserve sur certaines courbes que l'on appelle trajectoires caract\'eristiques.
+Dans le cas monodimensionnel avec $a$ constant, ces courbes sont des droites.
+On parlera donc de droites caract\'eristiques.
+Cependant, dans le cas o\`u plusieurs dimensions d'espace sont consid\'er\'ees,
+ces courbes peuvent \^etre plus complexes (voir la section \ref{subsec:transport_multiD}).
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale = 10]
+  \input{D_carac.tex}
+\end{tikzpicture}
+\caption{Les droites caract\'eristiques de l'\'equation de transport
+  ($a=1$ et $T=0.9$).}
+\label{fig:D_carac}
+\end{figure}
+
+Nous pouvons montrer que dans le cas consid\'er\'e dans cette section,
+la solution se conserve sur les droites d'\'equation $t=ax+b$ avec $b \in \R$.
+Ces droites sont donc les droites caract\'eristiques de notre probl\`eme,
+nous les repr\'esentons sur la figure \ref{fig:D_carac}.
+
+!! equation des droites a montrer en exo !!
+
+Nous voyons donc que la valeur de la solution en $(t,x)$ est \`a aller chercher
+sur le bord du domaine espace-temps. C'est-\`a-dire, en fonction de la valeur de 
+$t$ et $x$, soit sur la condition initiale, soit sur la donn\'ee de Dirichlet
+(l'endroit o\`u r\'ecup\'erer l'information est repr\'esent\'e sur la figure
+\ref{fig:D_carac} par un cercle).
+Nous retrouvons donc l'expression de la solution donn\'ee en (...).
+
+
+Pour montrer la r\'eversibilit\'e de l'\'equation, il suffit de parcourir ces droites 
+caract\'eristiques dans l'autre sens (...)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Discr\'etisation de l'\'equation de transport 
   par les diff\'erences finies}
 \label{subsec:transport_DF}
 
+Nous cherchons maintenant \`a discr\'etiser le probl\`eme \eqref{eq:transport}
+par la m\'ethode des diff\'erences finies.
+
+
+!! comparer les r\'esultats avec ceux de l'intro !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de la chaleur}
@@ -760,6 +858,12 @@ introduire stabilit\'e et consistance !!
 
 !! Ecrire tous les exercices au fur et \`a mesure et les reporter
 dans une section \`a la fin du poly !!
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\'Equation de transport dans un domaine multi-dimensionnel}
+\label{subsec:transport_multiD}
+
 
 %===================================================================================
 
