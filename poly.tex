@@ -896,6 +896,8 @@ $\frac{\partial u}{\partial x}(t_n,x_M) \simeq \frac{u(t_n,x_M) - u(t_n, x_{M-1}
 au lieu de 
 $\frac{\partial u}{\partial x}(t_n,x_M) \simeq \frac{u(t_n,x_{M+1}) - u(t_n, x_{M-1})}{2h_x}$.
 
+
+
 Les r\'esultats obtenus avec le sch\'ema \eqref{eq:transport_DF_centre}
 sont report\'es en figure (...).
 On voit que la solution obtenue n'est pas satisfaisante puisqu'elle n'approche
@@ -907,18 +909,261 @@ pour \^etre s\^ur que le sch\'ema ainsi obtenu sera satisfaisant.
 Pour assurer une bonne qualit\'e du sch\'ema, il faut montrer que celui-ci est
 stable et consistant.
 Nous d\'efinissons maintenant ces deux termes.
+Pour cela, consid\'erons une suite $(u_j^n)_{\substack{0 \leq n \leq N \\ 0 \leq j \leq M}}$
+telle que $u_j^n$ soit \'egal \`a la $j$-\`eme coordonn\'ee du vecteur
+$U^n$ g\'en\'er\'e par r\'ecurrence comme suit:
+\begin{align}
+  \label{eq:schema_1pas}
+  U^0 = U_0 \qquad \text{et} \qquad \forall n \geq 0, \quad U^{n+1} = A U^n + h_t F^n ,
+\end{align}
+o\`u $U_0$ est donn\'e par $(U_0)_j = u(t_0,x_j)$.
+Notons \'egalement que nous consid\'erons dans la suite
+$U_0, F^n \in \R^{M+1}$ et $A \in \R^{(M+1)\times(M+1)}$.
+Si ces vecteurs et matrice ont une autre dimension, cela ne change pas la suite de
+notre propos.
+
+\begin{remark}
+  Dans le cas pr\'esent, nous consid\'erons une suite dont la formule de r\'ecurrence
+  ne n\'ecessite que le pas de temps pr\'ec\'edent.
+  En pratique, certains sch\'emas n\'ecessitent plusieurs pas de temps pr\'ec\'edents.
+  Le sch\'ema \eqref{eq:schema_1pas} peut \^etre adapt\'e \`a ce cas de figure.
+  Nous verrons ceci plus loin dans ce cours.
+\end{remark}
 
 \begin{definition}[Stabilit\'e]
-  On dit qu'un sch\'ema num\'erique est stable si ...
+  \label{def:stabilite}
+  Soit $\Stab \subset \R_+^* \times \R_+^*$ tel que $(0,0) \in \overline{\Stab}$.
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} est stable 
+  sous la condition $\Stab$ s'il existe $C_1 , C_2 > 0$ qui ne d\'ependent que de $T$
+  tels que $\forall (h_x , h_t) \in \Stab$, $\forall U_0 \in \R^{M+1}$, 
+  $\forall 0 \leq n \leq N$, $\forall F^n \in \R^{M+1}$, on a
+  \begin{align}
+    \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | u_j^n | 
+    \leq C_1 \max_{0 \leq j \leq M} | (U_0)_j | 
+    + C_2 \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | F_j^n | ,
+  \end{align}
+  o\`u $(u_j^n)$ est la suite g\'en\'er\'ee par la r\'ecurrence \eqref{eq:schema_1pas}.
+
+  On dit \'egalement que le sch\'ema est inconditionnellement stable
+  si la d\'efinition de stabilit\'e conditionnelle 
+  s'applique avec $\Stab = \R_+^* \times \R_+^*$.
+\end{definition}
+
+\begin{definition}[Erreur de troncature]
+  \label{def:troncature}
+  L'erreur de troncature du sch\'ema \eqref{eq:schema_1pas}
+  au temp $t_n$ est un vecteur $\varepsilon^n \in \R^{M+1}$
+  d\'efini par
+  \begin{align}
+    \label{eq:troncature}
+    \varepsilon^{n+1} := \tu^{n+1} - A \tu^n - h_t F^n ,
+  \end{align}
+  o\`u $\tu^n \in \R^{M+1}$ est d\'efini par
+  $(\tu^n)_j = u(t_n,x_j)$ avec $u$ la solution du probl\`eme exact associ\'e \`a
+  \eqref{eq:schema_1pas}.
 \end{definition}
 
 \begin{definition}[Consistance]
-  On dit qu'un sch\'ema num\'erique est consistant si ...
+  \label{def:consistance}
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} est consistant si pour toute
+  solution r\'eguli\`ere $u$ du probl\`eme exact on a
+  \begin{align}
+    \lim_{\substack{h_t \to 0\\ h_x \to 0}} \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} 
+    \dfrac{| \varepsilon_j^n|}{h_t} = 0 ,
+  \end{align}
+  o\`u $\varepsilon_j^n = (\varepsilon^n)_j$ l'erreur de troncature.
+
+  On dit de plus que le sch\'ema \eqref{eq:schema_1pas} est consistant d'ordre $p \in \N^*$
+  en temps et $q \in \N^*$ en espace si pour toute solution r\'eguli\`ere $u$ (du probl\`eme exact)
+  il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$ telle que
+  \begin{align}
+    \forall h_t , h_x > 0 , \quad \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}}
+    \dfrac{| \varepsilon_j^n|}{h_t} \leq C (h_t^p + h_x^q) .
+  \end{align}
 \end{definition}
 
 \begin{definition}[Convergence]
-  On dit qu'un sch\'ema num\'erique converge (ou est convergent) si ...
+  \label{def:convergence}
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} converge (ou est convergent) 
+  sous la condition $\Stab \subset \R_+^* \times \R_+^*$
+  si 
+  \begin{align}
+    \lim_{\substack{(h_t,h_x) \in \Stab \\ (h_t,h_x) \to (0,0)}} \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} 
+    | u(t_n , x_j) - u_j^n | = 0 ,
+  \end{align}
+  o\`u $u$ est la solution du probl\`eme exact.
+  
+  De mani\`ere similaire, on dit que le sch\'ema num\'erique 
+  \eqref{eq:schema_1pas} converge (ou est convergent) 
+  \`a l'ordre $p\in\N^*$ en temps et $q\in\N^*$ en espace
+  sous la condition $\Stab \subset \R_+^* \times \R_+^*$
+  s'il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$
+  telle que
+  \begin{align}
+    \forall (h_t , h_x) \in \Stab , \quad \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}}
+    | u(t_n,x_j) - u_j^n | \leq C (h_t^p + h_x^q) .
+  \end{align}
+
+  On dit enfin que le sch\'ema est convergent (resp. convergent \`a l'ordre $p$
+  en temps et $q$ en espace) si la d\'efinition ci-dessus est v\'erifi\'ee
+  avec $\Stab = \R_+^* \times \R_+^*$.
 \end{definition}
+
+Ces d\'efinitions sont reli\'ees par le th\'eor\`eme suivant.
+\begin{theorem}
+  \label{thm:convergence}
+  Si le sch\'ema \eqref{eq:schema_1pas} est stable sous la condition
+  $\Stab \subset \R_+^* \times \R_+^*$ et consistant 
+  (respectivement consistant d'ordre $p$ en temps et $q$ en espace),
+  alors le sch\'ema \eqref{eq:schema_1pas} est convergent
+  (respectivement convergent d'ordre $p$ en temps et $q$ en espace)
+  sous la condition $\Stab$.
+\end{theorem}
+Le th\'eor\`eme pr\'ec\'edent s'applique aussi avec $\Stab = \R_+^* \times \R_+^*$.
+Avant d'exposer une preuve du th\'eor\`eme \ref{thm:convergence}
+faisons quelques remarques sur les d\'efinitions pr\'ec\'edentes.
+
+Concernant la stabilit\'e (cf d\'efinition \ref{def:stabilite}),
+les quantit\'es $\max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | u_j^n |$, 
+$\max_{0\leq j \leq M} | (U_0)_j |$ et $\max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | F_j^n |$ 
+sont des normes portant sur $(u_j^n)$, $U_0$ et $(F^n)$.
+On peut donner dire que la stabilit\'e du sch\'ema correspond \`a
+la continuit\'e de l'application lin\'eaire qui \`a 
+$U_0$ et $(F^n)$ associe $(u_j^n)$ en ajoutant que la constante
+associ\'ee \`a cette continuit\'e ne doit pas d\'ependre
+de $h_t$ et $h_x$.
+On pourrait consid\'erer d'autres normes pour exprimer cette stabilit\'e,
+il faudrait alors utiliser des poids adapt\'es en $h_t$ et $h_x$ pour 
+avoir une d\'efinition \'equivalente (la constante $C$ ne doit
+pas d\'ependre de $h_t$ et $h_x$).
+Par exemple, on pourrait consid\'erer la norme
+$\max_{0\leq n \leq N} \sqrt{h_x} (\sum_{0\leq j \leq M} (u_j^n)^2)^{1/2}$
+pour $(u_j^n)$.
+Pour ne pas avoir \`a consid\'erer des poids en $h_x$ et $h_t$,
+nous consid\'erons les normes avec des "$\max$".
+Cette continuit\'e permet d'obtenir le fait qu'une "petite"
+modification de la donn\'ee initiale ou des termes source
+ou fronti\`ere ne cr\'ee qu'une "petite" modification
+du r\'esultat obtenu.
+La condition $\Stab$ permet de traiter des cas o\`u le sch\'ema
+n'est stable que si on restreint les $h_t$ et $h_x$ utilis\'es.
+Nous verrons un tel exemple dans la suite de cette section.
+
+
+L'erreur de troncature repr\'esente l'erreur que fait un sch\'ema
+au cours d'un pas de temps.
+En effet, on compare (cf d\'efinition \ref{def:troncature})
+la solution exacte $\tu^{n+1}$ \`a la solution 
+obtenue en faisant un pas de temps du sch\'ema
+\`a partir de la solution exacte au pas de temps
+pr\'ec\'edent $\tu^{n+1}$.
+
+
+La consistance d'un sch\'ema (cf d\'efinition \ref{def:consistance})
+signifie que l'erreur de troncature commise par unit\'e de temps
+(on divise par $h_t$) tend vers $0$ lorsqu'on prend 
+des pas de temps et d'espace de plus en plus petits.
+De plus, on peut quantifier la notion de consistance
+gr\^ace \`a l'ordre de consistance 
+(plus les ordres de consistance en temps et en espace sont \'elev\'es,
+plus l'erreur de troncature d\'ecro\^it vite vers $0$ quand les pas 
+de temps et d'espace tendent vers $0$).
+En quelque sorte, la consistance signifie que le sch\'ema est
+coh\'erent avec le probl\`eme exact 
+(les termes pr\'esents dans le sch\'ema num\'erique correspondent
+\`a des termes du probl\`eme exact et vice-versa).
+
+
+La convergence d'un sch\'ema signifie que la solution approch\'ee obtenue
+correspond bien \`a une approximation de la solution exacte
+au sens o\`u si l'on fait tendre les pas de temps et d'espace vers
+$0$, l'erreur commise par le sch\'ema tend aussi vers $0$.
+L\`a encore on peut quantifier cette d\'ecroissance de l'erreur commise 
+avec la notion d'ordre de convergence.
+
+
+En pratique, la convergence est la propri\'et\'e que l'on veut avoir
+car elle garantit que le sch\'ema consid\'er\'e fournit une approximation
+raisonnable du probl\`eme exact (sous r\'eserve que les pas de temps
+et d'espace soient suffisamment petits).
+Cependant, cette propri\'et\'e n'est pas ais\'ee \`a d\'emontrer.
+C'est pourquoi nous utilisons le th\'eor\`eme \ref{thm:convergence}
+qui assure la convergence \`a partir de la stabilit\'e et 
+de la consistance.
+
+
+\begin{remark}
+  Les notions de consistance et de convergence sont diff\'erentes.
+  Les jurys se plaignent des candidats qui confondent ces deux
+  notions.
+  Ne fa\^ites pas cette erreur.
+\end{remark}
+
+Nous allons maintenant prouver le th\'eor\`eme \ref{thm:convergence}.
+\begin{proof}[Preuve du th\'eor\`eme \ref{thm:convergence}]
+  Dans cette preuve, nous utilisons toutes les d\'efinitions pr\'ec\'edentes.
+  Tout d'abord, par d\'efinition de l'erreur de troncature,
+  $\tu^{n+1} = A \tu^n + h_t F^n + \varepsilon^{n+1}$.
+  On montre ainsi que
+  $w^n = \tu^{n} - U^{n}$ v\'erifie $w^0 = 0$ 
+  (puisque $(U^0)_j = u(t_0,x_j)$) et
+  $w^{n+1} = A w^n + \varepsilon^{n+1}$.
+
+  Par stabilit\'e du sch\'ema, on obtient
+  $\max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | w_j^n |
+  \leq C_2 \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} \dfrac{| \varepsilon_j^n |}{h_t}$.
+  On conclut en utilisant la d\'efinition de la consistance.
+\end{proof}
+
+
+Pour $A \in \R^{(M+1)\times (M+1)}$, on note 
+\[
+  \tn A \tn = \sup_{V \in \R^{M+1} \backslash\{0\}} \dfrac{\| A V \|}{\| V \|} ,
+\]
+o\`u $\| V \| = \max\limits_{0\leq j \leq M} | V_j |$.
+Nous donnons maintenant une caract\'erisation de la stabilit\'e du sch\'ema.
+\begin{proposition}
+  \label{prop:carac_stab}
+  Le sch\'ema \eqref{eq:schema_1pas} est stable si et seulement si
+  il existe $C>0$ d\'ependant uniquement de $T$ tel que
+  \[
+    \forall n \in \N , \quad \tn A^n \tn \leq C .
+  \]
+\end{proposition}
+
+\begin{corrolary}
+  Si $\tn A \tn \leq 1$, alors le sch\'ema est stable.
+\end{corrolary}
+
+\begin{proof}[Preuve de la proposition \ref{prop:carac_stab}]
+  !! TODO !!
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%
+\subsubsection{Analyse de discr\'etisations}
+
+
+Nous allons montrer dans cette section que le sch\'ema num\'erique 
+propos\'e en \eqref{eq:transport_DF_centre} n'est pas stable,
+ce qui explique les r\'esultats num\'eriques obtenus.
+Nous proposerons \'egalement un sch\'ema stable.
+
+
+
+
+
+!! remplacer les d\'eriv\'ees continues par des taux d'accroissement
+assure la consistance mais pas forc\'ement la stabilit\'e !!
+
+!! faire des sous-sections dans cette section !!
+
+!! prouver que le sch\'ema en intro n'est pas stable !!
+
+!! donner un sch\'ema stable sous CFL et faire les preuves + simus num !!
+
+!! introduire nombre de CFL + sens physique + simus avec diff\'erentes CFL !!
+
+!! donner un sch\'ema inconditionnellement stable !!
 
 !! comparer les r\'esultats avec ceux de l'intro !!
 
