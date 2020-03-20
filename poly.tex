@@ -882,7 +882,7 @@ on obtient le sch\'ema num\'erique
     \\
     \forall 1 \leq n \leq N, u_0^n = \alpha(t_n) ,
     \\
-    \forall 1 \leq n \leq N, \forall 1 \leq j \leq M,
+    \forall 1 \leq n \leq N, \forall 1 \leq j \leq M-1,
     u_j^n = u_j^{n-1} - \dfrac{a h_t}{2 h_x} (u_{j+1}^{n-1} - u_{j-1}^{n-1}) ,
     \\
     \forall 1 \leq n \leq N,
@@ -1126,9 +1126,10 @@ Nous donnons maintenant une caract\'erisation de la stabilit\'e du sch\'ema.
   \label{prop:carac_stab}
   Le sch\'ema \eqref{eq:schema_1pas} est stable si et seulement si
   il existe $C>0$ d\'ependant uniquement de $T$ tel que
-  \[
+  \begin{align}
+    \label{eq:carac_stab}
     \forall n \in \N , \quad \tn A^n \tn \leq C .
-  \]
+  \end{align}
 \end{proposition}
 
 \begin{corrolary}
@@ -1136,8 +1137,33 @@ Nous donnons maintenant une caract\'erisation de la stabilit\'e du sch\'ema.
 \end{corrolary}
 
 \begin{proof}[Preuve de la proposition \ref{prop:carac_stab}]
-  !! TODO !!
+  Supposons tout d'abord que le sch\'ema est stable.
+  Dans ce cas, appliquons le sch\'ema \`a $U_0 = V \in \R^{M+1}$
+  quelconque et $F^n = 0$. 
+  La solution obtenue est $U^n = A^n V$.
+  On a donc prouv\'e qu'il existe $C>0$ d\'ependant uniquement
+  de $T$ tel que
+  $\forall V \in \R^{M+1} , \quad \| A^n V \| \leq C \| V \|$
+  et donc \eqref{eq:carac_stab}.
+
+  Maintenant supposons que \eqref{eq:carac_stab} est \'etablie.
+  Appliquons le sch\'ema \`a $U_0 \in \R^{M+1}$
+  et $\forall n \in \N , F^n \in \R^{M+1}$.
+  Nous pouvons prouver que la solution obtenue est
+  \begin{align}
+    \label{eq:sol_Un}
+    U^n = A^n U_0 + h_t \sum_{\ell = 0}^{n-1} A^{n-\ell-1} F^{\ell} .
+  \end{align}
+  Ainsi, $\| U^n \| \leq \tn A^n \tn \| U_0 \| 
+  + h_t \sum_{\ell = 0}^{n-1} \tn A^{n-\ell-1} \tn \| F^n \|$.
+  En utilisant \eqref{eq:carac_stab}, on obtient
+  $\| U^n \| \leq C \| U_0 \| + C h_t n \max_{0\leq \ell \leq N} \| F^{\ell} \|$.
+  De plus, $n h_t = t_n \leq T$.
+  On a donc \'etabli la stabilit\'e du sch\'ema.
 \end{proof}
+
+
+!! Exercice : \'etablir \eqref{eq:sol_Un} !!
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Analyse de discr\'etisations}
@@ -1151,9 +1177,87 @@ Nous proposerons \'egalement un sch\'ema stable.
 
 
 
+!! Mettre les deux sch\'emas num\'eriques ensemble !!
+!! motivation : on a eu l'impression que c'\'etait facile pour
+le cas elliptique, montrons qu'ici tout n'est pas si simple !!
+
+
+
+!! Autre sch\'ema num :
+
+Approchons les d\'eriv\'ees par 
+\begin{align}
+  \label{eq:der_decentre_AM}
+  \dfrac{\partial u}{\partial t}(t_n,x_j) \simeq \dfrac{u(t_{n+1},x_j) - u(t_n,x_j)}{h_t} ,
+  \qquad \qquad 
+  \dfrac{\partial u}{\partial x}(t_n,x_j) \simeq \dfrac{u(t_n,x_{j}) - u(t_n,x_{j-1})}{h_x} .
+\end{align}
+
+%%%%%%%%%%%%%%%%%%
+\subsubsection{Condition de Dirichlet}
+
+!! on s'int\'eresse au pb (...) !!
+
+En appliquant \eqref{eq:der_decentre_AM}, 
+on obtient le sch\'ema num\'erique
+\begin{align}
+  \label{eq:transport_DF_decentre_AM}
+  \left\{
+  \begin{array}{l}
+    \forall 0 \leq j \leq M , 
+    u_j^0 = u_0(x_j) ,
+    \\
+    \forall 1 \leq n \leq N, u_0^n = \alpha(t_n) ,
+    \\
+    \forall 1 \leq n \leq N, \forall 1 \leq j \leq M,
+    u_j^n = u_j^{n-1} - \dfrac{a h_t}{h_x} (u_{j}^{n-1} - u_{j-1}^{n-1}) .
+  \end{array}
+  \right.
+\end{align}
+
+On a donc 
+\begin{align}
+  A =
+  \begin{pmatrix}
+    1 - \co & 0 & & &
+    \\
+    \co & 1 - \co & \ddots & &
+    \\
+    0 & \ddots & \ddots & \ddots &
+    \\
+    \vdots & & \ddots & \ddots & 0
+    \\
+    0 & & & \co & 1-\co
+  \end{pmatrix}
+  \qquad \text{et} \qquad
+  \forall n \geq 0,
+  \quad h_t F^n = \co
+  \begin{pmatrix}
+    \alpha(t_n)
+    \\
+    0
+    \\
+    \vdots
+    \\
+    0
+  \end{pmatrix}
+  ,
+\end{align}
+avec $\co = \frac{a h_t}{h_x}$.
+Remarquons que la condition de Dirichlet a \'et\'e prise en compte
+dans le terme "second membre" $F^n$.
+
+On obtient les r\'esultats (...)
+
+!! est-ce qu'on ne ferait pas mieux de faire l'analyse de stabilit\'e
+avec des conditions p\'eriodiques ??
+-- Ca simplierait les choses en particulier pour les sch\'emas instables !!
+
 
 !! remplacer les d\'eriv\'ees continues par des taux d'accroissement
 assure la consistance mais pas forc\'ement la stabilit\'e !!
+-- C'est tres interessant de faire ca sur l'\'equation de transport par ce que 
+l'information ne se d\'eplace que dans une direction !!
 
 !! faire des sous-sections dans cette section !!
 
