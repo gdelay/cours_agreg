@@ -1167,6 +1167,10 @@ Cependant, cette propri\'et\'e n'est pas ais\'ee \`a d\'emontrer.
 C'est pourquoi nous utilisons le th\'eor\`eme \ref{thm:convergence}
 qui assure la convergence \`a partir de la stabilit\'e et 
 de la consistance.
+Notons \'egalement que si le probl\`eme exact est bien pos\'e
+alors avoir la convergence est \'equivalent \`a avoir
+la stabilit\'e et la consistance (on appelle ce r\'esultat le 
+th\'eor\`eme de Lax). 
 
 
 \begin{remark}
@@ -1210,6 +1214,7 @@ Nous donnons maintenant une caract\'erisation de la stabilit\'e du sch\'ema.
 \end{proposition}
 
 \begin{corrolary}
+  \label{corro:stability}
   Si $\tn A \tn \leq 1$, alors le sch\'ema est stable.
 \end{corrolary}
 
@@ -1350,16 +1355,88 @@ $\R^{M \times M}$.
 
 
 \begin{proposition}
-  Le sch\'ema \eqref{eq:transport_DF_decentre_AM} est stable.
+  Le sch\'ema \eqref{eq:transport_DF_decentre_AM} est stable
+  sous la condition $c = \dfrac{a h_t}{h_x} \leq 1$.
 \end{proposition}
+\begin{proof}
+  Soit $U_0 \in \R^M$, on calcule $U^1 = A U_0$.
+  Pour $0 \leq j \leq M-1$, 
+  $u_j^1 = (1-c) u_j^0 + c u_{j-1}^0$.
+  Ainsi, $|u_j^1| \leq |1-c| | u_j^0 | + | c | | u_{j-1}^0 |$.
+  On obtient $\| U^1 \| \leq (|1-c| + |c|) \| U_0 \|$.
+  Ceci \'etant valide pour tout $U_0 \in \R^M$, on a $\tn A \tn \leq |1-c| + |c|$.
+  La condition $0 \leq c \leq 1$ donne $\tn A \tn \leq 1$ et le sch\'ema est stable 
+  d'apr\`es le corrolaire \ref{corro:stability}.
+\end{proof}
 
+
+Lorsque l'on veut prouver qu'un sch\'ema de la forme \eqref{eq:schema_1pas}
+est instable, la fa\c{c}on standard
+de proc\'eder est d'utiliser la stabilit\'e au sens de von Neumann.
+On consid\`ere alors $F^n = 0$ et une condition initiale sous la forme
+d'une onde spatiale: $u_j^0 = e^{2 i \pi k x_j}$ avec $i$ la racine carr\'e de l'unit\'e
+et $k \in \Z$.
+On \'etudie ensuite l'effet qu'a l'application du sch\'ema sur ce nombre complexe.
+On montre que $\forall n \in \N, u_j^{n+1} = \calA u_j^n$ avec $\calA \in \C$.
+\begin{definition}[Stabilit\'e au sens de von Neumann]
+  On dit qu'un sch\'ema \eqref{eq:schema_1pas} est stable au
+  sens de von Neumann si $| \calA | \leq 1$.
+\end{definition}
 \begin{proposition}
-  Le sch\'ema \eqref{eq:transport_DF_centre} est instable.
+  La stabilit\'e au sens de von Neumann est n\'ecessaire \`a la stabilit\'e du sch\'ema.
+  Dit autrement, la stabilit\'e du sch\'ema implique la stabilit\'e au sens de 
+  von Neumann.
 \end{proposition}
+\begin{proof}
+  On peut montrer que si on consid\`ere $u_j^0 = \Re (e^{2 i \pi k x_j})$
+  alors $\forall 0 \leq n \leq N, u_j^n = \Re (\calA^n e^{2 i \pi k x_j})$.
+  Idem, si $u_j^0 = \Im (e^{2 i \pi k x_j})$, 
+  alors $\forall 0 \leq n \leq N, u_j^n = \Im (\calA^n e^{2 i \pi k x_j})$.
+  
+  Ainsi, si le sch\'ema \eqref{eq:schema_1pas} est stable alors
+  $\max_{\substack{0 \leq n \leq N \\ 0 \leq j \leq M}} 
+  | \Re (\calA^n e^{2 i \pi k x_j})| \leq C$ o\`u $C>0$ ne d\'epend que de $T$.
+  En faisant le m\^eme raisonnement sur la partie imaginaire,
+  on obtient
+  $\max_{\substack{0 \leq n \leq N \\ 0 \leq j \leq M}} 
+  | \calA^n e^{2 i \pi k x_j}| \leq \sqrt{2}C$.
+  
+  Or ceci n'est possible que si $| \calA | \leq 1$ sinon on d\'epasse
+  la constante $\sqrt{2}C$ en faisant tendre $N$ vers $+\infty$.
+  Ceci prouve le r\'esultat.
+\end{proof}
+
+Appliquons ce crit\`ere pour prouver le r\'esultat suivant.
+\begin{proposition}
+  Le sch\'ema \eqref{eq:transport_DF_decentre_AM} est instable
+  si $c = \dfrac{a h_t}{h_x} > 1$.
+\end{proposition}
+\begin{proof}
+  Si $u_j^n = b_n(k) e^{2i\pi k x_j}$, alors
+  \[
+    u_j^{n+1} = (1-c) u_j^n + c u_{j-1}^n = (1 - c + c e^{-2i\pi k h_x}) u_j^n .
+  \]
+  Ici, nous avons $u_j^{n+1} = \calA u_j^n$ avec $\calA = 1 - c + c e^{-2i\pi k h_x}$.
+  Pour $c > 1$, on a $| \calA | > 1$ (si $\cos(2\pi k h_x) < 1$). 
+  Le sch\'ema n'est pas stable au sens 
+  de von Neumann donc il n'est pas stable au sens de la d\'efinition \ref{def:stabilite}.
+\end{proof}
+
+\begin{remark}
+  On peut m\^eme prouver l'\'equivalence des deux notions de stabilit\'e
+  en utilisant le fait que les exponentielles complexes constituent une base
+  Hilbertienne de l'espace des fonctions de carr\'e int\'egrable sur $(0,1)$.
+\end{remark}
+
+
+
+!! exercice le sch\'ema \eqref{eq:transport_DF_centre} est instable. !!
 
 !! expliquer qu'il faut aller chercher l'information qui vient
 pas celle qui part !!
 
+
+!! exercice : consistance + stabilit\'e d'un sch\'ema implicite !!
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Conditions de Dirichlet}
@@ -1415,6 +1492,10 @@ avec $\co = \frac{a h_t}{h_x}$.
 Remarquons que la condition de Dirichlet a \'et\'e prise en compte
 dans le terme "second membre" $F^n$.
 
+
+!! comparer avec matrice des conditions p\'eriodiques !!
+
+
 On obtient les r\'esultats (...)
 
 !! est-ce qu'on ne ferait pas mieux de faire l'analyse de stabilit\'e
@@ -1445,6 +1526,8 @@ l'information ne se d\'eplace que dans une direction !!
 
 !! dessin repr\'esentant l'endroit o\`u on va chercher l'information :
 sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
+
+!! faut-il parler des propri\'et\'es de positivit\'e ??
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de la chaleur}
