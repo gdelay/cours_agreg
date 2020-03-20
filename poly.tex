@@ -839,8 +839,7 @@ Pour montrer la r\'eversibilit\'e de l'\'equation, il suffit de parcourir ces dr
 caract\'eristiques dans l'autre sens (...)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Discr\'etisation de l'\'equation de transport 
-  par les diff\'erences finies}
+\subsection{Discr\'etisation par les diff\'erences finies et analyse num\'erique}
 \label{subsec:transport_DF}
 
 Nous cherchons maintenant \`a discr\'etiser le probl\`eme \eqref{eq:transport}
@@ -861,18 +860,64 @@ Ici, l'indice $j$ donne la position en espace et l'exposant $n$
 donne le temps consid\'er\'e. Ainsi, $u_j^n$ devra \^etre une approximation
 de $u(t_n, x_j)$.
 
+%%%%%%%%%%%%%%%%%%
+\subsubsection{Conditions p\'eriodiques et motivation de l'analyse}
 
-La m\'ethode consiste donc \`a approcher les d\'eriv\'ees partielles
+Comme nous l'avons vu pr\'ec\'edemment, lorsque l'on consid\`ere
+l'\'equation de transport avec une condition de Dirichlet,
+l'information de la donn\'ee initiale sort progressivement du domaine
+en \'etant remplac\'ee par la donn\'ee de Dirichlet.
+On pourrait vouloir s'int\'eresser au traitement sur le temps long de 
+l'information issue de la donn\'ee initiale.
+Pour cela, on peut essayer de suivre le d\'eplacement de cette donn\'ee
+initiale dans un domaine infini en consid\'erant des conditions p\'eriodiques.
+Dans cette section, on s'int\'eresse au probl\`eme
+\begin{equation}
+  \label{eq:transport_per}
+  \left\{
+    \begin{array}{l}
+     \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = 0 
+      \dans (0,T) \times (0,1),
+      \\
+      \forall t \in (0,T), u(t,0) = u(t,1) ,
+      \\
+      \forall x \in (0,1), u(0,x) = u_0(x) ,
+    \end{array}
+  \right.
+\end{equation}
+avec $a>0$ et $u_0$ v\'erifie les conditions p\'eriodiques $u_0(0) = u_0(1)$.
+Avec ces conditions fronti\`eres, l'information qui sort en 
+$x=1$ r\'eentre imm\'ediatement en $x=0$.
+
+
+En appliquant la m\'ethode des caract\'eristiques, on peut montrer
+que la solution exacte de ce probl\`eme est
+\begin{align}
+  \label{eq:sol_transport_per}
+  u(t,x) = u_0(f(x-at)) ,
+\end{align}
+o\`u $f(x)$ est la partie fractionnaire de $x$,
+c'est-\`a-dire $x = E(x) + f(x)$ avec $E(x) \in \Z$
+et $0 \leq f(x) < 1$.
+
+
+!! Calcul de la solution du pb p\'eriodique avec m\'ethode des caract\'eristiques en exo ??
+
+Nous souhaitons maintenant discr\'etiser l'\'equation
+\eqref{eq:transport_per}
+et comparer la solution obtenue num\'eriquement avec \eqref{eq:sol_transport_per}.
+La m\'ethode consiste \`a approcher les d\'eriv\'ees partielles
 (en temps et en espace) par des taux d'accroissement.
-Cependant, cette m\'ethode n'est pas suffisante pour assurer un bon comportement 
-du sch\'ema ainsi obtenu.
-Par exemple, si l'on approche les deux d\'eriv\'ees partielles par
+Nous proposons de comparer le comportement de deux discr\'etisations diff\'erentes.
+Nous proposons tout d'abord d'approcher la d\'eriv\'ee en temps par une
+approximation d\'ecentr\'ee et la d\'eriv\'ee en espace par une 
+approximation centr\'ee comme suit
 \begin{align*}
   \dfrac{\partial u}{\partial t}(t_n,x_j) \simeq \dfrac{u(t_{n+1},x_j) - u(t_n,x_j)}{h_t} ,
   \qquad \qquad 
-  \dfrac{\partial u}{\partial x}(t_n,x_j) \simeq \dfrac{u(t_n,x_{j+1}) - u(t_n,x_{j-1})}{2 h_x} ,
+  \dfrac{\partial u}{\partial x}(t_n,x_j) \simeq \dfrac{u(t_n,x_{j+1}) - u(t_n,x_{j-1})}{2 h_x} .
 \end{align*}
-on obtient le sch\'ema num\'erique
+On obtient le sch\'ema num\'erique
 \begin{align}
   \label{eq:transport_DF_centre}
   \left\{
@@ -880,35 +925,67 @@ on obtient le sch\'ema num\'erique
     \forall 0 \leq j \leq M , 
     u_j^0 = u_0(x_j) ,
     \\
-    \forall 1 \leq n \leq N, u_0^n = \alpha(t_n) ,
+    \forall 1 \leq n \leq N, u_0^n = u_M^n ,
     \\
-    \forall 1 \leq n \leq N, \forall 1 \leq j \leq M-1,
+    \forall 1 \leq n \leq N, \forall 0 \leq j \leq M,
     u_j^n = u_j^{n-1} - \dfrac{a h_t}{2 h_x} (u_{j+1}^{n-1} - u_{j-1}^{n-1}) ,
-    \\
-    \forall 1 \leq n \leq N,
-    u_M^n = u_M^{n-1} - \dfrac{a h_t}{h_x} ( u_M^{n-1} - u_{M-1}^{n-1} ) .
   \end{array}
   \right.
 \end{align}
-Notons que le fait que $u_{M+1}^n$ ne soit pas d\'efini nous a pouss\'e \`a utiliser 
-la d\'eriv\'ee discr\`ete suivante en $x_M=1$: 
-$\frac{\partial u}{\partial x}(t_n,x_M) \simeq \frac{u(t_n,x_M) - u(t_n, x_{M-1})}{h_x}$
-au lieu de 
-$\frac{\partial u}{\partial x}(t_n,x_M) \simeq \frac{u(t_n,x_{M+1}) - u(t_n, x_{M-1})}{2h_x}$.
+o\`u nous consid\'erons $u_0^n = u_M^n$, $u_{M+1}^n = u_1^n$ et $u_{-1}^n = u_{M-1}^n$.
+%En consid\'erant comme degr\'es de libert\'e $U^n = u_j^n$ pour $1 \leq n \leq N$,
 
+Nous nous proposons \'egalement d'approcher les d\'eriv\'ees en temps et les d\'eriv\'ees
+en espace respectivement par des approximations d\'ecentr\'ees aval et amont comme suit
+\begin{align}
+  \label{eq:der_decentre_AM}
+  \dfrac{\partial u}{\partial t}(t_n,x_j) \simeq \dfrac{u(t_{n+1},x_j) - u(t_n,x_j)}{h_t} ,
+  \qquad \qquad 
+  \dfrac{\partial u}{\partial x}(t_n,x_j) \simeq \dfrac{u(t_n,x_{j}) - u(t_n,x_{j-1})}{h_x} .
+\end{align}
+On obtient le sch\'ema num\'erique
+\begin{align}
+  \label{eq:transport_DF_decentre_AM}
+  \left\{
+  \begin{array}{l}
+    \forall 0 \leq j \leq M , 
+    u_j^0 = u_0(x_j) ,
+    \\
+    \forall 1 \leq n \leq N, u_0^n = u_M^n ,
+    \\
+    \forall 1 \leq n \leq N, \forall 0 \leq j \leq M,
+    u_j^n = u_j^{n-1} - \dfrac{a h_t}{h_x} (u_{j}^{n-1} - u_{j-1}^{n-1}) ,
+  \end{array}
+  \right.
+\end{align}
+o\`u nous consid\'erons $u_0^n = u_M^n$ et $u_{-1}^n = u_{M-1}^n$.
 
+Les r\'esultats num\'eriques sont report\'es dans la
+figure \ref{fig:trans_per}.
+Nous observons des comportements num\'eriques tr\`es diff\'erents pour ces deux
+sch\'emas qui sont pourtant similaires.
+Il ne suffit donc pas de remplacer les d\'eriv\'ees partielles
+par des taux d'accroissement pour obtenir des r\'esultats convenables.
+Il faut aussi v\'erifier certaines propri\'et\'es que nous abordons dans
+la section suivante.
 
-Les r\'esultats obtenus avec le sch\'ema \eqref{eq:transport_DF_centre}
-sont report\'es en figure (...).
-On voit que la solution obtenue n'est pas satisfaisante puisqu'elle n'approche
-pas la solution exacte.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \caption{\'Equation de transport avec conditions p\'eriodiques}
+  \label{fig:trans_per}
+\end{figure}
 
+!! exercice : coder les deux sch\'emas et retrouver les r\'esultats
+de la figure \ref{fig:trans_per} !!
 
-En fait, il ne suffit pas de remplacer les d\'eriv\'ees partielles par des taux d'accroissement
-pour \^etre s\^ur que le sch\'ema ainsi obtenu sera satisfaisant.
-Pour assurer une bonne qualit\'e du sch\'ema, il faut montrer que celui-ci est
-stable et consistant.
-Nous d\'efinissons maintenant ces deux termes.
+%%%%%%%%%%%%%%%%%%
+\subsubsection{Outils d'analyse num\'erique}
+
+Nous d\'efinissons maintenant des notions que nous
+utiliserons ensuite pour analyser les deux sch\'emas introduits pr\'ec\'edemment.
 Pour cela, consid\'erons une suite $(u_j^n)_{\substack{0 \leq n \leq N \\ 0 \leq j \leq M}}$
 telle que $u_j^n$ soit \'egal \`a la $j$-\`eme coordonn\'ee du vecteur
 $U^n$ g\'en\'er\'e par r\'ecurrence comme suit:
@@ -1166,42 +1243,133 @@ Nous donnons maintenant une caract\'erisation de la stabilit\'e du sch\'ema.
 !! Exercice : \'etablir \eqref{eq:sol_Un} !!
 
 %%%%%%%%%%%%%%%%%%
-\subsubsection{Analyse de discr\'etisations}
+\subsubsection{Analyse des deux sch\'emas pour conditions p\'eriodiques}
 
 
 Nous allons montrer dans cette section que le sch\'ema num\'erique 
-propos\'e en \eqref{eq:transport_DF_centre} n'est pas stable,
-ce qui explique les r\'esultats num\'eriques obtenus.
-Nous proposerons \'egalement un sch\'ema stable.
+propos\'e en \eqref{eq:transport_DF_centre} n'est pas stable
+contrairement au sch\'ema \eqref{eq:transport_DF_decentre_AM}.
 
-
-
-
-!! Mettre les deux sch\'emas num\'eriques ensemble !!
-!! motivation : on a eu l'impression que c'\'etait facile pour
-le cas elliptique, montrons qu'ici tout n'est pas si simple !!
-
-
-
-!! Autre sch\'ema num :
-
-Approchons les d\'eriv\'ees par 
+On consid\`ere comme degr\'es de libert\'e
+$U^n = 
+\begin{pmatrix}
+  u_0^n \\ \vdots \\ u_{M-1}^n
+\end{pmatrix}
+\in \R^M
+$.
+Les deux sch\'emas pr\'ec\'edents peuvent \^etre \'ecrits sous la forme matricielle 
+\eqref{eq:schema_1pas} avec $F^n = 0$ et pour matrices
 \begin{align}
-  \label{eq:der_decentre_AM}
-  \dfrac{\partial u}{\partial t}(t_n,x_j) \simeq \dfrac{u(t_{n+1},x_j) - u(t_n,x_j)}{h_t} ,
-  \qquad \qquad 
-  \dfrac{\partial u}{\partial x}(t_n,x_j) \simeq \dfrac{u(t_n,x_{j}) - u(t_n,x_{j-1})}{h_x} .
+  A_{C} = \dfrac{1}{2}
+  \begin{pmatrix}
+    2 & -\co & 0 & \dots & 0 & \co
+    \\
+    \co & 2 & -\co & & & 0
+    \\
+    0 & \ddots & \ddots & \ddots & &
+    \\
+    \vdots & & \ddots & \ddots & \ddots
+    \\
+    0 & & & \ddots & \ddots & -\co
+    \\
+    -\co & 0 & & & \co & 2
+  \end{pmatrix},
 \end{align}
+pour le sch\'ema centr\'e \eqref{eq:transport_DF_centre}
+et
+\begin{align}
+  A_{AM} = 
+  \begin{pmatrix}
+    1-\co & 0 & \dots & 0 & \co
+    \\
+    \co & \ddots & & & 0
+    \\
+    & \ddots & \ddots &   &
+    \\
+    & & \ddots & \ddots &
+    \\
+    &&   &  \co & 1-\co
+  \end{pmatrix},
+\end{align}
+pour le sch\'ema d\'ecentr\'e amont \eqref{eq:transport_DF_decentre_AM}.
+Les deux matrices pr\'ec\'edentes ont \'et\'e \'ecrites avec 
+$\co = \frac{a h_t}{h_x}$.
+Notons que les deux matrices pr\'ec\'edentes sont dans
+$\R^{M \times M}$.
+
+\begin{proposition}
+  Les sch\'emas \eqref{eq:transport_DF_centre} et \eqref{eq:transport_DF_decentre_AM}
+  sont tous les deux consistants.
+  De plus, le sch\'ema \eqref{eq:transport_DF_centre} est consistant d'ordre 1
+  en temps et 2 en espace;
+  le sch\'ema \eqref{eq:transport_DF_decentre_AM} est consistant d'ordre 1
+  en temps et 1 en espace.
+\end{proposition}
+
+
+\begin{proof}
+  Prouvons que le sch\'ema \eqref{eq:transport_DF_centre} est consistant
+  d'ordre 1 en temps et 2 en espace.
+  La preuve pour le sch\'ema d\'ecentr\'e amont est laiss\'ee en exercice.
+
+  On calcule l'erreur de troncature. Ceci revient \`a 
+  calculer une solution approch\'ee au temps $t_{n+1}$ par le sch\'ema \`a partir
+  de la solution exacte au temps $t_n$ et de comparer le r\'esultat
+  obtenu \`a la solution exacte au temps $t_{n+1}$.
+  On a ainsi
+  \[
+    \varepsilon_j^{n+1} = u(t_{n+1},x_j) - u(t_n,x_j)
+    + \dfrac{a h_t}{2 h_x} (u(t_n, x_{j+1}) - u(t_n, x_{j-1})) ,
+  \]
+  o\`u $u$ est la solution de \eqref{eq:transport_per}.
+
+  On consid\`ere ensuite les d\'eveloppements de Taylor suivants:
+  \begin{align*}
+    u(t_{n+1} , x_j) = u(t_n , x_j) + h_t \dfrac{\partial u}{\partial t} (t_n , x_j)
+    + O(h_t^2) ,
+    \\
+    u(t_n , x_{j+1} ) = u(t_n , x_{j} ) + h_x \dfrac{\partial u}{\partial x}(t_n, x_j)
+    + \dfrac{h_x^2}{2} \dfrac{\partial^2 u}{\partial x^2}(t_n, x_j)
+    + O(h_x^3) ,
+    \\
+    u(t_{n} , x_{j-1} ) = u(t_n , x_{j} ) - h_x \dfrac{\partial u}{\partial x}(t_n, x_j)
+    + \dfrac{h_x^2}{2} \dfrac{\partial^2 u}{\partial x^2}(t_n, x_j)
+    + O(h_x^3) .
+  \end{align*}
+  Nous obtenons donc
+  \begin{align*}
+    \dfrac{\varepsilon_j^{n+1}}{h_t} = \dfrac{\partial u}{\partial t}(t_n, x_j)
+    + O (h_t) + a \dfrac{\partial u}{\partial x}(t_n, x_j) + O (h_x^2) .
+  \end{align*}
+  En utilisant le fait que $u$ est solution de \eqref{eq:transport_per},
+  nous avons prouv\'e le fait que le sch\'ema \eqref{eq:transport_DF_centre}
+  est consistant d'ordre 2 en espace et d'ordre 1 en temps.
+\end{proof}
+
+!! exercice : consistance du sch\'ema \eqref{eq:transport_DF_decentre_AM} !!
+
+
+\begin{proposition}
+  Le sch\'ema \eqref{eq:transport_DF_decentre_AM} est stable.
+\end{proposition}
+
+\begin{proposition}
+  Le sch\'ema \eqref{eq:transport_DF_centre} est instable.
+\end{proposition}
+
+!! expliquer qu'il faut aller chercher l'information qui vient
+pas celle qui part !!
+
 
 %%%%%%%%%%%%%%%%%%
-\subsubsection{Condition de Dirichlet}
+\subsubsection{Conditions de Dirichlet}
 
 !! on s'int\'eresse au pb (...) !!
 
 En appliquant \eqref{eq:der_decentre_AM}, 
 on obtient le sch\'ema num\'erique
 \begin{align}
-  \label{eq:transport_DF_decentre_AM}
+  \label{eq:transport_DF_decentre_AM_dir}
   \left\{
   \begin{array}{l}
     \forall 0 \leq j \leq M , 
@@ -1271,6 +1439,13 @@ l'information ne se d\'eplace que dans une direction !!
 
 !! comparer les r\'esultats avec ceux de l'intro !!
 
+!! diffusion num\'erique : comparer avec l'\'equation de la chaleur !!
+
+!! discr\'etisation implicite en exercice !!
+
+!! dessin repr\'esentant l'endroit o\`u on va chercher l'information :
+sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de la chaleur}
 
@@ -1284,6 +1459,11 @@ l'information ne se d\'eplace que dans une direction !!
 !! Ecrire tous les exercices au fur et \`a mesure et les reporter
 dans une section \`a la fin du poly !!
 
+
+!! les elements de cette section sont hors-programme mais ne sont pas 
+d\'econnect\'es de celui-ci au sens o\`u ils peuvent \^etre utilis\'es 
+dans un texte (ils seront alors pr\'esent\'es) !!
+!! Ne travailler cette section qu'une fois que les autres sont parfaitement maitris\'ees !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation de transport dans un domaine multi-dimensionnel}
