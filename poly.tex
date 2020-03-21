@@ -17,6 +17,10 @@
 \usepackage{tikz}
 \usepackage{forloop}
 
+
+%% pour les exercices
+%\usepackage{exercise}
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -41,21 +45,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Avant-propos}
 
-Le but de ce cours est de vous proposer une introduction \`a la th\'eorie
+Le but de ce cours est de proposer une introduction \`a la th\'eorie
 des \'equations aux d\'eriv\'ees partielles (EDP dans la suite).
 Nous \'etudierons plusieurs \'equations ainsi que leur discr\'etisation
 par la m\'ethode des diff\'erences finies.
 
-Dans le cadre du programme officiel de la pr\'eparation \`a l'agr\'egation
-de math\'ematiques (\'epreuve de mod\'elisation), nous aborderons notamment:
+Dans le cadre du programme officiel de l'agr\'egation
+de math\'ematiques (\'epreuve de mod\'elisation, option B: calcul scientifique), 
+nous aborderons notamment:
 \begin{itemize}
-\item des notions \'el\'ementaires portant sur les EDP classiques en dimension 1,
-\item l'\'equation de transport lin\'eaire avec la m\'ethode des caract\'eristiques,
-\item l'\'equation des ondes et de la chaleur; une r\'esolution par s\'erie de Fourier
+\item des notions \'el\'ementaires portant sur les EDP classiques en dimension 1.
+\item l'\'equation de transport lin\'eaire avec la m\'ethode des caract\'eristiques.
+\item l'\'equation des ondes et de la chaleur. Une r\'esolution par s\'erie de Fourier
   et transform\'ee de Fourier sera propos\'ee ainsi qu'une m\'ethode de s\'eparation
   des variables.
   Les aspects qualitatifs seront abord\'es.
-\item les \'equations elliptiques avec l'utilisation du th\'eor\`eme de Lax--Milgram
+\item les \'equations elliptiques avec l'utilisation du th\'eor\`eme de Lax--Milgram.
 \item des exemples de discr\'etisation des EDP en dimension 1 avec la m\'ethode des
   diff\'erences finies. L'\'etude des propri\'et\'es de ces discr\'etisations
   sera propos\'ee : notions de consistance, stabilit\'e, convergence et d'ordre.
@@ -65,9 +70,10 @@ de math\'ematiques (\'epreuve de mod\'elisation), nous aborderons notamment:
 Vous \^etes par ailleurs invit\'es \`a lire le rapport du jury (disponible sur internet).
 Vous vous rendrez compte que le jury insiste notamment sur le fait que :
 \begin{itemize}
-\item l'\'epreuve de mod\'elisation, comme les autres, requiert de la rigueur math\'ematique,
+\item l'\'epreuve de mod\'elisation, comme les autres, requiert une d\'emarche rigoureuse
+  de la part des candidats.
 \item il faut \'equilibrer sa pr\'esentation entre une pr\'esentation du mod\`ele \'etudi\'e,
-  des preuves math\'ematiques rigoureuses, des illustrations informatiques,
+  des preuves math\'ematiques rigoureuses et des illustrations informatiques.
 \item il attend une prise de recul de la part des candidats.
   Il faudra donc notamment \^etre capable de critiquer les limites du mod\`ele pr\'esent\'e
   dans le texte, d'expliquer le comportement qualitatif de celui-ci 
@@ -76,79 +82,93 @@ Vous vous rendrez compte que le jury insiste notamment sur le fait que :
 \end{itemize}
 
 
-Ce cours sera compos\'e de
+Ce cours sera compos\'e de :
 \begin{itemize}
-\item cinq s\'eances de cours de deux heures chacune,
+\item cinq s\'eances de cours de deux heures chacune.
 \item une s\'eance de programmation de deux heures.
 \end{itemize}
 Dans une premi\`ere partie, nous pr\'esenterons les \'equations \'etudi\'ees
-dans ce cours en donnant une id\'ee des probl\`emes physiques associ\'es.
+dans ce cours ainsi que les probl\`emes physiques associ\'es.
 Chacune des parties suivantes sera consacr\'ee \`a l'\'etude plus approfondie
-d'une EDP. Nous y traiterons notamment les principales caract\'eristiques de cette EDP,
-les outils utilis\'es pour mener des preuves ainsi qu'une discr\'etisation par diff\'erences finies.
+d'une EDP. Nous pr\'esenterons notamment les principales caract\'eristiques de cette EDP,
+les outils d'analyse utilis\'es ainsi qu'une discr\'etisation par diff\'erences finies.
 Les EDP \'etudi\'ees dans la suite seront les \'equations elliptiques,
 l'\'equation de transport, l'\'equation de la chaleur et enfin
 l'\'equation des ondes.
+Une derni\`ere section sera consacr\'ee \`a des \'el\'ements de cours
+hors-programme destin\'es aux candidats souhaitant approfondir
+leurs connaissances sur ce sujet.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Pr\'esentation des EDP du cours}
 
 Nous pr\'esentons dans cette section les EDP \'etudi\'ees dans la suite du cours.
 Nous essayons de donner une signification physique aux diff\'erents termes.
-
 Nous nous int\'eressons \`a des EDP de la forme
-\begin{align*}
+\begin{align}
+  \label{eq:EDP_type}
   a \dfrac{\partial^2 u}{\partial x^2} + b \dfrac{\partial^2 u}{\partial x \partial y}
   + c \dfrac{\partial^2 u}{\partial y^2} + d \dfrac{\partial u}{\partial x}
-  + e \dfrac{\partial u}{\partial y} + f u = F .
-\end{align*}
-Pour d\'eterminer la nature de l'EDP, on associe \`a chaque d\'eriv\'ee
-la variable qui correspond \`a la direction de d\'erivation.
-L'\'equation pr\'ec\'edente devient donc
-\begin{align*}
+  + e \dfrac{\partial u}{\partial y} + f u = F ,
+\end{align}
+o\`u $a$, $b$, $c$, $d$, $e$ et $f$ sont des r\'eels et o\`u $F$
+est une fonction de $x$ et $y$.
+
+Une partie du comportement qualitatif de l'EDP peut \^etre d\'etermin\'ee
+\`a partir de la valeur de ces coefficients.
+Consid\'erons l'\'equation
+\begin{align}
+  \label{eq:EDP_geom}
   a x^2 + b xy + c y^2 + d x + e y + f = A ,
-\end{align*}
+\end{align}
 avec $A$ un r\'eel tel que l'ensemble des solutions soit non vide.
 S'il s'agit de l'\'equation:
 \begin{itemize}
-\item d'une ellipse, on dira que l'\'equation est elliptique;
-\item d'une parabole, on dira que l'\'equation est parabolique;
+\item d'une ellipse, on dira que l'\'equation est elliptique.
+\item d'une parabole, on dira que l'\'equation est parabolique.
 \item d'une hyperbole, on dira que l'\'equation est hyperbolique.
 \end{itemize}
 Cette d\'enomination n'est pas juste esth\'etique.
 En effet, comme nous le verrons plus loin dans ce cours,
 chacun de ces types d'\'equations dispose de propri\'et\'es sp\'ecifiques.
 
-Notons \'egalement que les \'equations pr\'ec\'edentes d\'ependent de deux
-variables d'espace. La d\'enomination pr\'ec\'edente se g\'en\'eralise 
-dans le cas o\`u on aurait une seule variable ou strictement plus de deux variables.
-Dans le cadre de ce cours, nous nous concentrerons sur l'\'etude d\'equations
+Dans l'\'equation \eqref{eq:EDP_type}
+nous avons consid\'er\'e un probl\`eme qui d\'epend de deux
+variables $x$ et $y$. 
+Les notions d'EDP elliptiques, paraboliques et hyperboliques peuvent
+aussi \^etre g\'en\'eralis\'ees \`a un plus grand nombre de variables.
+Dans le cadre de ce cours, nous nous concentrerons 
+sur l'\'etude d'\'equations
 avec une seule dimension d'espace.
 On consid\'erera donc une seule variable $x$ dans le cas d'un probl\`eme stationnaire
 et deux variables $t$ (le temps) et $x$ (l'espace) dans le cas d'un probl\`eme
 instationaire.
 
-Dans la suite de ce cours, on notera $\Omega$ un ouvert born\'e de $\R^d$
-avec $d=1,2,3$.
+% Dans la suite de ce cours, on notera $\Omega$ un ouvert born\'e de $\R^d$
+% avec $d=1,2,3$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equations elliptiques}
 \label{subsec:elliptique}
 
-Les \'equations elliptiques apparaissent principalement dans deux contextes que nous
-allons maintenant aborder.
+Nous pr\'esentons deux probl\`emes physiques qui font intervenir
+des \'equations elliptiques.
 Le premier est le cas o\`u des particules circulent dans un domaine.
-Ce probl\`eme est repr\'esent\'e sur la figure \ref{fig:flux}.
-Dans la partie droite de cette figure, nous nous int\'eressons \`a un probl\`eme
-o\`u des particules circulent dans un milieu unidimensionnel. La position est
+Le second est un probl\`eme d'\'equilibre m\'ecanique.
+
+
+Nous donnons dans la partie gauche de la figure \ref{fig:flux} 
+une repr\'esentation du premier probl\`eme.
+Nous nous int\'eressons \`a des particules qui circulent 
+dans un milieu unidimensionnel. La position est
 rep\'er\'ee par la coordonn\'ee d'espace $x$. On note $u(x)$ la densit\'e
 de particules en $x$. Certaines particules entrent ou sortent du domaine
-en $x$, on les note $f(x)$ le terme source les repr\'esentant.
+en $x$, on note $f(x)$ le terme source les repr\'esentant.
 De plus, les particules se d\'eplacent \`a travers le domaine,
 on note $q(x)$ le flux de particules en $x$
-(le nombre de particules qui traversent l'axe vertical d'abscisse $x$).
-Ce flux est n\'egatif si les particules vont vers la gauche ($x$ d\'ecroissants)
-et positif si elles vont vers la droite ($x$ croissants).
+(le nombre de particules qui traversent l'axe vertical d'abscisse $x$
+par unit\'e de temps). Ce flux est positif si les particules 
+vont vers la droite et n\'egatif si elles vont vers la gauche.
 
 \begin{figure}
 \begin{tikzpicture}[scale = 3]
@@ -157,8 +177,8 @@ et positif si elles vont vers la droite ($x$ croissants).
 \begin{tikzpicture}[scale = 2.5]
   \input{flux_dx.tex}
 \end{tikzpicture}
-\caption{Un flux de particules. Gauche: repr\'esentation du probl\`eme.
-  Droite: \'equilibre des flux.}
+\caption{R\'epartition de particules dans un domaine. Gauche: repr\'esentation du probl\`eme.
+  Droite: \'equilibre des flux sur une portion infinit\'esimale du domaine.}
 \label{fig:flux}
 \end{figure}
 
@@ -168,9 +188,11 @@ a donc pas d'accumulation de particules en aucun point de l'espace.
 Le probl\`eme ne d\'epend pas du temps.
 
 
-Si l'on consid\`ere un \'el\'ement du domaine de taille $\delta x$ comme
-sur la droite de la figure \ref{fig:flux}, le nombre de particules doit
-rester constant au cours du temps.
+Pour \'etablir les \'equations de ce probl\`eme,
+consid\'erons une portion infinit\'esimale du domaine (de taille $\delta x$) comme
+repr\'esent\'e sur la droite de la figure \ref{fig:flux}.
+Le nombre de particules \`a l'int\'erieur de cette section doit
+rester constant.
 On obtient donc la relation de conservation
 $q(x) - q(x+\delta x) + f(x) \delta x = 0$,
 ce qui donne
@@ -180,7 +202,7 @@ ce qui donne
 \end{align}
 
 De plus, on consid\`ere que les particules fuient les zones de forte densit\'e:
-le flux $q(x)$ est orient\'e dans le sens inverse du gradient de $u$.
+le flux $q(x)$ suit la direction oppos\'ee au gradient de $u$.
 On note donc 
 \begin{align}
   \label{eq:def_flux}
@@ -191,41 +213,46 @@ Il traduit le rapport de proportionnalit\'e entre le gradient de la densit\'e
 et le flux qui en r\'esulte. Ainsi, pour une densit\'e fix\'ee,
 si $k$ est grand alors les particules circuleront facilement et le flux sera important;
 \`a l'inverse, un $k$ petit traduit le fait que les particules ont du mal \`a circuler dans
-le milieu. On dit que $k$ est un coeeficient de diffusion.
+le milieu.
 
 L'\'equation finale sur $u$ est donc
-\begin{align*}
+\begin{align}
+  \label{eq:ell_1D}
   - \dfrac{\partial}{\partial x} \left(k \dfrac{\partial u}{\partial x} \right) = f .
-\end{align*}
+\end{align}
 
 Si l'on consid\`ere plusieurs dimensions d'espace, cette \'equation devient
-\begin{align*}
+\begin{align}
+  \label{eq:ell_2D}
   - \DIV \left(k \GRAD u \right) = f ,
-\end{align*}
+\end{align}
 o\`u $\DIV$ et $\GRAD$ sont respectivement les op\'erateurs divergence et gradient.
 
 
-En pratique les particules peuvent r\'eellement repr\'esenter des particules physiques,
-dans ce cas $u$ sera une densit\'e de particules, $q$ un flux de particules, 
-$f$ un terme repr\'esentant l'apparition ou la disparition de particules et
-$k$ sera un coefficient de diffusion des particules.
-On peut aussi dire que les particules repr\'esentent de l'\'energie thermique.
-Dans ce cas, $u$ sera la temp\'erature, $q$ un flux thermique, $f$ une source
+En pratique les particules que nous avons consid\'er\'ees peuvent 
+repr\'esenter par exemple des mol\'ecules.
+Dans ce cas $u$ sera une concentration chimique, $q$ un flux de mol\'ecules, 
+$f$ un terme repr\'esentant leur apparition ou leur disparition
+(par des r\'eactions chimiques) et
+$k$ sera un coefficient d\'eterminant la facilit\'e avec laquelle
+les mol\'ecules se d\'eplacent.
+
+On peut aussi dire que les particules repr\'esentent de l'\'energie thermique
+qui se propage \`a travers un mat\'eriau.
+Dans ce cas, $u$ sera la temp\'erature , $q$ un flux thermique, $f$ une source
 ou un puit de chaleur et $k$ sera la conductivit\'e thermique du mat\'eriau consid\'er\'e.
-Nous citerons une derni\`ere possibilit\'e selon laquelle les particules sont des
+
+Nous citons une derni\`ere possibilit\'e selon laquelle les particules sont des
 individus (humains ou animaux).
 Dans ce cas, $u$ correspond \`a une densit\'e de population,
-$q$ \`a un flux de population, $f$ repr\'esente des naissances ou des morts
-dans la population et $k$ est un coefficient de diffusion repr\'esentant la
+$q$ \`a un flux de population, $f$ repr\'esente les naissances et morts
+et $k$ est un coefficient repr\'esentant la
 facilit\'e avec laquelle la population peut se d\'eplacer. 
 
 
-!! TABLEAU !!
-
-
-!! CONDITIONS FRONTIERES !!
-
-Un autre cas o\`u ces \'equations apparaissent est le cas d'un mat\'eriau 
+Nous pr\'esentons maintenant
+un autre probl\`eme physique faisant intervenir des \'equations elliptiques.
+Consid\'erons un mat\'eriau 
 soumis \`a des contraintes m\'ecaniques.
 Par exemple, on repr\'esente sur la figure \ref{fig:barre} une barre \'elastique
 en \'equilibre.
@@ -238,22 +265,25 @@ en \'equilibre.
 \begin{tikzpicture}[scale = 2]
   \input{barre_dx.tex}
 \end{tikzpicture}
-\caption{Un flux de particules. Gauche: repr\'esentation du probl\`eme.
-  Droite: \'equilibre des flux.}
+\caption{Une barre \'elastique en \'equilibre. Gauche: repr\'esentation du probl\`eme.
+  Droite: d\'eformation d'un \'el\'ement infinit\'esimal de mati\`ere.
+  Le trait continu repr\'esente la configuration soumise \`a une charge $f$.
+  Le trait discontinu repr\'esente la configuration au repos (sans $f$).}
 \label{fig:barre}
 \end{figure}
 
 
 La barre dans son \'etat initial est repr\'esent\'ee en pointill\'es.
 Sous l'effet d'une force lin\'eique $f$, cette barre s'allonge
-et atteint l'\'etat d'\'equilibre repr\'esent\'e en bas de la figure.
-On note $u(x)$ le d\'eplacement de mati\`ere qui a eu lieu entre
-l'\'etat sous la charge $f$ et l'\'etat de r\'ef\'erence en pointill\'es.
+et atteint l'\'etat d'\'equilibre repr\'esent\'e en trait continu.
+On note $u(x)$ le d\'eplacement de la mati\`ere qui a eu lieu en $x$ entre
+la configuration au repos et la configuration soumise \`a la charge $f$.
 
 
 On consid\`ere que la barre est \`a l'\'equilibre m\'ecanique.
 On note $q(x)$ la force qu'exerce la section de gauche sur la section de droite
-en $x$. En faisant un bilan de force comme sur la partie droite de la figure \ref{fig:flux},
+en $x$. En faisant un bilan de force comme repr\'esent\'e 
+sur la partie droite de la figure \ref{fig:flux},
 les forces s'exer\c{c}ant sur une portion infinit\'esimale de barre sont
 la force $q(x)$ \`a gauche, la force $-q(x+\delta x)$ \`a droite
 et la force lin\'eique $f(x) \delta x$. La barre \'etant \`a l'\'equilibre la somme de ces forces
@@ -267,34 +297,127 @@ qui tend \`a le faire revenir vers sa position initiale. De plus, plus l'\'elong
 est importante, plus l'intensit\'e de la force est grande.
 On obtient donc la loi d'\'elasticit\'e \eqref{eq:def_flux}
 o\`u $k$ est un coefficient de raideur:
-plus $k$ est grand, plus la barre est raide, plus il faut forcer pour la d\'eformer.
+plus $k$ est grand, plus la barre est raide (plus il faut forcer pour la d\'eformer).
 En pratique, le coefficient de raideur d\'epend du mat\'eriau choisi et
 de la g\'eom\'etrie de la section de la barre.
 
-Notons que dans \eqref{eq:def_flux}, la d\'eriv\'ee en espace correspond \`a 
+Notons que dans \eqref{eq:def_flux}, la d\'eriv\'ee en espace correspond bien \`a 
 l'\'elongation de la barre en $x$. Pour s'en convaincre, on regardera la 
 partie droite de la figure \ref{fig:barre}. Un \'el\'ement de mati\`ere de longueur
 $\delta x$ dans sa position de r\'ef\'erence a pour longueur 
 $x + \delta x + u(x+\delta x) - u(x) - x$ sous charge $f$.
 La nouvelle longueur est donc de $\delta x + u(x+\delta x) - u(x) 
 \simeq \left(1 + \dfrac{\partial u}{\partial x} \right) \delta x$
-et la d\'eriv\'ee partielle en $x$ est donc bien une \'elongation lin\'eique.
+et la d\'eriv\'ee partielle en $x$ est donc bien une \'elongation par unit\'e de longueur.
 
 
-!! CONDITIONS FRONTIERES !!
-La partie hachur\'ee \`a gauche du dessin repr\'esente le fait que la barre est encastr\'ee
-dans un mur. Ainsi son d\'eplacement est forc\'ement nul \`a gauche.
+D'autres probl\`emes physiques peuvent \^etre par des \'equations elliptiques.
+Nous citerons simplement l'\'electromagn\'etisme sans donner plus de d\'etails.
+Nous verrons par la suite que, dans le cas instationnaire,
+les deux classes de probl\`emes expos\'ees ici correspondent \`a 
+des \'equations de nature diff\'erente.
+La premi\`ere classe de probl\`eme est une \'equation parabolique en instationnaire,
+tandis que la deuxi\`eme classe est une \'equation hyperbolique.
 
 
-!! autres exemples de cette physique : electromagnetisme !!
+\'Evoquons maintenant les conditions fronti\`eres les plus classiques
+que l'on peut associer \`a ce probl\`eme.
+Tout d'abord, nous pouvons consid\'erer la condition de Dirichlet
+$u = g$ o\`u $g$ est une donn\'ee du probl\`eme. Ceci revient \`a imposer
+la valeur de la solution $u$ sur la bord du domaine.
+Par exemple, dans le cas de l'\'equation de la chaleur stationnaire,
+la condition de Dirichlet revient \`a consid\'erer que le bord du domaine
+correspond \`a un \'el\'ement \`a forte capacit\'e thermique
+dont la temp\'erature restera constante quoiqu'il arrive.
 
-!! solution pour diff\'erents $k$ !!
 
-!! EDP elliptique !! A faire en exo !! -- A exprimer sous la forme d'une proposition !!
+Une autre condition fronti\`ere classique est la condition de Neumann
+$q = g$ o\`u $g$ est une donn\'ee. Ceci revient \`a imposer la valeur
+du flux $q$ sur le bord du domaine.
+En g\'en\'eral, la valeur $g$ sera nulle.
+Par exemple, dans le cas du probl\`eme de la chaleur, ceci revient
+\`a consid\'erer que le bord du domaine est adiabatique:
+quoiqu'il arrive aucun flux de chaleur ne traversera cette fronti\`ere
+(pensez par exemple \`a une bouteille isotherme).
 
-!! dire clairement ce qui est exigible !!
 
-!! dire ce que sont les equations de Poisson et de Laplace !!
+Ces deux conditions fronti\`eres peuvent \'eventuellement \^etre utilis\'ees 
+simultan\'ement en des points diff\'erents du domaine
+(Dirichlet sur une partie de la fronti\`ere et Neumann sur le reste).
+On parle alors de conditions fronti\`eres mixtes.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    &Chaleur stationnaire&Barre \'elastique& Mol\'ecules
+    \\
+    \hline
+    $u$ & temp\'erature & d\'eplacement & concentration
+    \\
+    \hline
+    $q=-k\GRAD u$ & flux de chaleur & force interne & d\'eplacements de mol.
+    \\
+    \hline
+    $k$ & conduction thermique & raideur & diffusion
+    \\
+    \hline
+    $f$& source & force externe & r\'eactions chimiques
+    \\
+    \hline
+    $u=g$ & temp. constante & d\'eplacement impos\'e & concentration impos\'ee
+    \\
+    \hline
+    $q=0$ & paroi adiabatique & fronti\`ere libre & fronti\`ere imperm\'eable
+    \\
+    \hline
+  \end{tabular}
+  \caption{R\'esum\'e des probl\`emes physiques abord\'es.}
+  \label{tab:pb_ell}
+\end{table}
+
+
+\begin{exercise}
+  On se place dans le cas d'un domaine bidimensionnel $\Omega \subset \R^2$.
+  On note $x$ et $y$ les deux variables d'espace.
+  On suppose que $k$ est constant : pour tout $(x,y) \in \Omega$,
+  $k(x,y) = k_0 > 0$.
+  Montrer que l'\'equation \eqref{eq:ell_2D} est elliptique.
+\end{exercise}
+
+\begin{remark}
+  Dans la plupart des applications, $k$ est une constante.
+  Prenons par exemple $k=1$.
+  L'\'equation \eqref{eq:ell_2D} devient $\Delta u = f$.
+  On appelle cette \'equation \'equation de Laplace ou 
+  \'equation de Poisson.
+\end{remark}
+
+
+Pour finir cette section, nous illustrons le comportement
+de la solution de \eqref{eq:ell_1D} en fonction de $k$
+(voir figure \ref{fig:ell_k}).
+Comme nous l'avons \'evoqu\'e pr\'ec\'edemment, une solution avec 
+un $k$ plus grand est plus "plate".
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \caption{Solution de l'\'equation elliptique 1D \eqref{eq:ell_1D}
+  pour diff\'erents $k$.}
+  \label{fig:ell_k}
+\end{figure}
+
+
+\begin{remark}
+  Les d\'emonstrations de cette section ne sont pas exigibles.
+  On demande simplement aux candidats de se repr\'esenter \`a quoi
+  correspondent les \'equations et les param\`etres introduits.
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation de transport}
 
@@ -336,12 +459,42 @@ le sable bouge vers la gauche; plus $a$ est grand en valeur absolue,
 plus le mouvement est rapide.
 
 
+\begin{remark}
+  En se r\'ef\'erant \`a la d\'efinition, cette \'equation n'est ni elliptique, 
+  ni parabolique, ni hyperbolique. Cependant, le comportement des solutions de 
+  cette \'equation est proche d'un comportement hyperbolique.
+  Notons par ailleurs que l'\'equation \eqref{eq:EDP_geom} associ\'ee
+  \`a l'\'equation de transport est une droite et les hyperboles ont des droites
+  comme asymptotes.
+\end{remark}
+
+Pour finir la pr\'esentation de l'\'equation de transport,
+nous donnons des r\'esultats num\'eriques pour diff\'erentes
+valeurs de la vitesse de transport $a$ (voir figure \ref{fig:transport_a}).
+Ces r\'esultats illustrent bien le fait $a$ est la vitesse \`a laquelle
+la solution se d\'eplace.
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \caption{Solution de l'\'equation de transport
+  pour diff\'erents $a$.}
+  \label{fig:transport_a}
+\end{figure}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation de la chaleur}
 
-L'\'equation de la chaleur est obtenue en consid\'erant une propagation 
-de quantit\'es d'\'energie comme sur la figure \ref{fig:flux}.
+On se place dans le cadre du premier probl\`eme que nous avons \'evoqu\'e dans
+la section \ref{subsec:elliptique} (voir figure \ref{fig:flux}). 
+Pour plus de simplicit\'e, nous consid\'erons que nous sommes dans le cas
+de la conduction thermique (bien que comme nous l'avons vu pr\'ec\'edemment
+d'autres probl\`emes comme le mouvement d'une population ou de mol\'ecules
+peuvent \^etre consid\'er\'es).
 La diff\'erence avec ce qui a \'et\'e fait dans la section \ref{subsec:elliptique}
 est qu'ici les flux de chaleur ne sont pas n\'ecessairement \`a l'\'equilibre.
 On permet donc \`a la temp\'erature de changer au cours du temps.
@@ -351,6 +504,9 @@ avec cette fois-ci une temp\'erature $u(t,x)$ qui d\'epend du temps.
 Si on consid\`ere la partie droite de la figure \ref{fig:flux}, l'accumulation
 d'\'energie en $(t,x)$ est due au fait que les flux ne sont pas \'equilibr\'es
 ("ce qui entre n'est pas \'egal \`a ce qui sort").
+Ainsi, s'il y a plus d'\'energie qui entre dans le domaine infinit\'esimal
+qu'il n'y en a qui en sort,
+alors la temp\'erature augmente.
 Nous traduisons cela par l'\'equation
 $c (x) \delta x \dfrac{\partial u}{\partial t}(t,x) = f(t,x) \delta x 
   + q(t,x) - q(t,x + \delta x)$, ce qui donne
@@ -369,22 +525,40 @@ thermique $c$ et la conduction thermique $k$ sont des constantes
 En combinant les \'equations \eqref{eq:def_flux} et \eqref{eq:flux_t},
 on obtient l'\'equation de la chaleur
 \begin{align}
+  \label{eq:chaleur}
   \dfrac{\partial u}{\partial t} - \nu \dfrac{\partial^2 u}{\partial x^2} = f ,
 \end{align}
-o\`u $\nu = k/c$ est la diffusion thermique.
+o\`u $\nu = k/c > 0$ est la diffusion thermique.
 
-
-!! courbes avec $\nu$ qui varie !!
-
-!! exercice : prouver qu'il s'agit d'une equation parabolique !!
 
 De mani\`ere similaire \`a ce qui a \'et\'e expliqu\'e dans la section \ref{subsec:elliptique},
 cette l'\'equation de la chaleur, en plus de repr\'esenter l'\'evolution de la temp\'erature
 dans un milieu peut aussi repr\'esenter l'\'evolution de la densit\'e d'une population
 ou encore l'\'evolution d'une concentration chimique d'une esp\`ece au sein d'un diluant.
 
+Les conditions fronti\`eres sont les m\^emes que celles \'evoqu\'ees pour le probl\`eme
+stationnaire (voir tableau \ref{tab:pb_ell}).
 
-!! rappel sur les conditions fronti\`eres !!
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \caption{Solution de l'\'equation de la chaleur
+  pour diff\'erents $\nu$.}
+  \label{fig:chaleur_nu}
+\end{figure}
+
+
+Nous illustrons sur la figure \ref{fig:chaleur_nu} l'influence du param\`etre $\nu$.
+Plus $\nu$ est grand, plus la chaleur va se diffuser rapidement et plus 
+la courbe va s'applatir rapidement.
+
+\begin{exercise}
+  Prouver que l'\'equation \eqref{eq:chaleur} est une \'equation parabolique.
+\end{exercise}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation des ondes}
@@ -394,7 +568,7 @@ comme celui de la figure \ref{fig:barre} o\`u cette fois-ci les forces ne
 sont pas n\'ecessairement \`a l'\'equilibre et o\`u les d\'eplacements
 $u(t,x)$ peuvent varier au cours du temps.
 
-La principe fondamental de la dynamique appliqu\'e \`a une tranche de mati\`ere
+Le principe fondamental de la dynamique appliqu\'e \`a une tranche de mati\`ere
 de longueur $\delta x$ nous dit que l'acc\'el\'eration de la position de cette tranche
 ($x+u(t,x)$) multipli\'ee par sa masse est \'egale \`a la somme des forces qui
 agissent sur elle.
@@ -402,7 +576,7 @@ Ainsi, $\rho(x) \delta x \dfrac{\partial^2 u}{\partial t^2} =
 f(t,x) \delta x + q(t,x) - q(t, x + \delta x)$, ce qui nous donne l'\'equation
 \begin{align}
   \label{eq:barre_t}
-  \rho(x) \dfrac{\partial^2 u}{\partial t^2} + \dfrac{\partial q}{\partial x}(t,x) = f(t,x) ,
+  \rho(x) \dfrac{\partial^2 u}{\partial t^2}(t,x) + \dfrac{\partial q}{\partial x}(t,x) = f(t,x) ,
 \end{align}
 o\`u $\rho(x)$ correspond \`a la masse de la barre par unit\'e de longueur.
 Plus $\rho$ est grand, plus la barre a d'inertie et plus elle acc\'el\`ere lentement.
@@ -421,14 +595,40 @@ En combinant \eqref{eq:def_flux} et \eqref{eq:barre_t} on obtient l'\'equation d
 o\`u $c>0$ d\'efini par $c^2 = k/\rho$ correspond \`a la vitesse de propagation
 des ondes dans ce milieu.
 
-!! differentes valeurs de $c$ -> utiliser des valeurs reelles (eau/air) !!
 
-!! prouver que l'\'equation est hyperbolique !!
 
-!! autres physiques : electromagnetisme, corde !!
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \caption{Solution de l'\'equation des ondes
+  pour diff\'erents $c$.}
+  \label{fig:ondes_c}
+\end{figure}
 
-!! rappel sur les conditions fronti\`eres !!
 
+On illustre l'influence de $c$ sur la figure \ref{fig:ondes_c}.
+Nous voyons que nous avons une propagation de l'information 
+dans les deux directions (les $x$ positifs et les $x$ n\'egatifs).
+Plus $c$ est grand, plus l'information se propage rapidement.
+
+
+Nous avons \'evoqu\'e le fait que l'\'equation des ondes
+pouvait repr\'esenter le d\'eplacement d'une barre en compression.
+On peut aussi mod\'eliser des probl\`emes 
+comme la propagation du d\'eplacement d'une corde ou
+la propagation d'une onde \'electromagn\'etique
+(on ne s'\'etendra pas davantage sur le sujet).
+
+
+Rappelons enfin que les conditions fronti\`eres utilisables sont 
+les m\^emes que celles du cas stationnaire
+(voir tableau \ref{tab:pb_ell}).
+
+\begin{exercise}
+  Prouver que l'\'equation \eqref{eq:ondes} est hyperbolique.
+\end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equations elliptiques}
