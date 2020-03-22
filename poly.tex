@@ -910,8 +910,7 @@ cette fonction en certains points. Dans toutes les discr\'etisations abord\'ees 
 nous ne consid\'ererons que le cas de probl\`emes \`a une dimension en espace
 (les probl\`emes instationnaires auront une deuxi\`eme dimension correspondant au temps).
 
-Par exemple, int\'eressons nous au probl\`eme \eqref{eq:ell_Dir} avec $\Omega = (0,1)$
-et $k = 1$.
+Par exemple, int\'eressons nous au probl\`eme \eqref{eq:ell_Dir} avec $\Omega = (0,1)$.
 Notre probl\`eme est donc
 \begin{equation}
   \label{eq:ell_1d}
@@ -924,9 +923,9 @@ Notre probl\`eme est donc
   \right.
 \end{equation}
 
-Nous discr\'etisons l'intervalle $(0,1)$ en $N>0$ sous-intervalles.
-On d\'efinit donc les points $x_j = j h$ ($0 \leq j \leq N$) o\`u $h = 1/N$.
-On a bien $x_0 = 0$ et $x_N = 1$ (voir figure \ref{fig:disc_x}).
+Nous discr\'etisons l'intervalle $(0,1)$ en $M>0$ sous-intervalles.
+On d\'efinit donc les points $x_j = j h$ ($0 \leq j \leq M$) o\`u $h = 1/M$.
+On a bien $x_0 = 0$ et $x_M = 1$ (voir figure \ref{fig:disc_x}).
 
 \begin{figure}
 \centering
@@ -943,7 +942,7 @@ On a bien $x_0 = 0$ et $x_N = 1$ (voir figure \ref{fig:disc_x}).
 \draw (10,-0.6) node {$1$};
 \draw (0,0.6) node {$x_0$};
 \draw (1,0.6) node {$x_1$};
-\draw (10,0.6) node {$x_N$};
+\draw (10,0.6) node {$x_M$};
 \draw (5,0.6) node {$.......$};
 \end{tikzpicture} 
 \caption{Repr\'esentation de la discr\'etisation de l'intervalle $(0,1)$.}
@@ -952,8 +951,8 @@ On a bien $x_0 = 0$ et $x_N = 1$ (voir figure \ref{fig:disc_x}).
 
 
 \'Etant donn\'e que nous ne disposons que de valeurs en certains points, on ne peut
-pas d\'efinir de d\'eriv\'ees au sens usuel. On utilise donc des d\'eriv\'ees discr\`etes.
-Pour cela, on rappelle qu'une d\'eriv\'ee est la limite d'un taux d'accroissement.
+pas d\'efinir de d\'eriv\'ees au sens usuel. On utilise donc des taux d'accroissement
+(rappelons qu'une d\'eriv\'ee est la limite d'un taux d'accroissement).
 Par exemple, on peut montrer que 
 $\dfrac{\!\deriv^2 u}{\!\deriv x^2}(x) 
 = \lim\limits_{h \to 0} \dfrac{u(x+h) - 2 u(x) + u(x-h)}{h^2}$.
@@ -963,12 +962,12 @@ pour $h$ suffisamment petit,
   \label{eq:dx2}
   \dfrac{\!\deriv^2 u}{\!\deriv x^2}(x_j) \simeq \dfrac{u(x_{j+1}) - 2 u(x_j) + u(x_{j-1})}{h^2} .
 \end{align}
-La m\'ethode des diff\'erences finies consiste donc \`a d\'efinir une suite $(u_j)_{0\leq j \leq N}$
+La m\'ethode des diff\'erences finies consiste donc \`a d\'efinir une suite $(u_j)_{0\leq j \leq M}$
 qui reprenne les \'el\'ements du probl\`eme \eqref{eq:ell_1d}. En particulier, il faut remplacer
-les d\'eriv\'ees continues par des d\'eriv\'ees discr\`etes.
-Il existe plusieurs fa\c{c}ons de d\'efinir la suite $(u_j)_{0\leq j \leq N}$ et toutes
+les d\'eriv\'ees continues par des taux d'accroissment.
+Il existe plusieurs fa\c{c}ons de d\'efinir la suite $(u_j)_{0\leq j \leq M}$ et toutes
 n'ont pas les m\^emes propri\'et\'es. La propri\'et\'e la plus importante est la convergence:
-on veut que $\lim\limits_{N \to +\infty} \max_{0 \leq j \leq N} | u(x_j) - u_j | = 0$.
+on veut que $\lim\limits_{M \to +\infty} \max_{0 \leq j \leq M} | u(x_j) - u_j | = 0$.
 Nous aborderons plus en d\'etails ces aspects dans la section \ref{subsec:transport_DF}.
 
 
@@ -979,15 +978,15 @@ La suite ainsi obtenue v\'erifie
   \label{eq:ell_DF}
   \left\{
     \begin{array}{l}
-      \forall 1 \leq j \leq N-1 , - \dfrac{u_{j+1} - 2 u_j + u_{j-1}}{h^2} = f(x_j) ,
+      \forall 1 \leq j \leq M-1 , - \dfrac{u_{j+1} - 2 u_j + u_{j-1}}{h^2} = f(x_j) ,
       \\
-      u_0 = u_N = 0 .
+      u_0 = u_M = 0 .
     \end{array}
   \right.
 \end{equation}
 
 \begin{proposition}
-  La relation \eqref{eq:ell_DF} d\'efinit une unique suite $(u_j)_{0\leq j \leq N}$ dont les valeurs
+  La relation \eqref{eq:ell_DF} d\'efinit une unique suite $(u_j)_{0\leq j \leq M}$ dont les valeurs
   peuvent \^etre d\'etermin\'ees en r\'esolvant le syst\`eme lin\'eaire
   $A U = F$, avec 
   \begin{equation}
@@ -1007,10 +1006,10 @@ La suite ainsi obtenue v\'erifie
       & &  & & -1 & 2
     \end{pmatrix} , \qquad U = 
     \begin{pmatrix}
-      u_1 \\ u_2 \\ \vdots \\ u_{N-1}
+      u_1 \\ u_2 \\ \vdots \\ u_{M-1}
     \end{pmatrix} , \qquad F = 
     \begin{pmatrix}
-      f(x_1) \\ f(x_2) \\ \vdots \\ f(x_{N-1})
+      f(x_1) \\ f(x_2) \\ \vdots \\ f(x_{M-1})
     \end{pmatrix} .
   \end{equation}
 \end{proposition}
@@ -1027,9 +1026,9 @@ La suite ainsi obtenue v\'erifie
     \\
     & \qquad \qquad \vdots
     \\
-    &\dfrac{-u_{N-2} + 2 u_{N-1} - u_N}{h^2} = f(x_{N-1}) .
+    &\dfrac{-u_{M-2} + 2 u_{M-1} - u_M}{h^2} = f(x_{M-1}) .
   \end{align*}
-  En prenant en compte $u_0 = u_N = 0$, on obtient bien $AU = F$.
+  En prenant en compte $u_0 = u_M = 0$, on obtient bien $AU = F$.
   La r\'eciproque se prouve de mani\`ere similaire.
 
   Maintenant, le fait que ce syst\`eme admet une unique solution vient de l'inversibilit\'e
@@ -1049,18 +1048,184 @@ La suite ainsi obtenue v\'erifie
 \end{proposition}
 
 
-!! Ajouter resultats de simulations !!
+\begin{exercise}
+  Prouver la proposition \ref{prop:matSDP}.
+\end{exercise}
 
-!! Ajouter exercice avec le probl\`eme de Neumann !!
+\begin{proposition}[Convergence]
+  \label{prop:ell_conv}
+  Supposons que la solution $u$ du probl\`eme \eqref{eq:ell_1d} soit 
+  dans $C^4(0,1)$.
+  Alors il existe $C>0$ tel que pour tout $M \geq 2$, on a
+  \begin{align*}
+    \max_{0 \leq j \leq M} | u(x_j) - u_j | \leq C h^2 ,
+  \end{align*}
+  avec $h = 1/M$.
+\end{proposition}
 
-!! La preuve des caracteristiques de la matrice $A$ en exercice ??
+\begin{proof}
+  \'Etant donn\'e que $u \in C^{4}(0,1)$, on peut utiliser la formule de Taylor--Young
+  \begin{align*}
+    u(x_{j+1}) = u(x_j) + h u'(x_j) + \dfrac{h^2}{2} u^{(2)}(x_j) + \dfrac{h^3}{6} u^{(3)}(x_j)
+    + \dfrac{h^4}{24} u^{(4)}(x_j) + o(h^4) ,
+    \\
+    u(x_{j-1}) = u(x_j) - h u'(x_j) + \dfrac{h^2}{2} u^{(2)}(x_j) - \dfrac{h^3}{6} u^{(3)}(x_j)
+    + \dfrac{h^4}{24} u^{(4)}(x_j) + o(h^4) .
+  \end{align*}
+  On obtient ainsi
+  \begin{align*}
+    \dfrac{-u(x_{j+1}) + 2 u(x_j) - u(x_{j-1})}{h^2} = - u^{(2)}(x_j) - \dfrac{h^2}{12} u^{(4)}(x_j)
+    + o (h^2) .
+  \end{align*}
+  On a 
+  \begin{align*}
+    \dfrac{- u_{j+1} + 2 u_j - u_{j-1}}{h^2} = f(x_j) = - u^{(2)}(x_j) ,
+  \end{align*}
+  et donc
+  \begin{align*}
+    \dfrac{-\delta_{j+1} + 2 \delta_j - \delta_{j-1}}{h^2} = \dfrac{h^2}{12} u^{(4)}(x_j) + o(h^2) ,
+  \end{align*}
+  o\`u $\delta_j = u_j - u(x_j)$.
+  En notant $\underline{\delta}$ le vecteur des $\delta_j$,
+  on a $\underline{\delta} = A^{-1} \underline{\epsilon}$
+  avec $(\underline{\epsilon})_j = O(h^2)$.
+  En supposant que $\sup_{X \in \R^{M-1}\backslash \{0\}} \dfrac{\max_{j} |(AX)_j|}{\max_j |X_j|}$
+  est born\'e quand $h$ tend vers $0$ (on ne le montre pas ici), on obtient le r\'esultat attendu.
+\end{proof}
 
-!! trouver une solution pour prouver la convergence de ce sch\'ema sans
-introduire stabilit\'e et consistance !!
+Le r\'esultat pr\'ec\'edent signifie que pour $h$ suffisamment petit
+on s'attend \`a ce que l'erreur commise par le sch\'ema num\'erique d\'ecroisse
+comme le carr\'e de $h$.
+On dit que le sch\'ema est d'ordre $2$, nous \'etudierons plus pr\'ecis\'ement cette notion
+plus loin dans le cours.
 
 
-!! exercice : prendre $k$ constant et faire des simus avec ---- retrouver les 
-r\'esultats de simu de la section 1 !!
+Cette notion d'ordre de convergence peut-\^etre illustr\'ee en repr\'esentant 
+l'erreur commise par le sch\'ema en fonction de $h$ en utilisant une \'echelle logarithmique
+pour les axes des abscisses et des ordonn\'ees (voir figure \ref{fig:ell_convergence}).
+On voit que l'on obtient une droite de pente $2$.
+Ceci est en accord avec la proposition \ref{prop:ell_conv} :
+si l'erreur est $\varepsilon = C h^2$ alors
+$\log(\varepsilon) = 2 \log(h) + \log(C)$.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \caption{Erreur en fonction de $h$ (\'echelle logarithmique).}
+  \label{fig:ell_convergence}
+\end{figure}
+
+
+\begin{exercise}
+  Coder le sch\'ema d\'ecrit pr\'ec\'edemment et retrouver les 
+  r\'esultats de la figure \ref{fig:ell_convergence}.
+\end{exercise}
+
+\begin{exercise}[Coefficient de raideur]
+  On peut d\'ecider d'ajouter un coefficient de raideur $k>0$ constant.
+  La nouvelle matrice devient alors $k A$ o\`u $A$ est la matrice 
+  pr\'ec\'edente.
+  La figure \ref{fig:ell_k} a \'et\'e obtenue pour $f(x) = 1$.
+  Coder le sch\'ema propos\'e et retrouver les r\'esultats
+  de la figure \ref{fig:ell_k}.
+\end{exercise}
+
+
+\begin{exercise}[Conditions aux limites de Dirichlet non homog\`enes]
+  Adapter le sch\'ema num\'erique pr\'ec\'edent pour approcher
+  le probl\`eme
+  \begin{align*}
+    \left\{
+    \begin{array}{l}
+      - \dfrac{\!\deriv^2 u}{\!\deriv x^2} = f \dans (0,1) ,
+      \\
+      u(0) = \alpha ,
+      \\
+      u(1) = \beta ,
+    \end{array}
+    \right.
+  \end{align*}
+  o\`u $\alpha, \beta \in \R$.
+  Donner le syst\`eme lin\'eaire \`a r\'esoudre.
+\end{exercise}
+
+\begin{exercise}[Condition aux limites de Neumann]
+  On consid\`ere le probl\`eme de Poisson avec des conditions aux limites
+  de Neumann 
+  \begin{align*}
+    \left\{
+    \begin{array}{l}
+      - \dfrac{\!\deriv^2 u}{\!\deriv x^2} = f \dans (0,1) ,
+      \\
+      u'(0) = u'(1) = 0 ,
+      \\
+      \int_0^1 u(x) \deriv x = 0 .
+    \end{array}
+  \right.
+  \end{align*}
+  \begin{enumerate}
+  \item On d\'ecide d'adapter la d\'emarche pr\'ec\'edente en consid\'erant le sch\'ema
+    \begin{align*}
+      \left\{
+      \begin{array}{l}
+        \forall 1 \leq j \leq M-1 , - \dfrac{u_{j+1} - 2 u_j + u_{j-1}}{h^2} = f(x_j) ,
+        \\
+        \dfrac{u_1 - u_0}{h} = \dfrac{u_M - u_{M-1}}{h} = 0.
+      \end{array}
+      \right.
+    \end{align*}
+    Calculer la matrice associ\'ee. Montrer qu'elle est positive 
+    mais qu'elle n'est pas inversible. Commenter.
+  \item On ajoute une condition de moyenne nulle, le sch\'ema devient
+    \begin{align*}
+      \left\{
+      \begin{array}{l}
+        \forall 1 \leq j \leq M-1 , - \dfrac{u_{j+1} - 2 u_j + u_{j-1}}{h^2} = f(x_j) ,
+        \\
+        \dfrac{u_1 - u_0}{h} = \dfrac{u_M - u_{M-1}}{h} = 0 ,
+        \\
+        \dfrac{1}{h^2} \sum_{0 \leq j \leq M} u_j = 0 .
+      \end{array}
+      \right.
+    \end{align*}
+    On impose la condition de moyenne nulle par un multiplicateur de Lagrange $\alpha \in \R$.
+    Le probl\`eme devient $\widetilde{A} U = F$ avec
+    \begin{align*}
+      \widetilde{A} = \dfrac{1}{h^2}
+      \begin{pmatrix}
+        1 & -1 & & & & 1
+        \\
+        -1 & 2 & -1& & &\vdots
+        \\
+        & \ddots & \ddots & \ddots & & \vdots
+        \\
+        & & -1 & 2 & -1 & \vdots
+        \\
+        & &    & -1 & 1 & 1
+        \\
+        1 & \cdots & \cdots & \cdots &  1 & 0
+      \end{pmatrix} ,
+      \qquad U = 
+      \begin{pmatrix}
+        u_1 \\ \vdots \\ u_{M-1} \\ \alpha
+      \end{pmatrix} ,
+      \qquad F = 
+      \begin{pmatrix}
+        f(x_1) \\ \vdots \\ f(x_{M-1}) \\ 0
+      \end{pmatrix} .
+    \end{align*}
+    Montrer que la matrice $\widetilde{A}$ est inversible.
+  \item Coder le sch\'ema propos\'e et faire une \'etude de convergence
+    (tracer l'erreur du sch\'ema en fonction de $h$ en \'echelle logarithmique).
+    Quel est l'ordre du sch\'ema ? ( !! quel $f$ ?? )
+  \item Que se passe-t-il si on prend $f=1$ ? Commenter.
+    !! Verifier ce qu'il se passe !!
+  \end{enumerate}
+\end{exercise}
+
+!! Un dernier exercice pour finir la page ??
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de transport}
