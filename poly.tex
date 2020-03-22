@@ -631,20 +631,23 @@ les m\^emes que celles du cas stationnaire
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\'Equations elliptiques}
+\section{\'Equation de Poisson}
 
-Comme \'evoqu\'e pr\'ec\'edemment, on s'int\'eresse au probl\`eme
+On consid\`ere $\Omega$ un ouvert born\'e de $\R^d$ avec $d \in \{1,2,3\}$.
+Nous simplifions le cadre \'evaoqu\'e pr\'ec\'edemment
+en consid\'erant $k=1$.
+On s'int\'eresse donc au probl\`eme
 \begin{equation}
   \label{eq:ell_Dir}
+  \text{Trouver $u \in C^2(\Omega)$ telle que  }
   \left\{
-    \begin{array}{l}
-      - \DIV (k \GRAD u) = f \dans \Omega ,
+    \begin{array}{l l}
+      - \Delta u = f &\dans \Omega ,
       \\
-      u = 0 \sur \partial \Omega ,
+      u = 0 &\sur \partial \Omega .
     \end{array}
   \right.
 \end{equation}
-avec $0 < k_0 \leq k(x) \leq k_1$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales de l'\'equation}
@@ -657,7 +660,11 @@ avec $0 < k_0 \leq k(x) \leq k_1$.
   $u \in C^{\ell+2}(\Omega)$.
 \end{theorem}
 
-!! commenter + donner lien vers preuve !!
+Dans ce th\'eor\`eme nous voyons l'effet r\'egularisant de l'\'equation de Poisson:
+Si le terme source est de classe $C^{\ell}$ alors la solution du probl\`eme
+est de classe $C^{\ell + 2}$.
+Les outils utilis\'es pour \'etablir cette preuve sont pr\'esent\'es
+dans la section \ref{subsec:LM}.
 
 \begin{proposition}[Principe du maximum]
   On se place dans le cadre du th\'eor\`eme \ref{thm:ell_existence}.
@@ -668,27 +675,99 @@ avec $0 < k_0 \leq k(x) \leq k_1$.
   (principe du maximum fort).
 \end{proposition}
 
-!! commenter + ref livre !!
+%% reference vers un livre ??
 
-\begin{remark}
-  D'autres conditions fronti\`ere sont possibles.
-  Condition de Neumann, de Robin, conditions mixtes, conditions de Dirichlet non homog\`enes.
-\end{remark}
 
-!! expliquer le principe d'un rel\`evement !!
-
-\begin{definition}[Fonction harmonique]
+\begin{definition}[Fonctions harmoniques]
   Si $u \in C^2(\Omega)$ et $- \Delta u = 0$ dans $\Omega$,
   on dit que $u$ est une fonction harmonique.
 \end{definition}
 
-!! lien avec les fonctions holomorphes !!
+Il existe des liens entre fonctions harmoniques et fonctions holomorphes.
+En effet, si $\varphi$ est une fonction holomorphe,
+alors $\Re(\varphi)$ et $\Im(\varphi)$ sont des fonctions harmoniques.
+
+
+D'autres conditions aux limites peuvent \^etre consid\'er\'ees.
+Nous pouvons par exemple consid\'erer des conditions de Dirichlet 
+non homog\`enes.
+\begin{equation*}
+  \text{Trouver $u \in C^2(\Omega)$ telle que  }
+  \left\{
+    \begin{array}{l l}
+      - \Delta u = f &\dans \Omega ,
+      \\
+      u = g &\sur \partial \Omega ,
+    \end{array}
+  \right.
+\end{equation*}
+o\`u $g \in C^2(\partial \Omega)$ est une donn\'ee du probl\`eme.
+Pour r\'esoudre ce probl\`eme, on consid\`ere un rel\`evement de $g$,
+c'est-\`a-dire une fonction $\tilde{g} \in C^2(\Omega)$ telle que
+$\tilde{g} = g$ sur $\partial \Omega$,
+et on cherche la solution $u$ sous la forme
+$u = \tilde{u} + \tilde{g}$.
+La fonction $\tilde{u}$ est alors solution du probl\`eme
+homog\`ene
+\begin{equation*}
+  \text{Trouver $\tilde{u} \in C^2(\Omega)$ telle que  }
+  \left\{
+    \begin{array}{l l}
+      - \Delta \tilde{u} = f + \Delta \tilde{g} &\dans \Omega ,
+      \\
+      \tilde{u} = 0 &\sur \partial \Omega .
+    \end{array}
+  \right.
+\end{equation*}
+Moyennant l'existence du rel\`evement $\tilde{g}$
+r\'esoudre le probl\`eme non homog\`ene revient \`a 
+r\'esoudre un probl\`eme homog\`ene \'equivalent.
+
+
+Nous pouvons \'egalement consid\'erer des conditions
+de Neumann. Le probl\`eme de Poisson devient alors
+\begin{align}
+  \label{eq:ell_Neu}
+  \text{Trouver $u \in C^2(\Omega)$ telle que  }
+  \left\{
+    \begin{array}{l l}
+      - \Delta u = f &\dans \Omega ,
+      \\
+      \GRAD u \SCAL n = 0 &\sur \partial \Omega ,
+      \\
+      \int_{\Omega} u \deriv x = 0 ,
+    \end{array}
+  \right.
+\end{align}
+o\`u $n$ d\'esigne la normale sortante au domaine.
+
+
+Dans le probl\`eme \eqref{eq:ell_Neu}, 
+la condition $\int_{\Omega} u \deriv x = 0$ a \'et\'e ajout\'ee
+pour garantir l'unicit\'e de la solution. 
+En effet, si on enlevait cette condition, pour $u$ solution
+de \eqref{eq:ell_Neu}, $u+c$ serait aussi solution pour tout $c\in \R$.
+Des alternatives existent \`a la condition 
+$\int_{\Omega} u \deriv x = 0$,
+l'essentiel est d'\'eliminer l'infinit\'e de solutions g\'en\'er\'ees en
+ajoutant $c\in\R$.
+
+Terminons cette section en relevant le fait que l'existence d'une solution
+au probl\`eme \eqref{eq:ell_Neu} requiert la condition
+$\int_{\Omega} f \deriv x = 0$.
+
+\begin{exercise}
+  Prouver que s'il existe une solution $u$ au probl\`eme \eqref{eq:ell_Neu},
+  alors $f$ v\'erifie $\int_{\Omega} f \deriv x = 0$.
+\end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Formulation variationnelle, th\'eor\`eme de Lax--Milgram}
+\label{subsec:LM}
 
-Le but de cette section est de pr\'esenter une preuve du th\'eor\`eme \ref{thm:ell_existence}
-en utilisant le th\'eor\`eme de Lax--Milgram.
+Le but de cette section est de pr\'esenter les outils utilis\'es pour prouver 
+le th\'eor\`eme \ref{thm:ell_existence}.
+Nous utilisons notamment le th\'eor\`eme de Lax--Milgram.
 
 \begin{theorem}[Lax--Milgram]
   \label{thm:Lax-Milgram}
@@ -711,7 +790,7 @@ en utilisant le th\'eor\`eme de Lax--Milgram.
   et que celle-ci v\'erifie $\| u \|_{V} \leq \dfrac{C_{\ell}}{\alpha}$.
 \end{theorem}
 
-!! lien vers un livre !!
+%% ref vers un livre 
 
 Pour utiliser ce th\'eor\`eme, \'ecrivons le probl\`eme \eqref{eq:ell_Dir} sous
 sa forme variationnelle.
@@ -727,22 +806,21 @@ est la trace de $v$ sur le bord du domaine.
 Si $u$ est une solution de \eqref{eq:ell_Dir}, alors pour tout $v \in H^1_0(\Omega)$
 on peut \'ecrire
 \begin{align*}
-  \int_{\Omega} - \DIV (k \GRAD u) v \deriv x = \int_{\Omega} f v \deriv x .
+  \int_{\Omega} - \Delta u v \deriv x = \int_{\Omega} f v \deriv x .
 \end{align*}
 En int\'egrant par parties on obtient 
 \begin{align*}
-  \int_{\Omega} k \GRAD u : \GRAD v \deriv x 
-  - \int_{\partial \Omega} k (\GRAD u \SCAL n) v \deriv s = \int_{\Omega} f v \deriv x .
+  \int_{\Omega} \GRAD u \SCAL \GRAD v \deriv x 
+  - \int_{\partial \Omega} (\GRAD u \SCAL n) v \deriv s = \int_{\Omega} f v \deriv x .
 \end{align*}
 Puisque $v_{\partial \Omega} = 0$, le deuxi\`eme terme de cette expression est nul.
-Nous avons donc \'etabli la proposition suivante 
-(la r\'eciproque utilise des arguments similaires).
+Nous avons donc \'etabli la proposition suivante.
 \begin{proposition}
-  Le probl\`eme \eqref{eq:ell_Dir} est \'equivalent au probl\`eme suivant.
+  Toute solution du probl\`eme \eqref{eq:ell_Dir} est solution du probl\`eme 
   \begin{equation}
     \label{eq:LM2}
     \text{Trouver $u \in H_0^1(\Omega)$, tel que $\forall v \in H_0^1(\Omega)$, } 
-    \int_{\Omega} k \GRAD v : \GRAD v \deriv x = \int_{\Omega} f v \deriv x .
+    \int_{\Omega} \GRAD v \SCAL \GRAD v \deriv x = \int_{\Omega} f v \deriv x .
   \end{equation}
 \end{proposition}
 
@@ -752,29 +830,75 @@ Nous avons donc \'etabli la proposition suivante
 \begin{proof}
   Le probl\`eme \eqref{eq:LM2} correspond au probl\`eme \eqref{eq:Lax-Milgram}
   avec $V = H_0^1(\Omega)$, 
-  $\forall v, w \in H_0^1(\Omega), a(v,w) = \int_{\Omega} k \GRAD v : \GRAD v \deriv x$
+  $\forall v, w \in H_0^1(\Omega), a(v,w) = \int_{\Omega} \GRAD v \SCAL \GRAD v \deriv x$
   et $\ell(v) = \int_{\Omega} f v \deriv x$.
   Nous allons montrer que toutes les hypoth\`eses du th\'eor\`eme de Lax--Milgram
   sont v\'erifi\'ees.
   On admet le fait que $H_0^1(\Omega)$ \'equip\'e de la norme 
-  $\| v \|_{H_0^1(\Omega)} := (\int_{\Omega} v^2 + \GRAD v : \GRAD v \deriv x)^{1/2}$ 
+  $\| v \|_{H^1(\Omega)} := (\int_{\Omega} v^2 + \GRAD v \SCAL \GRAD v \deriv x)^{1/2}$ 
   est un espace de Hilbert (se reporter \`a un cours sur les distributions).
   D'apr\`es l'in\'egalit\'e de Cauchy--Schwarz, on a 
   $|\ell(v)| \leq (\int_{\Omega} f^2 \deriv x)^{1/2} (\int_{\Omega} v^2 \deriv x)^{1/2}
-  \leq (\int_{\Omega} f^2 \deriv x)^{1/2} \| v \|_{H_0^1(\Omega)}$.
+  \leq (\int_{\Omega} f^2 \deriv x)^{1/2} \| v \|_{H^1(\Omega)}$.
   La forme lin\'eaire $\ell$ est donc continue. 
+  
+  
   De la m\^eme fa\c{c}on, l'in\'egalit\'e de Cauchy--Schwarz permet de prouver
   que la forme bilin\'eaire $a$ est continue.
   Pour finir, nous utilisons l'in\'egalit\'e de Poincar\'e: il existe $c>0$
   tel que $\forall v \in H_0^1(\Omega), 
-  \int_{\Omega} v^2 \deriv x \leq c \int_{\Omega} \GRAD v : \GRAD v \deriv x$.
+  \int_{\Omega} v^2 \deriv x \leq c \int_{\Omega} \GRAD v \SCAL \GRAD v \deriv x$.
   Avec cette in\'egalit\'e, on peut prouver que $a$ est coercive.
   Toutes les hypoth\`eses du th\'eor\`eme de Lax--Milgram sont r\'eunies,
   le probl\`eme \eqref{eq:LM2} est donc bien pos\'e.
 \end{proof}
 
+\begin{remark}
+  Les r\'esultats de cette section prouvent l'unicit\'e de la solution
+  de \eqref{eq:ell_Dir}. On a \'egalement prouv\'e l'existence d'une
+  solution \`a \eqref{eq:LM2}. Pour prouver le th\'eor\`eme
+  \ref{thm:ell_existence}, il faut montrer que si $f \in C^{\ell}(\Omega)$
+  alors la solution de \eqref{eq:LM2} est dans $C^{\ell+2}(\Omega)$
+  et est solution de \eqref{eq:ell_Dir}. Cependant cette preuve est 
+  tr\`es d\'elicate et nous ne la d\'evelopperons pas ici.
+\end{remark}
 
 
+\begin{remark}
+  On dit qu'une solution de \eqref{eq:ell_Dir}
+  est une solution forte du probl\`eme de Poisson au sens
+  o\`u les d\'eriv\'ees sont des d\'eriv\'ees usuelles.
+  On dit qu'une solution de \eqref{eq:LM2} est une solution
+  faible du probl\`eme de Poisson au sens o\`u les d\'eriv\'ees
+  sont des d\'eriv\'ees faibles (au sens des distributions).
+  Nous avons montr\'e qu'une solution forte est une solution faible.
+  La r\'eciproque est plus d\'elicate et n\'ecessite des hypoth\`eses
+  sur la r\'egularit\'e de $f$.
+\end{remark}
+
+
+\begin{exercise}
+  On note $H^1 = \{ v \in L^2(\Omega) \st \GRAD u \in L^2(\Omega) \}$
+  et $H_{\bullet}^1 = \{ v \in H^1(\Omega) \st \int_{\Omega} v \deriv x = 0 \}$.
+  Prouver que toute solution du probl\`eme \eqref{eq:ell_Neu}
+  est solution de la formulation variationnelle
+  \begin{align}
+    \label{eq:LM2_Neu}
+    \text{Trouver $u \in H_{\bullet}^1(\Omega)$, tel que $\forall v \in H_{\bullet}^1(\Omega)$, } 
+    \int_{\Omega} \GRAD v \SCAL \GRAD v \deriv x = \int_{\Omega} f v \deriv x .
+  \end{align}
+  Prouver de plus que le probl\`eme \eqref{eq:LM2_Neu} est bien pos\'e.
+
+  Pour cela, on supposera que $H_{\bullet}^1$ \'equip\'e de la norme $\| \cdot \|_{H^1(\Omega)}$
+  introduite pr\'ec\'edemment est un espace de Hilbert.
+  On pourra \'egalement utiliser l'in\'egalit\'e de Poincar\'e--Wirtinger:
+  il existe une constante $C>0$ telle que
+  \begin{equation*}
+    \forall v \in H^1(\Omega) , \qquad
+    \int_{\Omega} \left( v - \dfrac{1}{|\Omega|} \int_{\Omega} v(x') \deriv x' \right)^2
+    \deriv x \leq C \int_{\Omega} \GRAD v \SCAL \GRAD v \deriv x .
+  \end{equation*}
+\end{exercise}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Discr\'etisation par la m\'ethode des diff\'erences finies}
 \label{subsec:ell_DF}
@@ -1731,6 +1855,8 @@ sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de la chaleur}
+
+!! parler des $\theta$-sch\'emas -- voir poly L. !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation des ondes}
