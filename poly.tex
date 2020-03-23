@@ -403,11 +403,9 @@ un $k$ plus grand est plus "plate".
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width = 4cm]{Figures/A_venir.png}
-  \includegraphics[width = 4cm]{Figures/A_venir.png}
-  \includegraphics[width = 4cm]{Figures/A_venir.png}
+  \includegraphics[width = 12cm]{Figures/Poisson_k.eps}
   \caption{Solution de l'\'equation elliptique 1D \eqref{eq:ell_1D}
-  pour diff\'erents $k$.}
+  pour diff\'erents $k$ (pour $f(x)=1$).}
   \label{fig:ell_k}
 \end{figure}
 
@@ -1101,8 +1099,14 @@ plus loin dans le cours.
 
 
 Cette notion d'ordre de convergence peut-\^etre illustr\'ee en repr\'esentant 
-l'erreur commise par le sch\'ema en fonction de $h$ en utilisant une \'echelle logarithmique
-pour les axes des abscisses et des ordonn\'ees (voir figure \ref{fig:ell_convergence}).
+l'erreur commise par le sch\'ema 
+$\varepsilon = \max_{0\leq j \leq M} |u(x_j) - u_j|$ en fonction de $h$ 
+en utilisant une \'echelle logarithmique
+pour les axes des abscisses et des ordonn\'ees.
+Par exemple, consid\'erons $f(x) = x^2$, la solution exacte associ\'ee
+est $u(x) = \frac{x}{12}(1-x^3)$.
+L'erreur du sch\'ema commise sur ce cas test est repr\'esent\'ee
+sur la figure \ref{fig:ell_convergence}.
 On voit que l'on obtient une droite de pente $2$.
 Ceci est en accord avec la proposition \ref{prop:ell_conv} :
 si l'erreur est $\varepsilon = C h^2$ alors
@@ -1110,10 +1114,9 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width = 4cm]{Figures/A_venir.png}
-  \includegraphics[width = 4cm]{Figures/A_venir.png}
-  \includegraphics[width = 4cm]{Figures/A_venir.png}
-  \caption{Erreur en fonction de $h$ (\'echelle logarithmique).}
+  \includegraphics[width = 12cm]{Figures/Poisson_conv.eps}
+  \caption{Erreur en fonction de $h$ (\'echelle logarithmique)
+    pour $f(x) = x^2$.}
   \label{fig:ell_convergence}
 \end{figure}
 
@@ -1127,9 +1130,11 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
   On peut d\'ecider d'ajouter un coefficient de raideur $k>0$ constant.
   La nouvelle matrice devient alors $k A$ o\`u $A$ est la matrice 
   pr\'ec\'edente.
-  La figure \ref{fig:ell_k} a \'et\'e obtenue pour $f(x) = 1$.
+  La figure \ref{fig:ell_k} a \'et\'e obtenue pour $f(x) = 1$
+  et $M=10$ ($h=1/10$).
   Coder le sch\'ema propos\'e et retrouver les r\'esultats
   de la figure \ref{fig:ell_k}.
+  Calculer l'erreur commise. Que remarquez-vous?
 \end{exercise}
 
 
@@ -1186,7 +1191,7 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
         \\
         \dfrac{u_1 - u_0}{h} = \dfrac{u_M - u_{M-1}}{h} = 0 ,
         \\
-        \dfrac{1}{h^2} \sum_{0 \leq j \leq M} u_j = 0 .
+        \sum_{1 \leq j \leq M-1} u_j = 0 .
       \end{array}
       \right.
     \end{align*}
@@ -1195,17 +1200,17 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
     \begin{align*}
       \widetilde{A} = \dfrac{1}{h^2}
       \begin{pmatrix}
-        1 & -1 & & & & 1
+        1 & -1 & & & & h^2
         \\
-        -1 & 2 & -1& & &\vdots
+        -1 & 2 & -1& & & \vdots
         \\
         & \ddots & \ddots & \ddots & & \vdots
         \\
         & & -1 & 2 & -1 & \vdots
         \\
-        & &    & -1 & 1 & 1
+        & &    & -1 & 1 & h^2
         \\
-        1 & \cdots & \cdots & \cdots &  1 & 0
+        h^2 & \cdots & \cdots & \cdots &  h^2 & 0
       \end{pmatrix} ,
       \qquad U = 
       \begin{pmatrix}
@@ -1217,15 +1222,29 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
       \end{pmatrix} .
     \end{align*}
     Montrer que la matrice $\widetilde{A}$ est inversible.
-  \item Coder le sch\'ema propos\'e et faire une \'etude de convergence
-    (tracer l'erreur du sch\'ema en fonction de $h$ en \'echelle logarithmique).
-    Quel est l'ordre du sch\'ema ? ( !! quel $f$ ?? )
-  \item Que se passe-t-il si on prend $f=1$ ? Commenter.
-    !! Verifier ce qu'il se passe !!
+  \item Coder ce sch\'ema et le tester avec $f(x)=1$.
+    Que se passe-t-il? Est-ce un comportement normal?
+    D'apr\`es vous, que repr\'esente $\alpha$?
+  \item Essayons maintenant 
+    \begin{align*}
+      f(x) = \left\{
+      \begin{array}{l}
+        1 \quad \text{si} \quad x \in (0,0.5),
+        \\
+        0 \quad \text{si} \quad x=0.5,
+        \\
+        -1 \quad \text{si} \quad x \in (0.5,1).
+      \end{array}
+      \right.
+    \end{align*}
+    Calculer la solution exacte \`a ce probl\`eme. 
+    D\'eterminer num\'eriquement l'ordre de convergence du sch\'ema. 
+    Est-ce en contradition avec la proposition \ref{prop:ell_conv}?
+
+  \item On pourra \'egalement reprendre la question pr\'ec\'edente avec
+    $f(x) = x-\frac{1}{2}$.
   \end{enumerate}
 \end{exercise}
-
-!! Un dernier exercice pour finir la page ??
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de transport}
