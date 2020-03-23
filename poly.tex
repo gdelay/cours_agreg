@@ -142,17 +142,46 @@ sur l'\'etude d'\'equations
 avec une seule dimension d'espace.
 On consid\'erera donc une seule variable $x$ dans le cas d'un probl\`eme stationnaire
 et deux variables $t$ (le temps) et $x$ (l'espace) dans le cas d'un probl\`eme
-instationaire.
+instationnaire.
 
 % Dans la suite de ce cours, on notera $\Omega$ un ouvert born\'e de $\R^d$
 % avec $d=1,2,3$.
+
+
+
+\begin{remark}
+  Les d\'emonstrations de cette section ne sont pas exigibles.
+  On demande simplement aux candidats de se repr\'esenter \`a quoi
+  correspondent les \'equations et les param\`etres introduits.
+  Aucune connaissance en physique n'est requise pour cette section
+  qui peut \^etre lue ind\'ependamment des autres.
+  Les candidats doivent cependant avoir \`a l'esprit que tous les textes
+  comportent une part de mod\'elisation et les mod\`eles pr\'esent\'es dans cette
+  section sont classiques.
+\end{remark}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equations elliptiques}
 \label{subsec:elliptique}
 
+Nous nous int\'eressons dans cette section \`a des \'equations de la forme
+\begin{align}
+  \label{eq:ell_1D}
+  - \dfrac{\mathrm{d}}{\mathrm{d} x} \left(k \dfrac{\mathrm{d} u}{\mathrm{d} x} \right) = f ,
+\end{align}
+pour une dimension d'espace et
+si l'on consid\`ere plusieurs dimensions d'espace, cette \'equation devient
+\begin{align}
+  \label{eq:ell_2D}
+  - \DIV \left(k \GRAD u \right) = f ,
+\end{align}
+o\`u $\DIV$ et $\GRAD$ sont respectivement les op\'erateurs divergence et gradient.
+
+
 Nous pr\'esentons deux probl\`emes physiques qui font intervenir
-des \'equations elliptiques.
+cette \'equation.
 Le premier est le cas o\`u des particules circulent dans un domaine.
 Le second est un probl\`eme d'\'equilibre m\'ecanique.
 
@@ -198,7 +227,7 @@ $q(x) - q(x+\delta x) + f(x) \delta x = 0$,
 ce qui donne
 \begin{align}
   \label{eq:eq_flux}
-  \dfrac{\partial q}{\partial x} = f .
+  \dfrac{\mathrm{d} q}{\mathrm{d} x} = f .
 \end{align}
 
 De plus, on consid\`ere que les particules fuient les zones de forte densit\'e:
@@ -206,7 +235,7 @@ le flux $q(x)$ suit la direction oppos\'ee au gradient de $u$.
 On note donc 
 \begin{align}
   \label{eq:def_flux}
-  q(x) = - k(x) \dfrac{\partial u}{\partial x}(x) . 
+  q(x) = - k(x) \dfrac{\mathrm{d} u}{\mathrm{d} x}(x) . 
 \end{align}
 Ici $k$ est un coefficient positif qui peut d\'ependre de l'espace.
 Il traduit le rapport de proportionnalit\'e entre le gradient de la densit\'e
@@ -214,19 +243,8 @@ et le flux qui en r\'esulte. Ainsi, pour une densit\'e fix\'ee,
 si $k$ est grand alors les particules circuleront facilement et le flux sera important;
 \`a l'inverse, un $k$ petit traduit le fait que les particules ont du mal \`a circuler dans
 le milieu.
+L'\'equation finale sur $u$ est donc \eqref{eq:ell_1D}.
 
-L'\'equation finale sur $u$ est donc
-\begin{align}
-  \label{eq:ell_1D}
-  - \dfrac{\partial}{\partial x} \left(k \dfrac{\partial u}{\partial x} \right) = f .
-\end{align}
-
-Si l'on consid\`ere plusieurs dimensions d'espace, cette \'equation devient
-\begin{align}
-  \label{eq:ell_2D}
-  - \DIV \left(k \GRAD u \right) = f ,
-\end{align}
-o\`u $\DIV$ et $\GRAD$ sont respectivement les op\'erateurs divergence et gradient.
 
 
 En pratique les particules que nous avons consid\'er\'ees peuvent 
@@ -409,12 +427,6 @@ un $k$ plus grand est plus "plate".
   \label{fig:ell_k}
 \end{figure}
 
-
-\begin{remark}
-  Les d\'emonstrations de cette section ne sont pas exigibles.
-  On demande simplement aux candidats de se repr\'esenter \`a quoi
-  correspondent les \'equations et les param\`etres introduits.
-\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation de transport}
