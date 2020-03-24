@@ -329,40 +329,40 @@ La nouvelle longueur est donc de $\delta x + u(x+\delta x) - u(x)
 et la d\'eriv\'ee partielle en $x$ est donc bien une \'elongation par unit\'e de longueur.
 
 
-D'autres probl\`emes physiques peuvent \^etre par des \'equations elliptiques.
+D'autres probl\`emes physiques peuvent \^etre mod\'elis\'es par des \'equations elliptiques.
 Nous citerons simplement l'\'electromagn\'etisme sans donner plus de d\'etails.
 Nous verrons par la suite que, dans le cas instationnaire,
-les deux classes de probl\`emes expos\'ees ici correspondent \`a 
+les deux probl\`emes expos\'es ici correspondent \`a 
 des \'equations de nature diff\'erente.
-La premi\`ere classe de probl\`eme est une \'equation parabolique en instationnaire,
-tandis que la deuxi\`eme classe est une \'equation hyperbolique.
+Le premier est repr\'esent\'e par une \'equation parabolique en instationnaire,
+tandis que la deuxi\`eme est repr\'esent\'e par une \'equation hyperbolique.
 
 
-\'Evoquons maintenant les conditions fronti\`eres les plus classiques
+\'Evoquons maintenant les conditions aux limites les plus classiques
 que l'on peut associer \`a ce probl\`eme.
 Tout d'abord, nous pouvons consid\'erer la condition de Dirichlet
 $u = g$ o\`u $g$ est une donn\'ee du probl\`eme. Ceci revient \`a imposer
-la valeur de la solution $u$ sur la bord du domaine.
+la valeur de la solution $u$ sur le bord du domaine.
 Par exemple, dans le cas de l'\'equation de la chaleur stationnaire,
 la condition de Dirichlet revient \`a consid\'erer que le bord du domaine
 correspond \`a un \'el\'ement \`a forte capacit\'e thermique
-dont la temp\'erature restera constante quoiqu'il arrive.
+dont la temp\'erature restera constante quoi qu'il arrive.
 
 
-Une autre condition fronti\`ere classique est la condition de Neumann
+Une autre condition aux limites classique est la condition de Neumann
 $q = g$ o\`u $g$ est une donn\'ee. Ceci revient \`a imposer la valeur
 du flux $q$ sur le bord du domaine.
 En g\'en\'eral, la valeur $g$ sera nulle.
 Par exemple, dans le cas du probl\`eme de la chaleur, ceci revient
 \`a consid\'erer que le bord du domaine est adiabatique:
-quoiqu'il arrive aucun flux de chaleur ne traversera cette fronti\`ere
+quoi qu'il arrive aucun flux de chaleur ne traversera le bord du domaine
 (pensez par exemple \`a une bouteille isotherme).
 
 
-Ces deux conditions fronti\`eres peuvent \'eventuellement \^etre utilis\'ees 
-simultan\'ement en des points diff\'erents du domaine
+Ces deux conditions aux limites peuvent \'eventuellement \^etre utilis\'ees 
+simultan\'ement en des points diff\'erents du bord
 (Dirichlet sur une partie de la fronti\`ere et Neumann sur le reste).
-On parle alors de conditions fronti\`eres mixtes.
+On parle alors de conditions aux limites mixtes.
 
 \begin{table}[h]
   \centering
@@ -409,6 +409,8 @@ On parle alors de conditions fronti\`eres mixtes.
   L'\'equation \eqref{eq:ell_2D} devient $\Delta u = f$.
   On appelle cette \'equation \'equation de Laplace ou 
   \'equation de Poisson.
+  Pour simplifier la pr\'esentation, c'est cette \'equation que nous \'etudierons
+  par la suite.
 \end{remark}
 
 
@@ -510,7 +512,7 @@ On permet donc \`a la temp\'erature de changer au cours du temps.
 
 Nous allons maintenant refaire le raisonnement de la section \ref{subsec:elliptique}
 avec cette fois-ci une temp\'erature $u(t,x)$ qui d\'epend du temps.
-Si on consid\`ere la partie droite de la figure \ref{fig:flux}, l'accumulation
+Si l'on consid\`ere la partie droite de la figure \ref{fig:flux}, l'accumulation
 d'\'energie en $(t,x)$ est due au fait que les flux ne sont pas \'equilibr\'es
 ("ce qui entre n'est pas \'egal \`a ce qui sort").
 Ainsi, s'il y a plus d'\'energie qui entre dans le domaine infinit\'esimal
@@ -535,17 +537,17 @@ En combinant les \'equations \eqref{eq:def_flux} et \eqref{eq:flux_t},
 on obtient l'\'equation de la chaleur
 \begin{align}
   \label{eq:chaleur}
-  \dfrac{\partial u}{\partial t} - \nu \dfrac{\partial^2 u}{\partial x^2} = f ,
+  \dfrac{\partial u}{\partial t} - \nu \dfrac{\partial^2 u}{\partial x^2} = \widetilde{f} ,
 \end{align}
 o\`u $\nu = k/c > 0$ est la diffusion thermique.
 
 
-De mani\`ere similaire \`a ce qui a \'et\'e expliqu\'e dans la section \ref{subsec:elliptique},
-cette l'\'equation de la chaleur, en plus de repr\'esenter l'\'evolution de la temp\'erature
-dans un milieu peut aussi repr\'esenter l'\'evolution de la densit\'e d'une population
-ou encore l'\'evolution d'une concentration chimique d'une esp\`ece au sein d'un diluant.
+% De mani\`ere similaire \`a ce qui a \'et\'e expliqu\'e dans la section \ref{subsec:elliptique},
+% cette l'\'equation de la chaleur, en plus de repr\'esenter l'\'evolution de la temp\'erature
+% dans un milieu peut aussi repr\'esenter l'\'evolution de la densit\'e d'une population
+% ou encore l'\'evolution d'une concentration chimique d'une esp\`ece au sein d'un diluant.
 
-Les conditions aux limites sont les m\^emes que celles \'evoqu\'ees pour le probl\`eme
+Les conditions aux limites classiques sont les m\^emes que celles \'evoqu\'ees pour le probl\`eme
 stationnaire (voir tableau \ref{tab:pb_ell}).
 
 
@@ -574,7 +576,7 @@ la courbe va s'applatir rapidement.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Equation des ondes}
 
-L'\'equation des ondes est obtenue en consid\'erant un mod\`ele m\'ecanique
+L'\'equation des ondes peut \^etre obtenue en consid\'erant un mod\`ele m\'ecanique
 comme celui de la figure \ref{fig:barre} o\`u cette fois-ci les forces ne
 sont pas n\'ecessairement \`a l'\'equilibre et o\`u les d\'eplacements
 $u(t,x)$ peuvent varier au cours du temps.
@@ -601,7 +603,7 @@ lin\'eique $\rho$ sont constantes (ne d\'ependent ni de $t$ ni de $x$).
 En combinant \eqref{eq:def_flux} et \eqref{eq:barre_t} on obtient l'\'equation des ondes
 \begin{align}
   \label{eq:ondes}
-  \dfrac{\partial^2 u}{\partial t^2} - c^2 \dfrac{\partial^2 u}{\partial x^2} = f ,
+  \dfrac{\partial^2 u}{\partial t^2} - c^2 \dfrac{\partial^2 u}{\partial x^2} = \widetilde{f} ,
 \end{align}
 o\`u $c>0$ d\'efini par $c^2 = k/\rho$ correspond \`a la vitesse de propagation
 des ondes dans ce milieu.
@@ -625,6 +627,10 @@ On illustre l'influence de $c$ sur la figure \ref{fig:ondes_c}.
 Nous voyons que nous avons une propagation de l'information 
 dans les deux directions (les $x$ positifs et les $x$ n\'egatifs).
 Plus $c$ est grand, plus l'information se propage rapidement.
+Notons \'egalement que la solution pour $c=0.5$ et $t=0.4$
+correspond \`a la solution pour $c=1.0$ et $t=0.2$.
+On voit donc bien que $c$ correspond \`a une vitesse de propagation
+de l'onde.
 
 
 Nous avons \'evoqu\'e le fait que l'\'equation des ondes
@@ -635,7 +641,7 @@ la propagation d'une onde \'electromagn\'etique
 (on ne s'\'etendra pas davantage sur le sujet).
 
 
-Rappelons enfin que les conditions fronti\`eres utilisables sont 
+Rappelons enfin que les conditions aux limites classiques sont 
 les m\^emes que celles du cas stationnaire
 (voir tableau \ref{tab:pb_ell}).
 
@@ -647,7 +653,7 @@ les m\^emes que celles du cas stationnaire
 \section{\'Equation de Poisson}
 
 On consid\`ere $\Omega$ un ouvert born\'e de $\R^d$ avec $d \in \{1,2,3\}$.
-Nous simplifions le cadre \'evaoqu\'e pr\'ec\'edemment
+Nous simplifions le cadre \'evoqu\'e pr\'ec\'edemment
 en consid\'erant $k=1$.
 On s'int\'eresse donc au probl\`eme
 \begin{equation}
@@ -674,7 +680,7 @@ On s'int\'eresse donc au probl\`eme
 \end{theorem}
 
 Dans ce th\'eor\`eme nous voyons l'effet r\'egularisant de l'\'equation de Poisson:
-Si le terme source est de classe $C^{\ell}$ alors la solution du probl\`eme
+si le terme source est de classe $C^{\ell}$ alors la solution du probl\`eme
 est de classe $C^{\ell + 2}$.
 Les outils utilis\'es pour \'etablir cette preuve sont pr\'esent\'es
 dans la section \ref{subsec:LM}.
@@ -698,7 +704,8 @@ dans la section \ref{subsec:LM}.
 
 Il existe des liens entre fonctions harmoniques et fonctions holomorphes.
 En effet, si $\varphi$ est une fonction holomorphe,
-alors $\Re(\varphi)$ et $\Im(\varphi)$ sont des fonctions harmoniques.
+alors $\Re(\varphi)$ et $\Im(\varphi)$ (parties r\'eelle et imaginaire)
+sont des fonctions harmoniques.
 
 
 D'autres conditions aux limites peuvent \^etre consid\'er\'ees.
@@ -812,7 +819,7 @@ On introduit l'espace de Sobolev
   H_0^1(\Omega) := \{ v \in L^2(\Omega) \st \GRAD v \in L^2(\Omega) 
   \text{ et } v_{| \partial \Omega} = 0 \sur \partial \Omega \} ,
 \end{align}
-o\`u $\GRAD v$ est d\'efini au sens des distributions et $v_{\partial \Omega}$
+o\`u $\GRAD v$ est d\'efini au sens des distributions et $v_{|\partial \Omega}$
 est la trace de $v$ sur le bord du domaine.
 
 
@@ -826,7 +833,7 @@ En int\'egrant par parties on obtient
   \int_{\Omega} \GRAD u \SCAL \GRAD v \deriv x 
   - \int_{\partial \Omega} (\GRAD u \SCAL n) v \deriv s = \int_{\Omega} f v \deriv x .
 \end{align*}
-Puisque $v_{\partial \Omega} = 0$, le deuxi\`eme terme de cette expression est nul.
+Puisque $v_{|\partial \Omega} = 0$, le deuxi\`eme terme de cette expression est nul.
 Nous avons donc \'etabli la proposition suivante.
 \begin{proposition}
   Toute solution du probl\`eme \eqref{eq:ell_Dir} est solution du probl\`eme 
@@ -986,7 +993,7 @@ Nous aborderons plus en d\'etails ces aspects dans la section \ref{subsec:transp
 
 Nous proposons maintenant de discr\'etiser le prob\`eme \eqref{eq:ell_1d}
 en utilisant \eqref{eq:dx2}.
-La suite ainsi obtenue v\'erifie
+Nous construisons donc une suite $(u_j)_{0\leq j \leq M}$ v\'erifiant
 \begin{equation}
   \label{eq:ell_DF}
   \left\{
@@ -1090,7 +1097,7 @@ La suite ainsi obtenue v\'erifie
     \dfrac{-u(x_{j+1}) + 2 u(x_j) - u(x_{j-1})}{h^2} = - u^{(2)}(x_j) - \dfrac{h^2}{12} u^{(4)}(x_j)
     + o (h^2) .
   \end{align*}
-  On a 
+  On a de plus 
   \begin{align*}
     \dfrac{- u_{j+1} + 2 u_j - u_{j-1}}{h^2} = f(x_j) = - u^{(2)}(x_j) ,
   \end{align*}
@@ -1102,7 +1109,7 @@ La suite ainsi obtenue v\'erifie
   En notant $\underline{\delta}$ le vecteur des $\delta_j$,
   on a $\underline{\delta} = A^{-1} \underline{\epsilon}$
   avec $(\underline{\epsilon})_j = O(h^2)$.
-  En supposant que $\sup_{X \in \R^{M-1}\backslash \{0\}} \dfrac{\max_{j} |(AX)_j|}{\max_j |X_j|}$
+  En supposant que $\sup_{X \in \R^{M-1}\backslash \{0\}} \dfrac{\max_{j} |(A^{-1}X)_j|}{\max_j |X_j|}$
   est born\'e quand $h$ tend vers $0$ (on ne le montre pas ici), on obtient le r\'esultat attendu.
 \end{proof}
 
@@ -1149,7 +1156,9 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
   et $M=10$ ($h=1/10$).
   Coder le sch\'ema propos\'e et retrouver les r\'esultats
   de la figure \ref{fig:ell_k}.
-  Calculer l'erreur commise. Que remarquez-vous?
+  Calculer la solution exacte.
+  En d\'eduire l'erreur que commet le sch\'ema.
+  Que remarquez-vous?
 \end{exercise}
 
 
@@ -1206,12 +1215,12 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
         \\
         \dfrac{u_1 - u_0}{h} = \dfrac{u_M - u_{M-1}}{h} = 0 ,
         \\
-        \sum_{1 \leq j \leq M-1} u_j = 0 .
+        \sum\limits_{j=1}^{M-1} u_j = 0 .
       \end{array}
       \right.
     \end{align*}
     On impose la condition de moyenne nulle par un multiplicateur de Lagrange $\alpha \in \R$.
-    Le probl\`eme devient $\widetilde{A} U = F$ avec
+    Le probl\`eme devient $\widetilde{A} \widetilde{U} = \widetilde{F}$ avec
     \begin{align*}
       \widetilde{A} = \dfrac{1}{h^2}
       \begin{pmatrix}
@@ -1227,11 +1236,11 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
         \\
         h^2 & \cdots & \cdots & \cdots &  h^2 & 0
       \end{pmatrix} ,
-      \qquad U = 
+      \qquad \widetilde{U} = 
       \begin{pmatrix}
         u_1 \\ \vdots \\ u_{M-1} \\ \alpha
       \end{pmatrix} ,
-      \qquad F = 
+      \qquad \widetilde{F} = 
       \begin{pmatrix}
         f(x_1) \\ \vdots \\ f(x_{M-1}) \\ 0
       \end{pmatrix} .
