@@ -1274,11 +1274,12 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
 \section{\'Equation de transport}
 
 Nous \'etudions ici l'\'equation de transport dans un espace \`a une dimension.
-Le probl\`eme d\'ependra donc d'une variable d'espace $x \in [0,1]$ et d'une variable de temps
-$t \in [0,T]$.
+Le probl\`eme d\'epend donc d'une variable d'espace $x \in [0,1]$ et d'une variable de temps
+$t \in [0,T]$ avec $T>0$.
 Nous consid\'erons le probl\`eme
 \begin{equation}
   \label{eq:transport}
+  \text{Trouver $u \in C^1([0,T] \times [0,1] )$ telle que} \;
   \left\{
     \begin{array}{l}
      \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = 0 
@@ -1290,9 +1291,12 @@ Nous consid\'erons le probl\`eme
     \end{array}
   \right.
 \end{equation}
-o\`u $a \geq 0$ correspond \`a la vitesse de transport de l'\'equation,
+o\`u $a > 0$ correspond \`a la vitesse de transport de l'\'equation,
 $\alpha(t)$ est la donn\'ee de Dirichlet \`a gauche
 et $u_0$ est la donn\'ee initiale.
+Dans l'\'enonc\'e de notre probl\`eme, nous avons not\'e
+$C^1([0,T] \times [0,1])$ l'ensemble des fonctions $C^1$
+de $[0,T] \times [0,1]$ \`a valeur dans $\R$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
 
@@ -1302,8 +1306,20 @@ vers la droite et en "faisant entrer" la donn\'ee de Dirichlet dans le domaine.
 De mani\`ere plus rigoureuse, nous avons le th\'eor\`eme suivant.
 
 \begin{theorem}
+  \label{thm:transport_existence}
+  Supposons que $a > 0$, $u_0 \in C^1([0,1])$ et $\alpha \in C^1([0,T])$.
+  Supposons de plus les conditions de compatibilit\'e $u_0(0) = \alpha(0)$
+  et $\alpha'(0) = -a u_0'(0)$.
   Le probl\`eme \eqref{eq:transport} admet une unique solution donn\'ee par
-  (...)
+  \begin{align}
+    \label{eq:transport_sol}
+    u(t,x) = 
+    \begin{cases} 
+      u_0(x-at) \quad &\text{si} \; x \geq at ,
+      \\ 
+      \alpha(t-x/a) \quad  &\text{sinon} .
+    \end{cases}
+  \end{align}
 \end{theorem}
 
 \begin{remark}
@@ -1323,7 +1339,26 @@ du domaine ($x=1$), on peut reconstituer la valeur de la solution \`a l'instant 
 ainsi que la valeur de la donn\'ee de Dirichlet $\alpha(t)$ en tout temps $t \in [0,T]$.
 
 \begin{proposition}[R\'eversibilit\'e de l'\'equation de transport]
-  (...)
+  \label{prop:transport_rev}
+  Soit $u$ une solution du probl\`eme \eqref{eq:transport}.
+  Le probl\`eme
+  \begin{equation}
+    \label{eq:transport_rev}
+    \text{Trouver $\tu \in C^1([0,T] \times [0,1] )$ telle que} \;
+    \left\{
+      \begin{array}{l}
+        \dfrac{\partial \tu}{\partial t} - a \dfrac{\partial \tu}{\partial x} = 0 
+        \quad \dans (0,T) \times (0,1),
+        \\
+        \forall t \in (0,T), \qquad \tu(t,1) = u(T-t,1) ,
+        \\
+        \forall x \in (0,1), \qquad \tu(0,x) = u(T,x) ,
+      \end{array}
+    \right.
+  \end{equation}
+  admet une unique solution d\'efinie par
+  $\forall t \in [0,T], \forall x \in [0,1]$, 
+  $\tu(t,x) = u(T-t,x)$. 
 \end{proposition}
 
 Cette propri\'et\'e signifie que l'information est conserv\'ee au cours du temps:
@@ -1351,24 +1386,141 @@ ces courbes peuvent \^etre plus complexes (voir la section \ref{subsec:transport
 \end{figure}
 
 Nous pouvons montrer que dans le cas consid\'er\'e dans cette section,
-la solution se conserve sur les droites d'\'equation $t=ax+b$ avec $b \in \R$.
+la solution se conserve sur les droites d'\'equation $x=at+b$ avec 
+$a$ la vitesse de transport dans \eqref{eq:transport} et $b \in \R$.
 Ces droites sont donc les droites caract\'eristiques de notre probl\`eme,
 nous les repr\'esentons sur la figure \ref{fig:D_carac}.
+Ce r\'esultat est \'enonc\'e dans la proposition suivante.
 
-!! equation des droites a montrer en exo !!
+\begin{proposition}
+  \label{prop:droites_carac}
+  Soit $u \in C^1([0,T] \times [0,1])$ v\'erifiant l'\'equation de transport
+  \begin{align*}
+    \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = 0 
+    \dans (0,T) \times (0,1) ,
+  \end{align*}
+  avec $a \in \R$.
+  Pour tous $t,s \in [0,T]$ et $x \in [0,1]$ tels que
+  $t-s \in [0,T]$ et $x-as \in [0,1]$, on a
+  \[
+    u(t,x) = u(t-s , x-as) .
+  \]
+\end{proposition}
+
+\begin{exercise}
+  Prouver la proposition \ref{prop:droites_carac}.
+\end{exercise}
+
+
+Notons que la proposition \ref{prop:droites_carac} est valable pour tout $a \in \R$
+et pour n'importe quelles conditions aux limites. Nous allons maintenant prouver
+le th\'eor\`eme \ref{thm:transport_existence}.
+
+\begin{proof}[Preuve du th\'eor\`eme \ref{thm:transport_existence}]
+  Commen\c{c}ons par montrer que la fonction $u$ donn\'ee dans \eqref{eq:transport_sol}
+  est solution du probl\`eme \eqref{eq:transport}.
+  On note $u^+(t,x) = u_0(x-at)$ et $u^-(t,x) = \alpha(t-x/a)$.
+
+  Par construction, les fonctions $u^+$ et $u^-$ sont $C^1$ sur leur domaine de 
+  d\'efinition. Nous cherchons \`a les raccorder le long de la droite $x=at$.
+  Soit $(t_0,x_0) \in [0,T] \times [0,1]$ qui v\'erifient $x_0 = at_0$.
+  On a $\lim_{(t,x) \to (t_0,x_0)} u^+(t,x) = \lim_{s \to 0^+} u_0(s) = u_0(0)
+  = \alpha(0) = \lim_{s \to 0^+} \alpha(s) = \lim_{(t,x) \to (t_0,x_0)} u^-(t,x)$.
+  La fonction $u$ est donc continue.
+  De plus, par un raisonnement similaire, la condition $\alpha'(0) = -au_0'(0)$
+  implique que $u$ est dans $C^1([0,T]\times [0,1])$.
+  De plus, $u$ v\'erifie la condition initiale $u(0,x) = u_0(x)$ ainsi que la condition
+  de Dirichlet $u(t,0) = \alpha(t)$ et elle v\'erifie l'\'equation de transport.
+  Il s'agit donc bien d'une solution de \eqref{eq:transport}.
+
+  Supposons maintenant que $v \in C^1([0,T] \times [0,1])$ est solution de
+  \eqref{eq:transport}.
+  Si $x \leq a t$, on applique la proposition \ref{prop:droites_carac}
+  avec $s=x/a$, avec la condition de Dirichlet
+  on obtient $u(t,x) = \alpha(t-x/a)$.
+  Si $x \geq a t$, on applique la proposition \ref{prop:droites_carac}
+  avec $s=t$, avec la condition initiale on obtient $u(t,x) = u_0(x-at)$.
+  Nous avons donc prouv\'e l'unicit\'e de la solution.
+\end{proof}
+
 
 Nous voyons donc que la valeur de la solution en $(t,x)$ est \`a aller chercher
 sur le bord du domaine espace-temps. C'est-\`a-dire, en fonction de la valeur de 
 $t$ et $x$, soit sur la condition initiale, soit sur la donn\'ee de Dirichlet
 (l'endroit o\`u r\'ecup\'erer l'information est repr\'esent\'e sur la figure
 \ref{fig:D_carac} par un cercle).
-Nous retrouvons donc l'expression de la solution donn\'ee en (...).
 
 
-!! preuve de l'unicit\'e ??
+\begin{remark}
+  Avec un raisonnement similaire, on peut montrer que si $a=0$, il n'y a pas besoin 
+  de condition de Dirichlet et que si $a<0$, il faut mettre la condition de Dirichlet
+  sur la droite du domaine (en $x=1$). 
+  Le m\^eme r\'esultat d'existence et d'unicit\'e s'applique alors.
+\end{remark}
+
 
 Pour montrer la r\'eversibilit\'e de l'\'equation, il suffit de parcourir ces droites 
-caract\'eristiques dans l'autre sens (...)
+caract\'eristiques dans le sens inverse.
+
+!! commentaires suppl\'ementaires sur la r\'eversibilit\'e en utilisant la figure !!
+
+En suivant un raisonnement similaire, nous pouvons prouver d'autres r\'esultats 
+laiss\'es ci-dessous en exercices.
+
+\begin{exercise}
+  Prouver la proposition \ref{prop:transport_rev}.
+\end{exercise}
+
+\begin{exercise}[Conditions aux limites p\'eriodiques]
+  Prouver que l'\'equation de transport avec des conditions aux limites p\'eriodiques
+  \begin{equation}
+    \label{eq:transport_per}
+    \left\{
+      \begin{array}{l}
+        \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = 0 
+        \dans (0,T) \times (0,1),
+        \\
+        \forall t \in (0,T), u(t,0) = u(t,1) ,
+        \\
+        \forall x \in (0,1), u(0,x) = u_0(x) ,
+      \end{array}
+    \right.
+  \end{equation}
+  avec $a>0$ et $u_0$ v\'erifie les conditions p\'eriodiques $u_0(0) = u_0(1)$,
+  admet pour unique solution 
+  \begin{align}
+    \label{eq:sol_transport_per}
+    u(t,x) = u_0(f(x-at)) ,
+  \end{align}
+  o\`u $f(x)$ est la partie fractionnaire de $x$,
+  c'est-\`a-dire $x = E(x) + f(x)$ avec $E(x) \in \Z$
+  et $0 \leq f(x) < 1$.
+
+  !! VERIFIER CE RESULTAT + HYPOTHESES !!
+\end{exercise}
+
+\begin{exercise}[Terme source]
+  Montrer que l'unique solution du probl\`eme
+  \begin{equation*}
+    \left\{
+      \begin{array}{l}
+        \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = f(t,x)
+        \dans (0,T) \times (0,1),
+        \\
+        \forall t \in (0,T), u(t,0) = u(t,1) ,
+        \\
+        \forall x \in (0,1), u(0,x) = u_0(x) ,
+      \end{array}
+    \right.
+  \end{equation*}
+  est donn\'ee par 
+  $u(t,x) = u_0(x-at) + \int_0^t f(s,x+a(s-t)) \deriv s$.
+
+  !! QUELLES CONDITIONS LIMITES FAUT-IL METTRE ?? -- PEUT ETRE TRAVAILLER DANS L'ESPACE ENTIER
+  SANS CONDITIONS AUX LIMITES !!
+
+  !! VERIFIER CE RESULTAT + HYPOTHESES !!
+\end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Discr\'etisation par les diff\'erences finies et analyse num\'erique}
@@ -1404,34 +1556,15 @@ l'information issue de la donn\'ee initiale.
 Pour cela, on peut essayer de suivre le d\'eplacement de cette donn\'ee
 initiale dans un domaine infini en consid\'erant des conditions p\'eriodiques.
 Dans cette section, on s'int\'eresse au probl\`eme
-\begin{equation}
-  \label{eq:transport_per}
-  \left\{
-    \begin{array}{l}
-     \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = 0 
-      \dans (0,T) \times (0,1),
-      \\
-      \forall t \in (0,T), u(t,0) = u(t,1) ,
-      \\
-      \forall x \in (0,1), u(0,x) = u_0(x) ,
-    \end{array}
-  \right.
-\end{equation}
-avec $a>0$ et $u_0$ v\'erifie les conditions p\'eriodiques $u_0(0) = u_0(1)$.
+\eqref{eq:transport_per}.
 Avec ces conditions fronti\`eres, l'information qui sort en 
 $x=1$ r\'eentre imm\'ediatement en $x=0$.
 
 
 En appliquant la m\'ethode des caract\'eristiques, on peut montrer
 que la solution exacte de ce probl\`eme est
-\begin{align}
-  \label{eq:sol_transport_per}
-  u(t,x) = u_0(f(x-at)) ,
-\end{align}
-o\`u $f(x)$ est la partie fractionnaire de $x$,
-c'est-\`a-dire $x = E(x) + f(x)$ avec $E(x) \in \Z$
-et $0 \leq f(x) < 1$.
 
+!! REPRENDRE CETTE SECTION !!
 
 !! Calcul de la solution du pb p\'eriodique avec m\'ethode des caract\'eristiques en exo ??
 
