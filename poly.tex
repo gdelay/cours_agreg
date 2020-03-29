@@ -1472,6 +1472,7 @@ laiss\'es ci-dessous en exercices.
 \end{exercise}
 
 \begin{exercise}[Conditions aux limites p\'eriodiques]
+  \label{exo:carac_per}
   Prouver que l'\'equation de transport avec des conditions aux limites p\'eriodiques
   \begin{equation}
     \label{eq:transport_per}
@@ -1486,7 +1487,7 @@ laiss\'es ci-dessous en exercices.
       \end{array}
     \right.
   \end{equation}
-  avec $a>0$ et $u_0$ v\'erifie les conditions p\'eriodiques $u_0(0) = u_0(1)$,
+  avec $a\in \R$ et $u_0 \in C^1([0,1])$ qui v\'erifie la condition $u_0(0) = u_0(1)$,
   admet pour unique solution 
   \begin{align}
     \label{eq:sol_transport_per}
@@ -1495,29 +1496,31 @@ laiss\'es ci-dessous en exercices.
   o\`u $f(x)$ est la partie fractionnaire de $x$,
   c'est-\`a-dire $x = E(x) + f(x)$ avec $E(x) \in \Z$
   et $0 \leq f(x) < 1$.
+  D'apr\`es vous, a-t-on besoin de la condition $u_0(0) = u_0(1)$?
+  A-t-on besoin de la condition $u_0'(0) = u_0'(1)$?
 
   !! VERIFIER CE RESULTAT + HYPOTHESES !!
+  -- Notamment ne faut-il pas compatibilit\'e des d\'eriv\'ees en $0$ et $1$ ?
 \end{exercise}
 
-\begin{exercise}[Terme source]
+\begin{exercise}[Prise en compte d'un terme source]
   Montrer que l'unique solution du probl\`eme
   \begin{equation*}
     \left\{
       \begin{array}{l}
         \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = f(t,x)
-        \dans (0,T) \times (0,1),
+        \dans (0,T) \times \R,
         \\
-        \forall t \in (0,T), u(t,0) = u(t,1) ,
-        \\
-        \forall x \in (0,1), u(0,x) = u_0(x) ,
+        \forall x \in \R, u(0,x) = u_0(x) ,
       \end{array}
     \right.
   \end{equation*}
+  avec $a \in \R$, $f \in C^0([0,T] \times \R)$ et $u_0 \in C^1(\R)$,
   est donn\'ee par 
   $u(t,x) = u_0(x-at) + \int_0^t f(s,x+a(s-t)) \deriv s$.
+  Notez que l'on a pos\'e ce probl\`eme sur $\R$ entier pour ne pas avoir
+  \`a se soucier des conditions aux limites.
 
-  !! QUELLES CONDITIONS LIMITES FAUT-IL METTRE ?? -- PEUT ETRE TRAVAILLER DANS L'ESPACE ENTIER
-  SANS CONDITIONS AUX LIMITES !!
 
   !! VERIFIER CE RESULTAT + HYPOTHESES !!
 \end{exercise}
@@ -1533,7 +1536,7 @@ nous avons discr\'etis\'e l'espace $(0,1)$ et nous avons approch\'e la solution
 $u(x)$ par une suite de terme g\'en\'eral $u_j$.
 
 Dans le cas pr\'esent, la solution d\'epend de deux variables $t$ et $x$,
-il faut donc discr\'etiser les deux dimensions.
+il faut donc discr\'etiser ces deux dimensions.
 On d\'ecoupe l'intervalle de temps $[0,T]$ en $N$ sous-intervalles $[t_n , t_{n+1}]$
 avec pour tout $0\leq n \leq N$,  $t_n = n h_t$ et $h_t = T/N$.
 De m\^eme, on d\'ecoupe l'intervalle d'espace $[0,1]$ en $M$ sous-intervalles
@@ -1541,11 +1544,12 @@ $[x_j , x_{j+1}]$ avec pour tout $0 \leq j \leq M$, $x_j = j h_x$ et $h_x = 1/M$
 De plus, nous allons approcher la fonction $u(t,x)$ par une suite
 $(u_j^n)_{\substack{0 \leq n \leq N \\ 0 \leq j \leq M}}$.
 Ici, l'indice $j$ donne la position en espace et l'exposant $n$
-donne le temps consid\'er\'e. Ainsi, $u_j^n$ devra \^etre une approximation
+donne le temps consid\'er\'e. Ainsi, on cherche \`a calculer $u_j^n$ 
+de mani\`ere \`a ce que ce soit une approximation
 de $u(t_n, x_j)$.
 
 %%%%%%%%%%%%%%%%%%
-\subsubsection{Conditions p\'eriodiques et motivation de l'analyse}
+\subsubsection{Motivation de l'analyse num\'erique}
 
 Comme nous l'avons vu pr\'ec\'edemment, lorsque l'on consid\`ere
 l'\'equation de transport avec une condition de Dirichlet,
@@ -1559,23 +1563,21 @@ Dans cette section, on s'int\'eresse au probl\`eme
 \eqref{eq:transport_per}.
 Avec ces conditions fronti\`eres, l'information qui sort en 
 $x=1$ r\'eentre imm\'ediatement en $x=0$.
+On peut donc la suivre au cours de sa propagation dans le domaine
+et observer la qualit\'e de l'approximation que nous avons faite.
+Nous allons donc comparer nos approximations num\'eriques avec la solution
+exacte donn\'ee par \eqref{eq:sol_transport_per}.
 
 
-En appliquant la m\'ethode des caract\'eristiques, on peut montrer
-que la solution exacte de ce probl\`eme est
-
-!! REPRENDRE CETTE SECTION !!
-
-!! Calcul de la solution du pb p\'eriodique avec m\'ethode des caract\'eristiques en exo ??
-
-Nous souhaitons maintenant discr\'etiser l'\'equation
-\eqref{eq:transport_per}
-et comparer la solution obtenue num\'eriquement avec \eqref{eq:sol_transport_per}.
+Nous proposons maintenant deux discr\'ertisations de l'\'equation
+\eqref{eq:transport_per}.
 La m\'ethode consiste \`a approcher les d\'eriv\'ees partielles
 (en temps et en espace) par des taux d'accroissement.
-Nous proposons de comparer le comportement de deux discr\'etisations diff\'erentes.
+Nous comparons le comportement de deux discr\'etisations diff\'erentes.
+
+
 Nous proposons tout d'abord d'approcher la d\'eriv\'ee en temps par une
-approximation d\'ecentr\'ee et la d\'eriv\'ee en espace par une 
+approximation d\'ecentr\'ee aval et la d\'eriv\'ee en espace par une 
 approximation centr\'ee comme suit
 \begin{align*}
   \dfrac{\partial u}{\partial t}(t_n,x_j) \simeq \dfrac{u(t_{n+1},x_j) - u(t_n,x_j)}{h_t} ,
@@ -1597,8 +1599,10 @@ On obtient le sch\'ema num\'erique
   \end{array}
   \right.
 \end{align}
-o\`u nous consid\'erons $u_0^n = u_M^n$, $u_{M+1}^n = u_1^n$ et $u_{-1}^n = u_{M-1}^n$.
-%En consid\'erant comme degr\'es de libert\'e $U^n = u_j^n$ pour $1 \leq n \leq N$,
+o\`u, pour simplifier l'\'ecriture, 
+nous avons introduit $u_{M+1}^n = u_1^n$ et $u_{-1}^n = u_{M-1}^n$
+(rappelons que $u_M^n = u_0^n$).
+
 
 Nous nous proposons \'egalement d'approcher les d\'eriv\'ees en temps et les d\'eriv\'ees
 en espace respectivement par des approximations d\'ecentr\'ees aval et amont comme suit
@@ -1623,31 +1627,51 @@ On obtient le sch\'ema num\'erique
   \end{array}
   \right.
 \end{align}
-o\`u nous consid\'erons $u_0^n = u_M^n$ et $u_{-1}^n = u_{M-1}^n$.
+o\`u, pour simplifier l'\'ecriture, nous avons introduit $u_{-1}^n = u_{M-1}^n$.
 
-Les r\'esultats num\'eriques sont report\'es dans la
-figure \ref{fig:trans_per}.
-Nous observons des comportements num\'eriques tr\`es diff\'erents pour ces deux
-sch\'emas qui sont pourtant similaires.
-Il ne suffit donc pas de remplacer les d\'eriv\'ees partielles
-par des taux d'accroissement pour obtenir des r\'esultats convenables.
-Il faut aussi v\'erifier certaines propri\'et\'es que nous abordons dans
-la section suivante.
+Nous reportons les r\'esultats obtenus sur la figure \ref{fig:trans_per}.
+Lorsque l'on raffine le maillage (quand on augmente $N$ et $M$),
+la solution obtenue par le sch\'ema d\'ecentr\'e \eqref{eq:transport_DF_decentre_AM}
+tend vers la solution exacte
+tandis que la solution obtenue par le sch\'ema centr\'e \eqref{eq:transport_DF_centre}
+se d\'egrade de plus en plus. La solution obtenue par le sch\'ema centr\'e va jusqu'\`a
+diverger quand $N$, $M$ sont augment\'es.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width = 4cm]{Figures/A_venir.png}
-  \includegraphics[width = 4cm]{Figures/A_venir.png}
-  \includegraphics[width = 4cm]{Figures/A_venir.png}
-  \caption{\'Equation de transport avec conditions p\'eriodiques}
+  \includegraphics[width = 8cm]{Figures/transport_per_N15.eps}
+  \includegraphics[width = 8cm]{Figures/transport_per_N30.eps}
+  \includegraphics[width = 8cm]{Figures/transport_per_N60.eps}
+  \includegraphics[width = 8cm]{Figures/transport_per_N120.eps}
+  \caption{\'Equation de transport avec conditions p\'eriodiques: solution exacte (\`a 
+    l'instant final) et
+    solutions (\`a l'instant final) 
+    obtenues par les sch\'emas d\'ecentr\'e et centr\'e pour $T=0.5$, $a=1$ et
+    $(N,M) = (15,20)$, $(30,40)$, $(60,80)$ et $(120,160)$.}
   \label{fig:trans_per}
 \end{figure}
 
-!! exercice : coder les deux sch\'emas et retrouver les r\'esultats
-de la figure \ref{fig:trans_per} !!
+
+Il va de soi que le sch\'ema d\'ecentr\'e a un comportement tout \`a fait acceptable
+tandis que le sch\'ema centr\'e est totalement inutilisable.
+Il ne suffit donc pas de remplacer les d\'eriv\'ees
+partielles de l'EDP par des taux d'accroissement pour obtenir un bon sch\'ema num\'erique.
+Pour \^etre s\^ur que le sch\'ema que l'on con\c{c}oit a un bon comportement,
+il faut v\'erifier certaines propri\'et\'es que nous allons aborder dans la section suivante.
+
+
+\begin{exercise}
+  La figure \ref{fig:trans_per} a \'et\'e obtenue pour $a=1$, $T=0.5$, $u_0(x) = x^2(1-x^2)$
+  et $(N,M) = (15,20)$, $(30,40)$, $(60,80)$ et $(120,160)$.
+  Dans ces conditions la solution exacte est $u(t,x) = u_0(f(x-at))$
+  (voir exercice \ref{exo:carac_per}).
+  Coder les sch\'emas \eqref{eq:transport_DF_centre} et \eqref{eq:transport_DF_decentre_AM}
+  et retrouver la figure \ref{fig:trans_per}.
+  On pourra aussi explorer d'autres valeurs de $(N,M)$.
+\end{exercise}
 
 %%%%%%%%%%%%%%%%%%
-\subsubsection{Outils d'analyse num\'erique}
+\subsubsection{Analyse num\'erique : d\'efinitions et th\'eor\`emes}
 
 Nous d\'efinissons maintenant des notions que nous
 utiliserons ensuite pour analyser les deux sch\'emas introduits pr\'ec\'edemment.
