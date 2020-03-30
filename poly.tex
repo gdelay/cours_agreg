@@ -1984,8 +1984,66 @@ Commen\c{c}ons d'abord par le r\'esultat suivant.
 \end{exercise}
 
 
-!! RAMENER stabilite de Von Neumann ICI !!
+Nous introduisons une derni\`ere d\'efinition: la stabilit\'e
+au sens de Von Neumann.
+Lorsque l'on veut prouver qu'un sch\'ema de la forme \eqref{eq:schema_1pas}
+est instable, la fa\c{c}on standard
+de proc\'eder est de montrer qu'il n'est pas stable au sens de Von Neumann.
+On consid\`ere alors $F^n = 0$ et une condition initiale sous la forme
+d'une onde spatiale: $u_j^0 = e^{2 i \pi k x_j}$ avec $i$ la racine carr\'e de l'unit\'e
+et $k \in \Z$.
+On \'etudie ensuite l'effet qu'a l'application du sch\'ema sur cette condition initiale complexe.
 
+L'int\'er\^et de choisir un vecteur de la forme $u_j^0 = e^{2 i \pi k x_j}$
+est que l'on a $u_j^1 = \sum_{\ell=0}^{M-1} a_{j \ell} u_{\ell}^{0}$.
+En prenant $\calA_j(k) = \sum_{\ell=0}^{M-1} a_{j\ell} e^{2i\pi k (x_{\ell} - x_j)}$, on montre
+que $\forall 1\leq j \leq M, \;  u_j^{1} = \calA_j(k) u_j^0$ avec $\calA_j(k) \in \C$.
+\begin{definition}[Stabilit\'e au sens de Von Neumann]
+  On dit qu'un sch\'ema \eqref{eq:schema_1pas} est stable au
+  sens de Von Neumann si pour tout $1 \leq j \leq M$ 
+  et pour tout $k \in \Z$, $| \calA_j(k) | \leq 1$.
+\end{definition}
+\begin{proposition}
+  La stabilit\'e au sens de Von Neumann est n\'ecessaire \`a la stabilit\'e du sch\'ema.
+  Dit autrement, la stabilit\'e du sch\'ema implique la stabilit\'e au sens de 
+  Von Neumann.
+\end{proposition}
+\begin{proof}
+  On peut montrer que si on consid\`ere $u_j^0 = \Re (e^{2 i \pi k x_j})$
+  alors $\forall 0 \leq n \leq N, u_j^n = \Re ((\calA_j(k))^n e^{2 i \pi k x_j})$.
+  Idem, si $u_j^0 = \Im (e^{2 i \pi k x_j})$, 
+  alors $\forall 0 \leq n \leq N, u_j^n = \Im ((\calA_j(k))^n e^{2 i \pi k x_j})$.
+  
+  Ainsi, si le sch\'ema \eqref{eq:schema_1pas} est stable alors
+  $\max_{\substack{0 \leq n \leq N \\ 1 \leq j \leq M}} 
+  | \Re ((\calA_j(k))^n e^{2 i \pi k x_j})| \leq C$ o\`u $C>0$ ne d\'epend que de $T$.
+  En faisant le m\^eme raisonnement sur la partie imaginaire,
+  on obtient
+  $\max_{\substack{0 \leq n \leq N \\ 1 \leq j \leq M}} 
+  | (\calA_j(k))^n e^{2 i \pi k x_j}| \leq \sqrt{2}C$.
+  
+  Or ceci n'est possible que si $| \calA_j(k) | \leq 1$ sinon on d\'epasse
+  la constante $\sqrt{2}C$ en faisant tendre $N$ vers $+\infty$.
+  Ceci prouve le r\'esultat.
+\end{proof}
+
+
+Par la suite nous utiliserons la stabilit\'e de Von Neumann pour prouver qu'un sch\'ema
+n'est pas stable.
+
+\begin{remark}
+  La stabilit\'e de Von Neumann correspond \`a la stabilit\'e du sch\'ema 
+  dans le sens 
+  \begin{align*}
+    \| (u_j^n) \|_{*} 
+    \leq C_1 \| U_0 \|_{\#} 
+    + C_2 \| (F^n) \|_{*} ,
+  \end{align*}
+  avec des normes $\| \cdot \|_{*}$ et $\| \cdot \|_{\#}$ diff\'erentes de celles
+  de la d\'efinition \ref{def:stabilite}.
+\end{remark}
+
+!! Harmoniser l'intervalle des j : 0 \`a M-1 ou 1 \`a M !!
 
 !! Attention aux remarques sur les diff\'erentes normes :
 on ne peut pas avoir l'\'equivalence entre les normes avec des constantes
@@ -1995,9 +2053,6 @@ qui ne d\'ependent pas des pas d'espace et de temps !!
 !! pour la stabilit\'e au sens de Von Neumann : prouver la condition n\'ecessaire
 + simple remarque sur condition suffisante sous certaines conditions
 dans une autre norme !! --- ne pas l'aborder ici !!
-
-!! v\'erifier que toutes les preuves de stabilit\'e du chapitre
-peuvent se faire sans la m\'ethode de Von Neumann !!
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Analyse des deux sch\'emas pour conditions p\'eriodiques}
@@ -2127,42 +2182,7 @@ $\R^{M \times M}$.
   d'apr\`es le corrolaire \ref{corro:stability}.
 \end{proof}
 
-
-Lorsque l'on veut prouver qu'un sch\'ema de la forme \eqref{eq:schema_1pas}
-est instable, la fa\c{c}on standard
-de proc\'eder est d'utiliser la stabilit\'e au sens de von Neumann.
-On consid\`ere alors $F^n = 0$ et une condition initiale sous la forme
-d'une onde spatiale: $u_j^0 = e^{2 i \pi k x_j}$ avec $i$ la racine carr\'e de l'unit\'e
-et $k \in \Z$.
-On \'etudie ensuite l'effet qu'a l'application du sch\'ema sur ce nombre complexe.
-On montre que $\forall n \in \N, u_j^{n+1} = \calA u_j^n$ avec $\calA \in \C$.
-\begin{definition}[Stabilit\'e au sens de von Neumann]
-  On dit qu'un sch\'ema \eqref{eq:schema_1pas} est stable au
-  sens de von Neumann si $| \calA | \leq 1$.
-\end{definition}
-\begin{proposition}
-  La stabilit\'e au sens de von Neumann est n\'ecessaire \`a la stabilit\'e du sch\'ema.
-  Dit autrement, la stabilit\'e du sch\'ema implique la stabilit\'e au sens de 
-  von Neumann.
-\end{proposition}
-\begin{proof}
-  On peut montrer que si on consid\`ere $u_j^0 = \Re (e^{2 i \pi k x_j})$
-  alors $\forall 0 \leq n \leq N, u_j^n = \Re (\calA^n e^{2 i \pi k x_j})$.
-  Idem, si $u_j^0 = \Im (e^{2 i \pi k x_j})$, 
-  alors $\forall 0 \leq n \leq N, u_j^n = \Im (\calA^n e^{2 i \pi k x_j})$.
-  
-  Ainsi, si le sch\'ema \eqref{eq:schema_1pas} est stable alors
-  $\max_{\substack{0 \leq n \leq N \\ 0 \leq j \leq M}} 
-  | \Re (\calA^n e^{2 i \pi k x_j})| \leq C$ o\`u $C>0$ ne d\'epend que de $T$.
-  En faisant le m\^eme raisonnement sur la partie imaginaire,
-  on obtient
-  $\max_{\substack{0 \leq n \leq N \\ 0 \leq j \leq M}} 
-  | \calA^n e^{2 i \pi k x_j}| \leq \sqrt{2}C$.
-  
-  Or ceci n'est possible que si $| \calA | \leq 1$ sinon on d\'epasse
-  la constante $\sqrt{2}C$ en faisant tendre $N$ vers $+\infty$.
-  Ceci prouve le r\'esultat.
-\end{proof}
+!! grouper ces deux propositions ainsi que leur preuve !!
 
 Appliquons ce crit\`ere pour prouver le r\'esultat suivant.
 \begin{proposition}
@@ -2177,7 +2197,7 @@ Appliquons ce crit\`ere pour prouver le r\'esultat suivant.
   Ici, nous avons $u_j^{n+1} = \calA u_j^n$ avec $\calA = 1 - c + c e^{-2i\pi k h_x}$.
   Pour $c > 1$, on a $| \calA | > 1$ (si $\cos(2\pi k h_x) < 1$). 
   Le sch\'ema n'est pas stable au sens 
-  de von Neumann donc il n'est pas stable au sens de la d\'efinition \ref{def:stabilite}.
+  de Von Neumann donc il n'est pas stable au sens de la d\'efinition \ref{def:stabilite}.
 \end{proof}
 
 \begin{remark}
@@ -2198,6 +2218,8 @@ pas celle qui part !!
 
 !! \'etude de l'influence du nombre de cfl (nouvelle section ??) !!
 -- DONNER DES FIGURES + EXO : RETROUVER LES FIGURES !!
+
+
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Conditions de Dirichlet}
@@ -2291,7 +2313,7 @@ sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
 !! faut-il parler des propri\'et\'es de positivit\'e ??
 -- OUI ET LE RELIER AVEC LA NOTION DE STABILITE !!
 
-
+!! exercice sur les ordre de convergence : figure avec echelle logarithmique !!
 
 \begin{exercise}[Sch\'ema implicite]
   Dans cet exercice, on s'int\'eresse \`a une discr\'etisation implicite du probl\`eme
