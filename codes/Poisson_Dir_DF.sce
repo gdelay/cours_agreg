@@ -76,6 +76,6 @@ end
 
 figure(2,"Figure_name",'etude de la convergence')
 plot(log10(vect_h),log10(vect_err),'o-b')
-xtitle("Erreur du schema en fonction de h (echelle logarithmique)","Pas (h)","Erreur")
+xtitle("Erreur du schema en fonction de h (echelle logarithmique)","log(h)","log(erreur)")
 //legend("k=5","k=1","k=0.5")
 //xtitle("Solution du problème de Poisson-Dirichlet","Position (x)","Solution (u)")
