@@ -1309,8 +1309,8 @@ De mani\`ere plus rigoureuse, nous avons le th\'eor\`eme suivant.
   \label{thm:transport_existence}
   Supposons que $a > 0$, $u_0 \in C^1([0,1])$ et $\alpha \in C^1([0,T])$.
   Supposons de plus les conditions de compatibilit\'e $u_0(0) = \alpha(0)$
-  et $\alpha'(0) = -a u_0'(0)$.
-  Le probl\`eme \eqref{eq:transport} admet une unique solution donn\'ee par
+  et $\alpha'(0) +a u_0'(0)=0$.
+  Le probl\`eme \eqref{eq:transport} admet alors une unique solution donn\'ee par
   \begin{align}
     \label{eq:transport_sol}
     u(t,x) = 
@@ -1324,19 +1324,19 @@ De mani\`ere plus rigoureuse, nous avons le th\'eor\`eme suivant.
 
 \begin{remark}
   On n'a besoin d'une donn\'ee de Dirichlet que d'un seul c\^ot\'e du domaine.
-  Puisque l'on a choisi $a \geq 0$, il faut fixer la donn\'ee de Dirichlet \`a gauche.
-  On aurait aussi pu prendre $a \leq 0$ et utiliser la condition de Dirichlet
+  Puisque l'on a choisi $a > 0$, il faut fixer la donn\'ee de Dirichlet \`a gauche.
+  On aurait aussi pu prendre $a < 0$ et utiliser la condition de Dirichlet \`a droite
   $u(t,1) = \alpha(t)$.
 \end{remark}
 
 
 Nous allons maintenant \'evoquer une autre propri\'et\'e int\'eressante de l'\'equation
 de transport: la r\'eversibilit\'e de l'\'equation.
-Cela signifie qu'en utilisant la solution au temps final, on peut reconstituer la solution
-initiale.
-Dans le cas pr\'esent, en utilisant la solution au temps final et la solution en sortie 
-du domaine ($x=1$), on peut reconstituer la valeur de la solution \`a l'instant initial
-ainsi que la valeur de la donn\'ee de Dirichlet $\alpha(t)$ en tout temps $t \in [0,T]$.
+Cela signifie qu'en utilisant la solution au temps final et \'eventuellement d'autres donn\'ees
+(ici la solution qui sort du domaine \`a droite), on peut reconstituer la solution
+en tout temps $t \in [0,T]$.
+Il s'agit en fait d'\'etudier un probl\`eme o\`u le temps s'\'ecoule 
+"en sens inverse".
 
 \begin{proposition}[R\'eversibilit\'e de l'\'equation de transport]
   \label{prop:transport_rev}
@@ -1390,7 +1390,7 @@ la solution se conserve sur les droites d'\'equation $x=at+b$ avec
 $a$ la vitesse de transport dans \eqref{eq:transport} et $b \in \R$.
 Ces droites sont donc les droites caract\'eristiques de notre probl\`eme,
 nous les repr\'esentons sur la figure \ref{fig:D_carac}.
-Ce r\'esultat est \'enonc\'e dans la proposition suivante.
+Le r\'esultat de conservation est \'enonc\'e dans la proposition suivante.
 
 \begin{proposition}
   \label{prop:droites_carac}
@@ -1458,21 +1458,15 @@ $t$ et $x$, soit sur la condition initiale, soit sur la donn\'ee de Dirichlet
   Le m\^eme r\'esultat d'existence et d'unicit\'e s'applique alors.
 \end{remark}
 
-
-Pour montrer la r\'eversibilit\'e de l'\'equation, il suffit de parcourir ces droites 
-caract\'eristiques dans le sens inverse.
-
-!! commentaires suppl\'ementaires sur la r\'eversibilit\'e en utilisant la figure !!
-
-En suivant un raisonnement similaire, nous pouvons prouver d'autres r\'esultats 
-laiss\'es ci-dessous en exercices.
-
+On peut utiliser la m\'ethode des caract\'eristiques pour prouver d'autres r\'esultats
+comme par exemple ceux \'enonc\'es dans les exercices suivants.
 \begin{exercise}
   Prouver la proposition \ref{prop:transport_rev}.
 \end{exercise}
 
 \begin{exercise}[Conditions aux limites p\'eriodiques]
   \label{exo:carac_per}
+  Soit $u_0 \in C^1([0,1])$ qui v\'erifie $u_0(0) = u_0(1)$ et $u_0'(0) = u_0'(1)$.
   Prouver que l'\'equation de transport avec des conditions aux limites p\'eriodiques
   \begin{equation}
     \label{eq:transport_per}
@@ -1481,26 +1475,17 @@ laiss\'es ci-dessous en exercices.
         \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = 0 
         \dans (0,T) \times (0,1),
         \\
-        \forall t \in (0,T), u(t,0) = u(t,1) ,
+        \forall t \in (0,T), \quad u(t,0) = u(t,1) ,
         \\
-        \forall x \in (0,1), u(0,x) = u_0(x) ,
+        \forall x \in (0,1), \quad u(0,x) = u_0(x) ,
       \end{array}
     \right.
   \end{equation}
-  avec $a\in \R$ et $u_0 \in C^1([0,1])$ qui v\'erifie la condition $u_0(0) = u_0(1)$,
-  admet pour unique solution 
-  \begin{align}
-    \label{eq:sol_transport_per}
-    u(t,x) = u_0(f(x-at)) ,
-  \end{align}
+  avec $a\in \R$
+  admet pour unique solution $u(t,x) = u_0(f(x-at))$,
   o\`u $f(x)$ est la partie fractionnaire de $x$,
   c'est-\`a-dire $x = E(x) + f(x)$ avec $E(x) \in \Z$
   et $0 \leq f(x) < 1$.
-  D'apr\`es vous, a-t-on besoin de la condition $u_0(0) = u_0(1)$?
-  A-t-on besoin de la condition $u_0'(0) = u_0'(1)$?
-
-  !! VERIFIER CE RESULTAT + HYPOTHESES !!
-  -- Notamment ne faut-il pas compatibilit\'e des d\'eriv\'ees en $0$ et $1$ ?
 \end{exercise}
 
 \begin{exercise}[Prise en compte d'un terme source]
@@ -1511,18 +1496,16 @@ laiss\'es ci-dessous en exercices.
         \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = f(t,x)
         \dans (0,T) \times \R,
         \\
-        \forall x \in \R, u(0,x) = u_0(x) ,
+        \forall x \in \R, \quad u(0,x) = u_0(x) ,
       \end{array}
     \right.
   \end{equation*}
   avec $a \in \R$, $f \in C^0([0,T] \times \R)$ et $u_0 \in C^1(\R)$,
   est donn\'ee par 
   $u(t,x) = u_0(x-at) + \int_0^t f(s,x+a(s-t)) \deriv s$.
-  Notez que l'on a pos\'e ce probl\`eme sur $\R$ entier pour ne pas avoir
+  \\
+  NB: Notez que l'on a pos\'e ce probl\`eme sur $\R$ entier pour ne pas avoir
   \`a se soucier des conditions aux limites.
-
-
-  !! VERIFIER CE RESULTAT + HYPOTHESES !!
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1566,7 +1549,7 @@ $x=1$ r\'eentre imm\'ediatement en $x=0$.
 On peut donc la suivre au cours de sa propagation dans le domaine
 et observer la qualit\'e de l'approximation que nous avons faite.
 Nous allons donc comparer nos approximations num\'eriques avec la solution
-exacte donn\'ee par \eqref{eq:sol_transport_per}.
+exacte donn\'ee par $u(t,x) = u_0(f(x-at))$.
 
 
 Nous proposons maintenant deux discr\'ertisations de l'\'equation
