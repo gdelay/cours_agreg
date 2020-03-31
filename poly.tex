@@ -1684,12 +1684,17 @@ $U^n$ g\'en\'er\'e par r\'ecurrence comme suit:
   \label{eq:schema_1pas}
   U^0 = U_0 \qquad \text{et} \qquad \forall n \geq 0, \quad U^{n+1} = A U^n + h_t F^n ,
 \end{align}
-o\`u $U_0$ est donn\'e par $(U_0)_j = u(0,x_j)$, $A$ est une matrice de $\R^{M \times M}$
-et $F^n \in \R^M$ est un vecteur.
-% Notons \'egalement que nous consid\'erons dans la suite
-% $U_0, F^n \in \R^{M+1}$ et $A \in \R^{(M+1)\times(M+1)}$.
-Si ces vecteurs et matrice ont une autre dimension, cela ne change pas la suite de
-notre propos.
+o\`u $U_0$ est donn\'e par $(U_0)_j = u(0,x_j)$, $A$ est une matrice
+et $F^n$ est un vecteur.
+Afin de simplifier notre propos, nous consid\'ererons que le syst\`eme \`a inverser 
+a $M$ inconnues que l'on num\'erotera de $1$ \`a $M$.
+Ainsi, pour tout $0 \leq n \leq N$,
+$U^n \in \R^M$ avec $\forall 1 \leq j \leq M$, $(U^n)_j = u_j^n$ et de m\^eme
+$A \in \R^{M \times M}$ et $F^n \in \R^M$.
+La valeur de $u_0^n$ n'est pas consid\'er\'ee comme inconnue du probl\`eme
+car elle est donn\'ee par la condition de Dirichlet ou p\'eriodique.
+Si la syst\`eme dispose d'un nombre diff\'erent d'inconnues, on pourra
+ais\'ement adapter notre propos.
 
 \begin{remark}
   Dans le cas pr\'esent, nous consid\'erons une suite dont la formule de r\'ecurrence
@@ -1708,11 +1713,11 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
   On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} est stable 
   sous la condition $\Stab$ s'il existe $C_1 , C_2 > 0$ qui ne d\'ependent que de $T$
   tels que $\forall (h_x , h_t) \in \Stab$, $\forall U_0 \in \R^{M}$, 
-  $\forall (F^n)_{0 \leq n \leq N} \in \R^{N \times M}$, on a
+  $\forall (F^n)_{0 \leq n \leq N} \in \R^{(N+1) \times M}$, on a
   \begin{align}
-    \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | u_j^n | 
-    \leq C_1 \max_{0 \leq j \leq M} | (U_0)_j | 
-    + C_2 \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | F_j^n | ,
+    \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | u_j^n | 
+    \leq C_1 \max_{1 \leq j \leq M} | (U_0)_j | 
+    + C_2 \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | F_j^n | ,
   \end{align}
   o\`u $u_j^n = (U^n)_j$ avec $(U^n)$ l'unique suite v\'erifiant \eqref{eq:schema_1pas}.
 
@@ -1742,7 +1747,7 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
   On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} est consistant si pour toute
   solution r\'eguli\`ere $u$ du probl\`eme exact on a
   \begin{align}
-    \lim_{\substack{N \to +\infty\\ M \to +\infty}} \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} 
+    \lim_{\substack{N \to +\infty\\ M \to +\infty}} \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} 
     \dfrac{| \varepsilon_j^n|}{h_t} = 0 ,
   \end{align}
   o\`u $\varepsilon_j^n = (\varepsilon^n)_j$ est l'erreur de troncature
@@ -1752,7 +1757,7 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
   en temps et $q \in \N^*$ en espace si pour toute solution r\'eguli\`ere $u$ (du probl\`eme exact)
   il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$ telle que
   \begin{align}
-    \forall N, M \geq 2 , \quad \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}}
+    \forall N, M \geq 2 , \quad \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}}
     \dfrac{| \varepsilon_j^n|}{h_t} \leq C (h_t^p + h_x^q) .
   \end{align}
 \end{definition}
@@ -1768,7 +1773,7 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
   sous la condition $\Stab \subset \R_+^* \times \R_+^*$
   si 
   \begin{align}
-    \lim_{\substack{(h_t,h_x) \in \Stab \\ (h_t,h_x) \to (0,0)}} \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} 
+    \lim_{\substack{(h_t,h_x) \in \Stab \\ (h_t,h_x) \to (0,0)}} \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} 
     | u(t_n , x_j) - u_j^n | = 0 ,
   \end{align}
   avec $Nh_t = T$ et $Mh_x = 1$ o\`u $u$ est la solution du probl\`eme exact.
@@ -1780,7 +1785,7 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
   s'il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$
   telle que
   \begin{align}
-    \forall (h_t , h_x) \in \Stab , \quad \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}}
+    \forall (h_t , h_x) \in \Stab , \quad \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}}
     | u(t_n,x_j) - u_j^n | \leq C (h_t^p + h_x^q) .
   \end{align}
 
@@ -1804,42 +1809,53 @@ Ces d\'efinitions sont reli\'ees par le th\'eor\`eme de Lax.
   est bien pos\'e, alors la consistance et la stabilit\'e du sch\'ema 
   sont n\'ecessaires \`a sa convergence.
 \end{theorem}
-Le th\'eor\`eme pr\'ec\'edent s'applique aussi avec $\Stab = \R_+^* \times \R_+^*$.
-Avant d'exposer une preuve du th\'eor\`eme \ref{thm:convergence}
+Le th\'eor\`eme \ref{thm:convergence} s'applique aussi avec $\Stab = \R_+^* \times \R_+^*$.
+Avant d'exposer une preuve de ce th\'eor\`eme 
 faisons quelques remarques sur les d\'efinitions pr\'ec\'edentes.
 
 
 Concernant la stabilit\'e (cf d\'efinition \ref{def:stabilite}),
-les quantit\'es $\max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | u_j^n |$, 
-$\max_{0\leq j \leq M} | (U_0)_j |$ et $\max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | F_j^n |$ 
+les quantit\'es $\max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | u_j^n |$, 
+$\max_{1\leq j \leq M} | (U_0)_j |$ et $\max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | F_j^n |$ 
 sont des normes portant sur $(u_j^n)$, $U_0$ et $(F^n)$.
 On peut dire que la stabilit\'e du sch\'ema correspond \`a
 la continuit\'e de l'application lin\'eaire qui \`a 
 $U_0$ et $(F^n)$ associe $(u_j^n)$ 
 avec une constante de continuit\'e que ne d\'epend pas
 de $h_t$ et $h_x$.
-On pourrait consid\'erer d'autres normes pour exprimer cette stabilit\'e,
-il faudrait alors utiliser des poids adapt\'es en $h_t$ et $h_x$ pour 
-avoir une d\'efinition \'equivalente (la constante $C$ ne doit
-pas d\'ependre de $h_t$ et $h_x$).
-Par exemple, on pourrait consid\'erer la norme
-$\max_{0\leq n \leq N} \sqrt{h_x} (\sum_{0\leq j \leq M} (u_j^n)^2)^{1/2}$
-pour $(u_j^n)$.
-Pour ne pas avoir \`a consid\'erer des poids en $h_x$ et $h_t$,
-nous consid\'erons les normes avec des "$\max$".
 Cette continuit\'e permet d'obtenir le fait qu'une "petite"
 modification de la donn\'ee initiale ou des termes $F^n$
 ne cr\'ee qu'une "petite" modification
-du r\'esultat obtenu.
+du r\'esultat obtenu et que cette propri\'et\'e se conserve lorsque
+$(h_t,h_x) \to (0,0)$.
+Remarquons sur la figure \ref{fig:trans_per} que l'erreur commise
+par le sch\'ema centr\'e augmente fortement lorsque
+$(h_t,h_x) \to (0,0)$, nous verrons plus loin que ce comportement
+est d\^u \`a un d\'efaut de stabilit\'e.
 
 
 La condition $\Stab$ permet de traiter des cas o\`u le sch\'ema
 n'est stable que si on restreint les $h_t$ et $h_x$ utilis\'es.
-Nous verrons un tel exemple dans la suite de cette section.
+Nous verrons dans la suite de cette section que le sch\'ema 
+d\'ecentr\'e amont n'est stable que sous une certaine condition
+que nous expliciterons.
 
 
-L'erreur de troncature repr\'esente l'erreur que fait un sch\'ema
-au cours d'un pas de temps.
+On pourrait consid\'erer d'autres normes pour exprimer cette stabilit\'e.
+Par exemple, on pourrait consid\'erer la norme
+$\max_{0\leq n \leq N} \sqrt{h_x} (\sum_{0\leq j \leq M} (u_j^n)^2)^{1/2}$
+pour $(u_j^n)$.
+La d\'efinition propos\'ee ne serait alors pas n\'ecessairement
+\'equivalente \`a celle de la d\'efinition \ref{def:stabilite}.
+En effet, si toutes les normes sont \'equivalentes en dimension
+finie, rien ne prouve que les constantes de la relation
+d'\'equivalence ne d\'ependent pas de $h_t$ et $h_x$.
+
+
+
+
+L'erreur de troncature repr\'esente l'erreur que fait le sch\'ema
+au cours d'un pas de temps en partant de la solution exacte.
 En effet, on compare (cf d\'efinition \ref{def:troncature})
 la solution exacte $\tu^{n+1}$ \`a la solution 
 obtenue en faisant un pas de temps du sch\'ema
@@ -1849,13 +1865,11 @@ pr\'ec\'edent $\tu^{n}$.
 
 La consistance d'un sch\'ema (cf d\'efinition \ref{def:consistance})
 signifie que l'erreur de troncature commise par unit\'e de temps
-(on divise par $h_t$) tend vers $0$ lorsqu'on prend 
-des pas de temps et d'espace de plus en plus petits.
+(on divise par $h_t$) tend vers $0$ lorsque $(h_t,h_x) \to (0,0)$.
 De plus, on peut quantifier la notion de consistance
 gr\^ace \`a l'ordre de consistance 
 (plus les ordres de consistance en temps et en espace sont \'elev\'es,
-plus l'erreur de troncature d\'ecro\^it vite vers $0$ quand les pas 
-de temps et d'espace tendent vers $0$).
+plus l'erreur de troncature d\'ecro\^it vite vers $0$ quand $(h_t,h_x) \to (0,0)$).
 En quelque sorte, la consistance signifie que le sch\'ema est
 coh\'erent avec le probl\`eme exact 
 (les termes pr\'esents dans le sch\'ema num\'erique correspondent
@@ -1896,6 +1910,12 @@ s'il manque la consistance ou la stabilit\'e.
   Ne fa\^ites pas cette erreur.
 \end{remark}
 
+\begin{remark}
+  Toutes ces d\'efinitions caract\'erisent le comportement du sch\'ema 
+  lorsque $(h_t,h_x) \to (0,0)$.
+  En g\'en\'eral, l'analyse num\'erique n'est men\'ee que dans cette limite.
+\end{remark}
+
 Nous allons maintenant prouver la premi\`ere partie du th\'eor\`eme \ref{thm:convergence}
 qui est celle que l'on utilise en pratique.
 \begin{proof}[Preuve partielle du th\'eor\`eme \ref{thm:convergence}]
@@ -1908,24 +1928,24 @@ qui est celle que l'on utilise en pratique.
   $w^{n+1} = A w^n + \varepsilon^{n+1}$.
 
   Par stabilit\'e du sch\'ema, on obtient
-  $\max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} | w_j^n |
-  \leq C_2 \max_{\substack{0\leq n \leq N\\ 0 \leq j \leq M}} \dfrac{| \varepsilon_j^n |}{h_t}$.
+  $\max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | w_j^n |
+  \leq C_2 \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} \dfrac{| \varepsilon_j^n |}{h_t}$.
   On conclut en utilisant la d\'efinition de la consistance.
 \end{proof}
 
 
-Pour $A \in \R^{M \times M}$, on note 
-\[
-  \tn A \tn = \sup_{V \in \R^{M} \backslash\{0\}} \dfrac{\| A V \|}{\| V \|} ,
-\]
-o\`u $\| V \| = \max\limits_{0\leq j \leq M} | V_j |$.
-Rappelons que $\tn \cdot \tn$ est une norme sur $\R^{M \times M}$.
+
 Comme nous l'avons dit, en pratique, pour prouver la convergence du sch\'ema
 on prouve sa consistance et sa stabilit\'e.
 Il se trouve que les preuves de consistances sont g\'en\'eralement plut\^ot
-ais\'ees. La difficult\'e se trouve donc dans la preuve de la stabilit\'e.
+ais\'ees, la difficult\'e se trouve donc plut\^ot dans la preuve de la stabilit\'e.
 Afin de faciliter ces preuves,
-nous donnons maintenant des caract\'erisations de la stabilit\'e.
+nous en donnons maintenant des conditions n\'ecessaires et des conditions
+suffisantes.
+Pour $A \in \R^{M \times M}$, on note 
+$\tn A \tn = \sup_{V \in \R^{M} \backslash\{0\}} \dfrac{\| A V \|}{\| V \|}$,
+o\`u $\| V \| = \max\limits_{0\leq j \leq M} | V_j |$.
+Rappelons que $\tn \cdot \tn$ est une norme sur $\R^{M \times M}$.
 Commen\c{c}ons d'abord par le r\'esultat suivant.
 \begin{proposition}
   \label{prop:carac_stab}
@@ -1954,7 +1974,7 @@ Commen\c{c}ons d'abord par le r\'esultat suivant.
 
   Maintenant supposons que \eqref{eq:carac_stab} est \'etablie.
   Appliquons le sch\'ema \`a $U_0 \in \R^{M}$
-  et $(F^n) \in \R^{N \times M}$.
+  et $(F^n) \in \R^{(N+1) \times M}$.
   Nous pouvons prouver (voir exercice \ref{exo:sol_schema_1pas}) 
   que la solution obtenue est donn\'ee par
   \begin{align*}
@@ -1973,14 +1993,13 @@ Commen\c{c}ons d'abord par le r\'esultat suivant.
 
 \begin{exercise}
   \label{exo:sol_schema_1pas}
-  Soient $U_0 \in \R^{M}$ et $(F^n) \in \R^{N \times M}$.
+  Soient $U_0 \in \R^{M}$ et $(F^n) \in \R^{(N+1) \times M}$.
   Montrer que l'unique solution de \eqref{eq:schema_1pas}
   est donn\'ee par
   \begin{align}
     \label{eq:sol_Un}
     \forall 0 \leq n \leq N , \quad  U^n = A^n U_0 + h_t \sum_{\ell = 0}^{n-1} A^{n-\ell-1} F^{\ell} .
   \end{align}
-  !! Cet exercice est-il vraiment utile ??
 \end{exercise}
 
 
@@ -1995,8 +2014,8 @@ et $k \in \Z$.
 On \'etudie ensuite l'effet qu'a l'application du sch\'ema sur cette condition initiale complexe.
 
 L'int\'er\^et de choisir un vecteur de la forme $u_j^0 = e^{2 i \pi k x_j}$
-est que l'on a $u_j^1 = \sum_{\ell=0}^{M-1} a_{j \ell} u_{\ell}^{0}$.
-En prenant $\calA_j(k) = \sum_{\ell=0}^{M-1} a_{j\ell} e^{2i\pi k (x_{\ell} - x_j)}$, on montre
+est que l'on a $u_j^1 = \sum_{\ell=1}^{M} a_{j \ell} u_{\ell}^{0}$.
+En prenant $\calA_j(k) = \sum_{\ell=1}^{M} a_{j\ell} e^{2i\pi k (x_{\ell} - x_j)}$, on montre
 que $\forall 1\leq j \leq M, \;  u_j^{1} = \calA_j(k) u_j^0$ avec $\calA_j(k) \in \C$.
 \begin{definition}[Stabilit\'e au sens de Von Neumann]
   On dit qu'un sch\'ema \eqref{eq:schema_1pas} est stable au
@@ -2004,6 +2023,7 @@ que $\forall 1\leq j \leq M, \;  u_j^{1} = \calA_j(k) u_j^0$ avec $\calA_j(k) \i
   et pour tout $k \in \Z$, $| \calA_j(k) | \leq 1$.
 \end{definition}
 \begin{proposition}
+  \label{prop:Von_Neumann_nec}
   La stabilit\'e au sens de Von Neumann est n\'ecessaire \`a la stabilit\'e du sch\'ema.
   Dit autrement, la stabilit\'e du sch\'ema implique la stabilit\'e au sens de 
   Von Neumann.
@@ -2033,29 +2053,13 @@ n'est pas stable.
 
 \begin{remark}
   La stabilit\'e de Von Neumann correspond \`a la stabilit\'e du sch\'ema 
-  dans le sens 
-  \begin{align*}
-    \| (u_j^n) \|_{*} 
-    \leq C_1 \| U_0 \|_{\#} 
-    + C_2 \| (F^n) \|_{*} ,
-  \end{align*}
+  dans le sens $\| (u_j^n) \|_{*} \leq C_1 \| U_0 \|_{\#} + C_2 \| (F^n) \|_{*}$,
   avec des normes $\| \cdot \|_{*}$ et $\| \cdot \|_{\#}$ diff\'erentes de celles
   de la d\'efinition \ref{def:stabilite}.
 \end{remark}
 
-!! Harmoniser l'intervalle des j : 0 \`a M-1 ou 1 \`a M !!
-
-!! Attention aux remarques sur les diff\'erentes normes :
-on ne peut pas avoir l'\'equivalence entre les normes avec des constantes
-qui ne d\'ependent pas des pas d'espace et de temps !!
-!! remarque sur l'existence d'autres notions de stabilit\'e avec d'autres normes !!
-
-!! pour la stabilit\'e au sens de Von Neumann : prouver la condition n\'ecessaire
-+ simple remarque sur condition suffisante sous certaines conditions
-dans une autre norme !! --- ne pas l'aborder ici !!
-
 %%%%%%%%%%%%%%%%%%
-\subsubsection{Analyse des deux sch\'emas pour conditions p\'eriodiques}
+\subsubsection{Analyse des deux sch\'emas donn\'es en introduction}
 
 
 Nous allons montrer dans cette section que le sch\'ema num\'erique 
@@ -2066,12 +2070,12 @@ C'est ce d\'efaut de stabilit\'e qui explique son mauvais comportement.
 On consid\`ere comme degr\'es de libert\'e
 $U^n = 
 \begin{pmatrix}
-  u_0^n \\ \vdots \\ u_{M-1}^n
+  u_1^n \\ \vdots \\ u_{M}^n
 \end{pmatrix}
 \in \R^M
 $.
 Les deux sch\'emas pr\'ec\'edents peuvent \^etre \'ecrits sous la forme matricielle 
-\eqref{eq:schema_1pas} avec $F^n = 0$ et pour matrices
+\eqref{eq:schema_1pas} avec $F^n = 0$ et
 \begin{align}
   A_{C} = \dfrac{1}{2}
   \begin{pmatrix}
@@ -2105,10 +2109,9 @@ et
   \end{pmatrix},
 \end{align}
 pour le sch\'ema d\'ecentr\'e amont \eqref{eq:transport_DF_decentre_AM}.
-Les deux matrices pr\'ec\'edentes ont \'et\'e \'ecrites avec 
+Les deux matrices pr\'ec\'edentes sont dans
+$\R^{M \times M}$ et ont \'et\'e \'ecrites avec 
 $\co = \frac{a h_t}{h_x}$.
-Notons que les deux matrices pr\'ec\'edentes sont dans
-$\R^{M \times M}$.
 
 \begin{proposition}
   \label{prop:consistance_2_schemas}
@@ -2124,7 +2127,8 @@ $\R^{M \times M}$.
 \begin{proof}
   Prouvons que le sch\'ema \eqref{eq:transport_DF_centre} est consistant
   d'ordre 1 en temps et 2 en espace.
-  La preuve pour le sch\'ema d\'ecentr\'e amont est laiss\'ee en exercice.
+  La preuve pour le sch\'ema d\'ecentr\'e amont est laiss\'ee en exercice
+  (cf exercice \ref{exo:consistance_trans_AM}).
 
   On calcule l'erreur de troncature. Ceci revient \`a 
   calculer une solution approch\'ee au temps $t_{n+1}$ par le sch\'ema \`a partir
@@ -2156,70 +2160,94 @@ $\R^{M \times M}$.
     + O (h_t) + a \dfrac{\partial u}{\partial x}(t_n, x_j) + O (h_x^2) .
   \end{align*}
   En utilisant le fait que $u$ est solution de \eqref{eq:transport_per},
-  nous avons prouv\'e le fait que le sch\'ema \eqref{eq:transport_DF_centre}
+  on a 
+  $\dfrac{\partial u}{\partial t}(t_n, x_j) + a \dfrac{\partial u}{\partial x}(t_n, x_j) = 0$.
+  Nous avons prouv\'e le fait que le sch\'ema \eqref{eq:transport_DF_centre}
   est consistant d'ordre 2 en espace et d'ordre 1 en temps.
 \end{proof}
 
 \begin{exercise}
+  \label{exo:consistance_trans_AM}
   Terminer la preuve de la proposition \ref{prop:consistance_2_schemas}:
   prouver que le sch\'ema \eqref{eq:transport_DF_decentre_AM} est consistant
-  d'ordre 1 en temps et 1 en espace. 
+  d'ordre 1 en temps et en espace. 
 \end{exercise}
 
 
 \begin{proposition}
+  \label{prop:stabilite_transport_AM}
   Le sch\'ema \eqref{eq:transport_DF_decentre_AM} est stable
   sous la condition $c = \dfrac{a h_t}{h_x} \leq 1$.
+  De plus, ce sch\'ema est instable si $c > 1$.
 \end{proposition}
 \begin{proof}
+  Supposons $c \leq 1$ et montrons que le sch\'ema est stable.
   Soit $U_0 \in \R^M$, on calcule $U^1 = A U_0$.
-  Pour $0 \leq j \leq M-1$, 
+  Pour $1 \leq j \leq M$, 
   $u_j^1 = (1-c) u_j^0 + c u_{j-1}^0$.
   Ainsi, $|u_j^1| \leq |1-c| | u_j^0 | + | c | | u_{j-1}^0 |$.
   On obtient $\| U^1 \| \leq (|1-c| + |c|) \| U_0 \|$.
   Ceci \'etant valide pour tout $U_0 \in \R^M$, on a $\tn A \tn \leq |1-c| + |c|$.
   La condition $0 \leq c \leq 1$ donne $\tn A \tn \leq 1$ et le sch\'ema est stable 
   d'apr\`es le corrolaire \ref{corro:stability}.
-\end{proof}
 
-!! grouper ces deux propositions ainsi que leur preuve !!
-
-Appliquons ce crit\`ere pour prouver le r\'esultat suivant.
-\begin{proposition}
-  Le sch\'ema \eqref{eq:transport_DF_decentre_AM} est instable
-  si $c = \dfrac{a h_t}{h_x} > 1$.
-\end{proposition}
-\begin{proof}
-  Si $u_j^n = b_n(k) e^{2i\pi k x_j}$, alors
+  Supposons maintenant que $c > 1$ et montrons que le sch\'ema est instable.
+  Pour cela, nous allons montrer qu'il est instable au sens de Von Neumann.
+  Si $u_j^0 = e^{2i\pi k x_j}$, alors
   \[
-    u_j^{n+1} = (1-c) u_j^n + c u_{j-1}^n = (1 - c + c e^{-2i\pi k h_x}) u_j^n .
+    u_j^{1} = (1-c) u_j^0 + c u_{j-1}^0 = (1 - c + c e^{-2i\pi k h_x}) u_j^0 
+    = \calA(k) u_j^0.
   \]
-  Ici, nous avons $u_j^{n+1} = \calA u_j^n$ avec $\calA = 1 - c + c e^{-2i\pi k h_x}$.
-  Pour $c > 1$, on a $| \calA | > 1$ (si $\cos(2\pi k h_x) < 1$). 
+  Ici, nous avons $\calA(k) = 1 - c + c e^{-2i\pi k h_x}$.
+  Pour $c > 1$ et $k=1$, on a pour $h_x<1$,
+  $| \calA | > 1$ (on montre que $\cos(2\pi k h_x) < 1$). 
   Le sch\'ema n'est pas stable au sens 
-  de Von Neumann donc il n'est pas stable au sens de la d\'efinition \ref{def:stabilite}.
+  de Von Neumann donc, d'apr\`es la proposition \ref{prop:Von_Neumann_nec},
+  il n'est pas stable au sens de la d\'efinition \ref{def:stabilite}.
 \end{proof}
 
-\begin{remark}
-  On peut m\^eme prouver l'\'equivalence des deux notions de stabilit\'e
-  en utilisant le fait que les exponentielles complexes constituent une base
-  Hilbertienne de l'espace des fonctions de carr\'e int\'egrable sur $(0,1)$.
-\end{remark}
-
-
+La mauvais comportement du sch\'ema centr\'e provient d'un d\'efaut
+de stabilit\'e. La preuve de ce r\'esultat est laiss\'ee en exercice.
 \begin{exercise}[Instabilit\'e du sch\'ema explicite centr\'e]
   Montrer que le sch\'ema \eqref{eq:transport_DF_centre} est instable
   (c'est-\`a-dire n'est stable sous aucune condition $\Stab$).
 \end{exercise}
 
-!! expliquer qu'il faut aller chercher l'information qui vient
-pas celle qui part !!
+
+
+Nous pouvons tirer plusieurs conclusions de l'\'etude de ces deux sch\'emas.
+Tout d'abord, le fait de d\'ecentrer la d\'eriv\'ee partielle en espace
+a permis de rendre le sch\'ema stable.
+Notons que le sens dans le lequel on d\'ecentre cette d\'eriv\'ee est essentiel,
+on peut montrer que le sch\'ema d\'ecentr\'e aval est instable pour 
+$a>0$ et qu'il faut changer le sens du d\'ecentrage si $a<0$.
+En fait, il faut d\'ecentrer en utilisant les donn\'ees qui correspondent
+\`a de l'information qui arrive et non de l'information qui part.
+
+
+De plus, nous avons vu dans la proposition \ref{prop:stabilite_transport_AM} que
+le sch\'ema \eqref{prop:stabilite_transport_AM} est stable
+uniquement sous la condition $a h_t \leq h_x$
+qui lie les pas de temps et d'espace.
+On appelle une telle condition "condition de CFL" pour 
+Courant--Friedrichs--Lewy.
+De la m\^eme fa\c{c}on on appelle $c = \frac{a h_t}{h_x}$
+le nombre de CFL.
+De telles conditions doivent \^etre associ\'ees aux sch\'emas
+explicites pour esp\'erer les rendre stables.
+Seuls les sch\'emas implicites peuvent se passer de ce
+type de condition (voir exercice \ref{exo:transport_implicite}).
 
 
 !! \'etude de l'influence du nombre de cfl (nouvelle section ??) !!
 -- DONNER DES FIGURES + EXO : RETROUVER LES FIGURES !!
 
 
+%%%%%%%%%%%%%%%%%%
+\subsubsection{D\'etermination pratique des ordres de convergence}
+
+
+!! expliquer comment ca marche + figures + exo : retrouver les figures !!
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Conditions de Dirichlet}
@@ -2316,6 +2344,7 @@ sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
 !! exercice sur les ordre de convergence : figure avec echelle logarithmique !!
 
 \begin{exercise}[Sch\'ema implicite]
+  \label{exo:transport_implicite}
   Dans cet exercice, on s'int\'eresse \`a une discr\'etisation implicite du probl\`eme
   \eqref{eq:transport}.
   On approche les d\'eriv\'ees partielles en temps et espace
@@ -2343,8 +2372,27 @@ sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
   \item Montrer que ce sch\'ema est consistant d'ordre 1 en temps et en espace.
     Que peut-on dire de la convergence de ce sch\'ema?
 
-  \item !! CODE !! TODO !!
+  \item Coder le sch\'ema propos\'e. On peut soit inverser la matrice \`a l'ext\'erieur
+    de la boucle en temps, soit r\'esoudre un syst\`eme lin\'eaire \`a chaque pas de temps.
+    Comparer les deux m\'ethodes, laquelle est la plus efficace ?
     
+    !! Coder ca !!
+
+    NB : commandes scilab
+
+
+  \item On consid\`ere $a=1$, $u_0 = 0$ et $\alpha(t) = t^2$.
+    Quelle est la solution exacte du probl\`eme?
+    approcher la solution gr\^ace au sch\'ema implicite.
+    Pour $(N,M) = (...)$, que remarquez-vous en $(t,x)=(0.1,0.5)$?
+    Si vous l'avez cod\'e, comparez avec le sch\'ema explicite.
+    Comment expliquez-vous ceci ?
+    
+  \item D\'eterminer num\'eriquement le taux de convergence de ce sch\'ema.
+    On prendra par exemple la solution du cas test pr\'ec\'edent \`a $T=1$ pour
+    estimer la convergence du sch\'ema. Calculer l'erreur et la tracer sur une figure
+    \`a l'\'echelle logarithmique comme sur la figure (...).
+    Quels ordres de convergence trouvez-vous num\'eriquement ?
   \end{enumerate}
 
 \end{exercise}
