@@ -1549,7 +1549,7 @@ $x=1$ r\'eentre imm\'ediatement en $x=0$.
 On peut donc la suivre au cours de sa propagation dans le domaine
 et observer la qualit\'e de l'approximation que nous avons faite.
 Nous allons donc comparer nos approximations num\'eriques avec la solution
-exacte donn\'ee par $u(t,x) = u_0(f(x-at))$.
+exacte donn\'ee par $u(t,x) = u_0(f(x-at))$ (voir exercice \ref{exo:carac_per}).
 
 
 Nous proposons maintenant deux discr\'ertisations de l'\'equation
@@ -1612,13 +1612,15 @@ On obtient le sch\'ema num\'erique
 \end{align}
 o\`u, pour simplifier l'\'ecriture, nous avons introduit $u_{-1}^n = u_{M-1}^n$.
 
-Nous reportons les r\'esultats obtenus sur la figure \ref{fig:trans_per}.
+
+Nous reportons sur la figure \ref{fig:trans_per} 
+les r\'esultats num\'eriques obtenus \`a partir de ces deux sch\'emas.
 Lorsque l'on raffine le maillage (quand on augmente $N$ et $M$),
 la solution obtenue par le sch\'ema d\'ecentr\'e \eqref{eq:transport_DF_decentre_AM}
 tend vers la solution exacte
 tandis que la solution obtenue par le sch\'ema centr\'e \eqref{eq:transport_DF_centre}
-se d\'egrade de plus en plus. La solution obtenue par le sch\'ema centr\'e va jusqu'\`a
-diverger quand $N$, $M$ sont augment\'es.
+se d\'egrade de plus en plus. La solution obtenue par le sch\'ema centr\'e semble
+diverger quand $N, M \to +\infty$.
 
 \begin{figure}[h]
   \centering
@@ -1669,14 +1671,14 @@ $U^n$ g\'en\'er\'e par r\'ecurrence comme suit:
 \end{align}
 o\`u $U_0$ est donn\'e par $(U_0)_j = u(0,x_j)$, $A$ est une matrice
 et $F^n$ est un vecteur.
-Afin de simplifier notre propos, nous consid\'ererons que le syst\`eme \`a inverser 
+Afin de simplifier notre propos, nous consid\'erons que le syst\`eme \`a inverser 
 a $M$ inconnues que l'on num\'erotera de $1$ \`a $M$.
 Ainsi, pour tout $0 \leq n \leq N$,
 $U^n \in \R^M$ avec $\forall 1 \leq j \leq M$, $(U^n)_j = u_j^n$ et de m\^eme
 $A \in \R^{M \times M}$ et $F^n \in \R^M$.
 La valeur de $u_0^n$ n'est pas consid\'er\'ee comme inconnue du probl\`eme
-car elle est donn\'ee par la condition de Dirichlet ou p\'eriodique.
-Si la syst\`eme dispose d'un nombre diff\'erent d'inconnues, on pourra
+car elle est donn\'ee par une condition limite (Dirichlet ou p\'eriodique).
+Si le syst\`eme dispose d'un nombre diff\'erent d'inconnues, on pourra
 ais\'ement adapter notre propos.
 
 \begin{remark}
@@ -1820,7 +1822,8 @@ est d\^u \`a un d\'efaut de stabilit\'e.
 La condition $\Stab$ permet de traiter des cas o\`u le sch\'ema
 n'est stable que si on restreint les $h_t$ et $h_x$ utilis\'es.
 Nous verrons dans la suite de cette section que le sch\'ema 
-d\'ecentr\'e amont n'est stable que sous une certaine condition
+d\'ecentr\'e amont \eqref{eq:transport_DF_decentre_AM} 
+n'est stable que sous une certaine condition
 que nous expliciterons.
 
 
@@ -1874,7 +1877,7 @@ on parle parfois simplement d'ordre d'un sch\'ema
 En pratique, la convergence est la propri\'et\'e que l'on veut avoir
 car elle garantit que le sch\'ema consid\'er\'e fournit une approximation
 raisonnable du probl\`eme exact (sous r\'eserve que les pas de temps
-et d'espace soient suffisamment petits).
+et d'espace sont suffisamment petits).
 Cependant, cette propri\'et\'e n'est pas ais\'ee \`a d\'emontrer.
 C'est pourquoi nous utilisons le th\'eor\`eme \ref{thm:convergence}
 qui assure la convergence \`a partir de la stabilit\'e et 
@@ -1927,7 +1930,7 @@ nous en donnons maintenant des conditions n\'ecessaires et des conditions
 suffisantes.
 Pour $A \in \R^{M \times M}$, on note 
 $\tn A \tn = \sup_{V \in \R^{M} \backslash\{0\}} \dfrac{\| A V \|}{\| V \|}$,
-o\`u $\| V \| = \max\limits_{0\leq j \leq M} | V_j |$.
+o\`u $\| V \| = \max\limits_{1 \leq j \leq M} | V_j |$.
 Rappelons que $\tn \cdot \tn$ est une norme sur $\R^{M \times M}$.
 Commen\c{c}ons d'abord par le r\'esultat suivant.
 \begin{proposition}
@@ -2013,6 +2016,7 @@ que $\forall 1\leq j \leq M, \;  u_j^{1} = \calA_j(k) u_j^0$ avec $\calA_j(k) \i
 \end{proposition}
 \begin{proof}
   On peut montrer que si on consid\`ere $u_j^0 = \Re (e^{2 i \pi k x_j})$
+  et $F^n = 0$
   alors $\forall 0 \leq n \leq N, u_j^n = \Re ((\calA_j(k))^n e^{2 i \pi k x_j})$.
   Idem, si $u_j^0 = \Im (e^{2 i \pi k x_j})$, 
   alors $\forall 0 \leq n \leq N, u_j^n = \Im ((\calA_j(k))^n e^{2 i \pi k x_j})$.
@@ -2031,13 +2035,15 @@ que $\forall 1\leq j \leq M, \;  u_j^{1} = \calA_j(k) u_j^0$ avec $\calA_j(k) \i
 \end{proof}
 
 
-Par la suite nous utiliserons la stabilit\'e de Von Neumann pour prouver qu'un sch\'ema
-n'est pas stable.
+Par la suite nous utilisons la stabilit\'e de Von Neumann lorsque nous voulons 
+prouver qu'un sch\'ema n'est pas stable.
 
 \begin{remark}
-  La stabilit\'e de Von Neumann correspond \`a la stabilit\'e du sch\'ema 
+  On peut prouver que la
+  stabilit\'e de Von Neumann correspond \`a la stabilit\'e du sch\'ema 
   dans le sens $\| (u_j^n) \|_{*} \leq C_1 \| U_0 \|_{\#} + C_2 \| (F^n) \|_{*}$,
-  avec des normes $\| \cdot \|_{*}$ et $\| \cdot \|_{\#}$ diff\'erentes de celles
+  avec $C_1$ et $C_2$ ne d\'ependant que de $T$
+  et des normes $\| \cdot \|_{*}$ et $\| \cdot \|_{\#}$ diff\'erentes de celles
   de la d\'efinition \ref{def:stabilite}.
 \end{remark}
 
