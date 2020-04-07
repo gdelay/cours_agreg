@@ -2529,6 +2529,8 @@ On peut d\'ecomposer $u_0$ en s\'erie de Fourier (...)
 
 !! sch\'ema explicite !! + exo: retrouver figures de l'intro !!
 
+!! CFL tr\`es co\^uteuse dans ce cas pr\'ecis !!
+
 !! sch\'ema implicite !! 
 
 
@@ -2548,16 +2550,193 @@ en "bonus" !!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation des ondes}
 
+!! definition des espaces de fonctions utiles : nombre de d\'eriv\'ees en x et en t
+peut \^etre diff\'erent !!
+
+\begin{equation}
+  \label{eq:ondes_Dir}
+  \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
+  \left\{
+    \begin{array}{l l}
+      \dfrac{\partial^2 u}{\partial t^2} - c^2 \dfrac{\partial^2 u}{\partial x^2} = f 
+      &\dans (0,T) \times (0,1) ,
+      \\
+      u(0,.) = u_0 
+      & \dans (0,1) ,
+      \\
+      \dfrac{\partial u}{\partial t}(0,.) = u_1 
+      & \dans (0,1) ,
+      \\
+      u(t,0) = 0 , \quad u(t,1) = 0 & \forall t \in (0,T) ,
+    \end{array}
+  \right.
+\end{equation}
+avec (...)
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
 
+\begin{theorem}[Existence et unicit\'e de la solution]
+  \label{thm:ondes_existence}
+  Supposons que (...).
+  Le probl\`eme \eqref{eq:ondes_Dir} est bien pos\'e:
+  il admet une unique solution $u \in $(...)
+  et $\| u \| \leq (...)$.
+
+  De plus, cette solution appartient \`a l'espace (...)
+\end{theorem}
+
+
+\begin{remark}[Pas d'effet r\'egularisant]
+  Commenter la r\'egularit\'e du th\'eor\`eme. (...)
+  -- M\^eme r\'egularit\'e que celle des donn\'ees.
+\end{remark}
+
+
+\begin{proposition}[R\'eversibilit\'e de l'\'equation]
+  Le probl\`eme \eqref{eq:ondes_Dir} est r\'eversible:
+  (...)
+\end{proposition}
+
+
+\begin{proposition}[Conservation de l'\'energie]
+  \label{prop:ondes_energie}
+  Soit $u$ une solution de \eqref{eq:ondes_Dir},
+  alors on a pour tout $t \in [0,T]$,
+  \begin{align*}
+    \dfrac{1}{2} \| \dfrac{\partial u}{\partial t}(t,.) \|_{(...)}^2
+    + \dfrac{1}{2} \| c \dfrac{\partial u}{\partial x}(t,.) \|_{(...)}^2
+    = \dfrac{1}{2} \| u_1 \|_{(...)}^2
+    + \dfrac{1}{2} \| c u_0' \|_{(...)}^2
+    + \| f \| (...)
+  \end{align*}
+\end{proposition}
+
+!! commenter les diff\'erents termes !!
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{M\'ethode de d'Alembert}
+\subsection{Construction de solutions r\'eguli\`eres}
 
+Si $u_0$ et $u_1$ sont dans $C^{\infty}([0,1])$
+avec $u_0^{(\ell)}(0) = u_0^{(\ell)}(1) = 0$
+et $u_1^{(\ell)}(0) = u_1^{(\ell)}(1) = 0$
+pour tout $\ell \in \N$, alors
+\begin{align*}
+  u_0(x) = \sum\limits_{k=1}^{+\infty} b_k \sin (k \pi x)
+  \qquad \text{et} \qquad
+  u_1(x) = \sum\limits_{k=1}^{+\infty} c_k \sin (k \pi x) .
+\end{align*}
+La fonction d\'efinie par
+\begin{align*}
+  u(t,x) = \sum\limits_{k=1}^{+\infty} ( b_k \cos(k \pi c t) + \dfrac{c_k}{k \pi} \sin(k \pi c t) ) .
+\end{align*}
+est alors solution de l'\'equation des ondes.
+
+!! A Verifier : c'est bizarre que ca ne depende pas de $x$ !!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Formule de d'Alembert}
+
+On consid\`ere le probl\`eme sur $\R$ entier:
+\begin{equation}
+  \label{eq:ondes_R}
+  \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
+  \left\{
+    \begin{array}{l l}
+      \dfrac{\partial^2 u}{\partial t^2} - c^2 \dfrac{\partial^2 u}{\partial x^2} = f 
+      &\dans \R_+ \times \R ,
+      \\
+      u(0,.) = u_0 
+      & \dans \R ,
+      \\
+      \dfrac{\partial u}{\partial t}(0,.) = u_1 
+      & \dans \R ,
+    \end{array}
+  \right.
+\end{equation}
+o\`u (...)
+
+
+\begin{theorem}
+  \label{thm:d_Alembert}
+  Si $u_0 \in C^2(\R)$, $u_1 \in C^1(\R)$ et $f \in C^1(\R)$,
+  alors le probl\`eme \eqref{eq:ondes_R} admet une unique solution 
+  $u \in C^2(\R_+ \times \R)$ donn\'ee par 
+  \begin{align*}
+    u(t,x) = \dfrac{u_0(x+ct) + u_0(x-ct)}{2} 
+    + \dfrac{1}{2c} \int_{x-ct}^{x+ct} u_1(s) \deriv s
+    + \dfrac{1}{2c} \int_0^t \int_{x - c(t-s)}^{x+c(t-s)} f(s,y) \deriv y \deriv s .
+  \end{align*}
+\end{theorem}
+
+!! prouver ce thm !!
+
+!! donner une interpretation de ces termes ??
+En particulier si $f=0$ !!
+
+\begin{remark}
+  L'information se propage \`a vitesse finie (...)
+  !! TODO !! !! Comparer avec l'\'equation de la chaleur !!
+\end{remark}
+
+\begin{exercise}
+  Si $f=0$, reprendre le r\'esultat du th\'eor\`eme \ref{thm:d_Alembert}.
+  Prouver qu'on a $u(t,x) = u^+(t,x) + u^-(t,x)$
+  avec (...).
+  Ces deux fonctions repr\'esentent des ondes se d\'epla\c{c}ant
+  dans les deux directions.
+
+  !! donner la forme de $u^+$ et $u^-$ !!
+\end{exercise}
+
+\begin{exercise}
+  Retrouver le r\'esultat du th\'eor\`eme \ref{thm:d_Alembert}
+  en utilisant la transform\'ee de Fourier comme dans (...).
+  !! TODO !!
+\end{exercise}
+
+
+!! faire la mont\'ee en r\'egularit\'e ??
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Approximation par diff\'erences finies}
+
+!! chapeau !!
+
+!! intro sch\'ema explicite centr\'e !!
+
+!! initialisation du pas de temps 1 !!
+
+!! exo : retrouver les r\'esultats de la section d'intro !! 
+
+%%%%%%%%%%%%%%%%%
+\subsubsection{D\'efinitions et th\'eor\`emes}
+
+!! on adapte toutes les d\'efinitions pr\'ec\'edentes au cas des sch\'emas \`a deux pas !!
+(est-ce que deux pas c'est suffisant ou bien faut-il pr\'evoir plus ??
+
+
+%%%%%%%%%%%%%%%%%
+\subsubsection{Analyse de quelques sch\'emas}
+
+!! analyse sch\'ema intro !!
+
+!! interpretation CFL !!
+
+!! v\'erifier qu'il n'y a pas besoin de stabilit\'e dans d'autres normes
+que celle propos\'ee !!
+
+
+!! sch\'ema implicite !!
++ $\theta$-sch\'ema en exo
+
+
+!! exo final sur formulation mixte !!
++ derniere question : legere modif rend le sch\'ema instable !!
+
+
+!! faire d'autres conditions limites (Neumann) ??
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Pour aller plus loin}
