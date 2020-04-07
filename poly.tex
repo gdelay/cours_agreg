@@ -2395,11 +2395,169 @@ sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de la chaleur}
 
-!! parler des $\theta$-sch\'emas -- voir poly L. !!
+!! definition des espaces de fonctions utiles : nombre de d\'eriv\'ees en x et en t
+peut \^etre diff\'erent !!
+
+\begin{equation}
+  \label{eq:chaleur_Dir}
+  \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
+  \left\{
+    \begin{array}{l l}
+      \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = f 
+      &\dans (0,T) \times (0,1) ,
+      \\
+      u(0,.) = u_0 
+      & \dans (0,1) ,
+      \\
+      u(t,0) = 0 , \quad u(t,1) = 0 & \forall t \in (0,T) ,
+    \end{array}
+  \right.
+\end{equation}
+avec (...)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Propri\'et\'es g\'en\'erales}
+
+
+
+\begin{theorem}[Existence et unicit\'e de la solution]
+  \label{thm:chaleur_existence}
+  Supposons que (...).
+  Le probl\`eme \eqref{eq:chaleur_Dir} est bien pos\'e:
+  il admet une unique solution $u \in $(...)
+  et $\| u \| \leq (...)$.
+
+  De plus, cette solution appartient \`a l'espace (...)
+\end{theorem}
+
+\begin{remark}[Effet r\'egularisant de l\'equation de la chaleur]
+  Commenter la r\'egularit\'e du th\'eor\`eme. (...)
+\end{remark}
+
+\begin{proposition}[Non r\'eversibilit\'e de l'\'equation]
+  Le probl\`eme \eqref{eq:chaleur_Dir} n'est pas r\'eversible:
+  (...)
+\end{proposition}
+
+
+\begin{proposition}
+  \label{prop:chaleur_continuite_donnees}
+  Soit $u$ une solution de \eqref{eq:chaleur_Dir},
+  alors on a pour tout $t \in [0,T]$,
+  \begin{align*}
+    \| u(t,.) \|_{(...)} \leq e^{-t} \| u_0 \|_{(...)} + \| f \|_{L^2(]0,t[ \times ]0,1[)} .
+  \end{align*}
+\end{proposition}
+
+\begin{proof}
+  !! TODO !!
+\end{proof}
+
+
+\begin{remark}
+  !! \'Energie du syst\`eme (utilis\'e aussi dans le livre de Brigitte Lucquin) !!
+  -- Ne correspond pas \`a l'\'energie physique !!
+\end{remark}
+
+\begin{remark}
+  La continuit\'e par rapport aux donn\'ees traduit une forme de stabilit\'e
+  (...)
+\end{remark}
+
+\begin{remark}[Conditions de Dirichlet non homog\`enes]
+  On peut utiliser un rel\`evement comme dans (...)
+\end{remark}
+
+\begin{remark}[Condition de Neumann]
+  Conservation de la valeur moyenne ??
+  (...)
+\end{remark}
+
+
+\begin{exercise}
+  Montrer que la solution du pb de Neumann sans terme source
+  tend exponentiellement vers la valeur moyenne de la donn\'ee initiale.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Analyse de Fourier}
+
+!! chapeau !!
+
+%%%%%%%%%%%%%%%%
+\subsubsection{Recherche d'une solution sous la forme de s\'eries de Fourier}
+
+On remarque que les fonctions de la forme $\sin(k \pi x) e^{-k^2 \pi^2 t}$
+v\'erifient l'\'equation de la chaleur.
+L'approche que nous allond pr\'esenter consiste donc \`a 
+chercher une solution au probl\`eme \eqref{eq:chaleur_Dir} sous la forme
+d'une s\'erie de ces termes.
+
+On se place ici dans le cas de conditions de Dirichlet homog\`enes
+$\alpha = \beta = 0$ et sans terme source $f=0$.
+On suppose que la donn\'ee initiale est $C^0([0,1])$ avec $u_0(0) = u_0(1) = 0$
+et \'egalement $C^1$ par morceaux.
+On peut d\'ecomposer $u_0$ en s\'erie de Fourier (...)
+
+!! parler du ph\'enom\`ene de Gibbs + figure + exo num\'erique !!
+
+!! m\'ethode de s\'eparation des variables !!
+
+
+\begin{proof}[Preuve du th\'eor\`eme \ref{thm:chaleur_existence}]
+  L'unicit\'e de la solution et la continuit\'e par rapport aux donn\'ees est une cons\'equence
+  de la proposition \ref{prop:chaleur_continuite_donnees}.
+
+  Montrons maintenant l'existence d'une solution (...)
+\end{proof}
+
+%%%%%%%%%%%%%%%%
+\subsubsection{Utilisation de la transform\'ee de Fourier}
+
+
+!! pb sur $\R$ entier !!
+
+!! noyau de Green !!
+
+!! propagation de l'info \`a vitesse infinie !!
+(+exo num\'erique avec version sch\'ema implicite/explicite)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Approximation par diff\'erences finies}
+
+
+!! sch\'ema explicite !! + exo: retrouver figures de l'intro !!
+
+!! sch\'ema implicite !! 
+
+
+!! \'etude des VP des matrices ??
+
+!! stabilit\'e avec d'autres normes ?? -> a priori, ce serait plus adapt\'e
+en "bonus" !!
+
+!! parler des $\theta$-sch\'emas -- voir poly L. !! 
+-- Est-ce possible de le faire avec les defs de la section sur l'equation de transport ??
+
+!! Preuve de stabilit\'e par la m\'ethode de l'\'energie : cf B. Lucquin !!
+
+
+!! exo final sur les $\theta$-sch\'emas !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation des ondes}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Propri\'et\'es g\'en\'erales}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{M\'ethode de d'Alembert}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Approximation par diff\'erences finies}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Pour aller plus loin}
