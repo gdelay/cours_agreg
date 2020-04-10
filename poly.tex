@@ -1074,6 +1074,7 @@ Nous construisons donc une suite $(u_j)_{0\leq j \leq M}$ v\'erifiant
 
 \begin{proposition}[Convergence]
   \label{prop:ell_conv}
+  %% voir Proposition 2.10 du livre de B. Lucquin
   Supposons que la solution $u$ du probl\`eme \eqref{eq:ell_1d} soit 
   dans $C^4(0,1)$.
   Alors il existe $C>0$ tel que pour tout $M \geq 2$, on a
@@ -2388,7 +2389,9 @@ sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
     \`a l'\'echelle logarithmique comme sur la figure (...).
     Quels ordres de convergence trouvez-vous num\'eriquement ?
   \end{enumerate}
-
+  
+  NB : si vous avez des difficult\'es pour l'une de ces questions, vous pouvez \'eventuellement
+  lire la section \ref{subsubsec:chaleur_DF_implicite}.
 \end{exercise}
 
 
@@ -2527,17 +2530,240 @@ On peut d\'ecomposer $u_0$ en s\'erie de Fourier (...)
 \subsection{Approximation par diff\'erences finies}
 
 
-!! sch\'ema explicite !! + exo: retrouver figures de l'intro !!
+Nous nous pla\c{c}ons ici dans le m\^eme cadre que celui utilis\'e pour 
+l'\'equation de transport en section \ref{subsec:transport_DF}.
+Nous d\'ecomposons les intervalles de temps et d'espace
+respectivement en $N$ et $M$ sous-intervalles.
+On note $t_n$ ($0 \leq n \leq N$) et $x_j$ ($0 \leq j \leq M$)
+les bornes de ces sous-intervalles.
+Nous cherchons \`a approcher la solution de \eqref{eq:chaleur_Dir}
+en $t_n$ et $x_j$, i.e. $u(t_n,x_j)$ par le terme $u_j^n$ d'une suite
+$(u_j^n)$. 
+Nous proposons plusieurs sch\'emas.
+Leurs propri\'et\'es seront \'etudi\'ees en utilisant les 
+\'el\'ements de la section \ref{subsubsec:analyse_def}.
+
+
+%%%%%%%%%%%%%%%%%%
+\subsubsection{Sch\'ema explicite centr\'e}
+
+Le sch\'ema le plus intuitif \`a utiliser est un sch\'ema 
+explicite centr\'e.
+Pour cela, consid\'erons d'approcher les d\'eriv\'ees de la fa\c{c}on suivante:
+\begin{align*}
+  \dfrac{\partial u}{\partial t}(t_n,x_j) \simeq \dfrac{u(t_{n+1},x_j) - u(t_n,x_j)}{h_t} ,
+  \qquad 
+  \dfrac{\partial^2 u}{\partial x^2}(t_n,x_j) 
+  \simeq \dfrac{u(t_{n},x_{j+1}) - 2 u(t_n,x_j) + u(t_n,x_{j-1})}{h_x^2} .
+\end{align*}
+
+
+Nous obtenons ainsi le sch\'ema suivant
+\begin{align}
+  \label{eq:chaleur_DF_exp_centre}
+  \left\{
+  \begin{array}{l}
+    \forall 1 \leq j \leq M-1 , 
+    u_j^0 = u_0(x_j) ,
+    \\
+    \forall 0 \leq n \leq N, u_0^n = u_M^n = 0 ,
+    \\
+    \forall 0 \leq n \leq N-1, \forall 1 \leq j \leq M-1,
+    u_j^{n+1} = u_j^{n} - \dfrac{\nu h_t}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n} + u_{j-1}^{n} ) 
+    + h_t f(t_n,x_j) .
+  \end{array}
+  \right.
+\end{align}
+
+!! FAUT-IL INTRODUIRE $\nu$ PLUS HAUT ??
+
+
+\begin{exercise}
+  La figure \ref{fig:chaleur_nu} 
+  a \'et\'e obtenue gr\^ace au sch\'ema \eqref{eq:chaleur_DF_exp_centre}.
+  Coder ce sch\'ema est retrouver cette figure.
+  
+  !! donner les param\`etres !!
+\end{exercise}
+
+
+Nous allons maintenant \'etudier les propri\'et\'es de ce sch\'ema.
+Nous pouvons prouver que ce sch\'ema est consistant d'ordre 1 en temps et 2 en espace.
+De plus, il est stable sous la condition de CFL $2 \nu h_t \leq h_x^2$ 
+et instable si cette condition n'est
+pas remplie.
+Ces r\'esultats peuvent \^etre prouv\'es en adaptant ce qui a \'et\'e fait dans
+la section \ref{subsec:transport_DF}.
+
+\begin{exercise}
+  Nous consid\'erons le sch\'ema \eqref{eq:chaleur_DF_exp_centre}.
+  \begin{enumerate}
+  \item Prouver que ce sch\'ema est consistant d'ordre 1 en temps et 2 en espace.
+  \item Prouver que ce sch\'ema est stable sous la condition de CFL
+    $2 \nu h_t \leq h_x^2$.
+  \item Prouver que ce sch\'ema est instable si la condition de CFL
+    pr\'ec\'edente n'est pas v\'erifi\'ee.
+  \end{enumerate}
+\end{exercise}
+
+
+
+
+!! Donner la preuve ??
+Un exemple de plus ne ferait pas de mal ...
+-- une bonne solution serait de donner une correction en fin de section --
+
+!! peut-\^etre modifier la def de la stabilit\'e de Von Neumann en permettant
+\`a la fr\'equence de parcourir $\R$ entier !!
 
 !! CFL tr\`es co\^uteuse dans ce cas pr\'ecis !!
 
-!! sch\'ema implicite !! 
+
+!! FAUT-IL FAIRE UNE REMARQUE SUR LE PRINCIPE DU MAXIMUM DISCRET ??
+-- A QUEL ENDROIT ?? ON POURRAIT AUSSI LA FAIRE POUR LES AUTRES EQUATIONS !!
+
+%%%%%%%%%%%%%%%%%%
+\subsubsection{Sch\'ema implicite centr\'e}
+\label{subsubsec:chaleur_DF_implicite}
 
 
-!! \'etude des VP des matrices ??
+Comme \'evoqu\'e dans la section pr\'ec\'edente, l'utilisation de sch\'emas
+explicites est tr\`es couteuse dans le cadre de l'\'equation de la chaleur.
+On s'int\'eresse donc \`a la possibilit\'e d'utiliser des sch\'emas
+qui seraient inconditionnellement stable.
+Un premier exemple d'un tel sch\'ema est donn\'e par le sch\'ema 
+implicite centr\'e.
+
+
+On approche les d\'eriv\'ees partielles de la mani\`ere suivante:
+\begin{align*}
+  \dfrac{\partial u}{\partial t}(t_n,x_j) \simeq \dfrac{u(t_{n},x_j) - u(t_{n-1},x_j)}{h_t} ,
+  \qquad 
+  \dfrac{\partial^2 u}{\partial x^2}(t_n,x_j) 
+  \simeq \dfrac{u(t_{n},x_{j+1}) - 2 u(t_n,x_j) + u(t_n,x_{j-1})}{h_x^2} .
+\end{align*}
+
+
+
+
+Le sch\'ema implicite centr\'e est donc d\'efini comme
+\begin{align}
+  \label{eq:chaleur_DF_exp_centre}
+  \left\{
+  \begin{array}{l}
+    \forall 1 \leq j \leq M-1 , 
+    u_j^0 = u_0(x_j) ,
+    \\
+    \forall 0 \leq n \leq N, u_0^n = u_M^n = 0 ,
+    \\
+    \forall 1 \leq n \leq N, \forall 1 \leq j \leq M-1,
+    u_j^{n} = u_j^{n-1} - \dfrac{\nu h_t}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n} + u_{j-1}^{n} ) 
+    + h_t f(t_n,x_j) .
+  \end{array}
+  \right.
+\end{align}
+
+Le sch\'ema peut donc \^etre \'ecrit sous la forme
+\begin{align*}
+  \widetilde{A} U^n = U^{n-1} + h_t \widetilde{F}^n ,
+\end{align*}
+avec $U^n$ le vecteur des $u_j^n$ pour $1 \leq j \leq N-1$ et $(\widetilde{F}^n)_j = f(t_n,x_j)$. 
+De plus, $\widetilde{A} = I - \nu h_t \widehat{A}$ o\`u $\widehat{A}$ est la matrice
+du probl\`eme de Laplace-Dirichlet (la matrice $A$ dans \eqref{eq:mat_DF_Laplacien}).
+Pour rappel, cette matrice est exigible.
+
+
+Pour montrer qu'il existe une unique solution \`a ce probl\`eme discret,
+il faut montrer que la matrice $\widetilde{A}$ est inversible.
+Cela a \'et\'e fait par un calcul direct dans l'exercice \ref{exo:transport_implicite}.
+Cependant ce calcul est bien plus difficile dans le cas pr\'esent.
+La m\'ethode utilis\'ee consiste alors \`a calculer les valeurs propres de cette matrice.
+
+Montrons le r\'esultat suivant qui nous servira \`a plusieurs endroits dans ce cours.
+\begin{proposition}[Valeurs propres d'une matrice tridiagonale sym\'etrique]
+  %% citer Lemme 2.2 du livre de B. Lucquin
+  Soit $M \geq 2$.
+  Consid\'erons une matrice de taille $(M-1) \times (M-1)$ de la forme 
+  \begin{align*}
+    A = 
+    \begin{pmatrix}
+      a & b 
+      \\
+      b & \ddots & \ddots
+      \\
+      & \ddots & \ddots & \ddots 
+      \\
+      &&\ddots & \ddots & b
+      \\
+      &&& b & a
+    \end{pmatrix} ,
+  \end{align*}
+  avec $a$ et $b$ des r\'eels.
+  Alors les valeurs propres de $A$ sont les 
+  $\lambda_k = a + 2b \cos \left( \dfrac{k \pi}{M} \right)$ avec $1 \leq k \leq M-1$.
+  Le vecteur propre associ\'e $V_k$ a pour composantes 
+  $(V_k)_j = \sin \left( j \dfrac{k \pi}{M} \right)$.
+\end{proposition}
+
+\begin{proof}
+  Pour une d\'emonstration de cette proposition, le lecteur pourra se r\'ef\'erer au 
+  Lemme 2.2 du livre 
+  de Brigitte Lucquin, "\'Equations aux d\'eriv\'ees partielles et leurs approximations", 2004.
+\end{proof}
+
+Les valeurs propres de la matrice $\widetilde{A}$ sont donc de la forme
+\begin{align*}
+  \lambda_k = 1 + \dfrac{2 \nu h_t}{h_x^2} \left(1 - \cos \left(\frac{k \pi}{M} \right) \right)
+  \qquad (1 \leq k \leq M-1) .
+\end{align*}
+Toutes ces valeurs propres sont strictement positives pour tous $h_t , h_x > 0$. 
+La matrice $\widetilde{A}$ est donc inversible.
+
+
+On peut donc r\'e\'ecrire le sch\'ema num\'erique sous la forme
+(...)
+
+
+
+!! est-ce qu'on ne pourrait pas faire une preuve avec la stabilit\'e en norme
+$\| . \|_{\infty}$ puis montrer que c'est beaucoup plus simple
+en norme $\| . \|_{L^2}$ ??
+--> De toutes fa\c{c}ons, il va falloir introduire la norme $\|.\|_{L^2}$ !!
+
+!! La stabilit\'e du sch\'ema implicite se fait bien pour la norme
+$L^2$ mais \c{c}a a l'air bien plus difficile pour la norme $\max$ !!
+
+!! Une possibilit\'e serait d'introduire ici la notion de stabilit\'e pour une autre
+norme, en particulier la norme $L^2$ !!
+
+!! Du coup quelle est la diff\'erence entre la norme $L^2$ du livre
+et la stabilit\'e au sens de Von Neumann ??
 
 !! stabilit\'e avec d'autres normes ?? -> a priori, ce serait plus adapt\'e
 en "bonus" !!
+
+
+!! Peut-\^etre faudrait-il aussi \'ecrire l'\'equivalence entre la stabilit\'e de
+Von Neumann et celle avec la norme $\| . \|_{L^2}$ ??
+
+\begin{remark}
+  La preuve de stabilit\'e fait ici appel \`a des r\'esultats qui peuvent \^etre
+  difficiles \`a v\'erifier dans le cas g\'en\'eral.
+  En comparaison, la preuve de la stabilit\'e au sens de Von Neumann est bien plus ais\'ee.
+  Ainsi, parfois en pratique, on se contentera de la stabilit\'e de Von Neumann.
+\end{remark}
+
+
+\begin{remark}
+  !! sch\'ema plus difficile \`a impl\'ementer !!
+
+  !! mettre r\'esultats num\'eriques !!
+
+  !! comparer avec sch\'ema explicite, notamment loin d'une condition non nulle !!
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%
+\subsubsection{$\theta$-sch\'emas}
 
 !! parler des $\theta$-sch\'emas -- voir poly L. !! 
 -- Est-ce possible de le faire avec les defs de la section sur l'equation de transport ??
@@ -2546,6 +2772,16 @@ en "bonus" !!
 
 
 !! exo final sur les $\theta$-sch\'emas !!
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\'Etude du probl\`eme de Neumann}
+
+Le but de cette section est d\'etudier le probl\`eme de la chaleur
+avec des conditions aux limites de Neumann.
+Toutes les preuves sont laiss\'ees en exercice.
+
+!! autre gros exo sur conditions de Neumann ??
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation des ondes}
