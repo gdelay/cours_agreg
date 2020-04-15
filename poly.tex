@@ -2938,20 +2938,212 @@ En particulier si $f=0$ !!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Approximation par diff\'erences finies}
 
-!! chapeau !!
 
-!! intro sch\'ema explicite centr\'e !!
+Nous \'etudions dans cette section diff\'erents sch\'emas pour approcher la solution
+de l'\'equation.
+La discr\'etisation la plus naturelle que l'on puisse imaginer
+consiste \`a approcher les d\'eriv\'ees d'ordre deux par des approximations centr\'ees.
+On utilise donc les approximations :
+\begin{align*}
+  \dfrac{\partial^2 u}{\partial t^2}(t_n,x_j) \simeq 
+  \dfrac{u(t_{n+1},x_j) - 2 u(t_n,x_j) + u(t_{n-1},x_j)}{h_t^2} ,
+  \\
+  \dfrac{\partial^2 u}{\partial x^2}(t_n,x_j) \simeq 
+  \dfrac{u(t_n,x_{j+1}) - 2 u(t_n,x_{j}) + u(t_n,x_{j-1})}{h_x^2} .
+\end{align*}
+On obtient ainsi le sch\'ema explicite suivant:
+\begin{align*}
+  \forall 1 \leq n \leq N, \forall 0 \leq j \leq M,
+  u_j^{n+1} = 2 u_j^{n} - u_j^{n-1} + \dfrac{c^2 h_t^2}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n}+u_{j-1}^{n}).
+\end{align*}
+Ce sch\'ema est \`a deux pas de temps.
+C'est-\`a-dire que si on introduit un vecteur $U^n$ repr\'esentant les $u_j^n$, 
+pour calculer $U^{n+1}$, il faut $U^n$ et $U^{n-1}$.
+Pour pouvoir calculer les $U^n$ pour tout $n \geq 0$, il faut donc
+initialiser les deux premiers termes de la suite.
+Comme d'habitude, on initialise le premier pas de temps avec les conditions initiales.
+En plus de cela, il faut aussi initialiser le second pas de temps qu'on prendra comme
+$U^{1} = U^0 + h_t V_0$. Cela signifie que l'on consid\`ere qu'au cours du premier pas de temps,
+la solution a \'et\'e modifi\'ee par la seule action de la vitesse initiale.
+Il s'agit d'une mani\`ere de proc\'eder qui est classique.
+On obtient donc le sch\'ema suivant
+\begin{align}
+  \label{eq:ondes_DF_exp}
+  \left\{
+  \begin{array}{l}
+    \forall 1 \leq n \leq N, \forall 0 \leq j \leq M,
+    u_j^{n+1} = 2 u_j^{n} - u_j^{n-1} + \dfrac{c^2 h_t^2}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n}+u_{j-1}^{n}) ,
+    \\
+    \forall 0 \leq n \leq N , \quad
+    u_0^n = u_M^n = 0 ,
+    \\
+    \forall 1 \leq j \leq M-1 ,  \quad
+    u_j^0 = u_0(x_j) \quad \text{et} \quad u_j^1 = u_0(x_j) + h_t v_0(x_j) ,
+  \end{array}
+  \right.
+\end{align}
+o\`u $u_0$ et $v_0$ sont les donn\'ees initiales du probl\`eme
+en position et en vitesse.
 
-!! initialisation du pas de temps 1 !!
+!! $v_0$ ou $u_1$ pour la vitesse initiale ??
 
-!! exo : retrouver les r\'esultats de la section d'intro !! 
 
+\begin{exercise}
+  La figure (...) a \'et\'e obtenue avec le sch\'ema \eqref{eq:ondes_DF_exp}
+  pour les donn\'ees (...).
+  Coder ce sch\'ema et retrouver la figure.
+\end{exercise}
+
+
+Plus g\'en\'eralement, les sch\'emas \`a deux pas sont de la forme
+\begin{align}
+  \label{eq:schema_2pas}
+  U^0 = U_0 , \quad U^1 = U_0 + h_t V_0 \quad \text{et} 
+  \quad \forall n \geq 1, \quad U^{n+1} = A_1 U^n + A_2 U^{n-1} + h_t^2 F^n ,
+\end{align}
+avec $A_1$ et $A_2$ deux matrices et $U_0$ et $V_0$ des vecteurs tels que (...)
+
+\begin{remark}
+  Notons que la d\'eriv\'ee seconde pr\'esente dans l'\'equation des ondes 
+  rend tr\`es naturel le recours \`a un sch\'ema \`a deux pas de temps.
+  Ce type de sch\'ema peut aussi \^etre utilis\'e pour les \'equations vues
+  pr\'ec\'edemment (voir sch\'ema saute-mouton).
+  On peut aussi envisager d'utiliser un sch\'ema \`a un pas de temps
+  pour r\'esoudre l'\'equation des ondes (voir ...).
+\end{remark}
+
+La but de cette section est d'adapter les d\'efinitions des sections \ref{subsubsec:analyse_def}
+et !!(...)!! au contexte des sch\'emas \`a deux pas de temps.
+Nous adaptons tout d'abord les d\'efinitions et les th\'eor\`emes d'analyse num\'erique.
+Nous analysons ensuite diff\'erents sch\'emas dont \eqref{eq:ondes_DF_exp}.
 %%%%%%%%%%%%%%%%%
-\subsubsection{D\'efinitions et th\'eor\`emes}
+\subsubsection{D\'efinitions et th\'eor\`emes 
+  pour les sch\'emas \`a deux pas de temps}
 
-!! on adapte toutes les d\'efinitions pr\'ec\'edentes au cas des sch\'emas \`a deux pas !!
-(est-ce que deux pas c'est suffisant ou bien faut-il pr\'evoir plus ??
+Nous donnons maintenant sans commentaire les d\'efinitions et th\'eor\`emes de la section
+\ref{subsubsec:analyse_def} adapt\'es au cadre d'un sch\'ema \`a deux pas de temps.
+Notons les similitudes avec les d\'efinitions pour un pas de temps.
+Nous consid\'erons $\|\cdot\|$ une norme de $\R^M$ (cette norme d\'epend de $M$).
 
+\begin{definition}[Stabilit\'e en norme $\|\cdot\|$]
+  \label{def:stabilite_2pas}
+  Soit $\Stab \subset \R_+^* \times \R_+^*$ tel que $(0,0) \in \overline{\Stab}$.
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_2pas} est stable 
+  (en norme $\|\cdot\|$)
+  sous la condition $\Stab$ s'il existe $C_1 , C_2 , C_3 > 0$ qui ne d\'ependent que de $T$
+  tels que $\forall (h_x , h_t) \in \Stab$, $\forall U_0 , U^1 \in \R^{M}$, 
+  $\forall (F^n)_{0 \leq n \leq N} \in \R^{(N+1) \times M}$, on a
+  \begin{align}
+    \max_{0\leq n \leq N} \| U^n \| 
+    \leq C_1 \| U^0 \| + C_2 \| U^1 \| 
+    + C_3 \max_{0\leq n \leq N} \| F^n \| ,
+  \end{align}
+  o\`u $(U^n)$ est l'unique suite v\'erifiant \eqref{eq:schema_2pas}.
+
+  On dit \'egalement que le sch\'ema \eqref{eq:schema_2pas} 
+  est inconditionnellement stable
+  si la d\'efinition pr\'ec\'edente
+  s'applique avec $\Stab = \R_+^* \times \R_+^*$.
+\end{definition}
+
+\begin{definition}[Erreur de troncature]
+  \label{def:troncature_2pas}
+  L'erreur de troncature (ou erreur de consistance) du sch\'ema \eqref{eq:schema_2pas}
+  au temps $t_n$ est un vecteur $\varepsilon^n \in \R^{M}$
+  ($2 \leq n \leq N$)
+  d\'efini par
+  \begin{align}
+    \label{eq:troncature_2pas}
+    \varepsilon^{n+1} := \tu^{n+1} - A_1 \tu^n - A_2 \tu^{n-1} - h_t^2 F^n ,
+  \end{align}
+  o\`u $\tu^n \in \R^{M}$ est d\'efini par
+  $(\tu^n)_j = u(t_n,x_j)$ avec $u$ la solution du probl\`eme exact associ\'e \`a
+  \eqref{eq:schema_2pas}.
+\end{definition}
+
+\begin{definition}[Consistance en norme $\|\cdot\|$]
+  \label{def:consistance_2pas}
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_2pas} est consistant 
+  (en norme $\|\cdot\|$) si pour toute
+  solution r\'eguli\`ere $u$ du probl\`eme exact on a
+  \begin{align}
+    \lim_{\substack{N \to +\infty\\ M \to +\infty}} \max_{0\leq n \leq N} 
+    \dfrac{\| \varepsilon^n \|}{h_t^2} = 0 ,
+  \end{align}
+  o\`u $\varepsilon^n$ est l'erreur de troncature (et $h_t = T/N$).
+
+  On dit de plus que le sch\'ema \eqref{eq:schema_2pas} est consistant d'ordre $p \in \N^*$
+  en temps et $q \in \N^*$ en espace (en norme $\|\cdot\|$)
+  si pour toute solution r\'eguli\`ere $u$ (du probl\`eme exact)
+  il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$ telle que
+  \begin{align}
+    \forall N, M \geq 2 , \quad \max_{0\leq n \leq N}
+    \dfrac{\| \varepsilon^n \|}{h_t^2} \leq C (h_t^p + h_x^q) .
+  \end{align}
+\end{definition}
+
+\begin{remark}
+  Notons que la constante $C$ dans la d\'efinition \ref{def:consistance}
+  peut d\'ependre de la solution $u$ du probl\`eme exact.
+\end{remark}
+
+\begin{definition}[Convergence en norme $\| \cdot \|$]
+  \label{def:convergence_2pas}
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_2pas} converge (ou est convergent) 
+  en norme $\| \cdot \|$
+  sous la condition $\Stab \subset \R_+^* \times \R_+^*$
+  si 
+  \begin{align}
+    \lim_{\substack{(h_t,h_x) \in \Stab \\ (h_t,h_x) \to (0,0)}} \max_{0\leq n \leq N} 
+    \| \tu^n - u^n \| = 0 ,
+  \end{align}
+  avec $Nh_t = T$ et $Mh_x = 1$ o\`u $u$ est la solution du probl\`eme exact
+  et $(\tu^n)_j = u(t_n,x_j)$.
+  
+  De mani\`ere similaire, on dit que le sch\'ema num\'erique 
+  \eqref{eq:schema_2pas} converge (ou est convergent) en norme $\|\cdot\|$
+  \`a l'ordre $p\in\N^*$ en temps et $q\in\N^*$ en espace
+  sous la condition $\Stab \subset \R_+^* \times \R_+^*$
+  s'il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$
+  telle que
+  \begin{align}
+    \forall (h_t , h_x) \in \Stab , \quad \max_{0\leq n \leq N}
+    \| \tu^n - u_j^n \| \leq C (h_t^p + h_x^q) .
+  \end{align}
+
+  On dit enfin que le sch\'ema est convergent (resp. convergent \`a l'ordre $p$
+  en temps et $q$ en espace) en norme $\|\cdot\|$ 
+  si la d\'efinition ci-dessus est v\'erifi\'ee
+  avec $\Stab = \R_+^* \times \R_+^*$.
+\end{definition}
+
+Ces d\'efinitions sont reli\'ees par le th\'eor\`eme de Lax.
+\begin{theorem}[Th\'eor\`eme de Lax]
+  \label{thm:convergence_2pas}
+  Si le sch\'ema \eqref{eq:schema_2pas} est stable en norme $\|\cdot\|$ sous la condition
+  $\Stab \subset \R_+^* \times \R_+^*$ et consistant en norme $\|\cdot\|$
+  (respectivement consistant d'ordre $p$ en temps et $q$ en espace),
+  alors le sch\'ema \eqref{eq:schema_2pas} est convergent en norme $\|\cdot\|$
+  (respectivement convergent d'ordre $p$ en temps et $q$ en espace)
+  sous la condition $\Stab$.
+
+
+  De plus, si le probl\`eme exact (le probl\`eme v\'erifi\'e par $u$) 
+  est bien pos\'e, alors la consistance et la stabilit\'e du sch\'ema 
+  sont n\'ecessaires \`a sa convergence.
+\end{theorem}
+Le th\'eor\`eme \ref{thm:convergence_2pas} s'applique aussi avec $\Stab = \R_+^* \times \R_+^*$.
+
+
+\begin{remark}
+  On peut imaginer des sch\'emas avec un nombre de pas de temps sup\'erieur \`a deux.
+  Ces d\'efinitions peuvent alors \^etre adapt\'ees \`a ce cas de figure.
+\end{remark}
+
+
+!! FAIRE ATTENTION A CE QUE CETTE SECTION SOIT ADAPTEE POUR L'ETUDE DES SCHEMAS
+MULTI-PAS DANS LE CAS D'UN PB D'ORDRE UN EN TEMPS 
+(en particulier faut-il un $h_t^2$ devant $F^n$ et dans la consistance) !!
 
 %%%%%%%%%%%%%%%%%
 \subsubsection{Analyse de quelques sch\'emas}
@@ -2970,6 +3162,11 @@ que celle propos\'ee !!
 
 !! exo final sur formulation mixte !!
 + derniere question : legere modif rend le sch\'ema instable !!
+
+!! exercice avec conditions de Dirichlet non homogenes ??
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\'Etude du probl\`eme de Neumann}
 
 
 !! faire d'autres conditions limites (Neumann) ??
