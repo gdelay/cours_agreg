@@ -2244,6 +2244,9 @@ type de condition (voir exercice \ref{exo:transport_implicite}).
 
 !! expliquer comment ca marche + figures + exo : retrouver les figures !!
 
+!! Le plus simple est peut-\^etre d'enlever cette section ou au moins la
+reporter plus loin dans le poly !!
+
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Conditions de Dirichlet}
 
@@ -2392,6 +2395,8 @@ sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
   
   NB : si vous avez des difficult\'es pour l'une de ces questions, vous pouvez \'eventuellement
   lire la section \ref{subsubsec:chaleur_DF_implicite}.
+
+  !! Ajouter une question sur la stabilit\'e de Von Neumann : comparer les preuves des deux stabilit\'es + remarque : Von Neumann plus simple, sera \'etudi\'e dans le chapire suivant (...)
 \end{exercise}
 
 
@@ -3145,8 +3150,124 @@ Le th\'eor\`eme \ref{thm:convergence_2pas} s'applique aussi avec $\Stab = \R_+^*
 MULTI-PAS DANS LE CAS D'UN PB D'ORDRE UN EN TEMPS 
 (en particulier faut-il un $h_t^2$ devant $F^n$ et dans la consistance) !!
 
+
+!! Remarque : on pourrait construire des caract\'erisations de la stabilit\'e comme
+nous l'avons fait en section 3 !!
+
+
+!! adapter ce qui vient d'\^etre fait \`a l'analyse des sch\'emas \`a venir !!
+---- Enlever toute cette partie ... 
+(en la reportant dans la partie \'equation de la chaleur)
+(faire quand m\^eme une remarque quelque part sur ce qu'est la convergence)
+
 %%%%%%%%%%%%%%%%%
 \subsubsection{Analyse de quelques sch\'emas}
+
+
+
+Une m\'ethode classique pour \'etudier des sch\'emas \`a plusieurs pas de temps est
+de les r\'e\'ecriture comme un sch\'ema "vectoriel" \`a un pas de temps.
+Pour cela, introduisons les inconnues 
+\begin{align}
+  v_j^n = \dfrac{u_j^n - u_j^{n-1}}{h_t} , \qquad w_j^n = c \dfrac{u_j^n - u_{j-1}^n}{h_x} .
+\end{align}
+Nous pouvons montrer que ces inconnues v\'erifient
+\begin{align}
+  \dfrac{v_j^{n+1} - v_j^n}{h_t} - c \dfrac{w_{j+1}^n - w_j^n}{h_x} = f(t_n,x_j) ,
+  \\
+  \dfrac{w_j^{n+1} - w_j^n}{h_t} = c \dfrac{v_j^{n+1} - v_{j-1}^{n+1}}{h_x} .
+\end{align}
+Nous pouvons donc r\'e\'ecrire le sch\'ema \eqref{eq:ondes_DF_exp}
+comme le sch\'ema \`a un pas de temps de la forme \eqref{eq:schema_1pas}
+(nous ne donnons pas ici l'expression de la matrice et du second membre).
+
+Il s'agit d'un sch\'ema explicite o\`u \`a chaque pas de temps,
+$V^{n+1}$ et $W^{n+1}$ sont calcul\'es comme
+\begin{align*}
+  &v_j^{n+1} = v_j^n + \dfrac{c h_t}{h_x} ( w_{j+1}^n - w_j^n ) + h_t f_j^n ,
+  \\
+  &w_j^{n+1} = w_j^n + \dfrac{c h_t}{h_x} ( v_j^n - v_{j-1}^n ) 
+  + \left( \dfrac{c h_t}{h_x} \right)^2 (w_{j+1}^n - 2 w_j^n + w_{j-1}^n ) 
+  + \dfrac{c h_t^2}{h_x} (f_j^n - f_{j-1}^n ) . 
+\end{align*}
+
+!! Donner l'initialisation de ce sch\'ema !!
+
+
+Nous voulons \'etudier la stabilit\'e de ce sch\'ema au sens de Von Neumann.
+On consid\`ere donc que $V^n$ et $W^n$ sont donn\'es par des ondes spatiales et
+on calcule le facteur d'amplification qui appara\^it au pas de temps suivant.
+Si pour $k \in \Z$, $v_j^n = w_j^n = e^{2 i \pi k x_j}$ et $f_j^n = 0$, alors
+$v_j^{n+1} = v_j^n + \dfrac{c h_t}{h_x} ( e^{2 i \pi k h_x} - 1 ) w_j$
+et $w_j^{n+1} = w_j^n + \dfrac{c h_t}{h_x} (1-e^{-2 i \pi k h_x}) v_j^n
++ 2 \left(\dfrac{c h_t}{h_x}\right)^2 (\cos(2 \pi k h_x) - 1) w_j^n$.
+Ainsi, nous avons la relation
+\begin{align*}
+  \begin{pmatrix}
+    v_j^{n+1} \\ w_j^{n+1}
+  \end{pmatrix}
+  = A(k)
+  \begin{pmatrix}
+    v_j^{n} \\ w_j^{n}
+  \end{pmatrix} ,
+\end{align*}
+o\`u $A(k)$ est la matrice d'amplification associ\'ee \`a ce probl\`eme.
+Elle est donn\'ee par
+\begin{align*}
+  A(k) = 
+  \begin{pmatrix}
+    1 & i e^{i \pi k h_x} a(k)
+    \\
+    i e^{-i \pi k h_x} a(k) & 1 - (a(k))^2
+  \end{pmatrix} ,
+\end{align*}
+avec $a(k) = 2 \frac{c h_t}{h_x} \sin(\pi k h_x)$.
+
+
+Nous admettons le fait qu'une condition n\'ecessaire de stabilit\'e soit
+que les valeurs propres de cette matrice aient un module $\leq 1$.
+Le discriminant de cette matrice vaut
+$\Delta(k) = (a(k))^2 [(a(k))^2 - 4]$.
+\'Etant donn\'e que le d\'eterminant de cette matrice vaut $1$,
+le produit de ses deux valeurs propres vaut aussi $1$.
+Il est donc n\'ecessaire que le discrimant reste $\leq 0$ pour tout $k \in \Z$.
+Nous avons donc la condition n\'ecessaire de stabilit\'e
+\begin{align*}
+  \frac{c h_t}{h_x} \leq 1 .
+\end{align*}
+
+
+Cette condition ne correspond pas \`a une condition suffisante de stabilit\'e.
+On peut prouver qu'une condition suffisante est
+\begin{align*}
+  \exists \delta \in ]0,1[, \qquad
+  \text{$\delta$ ind\'ependant de $h_t$ et $h_x$ tel que  }
+  \dfrac{c h_t}{h_x} \leq \delta .
+\end{align*}
+Pour plus de d\'etails, le lecteur peut se reporter au livre de B. Lucquin
+(p. 196--201).
+
+
+!! difficult\'e : dans le livre de B. Lucquin, il faut r\'e\'ecrire les 
+sch\'emas comme des sch\'emas d'ordre 1 !!
+-- Utilise-t-on les def au dessus ??
+!! Il y aurait moyen de les utiliser mais il faudrait refaire toutes les 
+caract\'erisations !!
+
+!! Une tr\`es bonne fa\c{c}on de faire serait de faire les premi\`eres d\'emos avec
+les nouvelles defs et de laisser en exercice un raisonnement sur le syst\`eme vectoriel
+---- On pourrait ainsi inclure la partie "continue" dans l'exo !!
+
+
+!! Une autre fa\c{c}on de proc\'eder serait de faire toute l'analyse num\'erique comme dans
+le livre puis de faire une section "liens avec l'\'equation de transport"
+o\`u on ferait l'\'etude continue avec la m\'ethode des caract\'eristiques !!
+---- On va choisir cette option : l'analyse avec plusieurs pas de temps est tr\`es compliqu\'ee !!
+
+
+
+!! toute cette analyse a l'air compliqu\'ee : une possibilit\'e serait 
+de juste \'evoquer les sch\'emas sans les analyser !!
 
 !! analyse sch\'ema intro !!
 
