@@ -24,8 +24,8 @@
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
+\newtheorem{theorem}{Th\'eor\`eme}
+\newtheorem{definition}{D\'efinition}
 \newcommand*{\R}{\mathbb{R}}
 
 \begin{center}
@@ -55,13 +55,14 @@ On peut raisonner de mani\`ere analogue s'il est vectoriel:
 $y(t) \in \R^d$.
 
 Pour approcher num\'eriquement le probl\`eme \eqref{eq:pb}, on d\'ecoupe l'intervalle
-$[t_0,T]$ en $N$ sous-intervalles de longueur uniforme que l'on appelle
-pas de discr\'etisation
+$[t_0,T]$ en $N$ sous-intervalles de longueur uniforme.
+La longueur de ces sous-intervalles est appel\'ee pas de discr\'etisation.
+On la note
 \begin{align*}
   h = \frac{T - t_0}{N} .
 \end{align*}
 On d\'efinit ainsi une discr\'etisation 
-de cet intervalle $t_k = t_0 + kh$ avec $0 \leq k \leq N$.
+de l'intervalle $[t_0,T]$ avec les temps $t_k = t_0 + kh$ avec $0 \leq k \leq N$.
 
 
 Le sch\'ema d'Euler consiste \`a approcher la d\'eriv\'ee par un taux d'accroissement:
@@ -94,16 +95,93 @@ et $y(t)$ la solution exacte (solution de \eqref{eq:pb}) au temps $t \in [t_0,T]
 Le but d'une telle approche est de construire une suite $(y_k)$ qui s'approche
 des $(y(t_k))$. Nous allons maintenant \'etudier sous quelles conditions
 $y_k$ est une bonne approximation de $y(t_k)$.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Analyse du sch\'ema}
 
-!! consistance !!
+Pour introduire le sch\'ema d'Euler explicite, nous avons approch\'e une d\'eriv\'ee
+par un taux d'accroissement. Cette approximation est correcte dans la limite
+$h \to 0$ (ou de mani\`ere \'equivalente $N \to +\infty$). 
+Nous allons maintenant \'etudier le comportement de ce sch\'ema dans cette limite.
+Pour cela, nous d\'efinissons un certain nombre de notions.
 
-!! stabilit\'e !!
 
-!! convergence !!
+Si l'on se place dans le cadre plus g\'en\'eral des sch\'emas explicites \`a un pas de temps,
+le probl\`eme consiste (en consid\'erant que $y_0 = y(t_0)$) 
+\`a construire une suite $(y_k)$ \`a partir de la relation de r\'ecurrence
+\begin{equation}
+  \label{eq:1pas}
+  y_{k+1} = y_k + h F(t_k,y_k,h) ,
+\end{equation}
+o\`u $h$ est le pas de discr\'etisation et $F$ est une fonction \`a trois variables
+donn\'ee qui d\'etermine le sch\'ema utilis\'e.
+Par exemple, dans le cas du sch\'ema d'Euler explicite on a $F(t,y,h) = f(t,y)$.
+
+
+\begin{definition}[Erreur de consistance]
+  On appelle erreur de consistance la quantit\'e
+  \begin{align*}
+    \varepsilon_k = y(t_{k+1}) - y(t_k) - h F(t_k , y(t_k) , h ) .
+  \end{align*}
+\end{definition}
+Il s'agit de la diff\'erence entre la solution exacte au temps $t_{k+1}$
+et la solution g\'en\'er\'ee par le sch\'ema \eqref{eq:1pas}
+\`a partir de la solution exacte au temps $t_k$.
+Nous voyons donc que cette erreur correspond \`a l'erreur g\'en\'er\'ee
+par le sch\'ema au cours de la r\'esolution dans l'intervalle
+$[t_k , t_{k+1}]$.
+
+\begin{definition}[Consistance]
+  On dit que le sch\'ema \eqref{eq:1pas} est consistant si 
+  \begin{align*}
+    \lim_{h \to 0} \sum_{k=0}^{N-1} | \varepsilon_k | = 0 ,
+  \end{align*}
+  o\`u $\varepsilon_k$ est l'erreur de consistance d\'efinie pr\'ec\'edemment.
+\end{definition}
+Notons que la notion de consistance se fait par rapport \`a un probl\`eme continu
+(ici \eqref{eq:pb}) puisqu'on utilise la solution exacte $y(t)$.
+Cette notion consiste donc \`a dire que l'erreur du sch\'ema g\'en\'er\'ee
+au cours de toutes les it\'erations tend vers 0 quand le pas de discr\'etisation
+tend vers 0.
+
+\begin{definition}[Stabilit\'e]
+  Le sch\'ema \eqref{eq:1pas} est stable s'il existe une constante $C > 0$
+  ind\'ependante de $N$ (et donc de $h$) telle que pour toute suite 
+  $(\eta_k)_{0 \leq k \leq N}$, les suites $(y_k)$ et $(z_k)$ d\'efinies comme
+  \begin{align*}
+    y_0 \in \R \quad \text{et} \quad y_{k+1} = y_k + h F(t_k,y_k,h) ,
+    \\
+    z_0 = y_0 + \eta_0 \quad \text{et} \quad z_{k+1} = z_k + h F(t_k,z_k,h) + \eta_{k+1} ,
+  \end{align*}
+  v\'erifient
+  \begin{align*}
+    \sup_{0 \leq k \leq N} | y_k - z_k | \leq C \sum_{n=0}^N | \eta_n | .
+  \end{align*}
+\end{definition}
+
+Cette notion correspond \`a dire que si une erreur de calcul s'introduit
+(ici l'erreur de calcul est le $\eta_k$) alors la solution sera perturb\'ee
+de mani\`ere "continue" par rapport \`a cette erreur de calcul.
+
+En pratique, des erreurs de calcul apparaissent lors des op\'erations informatiques.
+Ces erreurs sont tr\`es petites par rapport \`a la solution du probl\`eme.
+Ainsi, si le sch\'ema est stable, ces erreurs seront n\'egligeables et ne d\'egraderont
+pas le r\'esultat final.
+
+
+\begin{definition}[Convergence]
+  Le sch\'ema \eqref{eq:1pas} converge (ou est convergent) si
+  \begin{align*}
+    \lim_{h \to 0} \sup_{0 \leq k \leq N} | y_k - y(t_k) | = 0 .
+  \end{align*}
+\end{definition}
 
 !! ordre !!
+
+\begin{theorem}[...]
+  a
+\end{theorem}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
