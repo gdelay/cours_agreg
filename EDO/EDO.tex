@@ -25,11 +25,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \noindent
-% {\rule{\textwidth}{.2mm}}\\
-% \renewcommand{\labelenumi}{(\alph{enumi})}
-% \input{entete}
-% {\rule{\textwidth}{.2mm}}\\
+
+\newcommand*{\R}{\mathbb{R}}
 
 \begin{center}
 {\bf \Huge Analyse du sch\'ema d'Euler explicite}
@@ -39,8 +36,80 @@
 %===================================================================================
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Pr\'esentation du sch\'ema d'Euler explicite}
 
-A
+On cherche \`a approcher num\'eriquement une EDO de la forme
+\begin{equation}
+  \label{eq:pb}
+  \left\{
+    \begin{array}{l}
+      y'(t) = f(t,y(t)) \text{ sur } [t_0,T] ,
+      \\
+      y(t_0) = y_0 ,
+    \end{array}
+  \right.
+\end{equation}
+o\`u $f$ et $y_0$ sont des donn\'ees du probl\`eme.
+Ici on consid\`ere que le probl\`eme est scalaire : $y(t) \in \R$.
+On peut raisonner de mani\`ere analogue s'il est vectoriel:
+$y(t) \in \R^d$.
+
+Pour approcher num\'eriquement le probl\`eme \eqref{eq:pb}, on d\'ecoupe l'intervalle
+$[t_0,T]$ en $N$ sous-intervalles de longueur uniforme que l'on appelle
+pas de discr\'etisation
+\begin{align*}
+  h = \frac{T - t_0}{N} .
+\end{align*}
+On d\'efinit ainsi une discr\'etisation 
+de cet intervalle $t_k = t_0 + kh$ avec $0 \leq k \leq N$.
+
+
+Le sch\'ema d'Euler consiste \`a approcher la d\'eriv\'ee par un taux d'accroissement:
+\begin{align}
+  \label{eq:taux_acc}
+  y'(t_k) \simeq \dfrac{y(t_{k+1}) - y(t_k)}{t_{k+1} - t_k } = \dfrac{y(t_{k+1}) - y(t_k)}{h} .
+\end{align}
+On cherche donc \`a calculer les termes d'une suite $(y_k)_{0 \leq k \leq N}$
+en rempla\c{c}ant dans \eqref{eq:pb} la d\'eriv\'ee par le taux d'accroissement
+\eqref{eq:taux_acc}.
+Ceci revient donc \`a calculer la suite $(y_k)_{0 \leq k \leq N}$ par r\'ecurrence comme:
+\begin{align*}
+  \left\{
+  \begin{array}{l}
+    y_{k+1} = y_k + h f(t_k , y_k), \qquad 0 \leq k \leq N-1 ,
+    \\
+    y_0 = y(t_0) .
+  \end{array}
+  \right.
+\end{align*}
+
+Nous voyons que la valeur de $y_{k+1}$ peut \^etre calcul\'ee de mani\`ere explicite 
+\`a partir de la valeur de $y_k$. C'est pour cela que l'on parle de sch\'ema
+d'Euler explicite.
+
+
+Dans l'ensemble de ce document on utilise les notations standards qui consistent
+\`a noter $(y_k)$ la suite calcul\'ee par le sch\'ema d'Euler explicite
+et $y(t)$ la solution exacte (solution de \eqref{eq:pb}) au temps $t \in [t_0,T]$.
+Le but d'une telle approche est de construire une suite $(y_k)$ qui s'approche
+des $(y(t_k))$. Nous allons maintenant \'etudier sous quelles conditions
+$y_k$ est une bonne approximation de $y(t_k)$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Analyse du sch\'ema}
+
+!! consistance !!
+
+!! stabilit\'e !!
+
+!! convergence !!
+
+!! ordre !!
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Un exemple}
+
+!! but : 3--4 pages !!
 
 %===================================================================================
 
