@@ -25,8 +25,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newtheorem{theorem}{Th\'eor\`eme}
+\newtheorem{proposition}{Proposition}
 \newtheorem{definition}{D\'efinition}
 \newcommand*{\R}{\mathbb{R}}
+\newcommand*{\N}{\mathbb{N}}
 
 \begin{center}
 {\bf \Huge Analyse du sch\'ema d'Euler explicite}
@@ -53,6 +55,11 @@ o\`u $f$ et $y_0$ sont des donn\'ees du probl\`eme.
 Ici on consid\`ere que le probl\`eme est scalaire : $y(t) \in \R$.
 On peut raisonner de mani\`ere analogue s'il est vectoriel:
 $y(t) \in \R^d$.
+
+
+!! Quelles hypoth\`eses sur $f$ ??
+------ Continuit\'e , rappel de Cauchy--Lipschitz ??
+
 
 Pour approcher num\'eriquement le probl\`eme \eqref{eq:pb}, on d\'ecoupe l'intervalle
 $[t_0,T]$ en $N$ sous-intervalles de longueur uniforme.
@@ -98,7 +105,9 @@ $y_k$ est une bonne approximation de $y(t_k)$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Analyse du sch\'ema}
+\section{Analyse des sch\'emas explicites \`a un pas}
+
+!! dans cette section, on ne parle pas d'Euler explicite !!
 
 Pour introduire le sch\'ema d'Euler explicite, nous avons approch\'e une d\'eriv\'ee
 par un taux d'accroissement. Cette approximation est correcte dans la limite
@@ -145,6 +154,23 @@ Cette notion consiste donc \`a dire que l'erreur du sch\'ema g\'en\'er\'ee
 au cours de toutes les it\'erations tend vers 0 quand le pas de discr\'etisation
 tend vers 0.
 
+
+
+\begin{definition}[Ordre]
+  On dit que le sch\'ema \eqref{eq:1pas} est d'ordre $p \in \N^*$ s'il existe
+  une constante $C>0$ ind\'ependante de $h$ telle que
+  \begin{align*}
+    \sum_{k=0}^{N-1} | \varepsilon_k | \leq C h^{p} .
+  \end{align*}
+\end{definition}
+
+
+Notons tout d'abord que si le sch\'ema est d'ordre $p \in \N^*$, alors il est consistant.
+Cette notion d'ordre permet de quantifier la consistance d'un sch\'ema:
+plus l'ordre du sch\'ema est \'elev\'e plus la somme des erreurs de consistance
+tendra rapidement vers 0.
+
+
 \begin{definition}[Stabilit\'e]
   Le sch\'ema \eqref{eq:1pas} est stable s'il existe une constante $C > 0$
   ind\'ependante de $N$ (et donc de $h$) telle que pour toute suite 
@@ -177,17 +203,98 @@ pas le r\'esultat final.
   \end{align*}
 \end{definition}
 
-!! ordre !!
+La convergence d'un sch\'ema assure que les valeurs donn\'ees par celui-ci
+tendent vers les valeurs exactes de l'EDO quand $h \to 0$.
+Il s'agit donc de la propri\'et\'e principale que l'on recherche puisqu'elle
+garantit un bon comportement du sch\'ema quand $h \to 0$.
+En pratique, on d\'emontre la convergence \`a partir de la consistance
+et de la stabilit\'e gr\^ace au th\'eor\`eme suivant.
 
-\begin{theorem}[...]
-  a
+\begin{theorem}
+  \label{thm:Lax}
+  Si le sch\'ema \eqref{eq:1pas} est consistant et stable, alors il est convergent.
+  Si de plus ce sch\'ema est d'ordre $p \in \N^*$, alors il existe une constante $C>0$
+  ind\'ependante de $h$ telle que
+  $\sup_{0 \leq k \leq N} | y_k - y(t_k) | \leq C h^p$.
 \end{theorem}
 
+Nous voyons ici, que comme pour la notion d'ordre, on peut quantifier la convergence d sch\'ema.
+En fait, plus l'ordre du sch\'ema sera \'elev\'e, plus il convergera vite (sous r\'eserve qu'il soit stable).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Un exemple}
+\section{Application au sch\'ema d'Euler explicite}
 
-!! but : 3--4 pages !!
+!! Dans cette section, on se r\'ef\`ere au sch\'ema d'Euler explicite seulement !!
+
+On s'int\'eresse dans cette section \`a l'analyse du sch\'ema d'Euler explicite.
+Nous allons montrer que ce sch\'ema est consistant et d'ordre 1 et qu'il est stable.
+En appliquant le th\'eor\`eme \ref{thm:Lax}, nous savons alors qu'il v\'erifie
+\begin{align*}
+  \sup_{0 \leq k \leq N} | y_k - y(t_k) | \leq C h .
+\end{align*}
+
+
+\begin{proposition}
+  On suppose que $f$ est continue sur $[t_0 , T] \times \R$.
+  Le sch\'ema d'Euler explicite est d'ordre 1.
+\end{proposition}
+
+\begin{proof}
+  \'Etant donn\'ee que $f$ est continue, toute solution de \eqref{eq:pb}
+  est de classe $C^1$.
+  Nous pouvons alors \'ecrire le d\'eveloppement de Taylor
+  \begin{align*}
+    y(t_{k+1}) 
+    &= y(t_k) + h y'(t_k) + O(h^2)
+    \\
+    &= y(t_k) + h f(t_k , y(t_k) ) + O(h^2) .
+  \end{align*}
+  Ainsi, l'erreur de consistance vaut
+  $\varepsilon_k = y(t_{k+1}) - y(t_k) - h f(t_k,y(t_k)) = O(h^2)$.
+  Donc 
+  \begin{align*}
+    \sum_{k=0}^{N-1} | \varepsilon_k | = O(h) ,
+  \end{align*}
+  et le sch\'ema est d'ordre 1.
+\end{proof}
+
+
+\begin{proposition}
+  On suppose que $f$ est globalement Lipschitzienne par rapport \`a sa variable
+  $y$ uniform\'ement en sa variable $t$, i.e. 
+  $\exists L > 0, \forall y, z \in \R, \forall t \in [t_0,T], 
+  | f(t,y) - f(t,z) | \leq L | y - z |$.
+  Alors le sch\'ema d'Euler explicite est stable.
+\end{proposition}
+
+\begin{proof}
+  On d\'efinit $(y_n)$ la solution du sch\'ema d'Euler explicite
+  et $(z_n)$ une solution avec des perturbations \`a chaque pas de temps.
+  \begin{align*}
+    y_{k+1} = y_k + h f(t_k,y_k) , 
+    \\
+    z_{k+1} = z_k + h f(t_k,z_k) + \eta_{k+1} ,
+  \end{align*}
+  avec $z_0 = y_0 + \eta_0$.
+  Ainsi, pour $0 \leq k \leq N-1$,
+  \begin{align*}
+    | z_{k+1} - y_{k+1} | \leq (1+Lh) |z_k - y_k| + | \eta_{k+1}| .
+  \end{align*}
+  En appliquant le Lemme de Gr\"onwall discret (voir par exemple wikipedia),
+  on obtient
+  \begin{align*}
+    |z_k - y_k|
+    & \leq e^{(t_k - t_0) L} |\eta_0| + \sum_{i=0}^{k-1} e^{L(t_{k}-t_{i+1})} |\eta_{i+1}|
+    \\
+    & \leq e^{(T-t_0) L} \sum_{i=0}^{N} |\eta_i| .
+  \end{align*}
+  Le sch\'ema est donc stable.
+\end{proof}
+
+Ainsi, si on se place dans le cadre du th\'eor\`eme de Cauchy--Lipschitz global
+($f$ continue et globalement Lipschitzienne par rapport \`a $y$ uniform\'ement en $t$)
+il existe une unique solution au probl\`eme \eqref{eq:pb} et le sch\'ema
+d'Euler explicite converge (\`a l'ordre 1).
 
 %===================================================================================
 
