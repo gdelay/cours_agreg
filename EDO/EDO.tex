@@ -40,7 +40,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Pr\'esentation du sch\'ema d'Euler explicite}
 
-On cherche \`a approcher num\'eriquement une EDO de la forme
+On cherche \`a approcher num\'eriquement sur l'intervalle $[t_0,T]$
+une \'equation aux d\'eriv\'ees ordinaires (EDO)
+de la forme
 \begin{equation}
   \label{eq:pb}
   \left\{
@@ -51,14 +53,9 @@ On cherche \`a approcher num\'eriquement une EDO de la forme
     \end{array}
   \right.
 \end{equation}
-o\`u $f$ et $y_0$ sont des donn\'ees du probl\`eme.
-Ici on consid\`ere que le probl\`eme est scalaire : $y(t) \in \R$.
-On peut raisonner de mani\`ere analogue s'il est vectoriel:
-$y(t) \in \R^d$.
-
-
-!! Quelles hypoth\`eses sur $f$ ??
------- Continuit\'e , rappel de Cauchy--Lipschitz ??
+o\`u $f : [t_0,T] \times \R \to \R$ et $y_0 \in \R$ sont des donn\'ees du probl\`eme.
+Ici on consid\`ere que le probl\`eme est scalaire ($y(t) \in \R$),
+on peut raisonner de mani\`ere analogue s'il est vectoriel ($y(t) \in \R^d$).
 
 
 Pour approcher num\'eriquement le probl\`eme \eqref{eq:pb}, on d\'ecoupe l'intervalle
@@ -107,24 +104,21 @@ $y_k$ est une bonne approximation de $y(t_k)$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Analyse des sch\'emas explicites \`a un pas}
 
-!! dans cette section, on ne parle pas d'Euler explicite !!
-
 Pour introduire le sch\'ema d'Euler explicite, nous avons approch\'e une d\'eriv\'ee
 par un taux d'accroissement. Cette approximation est correcte dans la limite
 $h \to 0$ (ou de mani\`ere \'equivalente $N \to +\infty$). 
-Nous allons maintenant \'etudier le comportement de ce sch\'ema dans cette limite.
-Pour cela, nous d\'efinissons un certain nombre de notions.
-
-
-Si l'on se place dans le cadre plus g\'en\'eral des sch\'emas explicites \`a un pas de temps,
-le probl\`eme consiste (en consid\'erant que $y_0 = y(t_0)$) 
-\`a construire une suite $(y_k)$ \`a partir de la relation de r\'ecurrence
+Nous allons maintenant d\'efinir un certain nombre de notions qui traitent 
+du comportement de la suite $(y_k)$ quand $h \to 0$.
+Nous exposons ces notions dans le cadre plus g\'en\'eral 
+des sch\'emas explicites \`a un pas de temps.
+On consid\`ere donc que la suite $(y_k)$ est g\'en\'er\'ee
+par $y_0 = y(t_0)$ et
 \begin{equation}
   \label{eq:1pas}
-  y_{k+1} = y_k + h F(t_k,y_k,h) ,
+  y_{k+1} = y_k + h F(t_k,y_k,h) , \qquad (k \geq 0),
 \end{equation}
 o\`u $h$ est le pas de discr\'etisation et $F$ est une fonction \`a trois variables
-donn\'ee qui d\'etermine le sch\'ema utilis\'e.
+donn\'ee qui d\'epend du sch\'ema utilis\'e.
 Par exemple, dans le cas du sch\'ema d'Euler explicite on a $F(t,y,h) = f(t,y)$.
 
 
@@ -137,7 +131,7 @@ Par exemple, dans le cas du sch\'ema d'Euler explicite on a $F(t,y,h) = f(t,y)$.
 Il s'agit de la diff\'erence entre la solution exacte au temps $t_{k+1}$
 et la solution g\'en\'er\'ee par le sch\'ema \eqref{eq:1pas}
 \`a partir de la solution exacte au temps $t_k$.
-Nous voyons donc que cette erreur correspond \`a l'erreur g\'en\'er\'ee
+Cette erreur correspond donc \`a l'erreur g\'en\'er\'ee
 par le sch\'ema au cours de la r\'esolution dans l'intervalle
 $[t_k , t_{k+1}]$.
 
@@ -168,7 +162,7 @@ tend vers 0.
 Notons tout d'abord que si le sch\'ema est d'ordre $p \in \N^*$, alors il est consistant.
 Cette notion d'ordre permet de quantifier la consistance d'un sch\'ema:
 plus l'ordre du sch\'ema est \'elev\'e plus la somme des erreurs de consistance
-tendra rapidement vers 0.
+tend rapidement vers 0.
 
 
 \begin{definition}[Stabilit\'e]
@@ -189,10 +183,13 @@ tendra rapidement vers 0.
 Cette notion correspond \`a dire que si une erreur de calcul s'introduit
 (ici l'erreur de calcul est le $\eta_k$) alors la solution sera perturb\'ee
 de mani\`ere "continue" par rapport \`a cette erreur de calcul.
+Ici, $(y_k)$ est la solution num\'erique attendue et $(z_k)$ est la solution
+num\'erique obtenue apr\`es perturbation.
+
 
 En pratique, des erreurs de calcul apparaissent lors des op\'erations informatiques.
-Ces erreurs sont tr\`es petites par rapport \`a la solution du probl\`eme.
-Ainsi, si le sch\'ema est stable, ces erreurs seront n\'egligeables et ne d\'egraderont
+Ces erreurs sont tr\`es petites par rapport aux valeurs de la solution du probl\`eme.
+Ainsi, si le sch\'ema est stable, ces erreurs sont n\'egligeables et ne d\'egradent
 pas le r\'esultat final.
 
 
@@ -218,16 +215,15 @@ et de la stabilit\'e gr\^ace au th\'eor\`eme suivant.
   $\sup_{0 \leq k \leq N} | y_k - y(t_k) | \leq C h^p$.
 \end{theorem}
 
-Nous voyons ici, que comme pour la notion d'ordre, on peut quantifier la convergence d sch\'ema.
-En fait, plus l'ordre du sch\'ema sera \'elev\'e, plus il convergera vite (sous r\'eserve qu'il soit stable).
+Nous voyons ici, que comme pour la notion d'ordre, on peut quantifier la convergence du sch\'ema.
+En fait, plus l'ordre du sch\'ema est \'elev\'e, plus celui-ci converge vite (sous r\'eserve qu'il soit stable).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Application au sch\'ema d'Euler explicite}
 
-!! Dans cette section, on se r\'ef\`ere au sch\'ema d'Euler explicite seulement !!
-
 On s'int\'eresse dans cette section \`a l'analyse du sch\'ema d'Euler explicite.
-Nous allons montrer que ce sch\'ema est consistant et d'ordre 1 et qu'il est stable.
+Nous allons montrer que, sous certaines conditions, 
+ce sch\'ema est consistant et d'ordre 1 et qu'il est stable.
 En appliquant le th\'eor\`eme \ref{thm:Lax}, nous savons alors qu'il v\'erifie
 \begin{align*}
   \sup_{0 \leq k \leq N} | y_k - y(t_k) | \leq C h .
@@ -235,8 +231,8 @@ En appliquant le th\'eor\`eme \ref{thm:Lax}, nous savons alors qu'il v\'erifie
 
 
 \begin{proposition}
-  On suppose que $f$ est continue sur $[t_0 , T] \times \R$.
-  Le sch\'ema d'Euler explicite est d'ordre 1.
+  On suppose que $f$ est continue sur $[t_0 , T] \times \R$,
+  alors le sch\'ema d'Euler explicite est d'ordre 1.
 \end{proposition}
 
 \begin{proof}
@@ -294,7 +290,7 @@ En appliquant le th\'eor\`eme \ref{thm:Lax}, nous savons alors qu'il v\'erifie
 Ainsi, si on se place dans le cadre du th\'eor\`eme de Cauchy--Lipschitz global
 ($f$ continue et globalement Lipschitzienne par rapport \`a $y$ uniform\'ement en $t$)
 il existe une unique solution au probl\`eme \eqref{eq:pb} et le sch\'ema
-d'Euler explicite converge (\`a l'ordre 1).
+d'Euler explicite converge vers cette solution (\`a l'ordre 1).
 
 %===================================================================================
 
