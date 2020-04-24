@@ -2439,7 +2439,7 @@ avec (...)
   De plus, cette solution appartient \`a l'espace (...)
 \end{theorem}
 
-\begin{remark}[Effet r\'egularisant de l\'equation de la chaleur]
+\begin{remark}[Effet r\'egularisant de l'\'equation de la chaleur]
   Commenter la r\'egularit\'e du th\'eor\`eme. (...)
 \end{remark}
 
@@ -2496,21 +2496,90 @@ avec (...)
 %%%%%%%%%%%%%%%%
 \subsubsection{Recherche d'une solution sous la forme de s\'eries de Fourier}
 
-On remarque que les fonctions de la forme $\sin(k \pi x) e^{-k^2 \pi^2 t}$
-v\'erifient l'\'equation de la chaleur.
-L'approche que nous allond pr\'esenter consiste donc \`a 
+On cherche une solution r\'eguli\`ere par la m\'ethode de s\'eparation des variables.
+On cherche donc une solution de la forme
+$u(t,x) = \Phi(t) \Psi(x)$.
+Si $f$ est nul, alors on a $\Phi'(t) \Psi(x) = \Phi(t) \Psi''(x)$.
+Tant que ces fonctions sont non nulles, on peut \'ecrire
+$\frac{\Phi'(t)}{\Phi(t)} = \frac{\Psi''(x)}{\Psi(x)}$.
+\'Etant donn\'e que le premier terme d\'epend uniquement de $t$
+et le second uniquement de $x$, on peut dire que ces deux termes sont constants.
+On suppose que cette constante est non nulle (sinon on a une solution
+identiquement nulle).
+
+
+On a donc les \'equations
+$\Phi'(t) = K \Phi(t)$ et $\Psi''(x) = K \Psi(x)$.
+Si $K>0$, alors $\Psi(x) = a e^{\sqrt{K} x} + b e^{- \sqrt{K} x}$.
+Les conditions aux limites donnent
+$a+b=0$ et $a(e^{\sqrt{K}} - e^{-\sqrt{K}}) = 0$.
+La seule solution est donc la solution nulle.
+
+
+On suppose maintenant $K < 0$.
+Dans ce cas, $\Psi(x) = a e^{i\sqrt{|K|} x} + b e^{- i\sqrt{|K|} x}$.
+Les conditions aux limites donnent alors $a + b = 0$
+et $a \sin(\sqrt{|K|}) = 0$.
+La seule fa\c{c}on d'avoir une solution non identiquement nulle
+est de prendre $K = - \pi^2 k^2$ avec $k \in \Z^*$.
+
+
+On remarque r\'eciproquement
+que les fonctions de la forme $\sin(k \pi x) e^{-k^2 \pi^2 t}$
+v\'erifient l'\'equation de la chaleur (avec $f = 0$).
+L'approche que nous allons pr\'esenter consiste donc \`a 
 chercher une solution au probl\`eme \eqref{eq:chaleur_Dir} sous la forme
 d'une s\'erie de ces termes.
 
 On se place ici dans le cas de conditions de Dirichlet homog\`enes
 $\alpha = \beta = 0$ et sans terme source $f=0$.
-On suppose que la donn\'ee initiale est $C^0([0,1])$ avec $u_0(0) = u_0(1) = 0$
-et \'egalement $C^1$ par morceaux.
-On peut d\'ecomposer $u_0$ en s\'erie de Fourier (...)
+On suppose que la donn\'ee initiale $u_0$ est $C^2([0,1])$ avec $u_0(0) = u_0(1) = 0$.
+On note $U_0$ la fonction d\'efinie sur $[-1,1]$ par
+\begin{align*}
+  U_0(x) =
+  \begin{cases}
+    u_0(x) \qquad \text{si } x \in [0,1] ,
+    \\
+    -u_0(-x) \qquad \text{sinon} .
+  \end{cases}
+\end{align*}
+On prolonge \'egalement $U_0$ sur $\R$ par $2$-p\'eriodicit\'e.
+La fonction obtenue est $C^1(\R)$.
+D'apr\`es le th\'eor\`eme de Dirichlet, cette fonction est donc \'egale \`a 
+sa s\'erie de Fourier (qui converge).
+De plus, comme $U_0$ est impaire, cette s\'erie de Fourier ne comprends que 
+des sinus.
+
+Donc, en particulier, sur $[0,1]$ on a 
+\begin{align*}
+  u_0(x) = \sum_{k \in \N^*} b_k \sin(k \pi x) ,
+\end{align*}
+avec
+\begin{align*}
+  b_k = \dfrac{2}{k \pi} \int_{0}^1 u_0'(x) \cos(k \pi x) \deriv x .
+\end{align*}
+Comme, pour $t \geq 0$, on a $e^{-k^2 \pi^2 t} \leq 1$, la s\'erie 
+$u(t,x) = \sum_{k\in\N^*} b_k \sin(k \pi x) e^{- k^2 \pi^2 t}$ est normalement
+convergente sur tout intervalle de la forme
+$[a,T] \times [0,1]$ pour tout $a > 0$.
+La fonction $u$ est donc d\'erivable par rapport \`a la variable $t$
+et sa d\'eriv\'ee est donn\'ee par
+\begin{align*}
+  \dfrac{\partial u}{\partial t} (t,x) 
+  = - \sum_{k \in \N^*} k^2 \pi^2 b_k \sin(k \pi x) e^{-k^2 \pi^2 t} .
+\end{align*}
+On peut \'egalement montrer que $u$ est d\'erivable deux fois par rapport
+\`a la variable $x$ et que cette d\'eriv\'ee seconde \`a la m\^eme
+valeur que la d\'eriv\'ee premi\`ere en $t$.
+Cette s\'erie de Fourier v\'erifie donc l'\'equation de la chaleur.
+
+Pour plus de d\'etails, on pourra se reporter aux pages 157--158
+du livre de Brigitte Lucquin.
 
 !! parler du ph\'enom\`ene de Gibbs + figure + exo num\'erique !!
 
-!! m\'ethode de s\'eparation des variables !!
+!! v\'erifier th\'eor\`emes sur les s\'eries de Fourier
++ les int\'egrer au cours !!
 
 
 \begin{proof}[Preuve du th\'eor\`eme \ref{thm:chaleur_existence}]
