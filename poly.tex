@@ -2214,28 +2214,29 @@ Nous pouvons tirer plusieurs conclusions de l'\'etude de ces deux sch\'emas.
 Tout d'abord, le fait de d\'ecentrer la d\'eriv\'ee partielle en espace
 a permis de rendre le sch\'ema stable.
 Notons que le sens dans le lequel on d\'ecentre cette d\'eriv\'ee est essentiel,
-on peut montrer que le sch\'ema d\'ecentr\'e aval est instable pour 
+on peut montrer que le sch\'ema d\'ecentr\'e aval 
+issu de l'approximation 
+$\frac{\partial u}{\partial x} (t_n , x_j) \simeq \frac{u(t_n,x_{j+1}) - u(t_n,x_{j})}{h_x}$ 
+est instable pour 
 $a>0$ et qu'il faut changer le sens du d\'ecentrage si $a<0$.
-En fait, il faut d\'ecentrer en utilisant les donn\'ees qui correspondent
+En fait, il faut d\'ecentrer la d\'eriv\'ee en espace en utilisant les donn\'ees qui correspondent
 \`a de l'information qui arrive et non de l'information qui part.
 
 
 De plus, nous avons vu dans la proposition \ref{prop:stabilite_transport_AM} que
-le sch\'ema \eqref{prop:stabilite_transport_AM} est stable
+le sch\'ema \eqref{eq:transport_DF_decentre_AM} est stable
 uniquement sous la condition $a h_t \leq h_x$
 qui lie les pas de temps et d'espace.
 On appelle une telle condition "condition de CFL" pour 
-Courant--Friedrichs--Lewy.
+les noms des trois scientifiques
+Courant, Friedrichs et Lewy.
 De la m\^eme fa\c{c}on on appelle $c = \frac{a h_t}{h_x}$
-le nombre de CFL.
+le nombre de CFL (parfois aussi appel\'e nombre de Courant).
 De telles conditions doivent \^etre associ\'ees aux sch\'emas
 explicites pour esp\'erer les rendre stables.
 Seuls les sch\'emas implicites peuvent se passer de ce
 type de condition (voir exercice \ref{exo:transport_implicite}).
 
-
-!! \'etude de l'influence du nombre de cfl (nouvelle section ??) !!
--- DONNER DES FIGURES + EXO : RETROUVER LES FIGURES !!
 
 
 %%%%%%%%%%%%%%%%%%
@@ -2340,6 +2341,89 @@ sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
 -- OUI ET LE RELIER AVEC LA NOTION DE STABILITE !!
 
 !! exercice sur les ordre de convergence : figure avec echelle logarithmique !!
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%
+\subsubsection{Diffusion num\'erique}
+
+
+
+On peut repr\'esenter le nombre de CFL comme le rapport entre les vitesses
+de propagation de l'information dans le cas continu et le cas discr\'etis\'e.
+En effet, si on consid\`ere une condition initiale constante et une perturbation
+arrivant en entr\'ee du domaine, dans le probl\`eme continu la perturbation
+va progressivement chasser la condition initiale \`a vitesse $a$.
+Dans le probl\`eme discr\'etis\'e avec un sch\'ema explicite 
+comme \eqref{eq:transport_DF_decentre_AM}, au premier pas de temps, 
+le premier point en espace est modifi\'e puis
+\`a chaque pas de temps un pas en espace est modifi\'e.
+Le front de la pertubation de la condition initiale se propage donc \`a la vitesse
+$h_x / h_t$.
+Ainsi, quand $c \leq 1$, le front de la perturbation se propage plus vite dans le probl\`eme
+num\'erique que dans le probl\`eme continu et inversement quand $c \geq 1$.
+
+
+Dans le cas o\`u $c \leq 1$, le front de perturbation se propage plus vite 
+dans le cas num\'erique et les valeurs ont tendance \`a s'applatir.
+On appelle ce ph\'enom\`ene la diffusion num\'erique:
+tout se passe comme s'il y avait un terme de diffusion suppl\'ementaire dans l'\'equation.
+Quand $c \geq 1$, le sch\'ema est instable et des ph\'enom\`enes similaires \`a ceux 
+du sch\'ema centr\'e apparaissent (voir figure \ref{fig:trans_per}).
+
+
+
+Nous y avons \'etudi\'e le probl\`eme de transport--Dirichlet
+avec $\alpha(t) = 2$, $u_0(x) = 1$ et $a = 1$.
+La solution exacte est 
+\begin{align*}
+  u(t,x) = 
+  \begin{cases}
+    2 & \text{si $x \leq at$,}
+    \\
+    1 & \text{sinon.}
+  \end{cases}
+\end{align*}
+On calcule la solution num\'erique avec le sch\'ema \eqref{eq:transport_DF_decentre_AM_dir}
+pour diff\'erents nombres de CFL.
+L'influence de la CFL est ainsi illustr\'ee sur la figure \ref{fig:trans_CFL}.
+On observe cet effet de diffusion num\'erique: un petit nombre de CFL tend \`a dissiper le saut
+comme le ferait un terme de diffusion (voir le chapitre sur l'\'equation de la chaleur).
+Bien entendu, l'effet de la diffusion num\'erique s'estompe quand $h \to 0$
+(en supposant que l'on v\'erifie la condition de CFL).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width = 12cm]{Figures/transport_Dir_CFL.pdf}
+  \caption{Solution du probl\`eme de transport--Dirichlet pour diff\'erents nombres de CFL $c$
+    ($t=0.5$, $M=160$).}
+  \label{fig:trans_CFL}
+\end{figure}
+
+Un dernier ph\'enom\`ene int\'eressant est le fait que le sch\'ema num\'erique permet
+d'obtenir la solution exacte lorsque $c=1$ (la d\'emonstration est laiss\'ee en exercice).
+Cette valeur de CFL n'est en pratique pas utilis\'ee car le sch\'ema est alors proche d'\^etre
+instable et de toutes fa\c{c}ons on ne trouve la solution exacte que dans des cas simples
+tels que celui de l'\'equation de transport unidimensionnelle \`a vitesse constante.
+Dans le cas de probl\`emes plus complexes ne pouvant \^etre r\'esolus que par de la simulation
+num\'erique, il ne faut pas s'attendre \`a ce que le sch\'ema fournisse la solution exacte.
+
+\begin{exercise}
+  Montrer que lorsque $c=1$, l'erreur commise par le sch\'ema 
+  \eqref{eq:transport_DF_decentre_AM_dir} est nulle.
+  La m\^eme d\'emonstration peut \^etre faite pour le cas des conditions p\'eriodiques
+  \eqref{eq:transport_DF_decentre_AM}.
+\end{exercise}
+
+!! V\'erifier que cet exercice est faisable !!
+
+
+%%%%%%%%%%%%%%%%%%
+\subsubsection{Sch\'ema implicite}
+
+
 
 \begin{exercise}[Sch\'ema implicite]
   \label{exo:transport_implicite}
