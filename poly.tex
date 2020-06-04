@@ -2087,6 +2087,7 @@ Les deux sch\'emas pr\'ec\'edents peuvent \^etre \'ecrits sous la forme matricie
 pour le sch\'ema centr\'e \eqref{eq:transport_DF_centre}
 et
 \begin{align}
+  \label{eq:trans_mat_per_AM}
   A_{AM} = 
   \begin{pmatrix}
     1-\co & 0 & \dots & 0 & \co
@@ -2238,23 +2239,20 @@ Seuls les sch\'emas implicites peuvent se passer de ce
 type de condition (voir exercice \ref{exo:transport_implicite}).
 
 
+Notons que remplacer les d\'eriv\'ees de l'EDP par des taux d'accroissements permet
+d'assurer la consistance d'un sch\'ema mais pas sa stabilit\'e comme nous venons de le voir.
+Il faut donc \^etre tr\`es prudent quand on discr\'etise une EDP.
 
-%%%%%%%%%%%%%%%%%%
-\subsubsection{D\'etermination pratique des ordres de convergence}
-
-
-!! expliquer comment ca marche + figures + exo : retrouver les figures !!
-
-!! Le plus simple est peut-\^etre d'enlever cette section ou au moins la
-reporter plus loin dans le poly !!
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Conditions de Dirichlet}
 
-!! on s'int\'eresse au pb (...) !!
-
-En appliquant \eqref{eq:der_decentre_AM}, 
-on obtient le sch\'ema num\'erique
+On s'int\'eresse dans cette section \`a la prise en compte des conditions de Dirichlet.
+On cherche donc \`a discr\'etiser le probl\`eme \eqref{eq:transport}.
+Pour avoir les m\^emes propri\'et\'es de stabilit\'e que dans le cas des conditions aux limites
+p\'eriodiques on discr\'etise la d\'eriv\'ee en espace par une approximation d\'ecentr\'ee
+amont, on utilise donc \eqref{eq:der_decentre_AM}.
+On obtient le sch\'ema num\'erique
 \begin{align}
   \label{eq:transport_DF_decentre_AM_dir}
   \left\{
@@ -2301,46 +2299,30 @@ On a donc
 avec $\co = \frac{a h_t}{h_x}$.
 Remarquons que la condition de Dirichlet a \'et\'e prise en compte
 dans le terme "second membre" $F^n$.
+Si l'on compare la matrice $A$ avec la matrice $A_{AM}$ dans le cas de conditions
+p\'eriodiques (voir \eqref{eq:trans_mat_per_AM}), on voit que le terme $c$
+de la matrice $A_{AM}$ a \'et\'e retir\'e et remplac\'e par la pr\'esence d'un second
+membre.
+Ce terme $c$ correspondait au fait que la valeur qui entrait en $0$ dans le cas des conditions
+p\'eriodiques \'etait celle de la valeur de la solution en $1$.
+Notons que ce terme a \'et\'e remplac\'e par un $c \alpha(t_n)$ dans le second membre
+(notons le coefficient $c$ qui est le m\^eme que pour les conditions p\'eriodiques).
 
 
-!! comparer avec matrice des conditions p\'eriodiques !!
+On peut, de la m\^eme fa\c{c}on que pour le cas des conditions p\'eriodiques, 
+montrer que ce sch\'ema est stable si et seulement la condition de CFL ``$c \leq 1$''
+est v\'erifi\'ee (vous pouvez chercher cette d\'emonstration pour vous convaincre
+que vous avez compris la section pr\'ec\'edente).
+
+!! VERIFIER QUE CA SE PROUVE FACILEMENT !!
 
 
-On obtient les r\'esultats (...)
-
-!! est-ce qu'on ne ferait pas mieux de faire l'analyse de stabilit\'e
-avec des conditions p\'eriodiques ??
--- Ca simplierait les choses en particulier pour les sch\'emas instables !!
-
-
-!! remplacer les d\'eriv\'ees continues par des taux d'accroissement
-assure la consistance mais pas forc\'ement la stabilit\'e !!
--- C'est tres interessant de faire ca sur l'\'equation de transport par ce que 
-l'information ne se d\'eplace que dans une direction !!
-
-!! faire des sous-sections dans cette section !!
-
-!! prouver que le sch\'ema en intro n'est pas stable !!
-
-!! donner un sch\'ema stable sous CFL et faire les preuves + simus num !!
-
-!! introduire nombre de CFL + sens physique + simus avec diff\'erentes CFL !!
-
-!! donner un sch\'ema inconditionnellement stable !!
-
-!! comparer les r\'esultats avec ceux de l'intro !!
-
-!! diffusion num\'erique : comparer avec l'\'equation de la chaleur !!
-
-!! discr\'etisation implicite en exercice !!
 
 !! dessin repr\'esentant l'endroit o\`u on va chercher l'information :
 sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
 
 !! faut-il parler des propri\'et\'es de positivit\'e ??
 -- OUI ET LE RELIER AVEC LA NOTION DE STABILITE !!
-
-!! exercice sur les ordre de convergence : figure avec echelle logarithmique !!
 
 
 
@@ -2415,9 +2397,22 @@ num\'erique, il ne faut pas s'attendre \`a ce que le sch\'ema fournisse la solut
   \eqref{eq:transport_DF_decentre_AM_dir} est nulle.
   La m\^eme d\'emonstration peut \^etre faite pour le cas des conditions p\'eriodiques
   \eqref{eq:transport_DF_decentre_AM}.
+
+  Application : 
+  la figure \ref{fig:transport_a} repr\'esente les solutions exactes de l'\'equation de transport
+  \`a $t=0.5$ pour $M=20$ et diff\'erentes vitesses $a$.
+  Elle a \'et\'e obtenue en appliquant le sch\'ema 
+  \eqref{eq:transport_DF_decentre_AM_dir}. Donner pour chaque valeur de $a$ la valeur de $N$
+  qui a \'et\'e utilis\'ee.
+  % a=0 -> peut importe, a=0.5 -> N=5, a=1 -> N=10, a=1.5 -> N=15
+
+  NB: pour rappel, l'intervalle de temps est $(0,0.5)$, l'intervalle d'espace est $(0,1)$.
+  Vous pouvez essayer de retrouver la figure \ref{fig:transport_a}
+  pour v\'erifier vos r\'esultats.
 \end{exercise}
 
-!! V\'erifier que cet exercice est faisable !!
+!! VERIFIER QUE CET EXERCICE EST FAISABLE !!
+
 
 
 %%%%%%%%%%%%%%%%%%
@@ -3439,6 +3434,20 @@ que celle propos\'ee !!
 
 !! exercice avec conditions de Dirichlet non homogenes ??
 
+
+
+
+%%%%%%%%%%%%%%%%%%
+\subsubsection{D\'etermination pratique des ordres de convergence}
+
+
+!! expliquer comment ca marche + figures + exo : retrouver les figures !!
+
+
+!! exercice sur les ordre de convergence : figure avec echelle logarithmique !!
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Etude du probl\`eme de Neumann}
 
@@ -3461,6 +3470,10 @@ dans un texte (ils seront alors pr\'esent\'es) !!
 \subsection{\'Equation de transport dans un domaine multi-dimensionnel}
 \label{subsec:transport_multiD}
 
+
+
+!! Ajouter une annexe sur les EDO + y faire reference 
+dans la premiere section d'analyse numerique !!
 
 %===================================================================================
 
