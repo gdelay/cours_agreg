@@ -2485,6 +2485,8 @@ num\'erique, il ne faut pas s'attendre \`a ce que le sch\'ema fournisse la solut
 !! definition des espaces de fonctions utiles : nombre de d\'eriv\'ees en x et en t
 peut \^etre diff\'erent !!
 
+!! La m\'ethode utilis\'ee par B. Lucquin est de ne pas donner les espaces :
+on dit juste qu'on cherche $u : [0,T] \times [0,1]$ telle que ... !!
 \begin{equation}
   \label{eq:chaleur_Dir}
   \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
@@ -2534,15 +2536,52 @@ les espaces de Sobolev (...) !!
 
 \begin{proposition}
   \label{prop:chaleur_continuite_donnees}
-  Soit $u$ une solution de \eqref{eq:chaleur_Dir},
-  alors on a pour tout $t \in [0,T]$,
+  Soit $u$ une solution de \eqref{eq:chaleur_Dir}.
+  Si $u_0 \in L^2(0,1)$ et $f \in L^2(]0,T[ \times ]0,1[)$,
+  alors $u \in L^{\infty}(0,T;L^2(0,1))$ et
   \begin{align*}
-    \| u(t,.) \|_{(...)} \leq e^{-t} \| u_0 \|_{(...)} + \| f \|_{L^2(]0,t[ \times ]0,1[)} .
+    \sup_{t \in [0,T]} \| u(t,.) \|_{L^2(0,1)} \leq \| u_0 \|_{L^2(0,1)} + \| f \|_{L^2(]0,T[ \times ]0,1[)} .
   \end{align*}
 \end{proposition}
 
 \begin{proof}
+  Montrons que $u \in L^{\infty}(0,T;L^2(0,1))$ (...)
+  
   !! TODO !!
+  
+  Maintenant, multiplions la premi\`ere ligne de \eqref{eq:chaleur_Dir} par $u$
+  et int\'egrons en espace sur le domaine $\Omega = (0,1)$,
+  on obtient
+  \begin{align*}
+    \int_{\Omega} \dfrac{\partial u}{\partial t} u = \int_{\Omega} \dfrac{\partial^2 u}{\partial x^2} u 
+    + \int_{\Omega} f u .
+  \end{align*}
+  On utilise ensuite l'int\'egration par parties 
+  $\int_{\Omega} \dfrac{\partial^2 u}{\partial x^2} u  
+  = - \int_{\Omega} \left(\dfrac{\partial u}{\partial x} \right)^2$
+  (on rappelle que $u(t,0) = u(t,1) = 0$)
+  ainsi que l'in\'egalit\'e de Cauchy--Schwarz 
+  $\int_{\Omega} f u \leq \| f \|_{L^2(\Omega)} \| u \|_{L^2(\Omega)}$,
+  que l'on combine avec l'in\'egalit\'e de Young 
+  $\| f \|_{L^2(\Omega)} \| u \|_{L^2(\Omega)} \leq \dfrac{1}{2} (\| f \|_{L^2(\Omega)}^2 +  \| u \|_{L^2(\Omega)}^2)$.
+  
+  On obtient ainsi
+  \begin{align*}
+    \dfrac{1}{2} \dfrac{\deriv}{\deriv t} \| u(t,\cdot) \|_{L^2(\Omega)}^2
+    \leq - \left\| \dfrac{\partial u}{\partial x} (t,\cdot) \right\|_{L^2(\Omega)}^2
+    + \dfrac{1}{2}  (\| f (t,\cdot) \|_{L^2(\Omega)}^2 +  \| u (t,\cdot) \|_{L^2(\Omega)}^2) .
+  \end{align*}
+  De plus, d'apr\`es l'in\'egalit\'e de Poincar\'e, on a 
+  $\| u (t,\cdot) \|_{L^2(\Omega)}^2 \leq \| \dfrac{\partial u}{\partial x} (t,\cdot) \|_{L^2(\Omega)}^2$.
+  On a donc 
+  \begin{align*}
+    \dfrac{\deriv}{\deriv t} \| u(t,\cdot) \|_{L^2(\Omega)}^2 \leq \| f (t,\cdot) \|_{L^2(\Omega)}^2 .
+  \end{align*}
+  On int\`egre selon $t$, ce qui donne
+  \begin{align*}
+    \| u(t,\cdot) \|_{L^2(\Omega)}^2 \leq \| u_0 \|_{L^2(\Omega)}^2 + \| f \|_{L^2((0,t) \times \Omega)}^2 .
+  \end{align*}
+  On obtient le r\'esultat en prenant le $\sup$ sur $t$.
 \end{proof}
 
 
