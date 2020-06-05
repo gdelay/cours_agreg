@@ -2722,6 +2722,70 @@ du livre de Brigitte Lucquin.
 !! propagation de l'info \`a vitesse infinie !!
 (+exo num\'erique avec version sch\'ema implicite/explicite)
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Recherche d'une solution faible}
+
+!! IL VAUDRAIT PEUT-\^ETRE MIEUX METTRE CETTE SECTION DANS
+LA SECTION BONUS HORS PROGRAMME !!
+
+
+On prouve la proposition suivante.
+\begin{proposition}
+  Soit $f \in L^2(0,T;L^2(0,1))$ et $u_0 \in L^2(0,1)$.
+  Alors il existe une unique solution $u$ dans 
+  $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$
+  au probl\`eme \eqref{eq:chaleur_Dir}.
+\end{proposition}
+
+Cette d\'emonstration est issue du livre de B. Lucquin.
+On note $\Omega = (0,1)$.
+On utilise une base orthogonale de fonctions propres de l'op\'erateur $- \Delta$.
+On note $w_k(x) = \sqrt{2} \sin(k \pi x)$ et $\lambda_k = (k\pi)^2$.
+On peut montrer que l'on a
+\begin{align*}
+  \forall v \in H_0^1(\Omega) , 
+  \int_{\Omega} w_k'(x) v'(x) \deriv x = \lambda_k \int_{\Omega} w_k(x) v(x) \deriv x .
+\end{align*}
+
+!! Donner le lien avec la r\'eduction d'endomorphismes !!
++ dire qui est $\calA$ !!
+
+Pour $k \geq 1$, la fonction $w_k$ est donc un vecteur propre de $\calA$
+associ\'e \`a la valeur propre $\lambda_k$.
+On cherche la solution $u$ sous la forme
+\begin{align}
+  \label{eq:chal_faible}
+  u(t,x) = \sum_{\ell = 1}^{+\infty} u_{\ell} (t) w_{\ell} (x) .
+\end{align}
+
+Les fonctions $w_k$ v\'erifient $\int_{\Omega} w_k (x) w_{\ell}(x) \deriv x = \delta_{k \ell}$
+o\`u $\delta_{k\ell}$ repr\'esente le symbole de Kronecker.
+
+L'\'equation de la chaleur sous sa forme variationnelle peut \^etre \'ecrite
+\begin{align*}
+  \forall v \in H^1_0(\Omega) ,  \quad
+  \dfrac{\deriv}{\deriv t} \int_{\Omega} u(t,x) v(x) \deriv x
+  + \int_{\Omega} \dfrac{\partial u}{\partial x}(t,x) \dfrac{\partial v}{\partial x}(x) \deriv x
+  = \int_{\Omega} f(t,x) v(x) \deriv x .
+\end{align*}
+En cherchant $u$ sous la forme \eqref{eq:chal_faible} et en prenant $v = w_k$, on obtient
+pour tout $k \geq 1$, $u_k'(t) + \lambda_k u_k(t) = \int_{\Omega} f(t,x) w_k(x) \deriv x$.
+La condition initiale donne $u_k(0) = \int_{\Omega} u_0(x) w_k(x) \deriv x$.
+Les fonctions $u_k$ v\'erifient donc 
+\begin{align}
+  \label{eq:chal_faible_sol}
+  \forall t \in [0,T] , \quad u_k(t) = \int_{\Omega} u_0(x) w_k(x) \deriv x e^{- \lambda_k t}
+  + \int_{0}^t \int_{\Omega} f(s,x) w_k(x) \deriv x e^{- \lambda_k (t-s)} \deriv s .
+\end{align}
+
+Il faut maintenant montrer que la s\'erie de fonctions \eqref{eq:chal_faible}
+d\'efinie \`a partir de \eqref{eq:chal_faible_sol} converge.
+
+
+!! PREUVE A FINIR !!
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Approximation par diff\'erences finies}
 
