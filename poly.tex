@@ -2513,6 +2513,18 @@ les espaces de Sobolev (...) !!
 \subsection{Propri\'et\'es g\'en\'erales}
 
 
+\begin{proposition}
+  \label{prop:chal_sol_faibles}
+  Soit $f \in L^2(0,T;L^2(0,1))$ et $u_0 \in L^2(0,1)$.
+  Alors il existe une solution $u$ au probl\`eme \eqref{eq:chaleur_Dir}
+  dans $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$.
+\end{proposition}
+
+!! EST-CE QU'ON PEUT AUGMENTER LA REGULARITE EN TEMPS ET EN EPACE DE LA SOLUTION ??
+--- EN TEMPS C'EST COMPLIQU\'E A CAUSE DU SECOND MEMBRE, EN ESPACE CA DOIT ETRE BON
+--- LE PROUVER !!!!
+
+!! DIRE QUE LA PREUVE SE TROUVE EN SECTION \ref{subsec:chal_sol_faibles} !!
 
 \begin{theorem}[Existence et unicit\'e de la solution]
   \label{thm:chaleur_existence}
@@ -2527,6 +2539,9 @@ les espaces de Sobolev (...) !!
 \begin{remark}[Effet r\'egularisant de l'\'equation de la chaleur]
   Commenter la r\'egularit\'e du th\'eor\`eme. (...)
 \end{remark}
+
+
+!! EST-CE QUE L'EFFET REGULARISANT EST SEULEMENT SANS $f$ ??
 
 \begin{proposition}[Non r\'eversibilit\'e de l'\'equation]
   Le probl\`eme \eqref{eq:chaleur_Dir} n'est pas r\'eversible:
@@ -2614,6 +2629,8 @@ les espaces de Sobolev (...) !!
 \subsection{Analyse de Fourier}
 
 !! chapeau !!
+
+!! parler de l'approche historique par Fourier !!
 
 %%%%%%%%%%%%%%%%
 \subsubsection{Recherche d'une solution sous la forme de s\'eries de Fourier}
@@ -2721,69 +2738,6 @@ du livre de Brigitte Lucquin.
 
 !! propagation de l'info \`a vitesse infinie !!
 (+exo num\'erique avec version sch\'ema implicite/explicite)
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Recherche d'une solution faible}
-
-!! IL VAUDRAIT PEUT-\^ETRE MIEUX METTRE CETTE SECTION DANS
-LA SECTION BONUS HORS PROGRAMME !!
-
-
-On prouve la proposition suivante.
-\begin{proposition}
-  Soit $f \in L^2(0,T;L^2(0,1))$ et $u_0 \in L^2(0,1)$.
-  Alors il existe une unique solution $u$ dans 
-  $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$
-  au probl\`eme \eqref{eq:chaleur_Dir}.
-\end{proposition}
-
-Cette d\'emonstration est issue du livre de B. Lucquin.
-On note $\Omega = (0,1)$.
-On utilise une base orthogonale de fonctions propres de l'op\'erateur $- \Delta$.
-On note $w_k(x) = \sqrt{2} \sin(k \pi x)$ et $\lambda_k = (k\pi)^2$.
-On peut montrer que l'on a
-\begin{align*}
-  \forall v \in H_0^1(\Omega) , 
-  \int_{\Omega} w_k'(x) v'(x) \deriv x = \lambda_k \int_{\Omega} w_k(x) v(x) \deriv x .
-\end{align*}
-
-!! Donner le lien avec la r\'eduction d'endomorphismes !!
-+ dire qui est $\calA$ !!
-
-Pour $k \geq 1$, la fonction $w_k$ est donc un vecteur propre de $\calA$
-associ\'e \`a la valeur propre $\lambda_k$.
-On cherche la solution $u$ sous la forme
-\begin{align}
-  \label{eq:chal_faible}
-  u(t,x) = \sum_{\ell = 1}^{+\infty} u_{\ell} (t) w_{\ell} (x) .
-\end{align}
-
-Les fonctions $w_k$ v\'erifient $\int_{\Omega} w_k (x) w_{\ell}(x) \deriv x = \delta_{k \ell}$
-o\`u $\delta_{k\ell}$ repr\'esente le symbole de Kronecker.
-
-L'\'equation de la chaleur sous sa forme variationnelle peut \^etre \'ecrite
-\begin{align*}
-  \forall v \in H^1_0(\Omega) ,  \quad
-  \dfrac{\deriv}{\deriv t} \int_{\Omega} u(t,x) v(x) \deriv x
-  + \int_{\Omega} \dfrac{\partial u}{\partial x}(t,x) \dfrac{\partial v}{\partial x}(x) \deriv x
-  = \int_{\Omega} f(t,x) v(x) \deriv x .
-\end{align*}
-En cherchant $u$ sous la forme \eqref{eq:chal_faible} et en prenant $v = w_k$, on obtient
-pour tout $k \geq 1$, $u_k'(t) + \lambda_k u_k(t) = \int_{\Omega} f(t,x) w_k(x) \deriv x$.
-La condition initiale donne $u_k(0) = \int_{\Omega} u_0(x) w_k(x) \deriv x$.
-Les fonctions $u_k$ v\'erifient donc 
-\begin{align}
-  \label{eq:chal_faible_sol}
-  \forall t \in [0,T] , \quad u_k(t) = \int_{\Omega} u_0(x) w_k(x) \deriv x e^{- \lambda_k t}
-  + \int_{0}^t \int_{\Omega} f(s,x) w_k(x) \deriv x e^{- \lambda_k (t-s)} \deriv s .
-\end{align}
-
-Il faut maintenant montrer que la s\'erie de fonctions \eqref{eq:chal_faible}
-d\'efinie \`a partir de \eqref{eq:chal_faible_sol} converge.
-
-
-!! PREUVE A FINIR !!
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2908,7 +2862,7 @@ On approche les d\'eriv\'ees partielles de la mani\`ere suivante:
 
 Le sch\'ema implicite centr\'e est donc d\'efini comme
 \begin{align}
-  \label{eq:chaleur_DF_exp_centre}
+  \label{eq:chaleur_DF_imp_centre}
   \left\{
   \begin{array}{l}
     \forall 1 \leq j \leq M-1 , 
@@ -3584,6 +3538,240 @@ dans un texte (ils seront alors pr\'esent\'es) !!
 
 !! Ajouter une annexe sur les EDO + y faire reference 
 dans la premiere section d'analyse numerique !!
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\'Equation de Burgers}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Recherche de solutions faibles \`a l'\'equation de la chaleur}
+\label{subsec:chal_sol_faibles}
+
+!! AJOUTER UN CHAPEAU A CETTE SECTION !!
+
+
+Cette section constitue une preuve \`a la proposition
+\ref{prop:chal_sol_faibles}.
+
+!! Est-ce qu'on peut prouver l'unicit\'e de la solution dans un espace particulier ??
+(pas juste dans l'espace des solutions de cette forme)
+---- On a l'unicit\'e avec la Proposition de stabilit\'e !!
+---- Il suffit juste de sp\'eficier la r\'egularit\'e de cette solution particuli\`ere !!
+
+Cette d\'emonstration est issue du livre de B. Lucquin.
+On note $\Omega = (0,1)$.
+
+$\bullet$ Recherche d'une solution :
+On utilise une base orthogonale de fonctions propres de l'op\'erateur $- \Delta$.
+On note $w_k(x) = \sqrt{2} \sin(k \pi x)$ et $\lambda_k = (k\pi)^2$.
+On peut montrer que l'on a
+\begin{align*}
+  \forall v \in H_0^1(\Omega) , 
+  \int_{\Omega} w_k'(x) v'(x) \deriv x = \lambda_k \int_{\Omega} w_k(x) v(x) \deriv x .
+\end{align*}
+
+!! Donner le lien avec la r\'eduction d'endomorphismes !!
++ dire qui est $\calA$ !!
+
+Pour $k \geq 1$, la fonction $w_k$ est donc un vecteur propre de $\calA$
+associ\'e \`a la valeur propre $\lambda_k$.
+On cherche la solution $u$ sous la forme
+\begin{align}
+  \label{eq:chal_faible}
+  u(t,x) = \sum_{\ell = 1}^{+\infty} u_{\ell} (t) w_{\ell} (x) .
+\end{align}
+
+Les fonctions $w_k$ v\'erifient $\int_{\Omega} w_k (x) w_{\ell}(x) \deriv x = \delta_{k \ell}$
+o\`u $\delta_{k\ell}$ repr\'esente le symbole de Kronecker.
+
+L'\'equation de la chaleur sous sa forme variationnelle peut \^etre \'ecrite
+\begin{align*}
+  \forall v \in H^1_0(\Omega) ,  \quad
+  \dfrac{\deriv}{\deriv t} \int_{\Omega} u(t,x) v(x) \deriv x
+  + \int_{\Omega} \dfrac{\partial u}{\partial x}(t,x) \dfrac{\partial v}{\partial x}(x) \deriv x
+  = \int_{\Omega} f(t,x) v(x) \deriv x .
+\end{align*}
+En cherchant $u$ sous la forme \eqref{eq:chal_faible} et en prenant $v = w_k$, on obtient
+pour tout $k \geq 1$, $u_k'(t) + \lambda_k u_k(t) = \int_{\Omega} f(t,x) w_k(x) \deriv x$.
+La condition initiale donne $u_k(0) = \int_{\Omega} u_0(x) w_k(x) \deriv x$.
+Les fonctions $u_k$ v\'erifient donc 
+\begin{align}
+  \label{eq:chal_faible_sol}
+  \forall t \in [0,T] , \quad u_k(t) = \int_{\Omega} u_0(x) w_k(x) \deriv x e^{- \lambda_k t}
+  + \int_{0}^t \int_{\Omega} f(s,x) w_k(x) \deriv x e^{- \lambda_k (t-s)} \deriv s .
+\end{align}
+
+Il faut maintenant montrer que la s\'erie de fonctions \eqref{eq:chal_faible}
+d\'efinie \`a partir de \eqref{eq:chal_faible_sol} converge
+dans les espaces $C^0([0,T];L^2(0,1))$ et $L^2(0,T;H^1_0(0,1))$.
+Pour cela, nous allons consid\'erer la suite 
+$(u^{(n)})_n$ avec $u^{(n)}(t,x) = \sum_{\ell=1}^n u_{\ell}(t) w_{\ell}(x)$. 
+Ces deux espaces \'etant dans des espaces de Hilbert,
+nous allons montrer que cette suite est de Cauchy dans chacun de ces espaces.
+
+$\bullet$ Convergence dans l'espace $C^0([0,T];L^2(0,1))$ :
+en utilisant l'orthogonalit\'e des $w_k$, nous avons pour $0 \leq m \leq n$,
+\begin{align*}
+  \| u^{(n)}(t,\cdot) - u^{(m)}(t,\cdot) \|_{L^2(0,1)}^2
+  &= \| \sum_{\ell = m+1}^n u_{\ell}(t) w_{\ell} \|_{L^2(0,1)}^2
+  = \sum_{k,\ell = m+1}^n u_{\ell}(t) u_{k}(t) (w_{\ell} , w_{k})_{L^2(0,1)}
+  \\
+  &= \sum_{k,\ell = m+1}^n u_{\ell}(t) u_{k}(t) \delta_{k \ell}
+  = \sum_{\ell = m+1}^n (u_{\ell}(t))^2 .
+\end{align*}
+On note 
+\begin{align*}
+  a_k (t) = (u_0 , w_k)_{L^2(0,1)} e^{- \lambda_k t} , \qquad
+  b_k(t) = \int_{0}^{t} (f(s,.),w_k)_{L^2(0,1)} e^{-\lambda_k(t-s)} \deriv s .
+\end{align*}
+En utilisant \eqref{eq:chal_faible_sol} et l'in\'egalit\'e de Young,
+on a $(u_{k}(t))^2 = (a_k(t) + b_k(t))^2 \leq 2 (a_k(t)^2 + b_k(t)^2)$.
+Ainsi,
+\begin{align*}
+  \| u^{(n)}(t,\cdot) - u^{(m)}(t,\cdot) \|_{L^2(0,1)}^2
+  \leq 2(A_{n,m}(t) + B_{n,m}(t)) ,
+\end{align*}
+avec 
+\begin{align*}
+  A_{n,m}(t) = \sum_{\ell=m+1}^n (a_{\ell}(t))^2 , \qquad
+  B_{n,m}(t) = \sum_{\ell=m+1}^n (b_{\ell}(t))^2 .
+\end{align*}
+
+Pour $t \geq 0$, on a $A_{n,m}(t) \leq \sum_{\ell = m+1}^n (u_0 , w_{\ell})_{L^2(0,1)}^2$.
+\'Etant donn\'e que les $w_k$ forment une base hilbertienne de $L^2(0,1)$ et que
+$u_0 \in L^2(0,1)$, on a $u_0 = \sum_{\ell = 1}^{+\infty} ( u_0, w_{\ell})_{L^2(0,1)} w_{\ell}$
+et avec l'\'egalit\'e de Parseval, 
+on a $\| u_0 \|_{L^2(0,1)}^2 = \sum_{\ell = 1}^{+\infty} ( u_0, w_{\ell})_{L^2(0,1)}^2$.
+La s\'erie de terme g\'en\'eral $( u_0, w_{\ell})_{L^2(0,1)}^2$ converge donc
+et on a $\sup_{t \in [0,T]} |A_{n,m}(t)| \to 0$ quand $n$ et $m \to +\infty$.
+
+
+!! VERIFIER QU'ON A BIEN UNE BASE HILBERTIENNE DANS $L^2$ \underline{ET} $H^1_0$ !! 
+
+Montrons maintenant le m\^eme r\'esultat sur $B_{n,m}(t)$.
+On a 
+\begin{align*}
+  \Big( \int_0^t (f(s,\cdot) , w_k)_{L^2(0,1)} e^{- \lambda_k (t-s)} \deriv s \Big)^2
+  & \leq \Big( \int_0^t (f(s,\cdot) , w_k)_{L^2(0,1)}^2\deriv s \Big)
+  \Big( \int_0^t e^{- 2 \lambda_k (t-s)} \deriv s \Big)
+  \\
+  & \leq \dfrac{1}{2 \lambda_k} \Big( \int_0^t (f(s,\cdot) , w_k)_{L^2(0,1)}^2\deriv s \Big)
+  \\
+  & \leq \dfrac{1}{2 \pi^2} \Big( \int_0^T (f(s,\cdot) , w_k)_{L^2(0,1)}^2\deriv s \Big) ,
+\end{align*}
+o\`u on a utilis\'e l'in\'egalit\'e de Cauchy--Schwarz et $\lambda_k = k^2 \pi^2 \geq \pi^2$.
+De plus, comme $f \in L^2(0,T;L^2(0,1))$, pour presque tout $s \in [0,T]$,
+$f(s,\cdot)$ appartient \`a $L^2(0,1)$. D'apr\`es l\'egalit\'e de Parseval,
+pour presque tout $s \in [0,T]$, 
+$\| f(s,\cdot) \|_{L^2(0,1)}^2 = \sum_{\ell=1}^{+\infty} (f(s,\cdot) , w_{\ell})_{L^2(0,1)}^2$.
+Ainsi, $\| f \|_{L^2(0,T;L^2(0,1))}^2 
+= \int_0^T \sum_{\ell=1}^{+\infty} (f(s,\cdot) , w_{\ell})_{L^2(0,1)}^2 \deriv s$.
+
+On peut donc montrer que la s\'erie de terme g\'en\'eral 
+$\int_0^T (f(s,\cdot) , w_k)_{L^2(0,1)}^2\deriv s$ converge
+(en \'etant born\'ee par $\| f \|_{L^2(0,T;L^2(0,1))}^2$).
+Donc $\sup_{t \in [0,T]} |B_{n,m}(t)| \to 0$ quand $n$ et $m \to + \infty$. 
+
+
+La suite $(u^{(n)})$ est donc de Cauchy dans $C^0([0,T];L^2(0,1))$
+et converge donc.
+
+$\bullet$ Convergence dans l'espace $L^2([0,T];H_0^1(0,1))$ :
+La norme 
+$|u|_{1,\Omega}^2 = \int_0^1 (\dfrac{\partial u}{\partial x})^2 \deriv x = \calA(u,u)$
+est une norme sur $H^1_0(0,1)$ \'equivalente \`a la norme usuelle
+(par l'in\'egalit\'e de Poincar\'e, voir (...)).
+On a 
+\begin{align*}
+  | (u^{(n)} - u^{(m)})(s,\cdot)|_{1,\Omega}^2
+  &= \calA((u^{(n)} - u^{(m)})(s,\cdot), (u^{(n)} - u^{(m)})(s,\cdot))
+  \\
+  &= \sum_{k,\ell = m+1}^n u_k(s) u_{\ell}(s) \calA(w_k , w_{\ell})
+  \\
+  &= \sum_{k,\ell = m+1}^n u_k(s) u_{\ell}(s) \lambda_k \delta_{k \ell}
+  = \sum_{k = m+1}^n \lambda_k (u_k(s))^2 .
+\end{align*}
+On montre donc que 
+$| (u^{(n)} - u^{(m)})(s,\cdot)|_{1,\Omega}^2 \leq 2 (C_{n,m}(t) + D_{n,m}(t))$
+avec
+\begin{align*}
+  C_{n,m}(t) := \sum_{\ell=m+1}^n \lambda_{\ell} (a_{\ell}(t))^2 , \qquad
+  D_{n,m}(t) := \sum_{\ell=m+1}^n \lambda_{\ell} (b_{\ell}(t))^2 .
+\end{align*}
+
+En raisonnant comme pr\'ec\'edemment, on a
+\begin{align*}
+  \int_0^T \lambda_k e^{-2 \lambda_k s} (u_0 , w_k)_{L^2(\Omega)}^2 \deriv s
+  \leq \dfrac{1}{2} (u_0 , w_k)_{L^2(\Omega)}^2 ,
+\end{align*}
+et la s\'erie de terme g\'en\'eral $(u_0 , w_k)_{L^2(\Omega)}^2$
+converge par l'\'egalit\'e de Parseval.
+Donc $\int_0^T C_{n,m} (s) \deriv s \to 0$ quand $n$ et $m \to +\infty$.
+
+De la m\^eme fa\c{c}on,
+\begin{align*}
+  \int_0^T \lambda_k \Big( \int_0^t (f(s,\cdot) , w_k)_{L^2(0,1)} e^{- \lambda_k (t-s)} \deriv s \Big)^2 
+  \deriv t
+  & \leq 
+    \int_0^T \lambda_k \Big( \int_0^t (f(s,\cdot) , w_k)_{L^2(0,1)}^2\deriv s \Big)
+  \Big( \int_0^t e^{- 2 \lambda_k (t-s)} \deriv s \Big) \deriv t
+  \\
+  & \leq \dfrac{1}{2} \int_0^T \Big( \int_0^t (f(s,\cdot) , w_k)_{L^2(0,1)}^2\deriv s \Big) \deriv t
+  \\
+  & \leq \dfrac{T}{2} \Big( \int_0^T (f(s,\cdot) , w_k)_{L^2(0,1)}^2\deriv s \Big) .
+\end{align*}
+Comme nous l'avons vu pr\'ec\'edemment, la s\'erie de terme g\'en\'eral 
+$\int_0^T (f(s,\cdot) , w_k)_{L^2(0,1)}^2\deriv s$ converge.
+
+Nous avons donc montr\'e que la suite $(u^{(n)})$ est de Cauchy et donc
+converge dans $L^2(0,T;H^1_0(0,1))$.
+
+
+$\bullet$ Solution de l'\'equation :
+montrons maintenant que $u$ d\'efinie par \eqref{eq:chal_faible}
+avec \eqref{eq:chal_faible_sol} v\'erifie l'\'equation \eqref{eq:chaleur_Dir}
+au sens faible.
+
+Soit $v \in H_0^1(\Omega)$. On note comme pr\'ec\'edemment
+$u^{(N)} (t,x) := \sum_{\ell=1}^N u_{\ell}(t) w_{\ell}(x)$.
+On a 
+\begin{align*}
+  \dfrac{\deriv}{\deriv t} ( u^{(N)}(t,\cdot) , v )_{L^2(\Omega)}
+  &= \sum_{k=1}^N - \lambda_k (u_0 , w_k)_{L^2(\Omega)} (w_k , v )_{L^2(\Omega)} e^{-\lambda t}
+    + ( f(t,\cdot) , w_k )_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)}
+  \\
+  & \qquad \quad 
+    - \lambda_k \int_{0}^t (f(s,\cdot) , w_k)_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)} 
+    e^{-\lambda_k (t-s)} \deriv s
+  \\
+  &= \sum_{k=1}^N - ( (u_0 , w_k)_{L^2(\Omega)} e^{-\lambda t} 
+    + \int_{0}^t (f(s,\cdot) , w_k)_{L^2(\Omega)} e^{-\lambda_k (t-s)} \deriv s)
+    \calA(w_k , v)
+  \\
+  & \qquad \quad 
+    + ( f(t,\cdot) , w_k )_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)}
+  \\
+  &= - \calA(u^{(N)}(t,\cdot) , v) 
+    + \sum_{k=1}^N ( f(t,\cdot) , w_k )_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)} .
+\end{align*}
+Quand $N \to +\infty$, $u^{(N)}$ converge vers $u$ dans $L^2(0,T;H^1_0(\Omega))$.
+De plus, (...)
+
+!! MONTRER QUE $\sum_{k=1}^N ( f(t,\cdot) , w_k )_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)}
+\to (f , v)$ !!
+
+
+Donc $t \mapsto ( u(t,\cdot) , v )_{L^2(\Omega)}$ est d\'erivable presque pour tout $t \in [0,T]$
+et $u$ v\'erifie (...)
+
+!! A COMPLETER !!
+
+!! LA SOLUTION PORTE SUR LA FORMULATION VARIATIONNELLE SEULEMENT !!
+
+!! EN QUOI LA FORMULATION VARIATIONNELLE IMPLIQUE LA FORMULATION FORTE ??
+
+
 
 %===================================================================================
 
