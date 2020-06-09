@@ -2519,52 +2519,22 @@ les espaces de Sobolev (...) !!
   Alors il existe une solution $u$ au probl\`eme \eqref{eq:chaleur_Dir}
   dans $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$.
 \end{proposition}
+Une preuve \`a cette proposition est propos\'ee en Section \ref{subsec:chal_sol_faibles}.
 
-!! EST-CE QU'ON PEUT AUGMENTER LA REGULARITE EN TEMPS ET EN EPACE DE LA SOLUTION ??
---- EN TEMPS C'EST COMPLIQU\'E A CAUSE DU SECOND MEMBRE, EN ESPACE CA DOIT ETRE BON
---- LE PROUVER !!!!
-
-!! DIRE QUE LA PREUVE SE TROUVE EN SECTION \ref{subsec:chal_sol_faibles} !!
-
-\begin{theorem}[Existence et unicit\'e de la solution]
-  \label{thm:chaleur_existence}
-  Supposons que (...).
-  Le probl\`eme \eqref{eq:chaleur_Dir} est bien pos\'e:
-  il admet une unique solution $u \in $(...)
-  et $\| u \| \leq (...)$.
-
-  De plus, cette solution appartient \`a l'espace (...)
-\end{theorem}
-
-\begin{remark}[Effet r\'egularisant de l'\'equation de la chaleur]
-  Commenter la r\'egularit\'e du th\'eor\`eme. (...)
-\end{remark}
-
-
-!! EST-CE QUE L'EFFET REGULARISANT EST SEULEMENT SANS $f$ ??
-
-\begin{proposition}[Non r\'eversibilit\'e de l'\'equation]
-  Le probl\`eme \eqref{eq:chaleur_Dir} n'est pas r\'eversible:
-  (...)
-\end{proposition}
 
 
 \begin{proposition}
   \label{prop:chaleur_continuite_donnees}
-  Soit $u$ une solution de \eqref{eq:chaleur_Dir}.
+  Soit $u \in C^0([0,T];L^2(0,1))$ une solution de \eqref{eq:chaleur_Dir}.
   Si $u_0 \in L^2(0,1)$ et $f \in L^2(]0,T[ \times ]0,1[)$,
-  alors $u \in L^{\infty}(0,T;L^2(0,1))$ et
+  alors 
   \begin{align*}
     \sup_{t \in [0,T]} \| u(t,.) \|_{L^2(0,1)} \leq \| u_0 \|_{L^2(0,1)} + \| f \|_{L^2(]0,T[ \times ]0,1[)} .
   \end{align*}
 \end{proposition}
 
 \begin{proof}
-  Montrons que $u \in L^{\infty}(0,T;L^2(0,1))$ (...)
-  
-  !! TODO !!
-  
-  Maintenant, multiplions la premi\`ere ligne de \eqref{eq:chaleur_Dir} par $u$
+  Multiplions la premi\`ere ligne de \eqref{eq:chaleur_Dir} par $u$
   et int\'egrons en espace sur le domaine $\Omega = (0,1)$,
   on obtient
   \begin{align*}
@@ -2599,11 +2569,43 @@ les espaces de Sobolev (...) !!
   On obtient le r\'esultat en prenant le $\sup$ sur $t$.
 \end{proof}
 
+En combinant les propositions \ref{prop:chal_sol_faibles} et
+\ref{prop:chaleur_continuite_donnees}, on obtient le r\'esultat suivant.
+\begin{corrolary}
+  Si $u_0 \in L^2(0,1)$ et $f \in L^2(0,T;L^2(0,1))$ alors le probl\`eme
+  \eqref{eq:chaleur_Dir} admet une unique solution dans 
+  $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$.
+\end{corrolary}
 
-\begin{remark}
-  !! \'Energie du syst\`eme (utilis\'e aussi dans le livre de Brigitte Lucquin) !!
-  -- Ne correspond pas \`a l'\'energie physique !!
-\end{remark}
+\begin{proposition}[Effet r\'egularisant de l'\'equation de la chaleur]
+  Si $u \in C^2(]0,T] \times ]0,1[)$ est solution de
+  $\dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = 0$,
+  alors $u \in C^{\infty}(]0,T] \times ]0,1[)$.
+\end{proposition}
+!! PREUVE : Proposition II.10 du poly ENS !!
+-- DEMANDER REF A MURIEL POUR MEILLEUR RESULTAT !!
+
+
+!! ON PEUT CONSTRUIRE UNE PREUVE DE REGULARITE EN CHERCHANT DES SOLUTIONS REGULIERES
+(VOIR NOTES MURIEL) !! 
+-- ON DOIT POUVOIR COMBINER CA AVEC LA PREUVE DE LA RECHERCHE DE SOLUTIONS FAIBLES !!
+
+Voir Figure (...) !! TODO !!
+
+
+!! VOIR COMMENT EXPRIMER LA NON-REVERSIBILIT\'E DE L'\'EQUATION !!
+
+\begin{proposition}[Non r\'eversibilit\'e de l'\'equation]
+  Le probl\`eme \eqref{eq:chaleur_Dir} n'est pas r\'eversible:
+  (...)
+\end{proposition}
+
+
+
+% \begin{remark}
+%   !! \'Energie du syst\`eme (utilis\'e aussi dans le livre de Brigitte Lucquin) !!
+%   -- Ne correspond pas \`a l'\'energie physique !!
+% \end{remark}
 
 \begin{remark}
   La continuit\'e par rapport aux donn\'ees traduit une forme de stabilit\'e
@@ -2611,13 +2613,26 @@ les espaces de Sobolev (...) !!
 \end{remark}
 
 \begin{remark}[Conditions de Dirichlet non homog\`enes]
-  On peut utiliser un rel\`evement comme dans (...)
+  On peut utiliser un rel\`evement comme dans (...) --- A DONNER EN EXERCICE !!
 \end{remark}
 
 \begin{remark}[Condition de Neumann]
   Conservation de la valeur moyenne ??
   (...)
 \end{remark}
+
+\begin{proposition}[Principe du maximum]
+  Supposons $\forall (t,x) \in (0,T) \times (0,1)$,
+  $f(t,x) \leq 0$. On note $u$ la solution de \eqref{eq:chaleur_Dir}.
+  Alors, pour tout $(t,x) \in [0,T] \times (0,1)$, on a 
+  \begin{align*}
+    \sup_{(t,x) \in [0,T] \times [0,1]} u(t,x) = \max(\sup_{x \in (0,1)} u_0(x) , 0 ) .
+  \end{align*}
+\end{proposition}
+Notons que nous avons utilis\'e le fait que les conditions de Dirichlet sont homog\`enes.
+Dans le cas de conditions de Dirichlet non homog\`enes, il faudrait prendre le max
+du sup en espace de la donn\'ee initiale et du sup en temps des donn\'ees de Dirichlet.
+
 
 
 \begin{exercise}
@@ -2721,12 +2736,7 @@ du livre de Brigitte Lucquin.
 + les int\'egrer au cours !!
 
 
-\begin{proof}[Preuve du th\'eor\`eme \ref{thm:chaleur_existence}]
-  L'unicit\'e de la solution et la continuit\'e par rapport aux donn\'ees est une cons\'equence
-  de la proposition \ref{prop:chaleur_continuite_donnees}.
 
-  Montrons maintenant l'existence d'une solution (...)
-\end{proof}
 
 %%%%%%%%%%%%%%%%
 \subsubsection{Utilisation de la transform\'ee de Fourier}
@@ -2738,6 +2748,12 @@ du livre de Brigitte Lucquin.
 
 !! propagation de l'info \`a vitesse infinie !!
 (+exo num\'erique avec version sch\'ema implicite/explicite)
+
+
+
+!! NON UNICITE DANS $\R$ ?? -- VOIR POLY MIRONESCU !!
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
