@@ -2647,6 +2647,8 @@ du sup en espace de la donn\'ee initiale et du sup en temps des donn\'ees de Dir
 
 !! parler de l'approche historique par Fourier !!
 
+!! parler aussi de s\'eparation des variables !! --- C'est \'ecrit dans le programme officiel !!
+
 %%%%%%%%%%%%%%%%
 \subsubsection{Recherche d'une solution sous la forme de s\'eries de Fourier}
 
@@ -2739,19 +2741,96 @@ du livre de Brigitte Lucquin.
 
 
 %%%%%%%%%%%%%%%%
-\subsubsection{Utilisation de la transform\'ee de Fourier}
+\subsubsection{Probl\`eme dans $\R$ entier : 
+  utilisation de la transform\'ee de Fourier}
 
 
-!! pb sur $\R$ entier !!
+On s'int\'eresse ici au probl\`eme
+\begin{equation}
+  \label{eq:chaleur_R}
+  % \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
+  \left\{
+    \begin{array}{l l}
+      \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = f 
+      &\dans (0,T) \times \R ,
+      \\
+      u(0,.) = u_0 
+      & \dans \R .
+    \end{array}
+  \right.
+\end{equation}
+Notons que comme le domaine spatial $\R$ n'a pas de bord, l'\'equation 
+n'a pas de conditions aux limites.
 
-!! noyau de Green !!
+
+!! ENONCER UN THEOREME D'EXISTENCE ET UNICITE !!
+
+
+On peut utiliser la transform\'ee de Fourier de $u$ par rapport \`a $x$ 
+pour r\'esoudre ce probl\`eme. On la note
+\begin{align*}
+  \calF(u)(t,\omega) := \hu(t,\omega) := \int_{\R} e^{- i \omega x} u(t,x) \deriv x .
+\end{align*}
+On notera la transform\'ee de Fourier inverse
+\begin{align*}
+  \calF^{-1}(v)(t,x) = \dfrac{1}{2\pi} \int_{\R} e^{2 i \omega x} v(t,\omega) \deriv \omega .
+\end{align*}
+
+
+!! HYPOTHESES DE LA TRANSFORMEE DE FOURIER ??
+
+
+En utilisant les propri\'et\'es classiques de la transform\'ee de Fourier,
+on montre que $\hu(t,\omega)$ est solution du probl\`eme
+\begin{align*}
+  \dfrac{\partial \hu}{\partial t}(t,\omega) + \omega^2 \hu(t , \omega) = \hf(t,\omega) 
+  & \dans (0,T) \times \R ,
+  \\
+  \hu(0 , \omega) = \hu_0(\omega)
+  & \dans \R .
+\end{align*}
+Ainsi 
+\begin{align*}
+  \hu(t,\omega) = \hu_0(\omega) e^{- \omega^2 t} 
+  + \int_0^t \hf(s,\omega) e^{- \omega^2 (t - s)} \deriv s . 
+\end{align*}
+Apr\`es quoi, on applique la transform\'ee de Fourier inverse pour trouver
+une solution \`a l'\'equation \eqref{eq:chaleur_R}.
+En utilisant les propri\'et\'es de la transform\'ee de Fourier, on obtient donc
+\begin{align*}
+  u(t,x) 
+  =& \calF^{-1}(\hu_0) * \calF^{-1} (e^{-\omega^2 t})
+  + \calF^{-1} (\int_0^t \hf(s,\omega) e^{- \omega^2(t-s)} \deriv s)
+  \\
+  =& (u_0 * G(t,.))(t,x) + ...
+\end{align*}
+avec $G(t,x) = \dfrac{1}{2 \pi} \sqrt{\dfrac{\pi}{t}} e^{- \frac{x^2}{4t}}$
+le noyau de la chaleur et $*$ le produit de convolution.
+Pour rappel
+$(u_0 * G(t,.))(t,x) := \int_{\R} u_0(y) G(t,x-y) \deriv y$.
+
+\begin{exercise}
+  Pour $t > 0$, calculer $\calF^{-1}(e^{-\omega^2 t})$.
+
+  Indice : utiliser des int\'egrations par parties et les propri\'et\'es de la transform\'ee
+  de Fourier pour prouver que pour tout $t > 0$, $x \mapsto \calF^{-1}(e^{-\omega^2 t})$ est solution
+  d'une EDO d'ordre 2.
+  Prouver que le probl\`eme de Cauchy v\'erifi\'e par cette fonction admet une unique solution
+  et v\'erifier que le noyau de la chaleur est cette unique solution.
+\end{exercise}
+
+% \begin{lemma}
+%   Il existe des solutions \`a \eqref{eq:chaleur_R} qui n'appartiennent pas 
+%   \`a $L^2(\R)$.
+% \end{lemma}
+
 
 !! propagation de l'info \`a vitesse infinie !!
 (+exo num\'erique avec version sch\'ema implicite/explicite)
 
 
 
-!! NON UNICITE DANS $\R$ ?? -- VOIR POLY MIRONESCU !!
+!! NON UNICITE DANS $\R$ ?? -- VOIR POLY MIRONESCU !! --- C'est peut-\^etre trop compliqu\'e !!
 
 
 
@@ -3787,8 +3866,22 @@ et $u$ v\'erifie (...)
 
 !! EN QUOI LA FORMULATION VARIATIONNELLE IMPLIQUE LA FORMULATION FORTE ??
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\section{Principales propri\'et\'es de la transform\'ee de Fourier}
 
-
+\begin{align}
+  \calF(\dfrac{\partial u}{\partial x}) = i \omega \calF(u) ,
+  \\
+  \label{eq:calF_uv}
+  \calF(u \times v) = \calF(u) * \calF(v) ,
+  \\
+  \calF^{-1}(\calF(u)) = u ,
+\end{align}
+avec $u*v$ le produit de convolution.
+Les propri\'et\'es \eqref{eq:calF_uv} sont aussi v\'erifi\'ees par $\calF^{-1}$,
+les preuves sont similaires et ne sont pas donn\'ees dans ce document.
 %===================================================================================
 
 \end{document}
