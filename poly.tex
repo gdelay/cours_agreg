@@ -3167,22 +3167,64 @@ avec (...)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Construction de solutions r\'eguli\`eres}
 
-Si $u_0$ et $u_1$ sont dans $C^{\infty}([0,1])$
-avec $u_0^{(\ell)}(0) = u_0^{(\ell)}(1) = 0$
-et $u_1^{(\ell)}(0) = u_1^{(\ell)}(1) = 0$
-pour tout $\ell \in \N$, alors
+On s'int\'eresse \`a l'\'equation \eqref{eq:ondes_Dir} avec $f = 0$.
+On utilise la m\'ethode de s\'eparation des variables.
+On cherche donc une solution de la forme $u(t,x) = \Phi(t) \Psi(x)$.
+En reportant cette expression dans l'\'equation, on s'aper\c{c}oit 
+que ces fonctions doivent satisfaire la relation
+$\Phi''(t) \Psi(x) = c^2 \Phi(t) \Psi''(x)$.
+On cherche donc des fonctions qui v\'erifient
+$\dfrac{\Phi''(t)}{\Phi(t)} = c^2 \dfrac{\Psi''(x)}{\Psi(x)} = C$
+avec $C$ une constante (puisque ces deux expressions sont \'egales 
+et d\'ependent du temps pour l'une et de l'espace pour l'autre).
+De plus, nous ne sommes pas int\'eress\'es par le cas o\`u cette
+constante serait nulle car la solution associ\'ee serait alors triviale.
+Les fonctions $\Phi$ et $\Psi$ v\'erifient donc les \'equations
+\begin{align*}
+  \Phi''(t) - C \Phi(t) = 0 , 
+  \qquad
+  c^2 \Psi''(x) - C \Psi(x) = 0 .
+\end{align*}
+
+Si $C > 0$, on peut montrer en utilisant les conditions de Dirichlet homog\`enes
+que la seule solution possible est la solution nulle.
+On s'int\'eresse donc uniquement au cas o\`u $C < 0$.
+Dans ce cas, on a $\Phi(t) = A \sin(\sqrt{|C|} t) + B \cos(\sqrt{|C|} t)$
+et $\Psi(x) = A' \sin(\dfrac{\sqrt{|C|}}{c} x) + B' \cos(\dfrac{\sqrt{|C|}}{c} x)$.
+Avec les conditions de Dirichlet homog\`enes, on montre
+que $B' = 0$ et $C = - k^2 c^2 \pi^2$ avec $k \in \Z$.
+Ainsi, si les conditions initiales le permettent, on peut consid\'erer
+des solutions de la forme
+$(t,x) \mapsto (A \sin(k\pi c t) + B \cos(k\pi c t)) \sin(k \pi x)$.
+
+
+Pour \^etre plus g\'en\'eral et ainsi v\'erifier les conditions intiiales impos\'ees,
+on va consid\'erer des solutions 
+sous la forme de s\'eries de Fourier utilisant ces termes.
+
+Supposons que $u_0$ et $u_1$ sont dans $C^{2}([0,1])$
+avec $u_0(0) = u_0(1) = 0$
+et $u_1(0) = u_1(1) = 0$.
+On peut alors \'ecrire
 \begin{align*}
   u_0(x) = \sum\limits_{k=1}^{+\infty} b_k \sin (k \pi x)
   \qquad \text{et} \qquad
   u_1(x) = \sum\limits_{k=1}^{+\infty} c_k \sin (k \pi x) .
 \end{align*}
+avec $b_k = 2 \int_0^1 u_0(x) \sin(k \pi x) \deriv x$
+et $c_k = 2 \int_0^1 u_1(x) \sin(k \pi x) \deriv x$.
+
+On peut montrer que ces coefficients sont en $O(1/k^2)$ de sorte que les s\'eries
+pr\'ec\'edentes sont normalement convergentes.
+
 La fonction d\'efinie par
 \begin{align*}
-  u(t,x) = \sum\limits_{k=1}^{+\infty} ( b_k \cos(k \pi c t) + \dfrac{c_k}{k \pi} \sin(k \pi c t) ) .
+  u(t,x) = \sum\limits_{k=1}^{+\infty} ( b_k \cos(k \pi c t) + \dfrac{c_k}{k \pi} \sin(k \pi c t) ) 
+  \sin(k \pi x) ,
 \end{align*}
-est alors solution de l'\'equation des ondes.
+est alors continue et solution de l'\'equation des ondes au sens des distributions
+(les d\'eriv\'ees sont \`a consid\'erer au sens des distributions).
 
-!! A Verifier : c'est bizarre que ca ne depende pas de $x$ !!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Formule de d'Alembert}
 
