@@ -3260,6 +3260,111 @@ o\`u (...)
   \end{align*}
 \end{theorem}
 
+
+
+\begin{proof}
+  On prouve ce th\'eor\`eme en supposant que $u$ est une solution de \eqref{eq:ondes_R}.
+  L'id\'ee de la preuve consiste \`a s'int\'eresser aux droites $(t,x) \mapsto x-ct$
+  et $(t,x) \mapsto x+ct$ selon lesquelles les ondes se d\'eplacent.
+  On introduit donc le changement de variables $y = x+ct$ et $z = x-ct$,
+  on note $v(y,z) := u(\dfrac{y-z}{2c} , \dfrac{y+z}{2})$ la repr\'esentation
+  de $u$ selon ces nouvelles variables.
+
+  On prouve ensuite que $v$ v\'erifie l'\'equation
+  \begin{align*}
+    \dfrac{\partial^2 v}{\partial y \partial z} = - \dfrac{1}{4 c^2} f (\dfrac{y-z}{2c} , \dfrac{y+z}{2}) .
+  \end{align*}
+  Cela se fait ais\'ement en calculant cette d\'eriv\'ee crois\'ee et en rappelant que $u$ 
+  est solution de \eqref{eq:ondes_R}.
+
+  On peut ensuite calculer la fonction $v$ en int\'egrant la relation pr\'ec\'edente
+  une fois selon $y$ et une fois selon $z$.
+  On obtient
+  \begin{align*}
+    v(y,z) = G(z) + F(y) - \dfrac{1}{4c^2} \int_0^z \int_0^y f(\dfrac{s-r}{2c} , \dfrac{s+r}{2})
+    \deriv s \deriv r ,
+  \end{align*}
+  o\`u $F$ et $G$ sont des fonctions \`a d\'eterminer.
+  On peut donc \'ecrire une premi\`ere expression pour $u$
+  \begin{align*}
+    u(t,x) 
+    =& v(x+ct,x-ct)
+    \\
+    =& G(x-ct) + F(x+ct) - \dfrac{1}{4c^2} \int_{0}^{x-ct} \int_0^{x+ct} f(\dfrac{s-r}{2c} , \dfrac{s+r}{2}) 
+       \deriv s \deriv r .
+  \end{align*}
+
+  Il faut maintenant d\'eterminer l'expression de $F$ et $G$.
+  Pour cela, on \'evalue l'expression pr\'ec\'edente en $t=0$ et on utilise
+  les conditions initiales, on obtient
+  \begin{align}
+    \label{eq:proof_DAlembert_u0}
+    u_0(x) = G(x) + F(x) - \dfrac{1}{4c^2} \int_{0}^{x} \int_0^{x} f(\dfrac{s-r}{2c} , \dfrac{s+r}{2})
+    \deriv s \deriv r .
+  \end{align}
+  Pour obtenir une deuxi\`eme relation, on suppose que $F$ et $G$ sont
+  d\'erivables, on d\'erive l'expression de $u$ et on \'evalue en $t=0$,
+  on obtient
+  \begin{align}
+    \label{eq:proof_DAlembert_u1}
+    u_1(x) = - c G'(x) + c F'(x) - \dfrac{1}{4c} \Big( 
+    \int_{0}^x f(\dfrac{x-r}{2c},\dfrac{x+r}{2}) \deriv r
+    - \int_0^x f(\dfrac{s-x}{2c},\dfrac{s+x}{2}) \deriv s
+    \Big) .
+  \end{align}
+
+  En combinant les relations \eqref{eq:proof_DAlembert_u0}
+  et \eqref{eq:proof_DAlembert_u1}, on peut montrer
+  $F(0) = 0$, $G(0) = 0$ et
+  \begin{align*}
+    F(x) &= \dfrac{u_0(x)}{2} + \int_{0}^{x} \dfrac{u_1(s)}{2c} \deriv s
+    + \dfrac{1}{8c^2} \Big(
+    \int_0^x \!\!\!\int_0^x f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r
+    + \int_0^x \!\!\!\int_0^s f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv r \deriv s
+    \\
+    & \qquad \qquad \qquad \qquad \qquad \qquad \qquad 
+      - \int_0^x \!\!\!\int_0^r f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r
+    \Big) ,
+    \\
+    G(x) &= \dfrac{u_0(x)}{2} - \int_{0}^{x} \dfrac{u_1(s)}{2c} \deriv s
+    + \dfrac{1}{8c^2} \Big(
+    \int_0^x \!\!\!\int_0^x f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r
+    - \int_0^x \!\!\!\int_0^s f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv r \deriv s
+    \\
+    & \qquad \qquad \qquad \qquad \qquad \qquad \qquad 
+      + \int_0^x \!\!\!\int_0^r f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r
+    \Big) .
+  \end{align*}
+  On peut maintenant simplifier les int\'egrales pour obtenir
+  \begin{align*}
+    F(x) &= \dfrac{u_0(x)}{2} + \int_{0}^{x} \dfrac{u_1(s)}{2c} \deriv s
+           + \dfrac{1}{4c^2} 
+           \int_0^x \!\!\!\int_0^s f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv r \deriv s ,
+    \\
+    G(x) &= \dfrac{u_0(x)}{2} - \int_{0}^{x} \dfrac{u_1(s)}{2c} \deriv s
+           + \dfrac{1}{4c^2}
+           \int_0^x \!\!\!\int_0^r f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r .
+  \end{align*}
+  On peut maintenant injecter $F(x)$ et $G(x)$ dans l'expression de $u(t,x)$.
+  Apr\`es simplification des int\'egrales, on obtient
+  \begin{align*}
+    u(t,x) = \dfrac{u_0(x+ct) + u_0(x-ct)}{2} + \dfrac{1}{2c} \int_{x-ct}^{x+ct} u_1(s) \deriv s
+    + \dfrac{1}{4c^2} \int_{x-ct}^{x+ct} \int_{x-ct}^{s} f(\dfrac{s-r}{2c} , \dfrac{s+r}{2})
+    \deriv r \deriv s .
+  \end{align*}
+
+  On termine cette preuve en remaniant le dernier terme par les changements de variables
+  $\tilde{t} = \dfrac{s-r}{2c}$ et $\tilde{x} = s - c \tilde{t}$.
+
+  !! PEUT-ON SUPPOSER QUE $F$ et $G$ sont d\'erivables ??
+  -- RAPPELER QU'ON EST DANS UNE PREUVE PAR ANALYSE--SYNTHESE !!
+
+  !! FAIRE A UN MOMENT UNE REMARQUE SUR LA REGULARITE DE $f$
+  QUI PERMET D'UTILISER FUBINI !!
+\end{proof}
+
+
+
 !! prouver ce thm !!
 
 !! donner une interpretation de ces termes ??
