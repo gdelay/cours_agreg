@@ -3142,11 +3142,27 @@ avec (...)
 % \end{remark}
 
 
-\begin{proposition}[R\'eversibilit\'e de l'\'equation]
-  Le probl\`eme \eqref{eq:ondes_Dir} est r\'eversible:
-  (...)
+\begin{proposition}[R\'eversibilit\'e de l'\'equation des ondes]
+  Soit $u$ une solution du probl\`eme \eqref{eq:ondes_Dir}.
+  Alors $\tu(t,x) := u(T-t,x)$ est l'unique solution du probl\`eme
+  r\'etrograde
+  \begin{align*}
+    \dfrac{\partial^2 \tu}{\partial t^2} - c^2 \dfrac{\partial^2 \tu}{\partial x^2} = f 
+    &\dans (0,T) \times (0,1) ,
+    \\
+    \tu(T,\cdot) = u(T,\cdot) 
+    & \dans (0,1) ,
+    \\
+    \dfrac{\partial \tu}{\partial t}(T,\cdot) = - \dfrac{\partial u}{\partial t}(T,\cdot) 
+    & \dans (0,1) ,
+    \\
+    \tu(t,0) = 0 , \quad \tu(t,1) = 0 
+    \quad& \forall t \in (0,T) ,
+  \end{align*}
+  et ce probl\`eme est bien pos\'e.
 \end{proposition}
-
+Ceci signifie que retrouver la solution initiale \`a partir des donn\'ees
+finales n'est pas une difficult\'e avec cette \'equation.
 
 \begin{proposition}[Conservation de l'\'energie]
   \label{prop:ondes_energie}
