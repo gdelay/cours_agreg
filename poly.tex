@@ -3125,21 +3125,21 @@ avec (...)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
 
-\begin{theorem}[Existence et unicit\'e de la solution]
-  \label{thm:ondes_existence}
-  Supposons que (...).
-  Le probl\`eme \eqref{eq:ondes_Dir} est bien pos\'e:
-  il admet une unique solution $u \in $(...)
-  et $\| u \| \leq (...)$.
+% \begin{theorem}[Existence et unicit\'e de la solution]
+%   \label{thm:ondes_existence}
+%   Supposons que (...).
+%   Le probl\`eme \eqref{eq:ondes_Dir} est bien pos\'e:
+%   il admet une unique solution $u \in $(...)
+%   et $\| u \| \leq (...)$.
 
-  De plus, cette solution appartient \`a l'espace (...)
-\end{theorem}
+%   De plus, cette solution appartient \`a l'espace (...)
+% \end{theorem}
 
 
-\begin{remark}[Pas d'effet r\'egularisant]
-  Commenter la r\'egularit\'e du th\'eor\`eme. (...)
-  -- M\^eme r\'egularit\'e que celle des donn\'ees.
-\end{remark}
+% \begin{remark}[Pas d'effet r\'egularisant]
+%   Commenter la r\'egularit\'e du th\'eor\`eme. (...)
+%   -- M\^eme r\'egularit\'e que celle des donn\'ees.
+% \end{remark}
 
 
 \begin{proposition}[R\'eversibilit\'e de l'\'equation]
@@ -3150,19 +3150,37 @@ avec (...)
 
 \begin{proposition}[Conservation de l'\'energie]
   \label{prop:ondes_energie}
-  Soit $u$ une solution de \eqref{eq:ondes_Dir},
-  alors on a pour tout $t \in [0,T]$,
+  Soit $u$ une solution de \eqref{eq:ondes_Dir}.
+  On note
   \begin{align*}
-    \dfrac{1}{2} \| \dfrac{\partial u}{\partial t}(t,.) \|_{(...)}^2
-    + \dfrac{1}{2} \| c \dfrac{\partial u}{\partial x}(t,.) \|_{(...)}^2
-    = \dfrac{1}{2} \| u_1 \|_{(...)}^2
-    + \dfrac{1}{2} \| c u_0' \|_{(...)}^2
-    + \| f \| (...)
+    E(t) := \dfrac{1}{2} \int_0^1 \left( \dfrac{\partial u}{\partial t}
+    \right)^2 \deriv x + \dfrac{c^2}{2} \int_0^1 \left( \dfrac{\partial u}{\partial x}
+    \right)^2 \deriv x .
+  \end{align*}
+  Si $f = 0$, alors on a pour tout $t \in [0,T]$,
+  \begin{align*}
+    E(t) = \dfrac{1}{2} \int_0^1 (u_1)^2 \deriv x
+    + \dfrac{c^2}{2} \int_0^1 (u_0)^2 \deriv x .
   \end{align*}
 \end{proposition}
 
-!! commenter les diff\'erents termes !!
+Le premier terme de $E(t)$ correspond \`a l'\'energie
+cin\'etique du syst\`eme et le second terme son \'enegie potentielle.
+Lorsqu'il n'y a pas d'effort dans le domaine ($f=0$),
+cette \'energie conserve la valeur qu'elle avait \`a l'instant initial.
 
+\begin{proof}
+  En multipliant l'\'equation de la chaleur par $\dfrac{\partial u}{\partial t}$
+  et en int\'egrant sur $(0,1)$, on obtient
+  \begin{align*}
+    0 = 
+    \int_0^1 \dfrac{\partial^2 u}{\partial t^2} \dfrac{\partial u}{\partial t} \deriv x
+    + c^2 
+    \int_0^1 \dfrac{\partial^2 u}{\partial x \partial t} \dfrac{\partial u}{\partial x} \deriv x
+    = \dfrac{\deriv E}{\deriv t} .
+  \end{align*}
+  On conclut en utilisant les conditions initiales.
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Construction de solutions r\'eguli\`eres}
