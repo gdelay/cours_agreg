@@ -3795,46 +3795,61 @@ dans la premiere section d'analyse numerique !!
 
 Cette section constitue une preuve \`a la proposition
 \ref{prop:chal_sol_faibles}.
+On cherche une solution faible \`a l'\'equation de la chaleur.
+Cela signifie que pour presque tout $t \in (0,T)$,
+on consid\`ere les termes de l'\'egalit\'e
+$\dfrac{\partial u}{\partial t}(t,\cdot) 
+- \dfrac{\partial^2 u}{\partial x^2}(t,\cdot) = f(t,\cdot)$
+comme des \'el\'ements de $H^{-1}(\Omega)$.
+On cherche donc une solution $u$ qui v\'erifie
+\begin{align}
+  \label{eq:chal_vari}
+  \forall v \in H^1_0(\Omega) ,  \quad
+  \dfrac{\deriv}{\deriv t} \int_{\Omega} u(t,x) v(x) \deriv x
+  + \int_{\Omega} \dfrac{\partial u}{\partial x}(t,x) \dfrac{\partial v}{\partial x}(x) \deriv x
+  = \int_{\Omega} f(t,x) v(x) \deriv x .
+\end{align}
 
 !! Est-ce qu'on peut prouver l'unicit\'e de la solution dans un espace particulier ??
 (pas juste dans l'espace des solutions de cette forme)
 ---- On a l'unicit\'e avec la Proposition de stabilit\'e !!
 ---- Il suffit juste de sp\'eficier la r\'egularit\'e de cette solution particuli\`ere !!
 
+
+
 Cette d\'emonstration est issue du livre de B. Lucquin.
 On note $\Omega = (0,1)$.
 
 $\bullet$ Recherche d'une solution :
-On utilise une base orthogonale de fonctions propres de l'op\'erateur $- \Delta$.
+on note $\calA$ l'op\'erateur $-\Delta$ sur $H^1_0(\Omega)$,
+on peut le d\'efinir comme
+\begin{align*}
+  \forall v,w \in H_0^1(\Omega) , \quad  \int_{\Omega} \calA(v) w \deriv x
+  := \int_{\Omega} v'(x) w'(x) \deriv x .
+\end{align*}
+On utilise une base orthogonale de fonctions propres de l'op\'erateur $\calA$.
 On note $w_k(x) = \sqrt{2} \sin(k \pi x)$ et $\lambda_k = (k\pi)^2$.
 On peut montrer que l'on a
 \begin{align*}
-  \forall v \in H_0^1(\Omega) , 
-  \int_{\Omega} w_k'(x) v'(x) \deriv x = \lambda_k \int_{\Omega} w_k(x) v(x) \deriv x .
+  \forall v \in H_0^1(\Omega) , \quad
+  \int_{\Omega} \calA(w_k) v \deriv x 
+  = \int_{\Omega} w_k'(x) v'(x) \deriv x = \lambda_k \int_{\Omega} w_k(x) v(x) \deriv x .
 \end{align*}
-
-!! Donner le lien avec la r\'eduction d'endomorphismes !!
-+ dire qui est $\calA$ !!
-
-Pour $k \geq 1$, la fonction $w_k$ est donc un vecteur propre de $\calA$
+En ce sens, pour $k \geq 1$, la fonction $w_k$ est un vecteur propre de $\calA$
 associ\'e \`a la valeur propre $\lambda_k$.
-On cherche la solution $u$ sous la forme
+Nous allons maintenant chercher une solution $u$ au probl\`eme \eqref{eq:chaleur_Dir}
+sous la forme
 \begin{align}
   \label{eq:chal_faible}
-  u(t,x) = \sum_{\ell = 1}^{+\infty} u_{\ell} (t) w_{\ell} (x) .
+  u(t,x) = \sum_{\ell = 1}^{+\infty} u_{\ell} (t) w_{\ell} (x) ,
 \end{align}
+avec pour $\ell \geq 1$, $u_{\ell}$ une fonction \`a d\'eterminer.
 
 Les fonctions $w_k$ v\'erifient $\int_{\Omega} w_k (x) w_{\ell}(x) \deriv x = \delta_{k \ell}$
-o\`u $\delta_{k\ell}$ repr\'esente le symbole de Kronecker.
+o\`u $\delta_{k\ell}$ repr\'esente le symbole de Kronecker (fa\^ites ce calcul).
 
-L'\'equation de la chaleur sous sa forme variationnelle peut \^etre \'ecrite
-\begin{align*}
-  \forall v \in H^1_0(\Omega) ,  \quad
-  \dfrac{\deriv}{\deriv t} \int_{\Omega} u(t,x) v(x) \deriv x
-  + \int_{\Omega} \dfrac{\partial u}{\partial x}(t,x) \dfrac{\partial v}{\partial x}(x) \deriv x
-  = \int_{\Omega} f(t,x) v(x) \deriv x .
-\end{align*}
-En cherchant $u$ sous la forme \eqref{eq:chal_faible} et en prenant $v = w_k$, on obtient
+En cherchant $u$ sous la forme \eqref{eq:chal_faible} et en prenant $v = w_k$
+dans \eqref{eq:chal_vari}, on obtient
 pour tout $k \geq 1$, $u_k'(t) + \lambda_k u_k(t) = \int_{\Omega} f(t,x) w_k(x) \deriv x$.
 La condition initiale donne $u_k(0) = \int_{\Omega} u_0(x) w_k(x) \deriv x$.
 Les fonctions $u_k$ v\'erifient donc 
@@ -3890,6 +3905,7 @@ et on a $\sup_{t \in [0,T]} |A_{n,m}(t)| \to 0$ quand $n$ et $m \to +\infty$.
 
 
 !! VERIFIER QU'ON A BIEN UNE BASE HILBERTIENNE DANS $L^2$ \underline{ET} $H^1_0$ !! 
+--- FAIRE UN POINT SUR TOUTES LES PROPRIETES DE CETTE BASE !!
 
 Montrons maintenant le m\^eme r\'esultat sur $B_{n,m}(t)$.
 On a 
@@ -3904,7 +3920,7 @@ On a
 \end{align*}
 o\`u on a utilis\'e l'in\'egalit\'e de Cauchy--Schwarz et $\lambda_k = k^2 \pi^2 \geq \pi^2$.
 De plus, comme $f \in L^2(0,T;L^2(0,1))$, pour presque tout $s \in [0,T]$,
-$f(s,\cdot)$ appartient \`a $L^2(0,1)$. D'apr\`es l\'egalit\'e de Parseval,
+$f(s,\cdot)$ appartient \`a $L^2(0,1)$. D'apr\`es l'\'egalit\'e de Parseval,
 pour presque tout $s \in [0,T]$, 
 $\| f(s,\cdot) \|_{L^2(0,1)}^2 = \sum_{\ell=1}^{+\infty} (f(s,\cdot) , w_{\ell})_{L^2(0,1)}^2$.
 Ainsi, $\| f \|_{L^2(0,T;L^2(0,1))}^2 
@@ -3921,7 +3937,7 @@ et converge donc.
 
 $\bullet$ Convergence dans l'espace $L^2([0,T];H_0^1(0,1))$ :
 La norme 
-$|u|_{1,\Omega}^2 = \int_0^1 (\dfrac{\partial u}{\partial x})^2 \deriv x = \calA(u,u)$
+$|u|_{1,\Omega}^2 = \int_0^1 (u'(x))^2 \deriv x = \calA(u,u)$
 est une norme sur $H^1_0(0,1)$ \'equivalente \`a la norme usuelle
 (par l'in\'egalit\'e de Poincar\'e, voir (...)).
 On a 
@@ -3973,22 +3989,24 @@ converge dans $L^2(0,T;H^1_0(0,1))$.
 $\bullet$ Solution de l'\'equation :
 montrons maintenant que $u$ d\'efinie par \eqref{eq:chal_faible}
 avec \eqref{eq:chal_faible_sol} v\'erifie l'\'equation \eqref{eq:chaleur_Dir}
-au sens faible.
+au sens faible (c'est-\`a-dire \eqref{eq:chal_vari}).
 
 Soit $v \in H_0^1(\Omega)$. On note comme pr\'ec\'edemment
 $u^{(N)} (t,x) := \sum_{\ell=1}^N u_{\ell}(t) w_{\ell}(x)$.
 On a 
 \begin{align*}
   \dfrac{\deriv}{\deriv t} ( u^{(N)}(t,\cdot) , v )_{L^2(\Omega)}
-  &= \sum_{k=1}^N - \lambda_k (u_0 , w_k)_{L^2(\Omega)} (w_k , v )_{L^2(\Omega)} e^{-\lambda t}
+  &= \sum_{k=1}^N u_k'(t) (w_k , v )_{L^2(\Omega)}
+  \\
+  &= \sum_{k=1}^N - \lambda_k (u_0 , w_k)_{L^2(\Omega)} (w_k , v )_{L^2(\Omega)} e^{-\lambda_k t}
     + ( f(t,\cdot) , w_k )_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)}
   \\
   & \qquad \quad 
     - \lambda_k \int_{0}^t (f(s,\cdot) , w_k)_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)} 
     e^{-\lambda_k (t-s)} \deriv s
   \\
-  &= \sum_{k=1}^N - ( (u_0 , w_k)_{L^2(\Omega)} e^{-\lambda t} 
-    + \int_{0}^t (f(s,\cdot) , w_k)_{L^2(\Omega)} e^{-\lambda_k (t-s)} \deriv s)
+  &= \sum_{k=1}^N - \Big( (u_0 , w_k)_{L^2(\Omega)} e^{-\lambda_k t} 
+    + \int_{0}^t (f(s,\cdot) , w_k)_{L^2(\Omega)} e^{-\lambda_k (t-s)} \deriv s  \Big)
     \calA(w_k , v)
   \\
   & \qquad \quad 
@@ -3998,20 +4016,15 @@ On a
     + \sum_{k=1}^N ( f(t,\cdot) , w_k )_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)} .
 \end{align*}
 Quand $N \to +\infty$, $u^{(N)}$ converge vers $u$ dans $L^2(0,T;H^1_0(\Omega))$.
-De plus, (...)
+Ainsi, le terme $\dfrac{\deriv}{\deriv t}( u^{(N)}(t,\cdot) , v)_{L^2(\Omega)}$
+est correctement d\'efini quand $N \to +\infty$ et sa limite vaut 
+$\dfrac{\deriv}{\deriv t}(u(t,\cdot) , v)_{L^2(\Omega)}$.
+De plus, $v \in L^2(\Omega)$ et $(w_k)$ est une base Hilbertienne,
+$\sum_{k=1}^N ( f(t,\cdot) , w_k )_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)}$
+tend donc vers $(f(t,\cdot),v)_{L^2(\Omega)}$ quand $N \to +\infty$.
+La fonction $u$ v\'erifie donc l'\'equation \eqref{eq:chal_vari},
+ce qui conclut cette d\'emonstration.
 
-!! MONTRER QUE $\sum_{k=1}^N ( f(t,\cdot) , w_k )_{L^2(\Omega)} ( w_k , v )_{L^2(\Omega)}
-\to (f , v)$ !!
-
-
-Donc $t \mapsto ( u(t,\cdot) , v )_{L^2(\Omega)}$ est d\'erivable presque pour tout $t \in [0,T]$
-et $u$ v\'erifie (...)
-
-!! A COMPLETER !!
-
-!! LA SOLUTION PORTE SUR LA FORMULATION VARIATIONNELLE SEULEMENT !!
-
-!! EN QUOI LA FORMULATION VARIATIONNELLE IMPLIQUE LA FORMULATION FORTE ??
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
