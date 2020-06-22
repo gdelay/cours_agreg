@@ -3176,7 +3176,7 @@ finales n'est pas une difficult\'e avec cette \'equation.
   Si $f = 0$, alors on a pour tout $t \in [0,T]$,
   \begin{align*}
     E(t) = \dfrac{1}{2} \int_0^1 (u_1)^2 \deriv x
-    + \dfrac{c^2}{2} \int_0^1 (u_0)^2 \deriv x .
+    + \dfrac{c^2}{2} \int_0^1 \left(\dfrac{\partial u_0}{\partial x} \right)^2 \deriv x .
   \end{align*}
 \end{proposition}
 
@@ -3197,6 +3197,16 @@ cette \'energie conserve la valeur qu'elle avait \`a l'instant initial.
   \end{align*}
   On conclut en utilisant les conditions initiales.
 \end{proof}
+
+Ce r\'esultat de conservation d'\'energie implique que le probl\`eme 
+\eqref{eq:ondes_Dir} admet une unique solution.
+\begin{corrolary}
+  Le probl\`eme \eqref{eq:ondes_Dir} admet une unique solution r\'eguli\`ere.
+\end{corrolary}
+En effet, si on consid\`ere deux solutions $u$ et $v$,
+alors $u-v$ v\'erifie \eqref{eq:ondes_Dir} avec $u_0 = 0$, $u_1 = 0$ et $f=0$. 
+Avec la Proposition \ref{prop:ondes_energie}, on peut alors
+montrer que $u=v$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Construction de solutions r\'eguli\`eres}
