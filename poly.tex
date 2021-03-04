@@ -111,8 +111,8 @@ Nous nous int\'eressons \`a des EDP de la forme
   + c \dfrac{\partial^2 u}{\partial y^2} + d \dfrac{\partial u}{\partial x}
   + e \dfrac{\partial u}{\partial y} + f u = F ,
 \end{align}
-o\`u $a$, $b$, $c$, $d$, $e$ et $f$ sont des r\'eels et o\`u $F$
-est une fonction de $x$ et $y$.
+o\`u $a$, $b$, $c$, $d$, $e$ et $f$ sont des r\'eels et o\`u $F$ et $u$
+sont des fonctions de $x$ et $y$.
 
 Une partie du comportement qualitatif de l'EDP peut \^etre d\'etermin\'ee
 \`a partir de la valeur de ces coefficients.
@@ -156,8 +156,8 @@ instationnaire.
   Aucune connaissance en physique n'est requise pour cette section
   qui peut \^etre lue ind\'ependamment des autres.
   Les candidats doivent cependant avoir \`a l'esprit que tous les textes
-  comportent une part de mod\'elisation et les mod\`eles pr\'esent\'es dans cette
-  section sont classiques.
+  comportent une part de mod\'elisation et que les mod\`eles pr\'esent\'es dans cette
+  section sont classiques (donc susceptibles d'\^etre rencontr\'es dans un texte).
 \end{remark}
 
 
@@ -171,13 +171,15 @@ Nous nous int\'eressons dans cette section \`a des \'equations de la forme
   \label{eq:ell_1D}
   - \dfrac{\mathrm{d}}{\mathrm{d} x} \left(k \dfrac{\mathrm{d} u}{\mathrm{d} x} \right) = f ,
 \end{align}
-pour une dimension d'espace et
-si l'on consid\`ere plusieurs dimensions d'espace, cette \'equation devient
+pour une dimension d'espace $x$.
+Si l'on consid\`ere plusieurs dimensions d'espace, cette \'equation devient
 \begin{align}
   \label{eq:ell_2D}
   - \DIV \left(k \GRAD u \right) = f ,
 \end{align}
 o\`u $\DIV$ et $\GRAD$ sont respectivement les op\'erateurs divergence et gradient.
+Dans ces deux \'equations, $k$ est un coefficient qui peut \'eventuellement d\'ependre 
+des variables d'espace et $f$ est une fonction de l'espace.
 
 
 Nous pr\'esentons deux probl\`emes physiques qui font intervenir
@@ -186,13 +188,15 @@ Le premier est le cas o\`u des particules circulent dans un domaine.
 Le second est un probl\`eme d'\'equilibre m\'ecanique.
 
 
-Nous donnons dans la partie gauche de la figure \ref{fig:flux} 
-une repr\'esentation du premier probl\`eme.
+Nous repr\'esentons dans la partie gauche de la figure \ref{fig:flux} 
+le premier probl\`eme.
 Nous nous int\'eressons \`a des particules qui circulent 
 dans un milieu unidimensionnel. La position est
 rep\'er\'ee par la coordonn\'ee d'espace $x$. On note $u(x)$ la densit\'e
 de particules en $x$. Certaines particules entrent ou sortent du domaine
-en $x$, on note $f(x)$ le terme source les repr\'esentant.
+en $x$, on note $f(x)$ le terme source repr\'esentant cette variation
+($f(x)$ sera positif si des particules apparaissent en $x$ 
+et n\'egatif si elles disparaissent).
 De plus, les particules se d\'eplacent \`a travers le domaine,
 on note $q(x)$ le flux de particules en $x$
 (le nombre de particules qui traversent l'axe vertical d'abscisse $x$
@@ -214,7 +218,7 @@ vont vers la droite et n\'egatif si elles vont vers la gauche.
 
 On s'int\'eresse au cas o\`u les flux sont \`a l'\'equilibre, il n'y
 a donc pas d'accumulation de particules en aucun point de l'espace.
-Le probl\`eme ne d\'epend pas du temps.
+Le probl\`eme ne d\'epend donc pas du temps.
 
 
 Pour \'etablir les \'equations de ce probl\`eme,
@@ -224,7 +228,7 @@ Le nombre de particules \`a l'int\'erieur de cette section doit
 rester constant.
 On obtient donc la relation de conservation
 $q(x) - q(x+\delta x) + f(x) \delta x = 0$,
-ce qui donne
+ce qui donne la relation
 \begin{align}
   \label{eq:eq_flux}
   \dfrac{\mathrm{d} q}{\mathrm{d} x} = f .
@@ -272,7 +276,7 @@ Nous pr\'esentons maintenant
 un autre probl\`eme physique faisant intervenir des \'equations elliptiques.
 Consid\'erons un mat\'eriau 
 soumis \`a des contraintes m\'ecaniques.
-Par exemple, on repr\'esente sur la figure \ref{fig:barre} une barre \'elastique
+Par exemple, on repr\'esente sur la figure~\ref{fig:barre} une barre \'elastique
 en \'equilibre.
 
 
@@ -310,7 +314,7 @@ est nulle. On retrouve donc \eqref{eq:eq_flux}.
 
 De plus, la force s'exer\c{c}ant en $x$ \`a travers la section de la barre est 
 proportionnelle \`a l'\'elongation de la barre et s'oppose au mouvement impos\'e.
-Ceci est intuitif, pensez \`a un \'elastique si vous l'allongez il s'exerce une force
+Ceci est intuitif, pensez \`a un \'elastique: si vous l'allongez, alors il s'exerce une force
 qui tend \`a le faire revenir vers sa position initiale. De plus, plus l'\'elongation
 est importante, plus l'intensit\'e de la force est grande.
 On obtient donc la loi d'\'elasticit\'e \eqref{eq:def_flux}
@@ -326,7 +330,7 @@ $\delta x$ dans sa position de r\'ef\'erence a pour longueur
 $x + \delta x + u(x+\delta x) - u(x) - x$ sous charge $f$.
 La nouvelle longueur est donc de $\delta x + u(x+\delta x) - u(x) 
 \simeq \left(1 + \dfrac{\partial u}{\partial x} \right) \delta x$
-et la d\'eriv\'ee partielle en $x$ est donc bien une \'elongation par unit\'e de longueur.
+et la d\'eriv\'ee partielle de $u$ en $x$ est donc bien une \'elongation par unit\'e de longueur.
 
 
 D'autres probl\`emes physiques peuvent \^etre mod\'elis\'es par des \'equations elliptiques.
@@ -352,7 +356,7 @@ dont la temp\'erature restera constante quoi qu'il arrive.
 Une autre condition aux limites classique est la condition de Neumann
 $q = g$ o\`u $g$ est une donn\'ee. Ceci revient \`a imposer la valeur
 du flux $q$ sur le bord du domaine.
-En g\'en\'eral, la valeur $g$ sera nulle.
+Dans la majorit\'e des cas, la donn\'ee de Neumann $g$ est nulle.
 Par exemple, dans le cas du probl\`eme de la chaleur, ceci revient
 \`a consid\'erer que le bord du domaine est adiabatique:
 quoi qu'il arrive aucun flux de chaleur ne traversera le bord du domaine
@@ -374,13 +378,13 @@ On parle alors de conditions aux limites mixtes.
     $u$ & temp\'erature & d\'eplacement & concentration
     \\
     \hline
-    $q=-k\GRAD u$ & flux de chaleur & force interne & d\'eplacements de mol.
+    $q=-k\GRAD u$ & flux de chaleur & force interne & flux de mol.
     \\
     \hline
-    $k$ & conduction thermique & raideur & diffusion
+    $k$ & conductivit\'e thermique & coeff. de raideur & coeff. de diffusion
     \\
     \hline
-    $f$& source & force externe & r\'eactions chimiques
+    $f$& source/puit de chaleur & force externe & r\'eactions chimiques
     \\
     \hline
     $u=g$ & temp. constante & d\'eplacement impos\'e & concentration impos\'ee
@@ -390,7 +394,8 @@ On parle alors de conditions aux limites mixtes.
     \\
     \hline
   \end{tabular}
-  \caption{R\'esum\'e des probl\`emes physiques abord\'es.}
+  \caption{Sens physique de la repr\'esentation math\'ematique en fonction
+    du probl\`eme trait\'e.}
   \label{tab:pb_ell}
 \end{table}
 
@@ -406,7 +411,7 @@ On parle alors de conditions aux limites mixtes.
 \begin{remark}
   Dans la plupart des applications, $k$ est une constante.
   Prenons par exemple $k=1$.
-  L'\'equation \eqref{eq:ell_2D} devient $\Delta u = f$.
+  L'\'equation \eqref{eq:ell_2D} devient $-\Delta u = f$.
   On appelle cette \'equation \'equation de Laplace ou 
   \'equation de Poisson.
   Pour simplifier la pr\'esentation, c'est cette \'equation que nous \'etudierons
@@ -418,14 +423,17 @@ Pour finir cette section, nous illustrons le comportement
 de la solution de \eqref{eq:ell_1D} en fonction de $k$
 (voir figure \ref{fig:ell_k}).
 Comme nous l'avons \'evoqu\'e pr\'ec\'edemment, une solution avec 
-un $k$ plus grand est plus "plate".
+un $k$ plus grand est plus "plate" 
+(par exemple dans le cas des mol\'ecules, une plus grande diffusion entra\^ine 
+une plus grande homog\'en\'eit\'e de la concentration).
 
 
 \begin{figure}[h]
   \centering
   \includegraphics[width = 12cm]{Figures/Poisson_k.eps}
   \caption{Solution de l'\'equation elliptique 1D \eqref{eq:ell_1D}
-  pour diff\'erents $k$ (pour $f(x)=1$).}
+  pour diff\'erents $k$ (pour $f(x)=1$) avec les conditions de Dirichlet homog\`enes
+  $u(0) = u(1) = 0$.}
   \label{fig:ell_k}
 \end{figure}
 
@@ -461,7 +469,7 @@ Si l'on consid\`ere un temps infinit\'esimal $\delta t$,
 le sable aura avanc\'e d'une distance $\delta x = a \delta t$.
 La hauteur en $(t+\delta t , x + \delta x)$ sera la m\^eme qu'elle
 \'etait en $(t,x)$, on traduit cela par $u(t+\delta t, x + a \delta t) = u(t,x)$.
-On obtient ainsi l'\'equation
+On obtient ainsi l'\'equation de transport
 \begin{align}
   \dfrac{\partial u}{\partial t} + a \dfrac{\partial u}{\partial x} = 0 .
 \end{align}
@@ -477,7 +485,7 @@ plus le mouvement est rapide.
   cette \'equation est proche d'un comportement hyperbolique.
   Notons par ailleurs que l'\'equation \eqref{eq:EDP_geom} associ\'ee
   \`a l'\'equation de transport est une droite et les hyperboles ont des droites
-  comme asymptotes.
+  comme asymptotes (d'o\`u le comportement hyperbolique de l'\'equation de transport).
 \end{remark}
 
 Pour finir la pr\'esentation de l'\'equation de transport,
@@ -491,8 +499,8 @@ la solution se d\'eplace.
   \centering
   \includegraphics[width = 12cm]{Figures/transport_Dir_a.eps}
   \caption{Solution de l'\'equation de transport \`a $t=0.5$
-  pour diff\'erents $a$. La donn\'ee initiale correspond \`a 
-  la solution pour $a = 0$.}
+  pour diff\'erents $a$. La donn\'ee initiale ($t=0$) correspond \`a 
+  la solution pour $a = 0$. On a impos\'e la condition de Dirichlet \`a gauche $u(t,0) = 1$.}
   \label{fig:transport_a}
 \end{figure}
 
@@ -531,7 +539,7 @@ et la source de chaleur en $(t,x)$.
 Comme pr\'ec\'edemment, le flux de chaleur est proportionnel au gradient 
 de temp\'erature (voir \eqref{eq:def_flux}).
 Pour simplifier la pr\'esentation, nous consid\'erons que la capacit\'e
-thermique $c$ et la conduction thermique $k$ sont des constantes 
+thermique $c$ et la conductivit\'e thermique $k$ sont des constantes 
 (qui ne d\'ependent ni du temps, ni de l'espace).
 En combinant les \'equations \eqref{eq:def_flux} et \eqref{eq:flux_t},
 on obtient l'\'equation de la chaleur
@@ -539,7 +547,8 @@ on obtient l'\'equation de la chaleur
   \label{eq:chaleur}
   \dfrac{\partial u}{\partial t} - \nu \dfrac{\partial^2 u}{\partial x^2} = \widetilde{f} ,
 \end{align}
-o\`u $\nu = k/c > 0$ est la diffusion thermique.
+o\`u $\nu = k/c > 0$ est la diffusivit\'e thermique 
+(qui d\'epend du mat\'eriau consid\'er\'e et de sa g\'eom\'etrie).
 
 
 % De mani\`ere similaire \`a ce qui a \'et\'e expliqu\'e dans la section \ref{subsec:elliptique},
@@ -559,7 +568,9 @@ stationnaire (voir tableau \ref{tab:pb_ell}).
   \caption{Solution de l'\'equation de la chaleur
   pour $f(x) = -1$. Gauche: $\nu = 0.5$.
   Milieu: $\nu = 1$. Droite: $\nu = 2$.
-  Les courbes repr\'esentent la solution \`a $t=0$ (bleu), $t=0.05$ (rouge) et $t=0.1$ (noir).}
+  Les courbes repr\'esentent la solution \`a $t=0$ (bleu), $t=0.05$ (rouge) et $t=0.1$ (noir).
+  On a impos\'e les conditions de Dirichlet $u(t,0) = u(t,1) = 0$.
+  La condition initiale est la solution stationnaire de ce probl\`eme avec $f=1$.}
   \label{fig:chaleur_nu}
 \end{figure}
 
@@ -582,8 +593,8 @@ sont pas n\'ecessairement \`a l'\'equilibre et o\`u les d\'eplacements
 $u(t,x)$ peuvent varier au cours du temps.
 
 Le principe fondamental de la dynamique appliqu\'e \`a une tranche de mati\`ere
-de longueur $\delta x$ nous dit que l'acc\'el\'eration de la position de cette tranche
-($x+u(t,x)$) multipli\'ee par sa masse est \'egale \`a la somme des forces qui
+de longueur $\delta x$ nous dit que l'acc\'el\'eration de cette tranche (la d\'eriv\'ee seconde de sa position
+$x+u(t,x)$) multipli\'ee par sa masse est \'egale \`a la somme des forces qui
 agissent sur elle.
 Ainsi, $\rho(x) \delta x \dfrac{\partial^2 u}{\partial t^2} = 
 f(t,x) \delta x + q(t,x) - q(t, x + \delta x)$, ce qui nous donne l'\'equation
@@ -618,12 +629,13 @@ des ondes dans ce milieu.
   \caption{Solution de l'\'equation des ondes pour $f=0$ et $v_0 = 0$.
   Gauche: $c = 0.2$. Milieu: $c=0.5$. Droite: $c=1$.
   Les courbes repr\'esentent la solution \`a $t=0$ (bleu),
-  $t=0.2$ (rouge) et $t=0.4$ (noir).}
+  $t=0.2$ (rouge) et $t=0.4$ (noir). On impose les conditions de Dirichlet $u(t,0) = u(t,1) = 0$.
+  La condition initiale est repr\'esent\'ee en bleu.}
   \label{fig:ondes_c}
 \end{figure}
 
 
-On illustre l'influence de $c$ sur la figure \ref{fig:ondes_c}.
+On illustre l'influence de $c$ sur la figure~\ref{fig:ondes_c}.
 Nous voyons que nous avons une propagation de l'information 
 dans les deux directions (les $x$ positifs et les $x$ n\'egatifs).
 Plus $c$ est grand, plus l'information se propage rapidement.
@@ -637,8 +649,11 @@ Nous avons \'evoqu\'e le fait que l'\'equation des ondes
 pouvait repr\'esenter le d\'eplacement d'une barre en compression.
 On peut aussi mod\'eliser des probl\`emes 
 comme la propagation du d\'eplacement d'une corde ou
-la propagation d'une onde \'electromagn\'etique
-(on ne s'\'etendra pas davantage sur le sujet).
+la propagation d'une onde \'electromagn\'etique.
+Une bonne fa\c{c}on d'interpr\'eter la figure~\ref{fig:ondes_c}
+est d'imaginer une corde tendue sur un intervalle $(0,1)$.
+La solution $u(t,x)$ correspond alors \`a la position verticale de la corde
+en $x$ \`a l'instant $t$.
 
 
 Rappelons enfin que les conditions aux limites classiques sont 
@@ -663,10 +678,11 @@ On s'int\'eresse donc au probl\`eme
     \begin{array}{l l}
       - \Delta u = f &\dans \Omega ,
       \\
-      u = 0 &\sur \partial \Omega .
+      u = 0 &\sur \partial \Omega ,
     \end{array}
   \right.
 \end{equation}
+o\`u on note $\partial \Omega$ le bord du domaine $\Omega$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales de l'\'equation}
@@ -689,7 +705,7 @@ dans la section \ref{subsec:LM}.
   On se place dans le cadre du th\'eor\`eme \ref{thm:ell_existence}.
   Si $f \leq 0$, alors $u \leq 0$. En particulier,
   $\max_{x\in \Omega} u(x) = \max_{x\in \partial \Omega} u(x) = 0$.
-  Si de plus il existe $m\in \Omega$ tel que $u(m) = 0$,
+  Si, de plus, il existe $m\in \Omega$ tel que $u(m) = 0$,
   alors $\forall x \in \Omega$, $u(x) = 0$ 
   (principe du maximum fort).
 \end{proposition}
@@ -728,7 +744,7 @@ $\tilde{g} = g$ sur $\partial \Omega$,
 et on cherche la solution $u$ sous la forme
 $u = \tilde{u} + \tilde{g}$.
 La fonction $\tilde{u}$ est alors solution du probl\`eme
-homog\`ene
+avec conditions de Dirichlet homog\`enes
 \begin{equation*}
   \text{Trouver $\tilde{u} \in C^2(\Omega)$ telle que  }
   \left\{
@@ -739,7 +755,7 @@ homog\`ene
     \end{array}
   \right.
 \end{equation*}
-Moyennant l'existence du rel\`evement $\tilde{g}$
+Moyennant l'existence du rel\`evement $\tilde{g}$,
 r\'esoudre le probl\`eme non homog\`ene revient \`a 
 r\'esoudre un probl\`eme homog\`ene \'equivalent.
 
@@ -807,7 +823,7 @@ Nous utilisons notamment le th\'eor\`eme de Lax--Milgram.
     \text{Trouver $u \in V$, tel que $\forall v \in V$, } a(u,v) = \ell(v) .
   \end{equation}
   Ceci signifie que le probl\`eme \eqref{eq:Lax-Milgram} admet une unique solution $u \in V$
-  et que celle-ci v\'erifie $\| u \|_{V} \leq \dfrac{C_{\ell}}{\alpha}$.
+  et que celle-ci est bornée, ici par $\| u \|_{V} \leq \dfrac{C_{\ell}}{\alpha}$.
 \end{theorem}
 
 %% ref vers un livre 
@@ -819,7 +835,7 @@ On introduit l'espace de Sobolev
   H_0^1(\Omega) := \{ v \in L^2(\Omega) \st \GRAD v \in L^2(\Omega) 
   \text{ et } v_{| \partial \Omega} = 0 \sur \partial \Omega \} ,
 \end{align}
-o\`u $\GRAD v$ est d\'efini au sens des distributions et $v_{|\partial \Omega}$
+o\`u $\GRAD v$, le gradient de $v$, est d\'efini au sens des distributions et $v_{|\partial \Omega}$
 est la trace de $v$ sur le bord du domaine.
 
 
@@ -836,7 +852,7 @@ En int\'egrant par parties on obtient
 Puisque $v_{|\partial \Omega} = 0$, le deuxi\`eme terme de cette expression est nul.
 Nous avons donc \'etabli la proposition suivante.
 \begin{proposition}
-  Toute solution du probl\`eme \eqref{eq:ell_Dir} est solution du probl\`eme 
+  Toute solution du probl\`eme~\eqref{eq:ell_Dir} est solution du probl\`eme 
   \begin{equation}
     \label{eq:LM2}
     \text{Trouver $u \in H_0^1(\Omega)$, tel que $\forall v \in H_0^1(\Omega)$, } 
@@ -845,10 +861,10 @@ Nous avons donc \'etabli la proposition suivante.
 \end{proposition}
 
 \begin{proposition}
-  Le probl\`eme \eqref{eq:LM2} est bien pos\'e.
+  Le probl\`eme~\eqref{eq:LM2} est bien pos\'e.
 \end{proposition}
 \begin{proof}
-  Le probl\`eme \eqref{eq:LM2} correspond au probl\`eme \eqref{eq:Lax-Milgram}
+  Le probl\`eme~\eqref{eq:LM2} correspond au probl\`eme~\eqref{eq:Lax-Milgram}
   avec $V = H_0^1(\Omega)$, 
   $\forall v, w \in H_0^1(\Omega), a(v,w) = \int_{\Omega} \GRAD v \SCAL \GRAD v \deriv x$
   et $\ell(v) = \int_{\Omega} f v \deriv x$.
@@ -875,7 +891,7 @@ Nous avons donc \'etabli la proposition suivante.
 
 \begin{remark}
   Les r\'esultats de cette section prouvent l'unicit\'e de la solution
-  de \eqref{eq:ell_Dir}. On a \'egalement prouv\'e l'existence d'une
+  de~\eqref{eq:ell_Dir} dans $H_0^1(\Omega)$. On a \'egalement prouv\'e l'existence d'une
   solution \`a \eqref{eq:LM2}. Pour prouver le th\'eor\`eme
   \ref{thm:ell_existence}, il faut montrer que si $f \in C^{\ell}(\Omega)$
   alors la solution de \eqref{eq:LM2} est dans $C^{\ell+2}(\Omega)$
@@ -898,7 +914,7 @@ Nous avons donc \'etabli la proposition suivante.
 
 
 \begin{exercise}
-  On note $H^1 = \{ v \in L^2(\Omega) \st \GRAD u \in L^2(\Omega) \}$
+  On note $H^1 = \{ v \in L^2(\Omega) \st \GRAD v \in L^2(\Omega) \}$
   et $H_{\bullet}^1 = \{ v \in H^1(\Omega) \st \int_{\Omega} v \deriv x = 0 \}$.
   Prouver que toute solution du probl\`eme \eqref{eq:ell_Neu}
   est solution de la formulation variationnelle
@@ -924,7 +940,7 @@ Nous avons donc \'etabli la proposition suivante.
 \label{subsec:ell_DF}
 
 Le but de la m\'ethode des diff\'erences finies est d'approcher la solution 
-d'une EDO (\'equation aux d\'eriv\'ees ordinaires) ou EDP
+d'une EDO (\'equation diff\'erentielle ordinaire) ou EDP
 (\'equation aux d\'eriv\'ees partielles) par des valeurs cens\'ees repr\'esenter
 cette fonction en certains points. Dans toutes les discr\'etisations abord\'ees dans ce cours,
 nous ne consid\'ererons que le cas de probl\`emes \`a une dimension en espace
@@ -965,14 +981,14 @@ On a bien $x_0 = 0$ et $x_M = 1$ (voir figure \ref{fig:disc_x}).
 \draw (10,0.6) node {$x_M$};
 \draw (5,0.6) node {$.......$};
 \end{tikzpicture} 
-\caption{Repr\'esentation de la discr\'etisation de l'intervalle $(0,1)$.}
+\caption{Repr\'esentation de la discr\'etisation de l'intervalle $(0,1)$ en $M$ sous-intervalles.}
 \label{fig:disc_x}
 \end{figure}
 
 
 \'Etant donn\'e que nous ne disposons que de valeurs en certains points, on ne peut
-pas d\'efinir de d\'eriv\'ees au sens usuel. On utilise donc des taux d'accroissement
-(rappelons qu'une d\'eriv\'ee est la limite d'un taux d'accroissement).
+pas d\'efinir de d\'eriv\'ees au sens usuel. On utilise donc des taux d'accroissement.
+Rappelons qu'une d\'eriv\'ee est la limite d'un taux d'accroissement.
 Par exemple, on peut montrer que 
 $\dfrac{\!\deriv^2 u}{\!\deriv x^2}(x) 
 = \lim\limits_{h \to 0} \dfrac{u(x+h) - 2 u(x) + u(x-h)}{h^2}$.
@@ -1032,6 +1048,7 @@ Nous construisons donc une suite $(u_j)_{0\leq j \leq M}$ v\'erifiant
       f(x_1) \\ f(x_2) \\ \vdots \\ f(x_{M-1})
     \end{pmatrix} .
   \end{equation}
+  Notons que la valeur de $u_0$ et $u_M$ est d\'ej\`a connue (elle est nulle).
 \end{proposition}
 
 \begin{proof}
@@ -1121,7 +1138,7 @@ On dit que le sch\'ema est d'ordre $2$, nous \'etudierons plus pr\'ecis\'ement c
 plus loin dans le cours.
 
 
-Cette notion d'ordre de convergence peut-\^etre illustr\'ee en repr\'esentant 
+Cette notion d'ordre de convergence peut \^etre illustr\'ee en repr\'esentant 
 l'erreur commise par le sch\'ema 
 $\varepsilon = \max_{0\leq j \leq M} |u(x_j) - u_j|$ en fonction de $h$ 
 en utilisant une \'echelle logarithmique
@@ -1311,7 +1328,7 @@ De mani\`ere plus rigoureuse, nous avons le th\'eor\`eme suivant.
 \begin{theorem}
   \label{thm:transport_existence}
   Supposons que $a > 0$, $u_0 \in C^1([0,1])$ et $\alpha \in C^1([0,T])$.
-  Supposons de plus les conditions de compatibilit\'e $u_0(0) = \alpha(0)$
+  Supposons, de plus, les conditions de compatibilit\'e $u_0(0) = \alpha(0)$
   et $\alpha'(0) +a u_0'(0)=0$.
   Le probl\`eme \eqref{eq:transport} admet alors une unique solution donn\'ee par
   \begin{align}
@@ -1366,7 +1383,14 @@ Il s'agit en fait d'\'etudier un probl\`eme o\`u le temps s'\'ecoule
 
 Cette propri\'et\'e signifie que l'information est conserv\'ee au cours du temps:
 le comportement de l'\'equation ne d\'egrade pas cette information.
+On peut donc, avec la connaissance de $u$ \`a l'instant final dans tout le domaine 
+et en tout temps sur la droite du domaine, retrouver la valeur de $u$ en tout temps dans tout le domaine.
+Pour cela, on inverse le temps ($\tilde{t} = T - t$) et le sens du transport
+(il y a un $-a$ au lieu de $+a$ dans~\eqref{eq:transport_rev}).
 
+Notons que toutes les \'equations instationnaires ne sont pas r\'eversibles, 
+nous verrons notamment la non-r\'eversibilit\'e de l'\'equation de la chaleur
+en section~\ref{subsec:chaleur_prop}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{M\'ethode des caract\'eristiques}
@@ -1376,7 +1400,7 @@ se conserve sur certaines courbes que l'on appelle trajectoires caract\'eristiqu
 Dans le cas monodimensionnel avec $a$ constant, ces courbes sont des droites.
 On parlera donc de droites caract\'eristiques.
 Cependant, dans le cas o\`u plusieurs dimensions d'espace sont consid\'er\'ees,
-ces courbes peuvent \^etre plus complexes (voir la section \ref{subsec:transport_multiD}).
+ces courbes peuvent \^etre plus complexes (voir la section~\ref{subsec:transport_multiD}).
 
 \begin{figure}
 \centering
@@ -1384,15 +1408,20 @@ ces courbes peuvent \^etre plus complexes (voir la section \ref{subsec:transport
   \input{D_carac.tex}
 \end{tikzpicture}
 \caption{Les droites caract\'eristiques de l'\'equation de transport
-  ($a=1$ et $T=0.9$).}
+  ($a=1$ et $T=0.9$). Ces droites sont repr\'esent\'ees dans le domaine $(0,T) \times (0,1)$
+  (ici le temps est en ordonn\'ee et l'espace en abscisse). La partie de la fronti\`ere
+  o\`u on utilise les donn\'ees de $u$ est repr\'esent\'ee en gras. Les cercles indiquent
+  qu'en ces points, on attribue la valeur de $u$ \`a la droite caract\'eristique
+  (et cette valeur est ensuite conserv\'ee sur toute la droite).
+  Comparer cette figure avec le th\'eor\`eme~\ref{thm:transport_existence}.}
 \label{fig:D_carac}
 \end{figure}
 
 Nous pouvons montrer que dans le cas consid\'er\'e dans cette section,
 la solution se conserve sur les droites d'\'equation $x=at+b$ avec 
-$a$ la vitesse de transport dans \eqref{eq:transport} et $b \in \R$.
+$a$ la vitesse de transport dans~\eqref{eq:transport} et $b \in \R$.
 Ces droites sont donc les droites caract\'eristiques de notre probl\`eme,
-nous les repr\'esentons sur la figure \ref{fig:D_carac}.
+nous les repr\'esentons sur la figure~\ref{fig:D_carac}.
 Le r\'esultat de conservation est \'enonc\'e dans la proposition suivante.
 
 \begin{proposition}
@@ -1411,13 +1440,23 @@ Le r\'esultat de conservation est \'enonc\'e dans la proposition suivante.
 \end{proposition}
 
 \begin{exercise}
-  Prouver la proposition \ref{prop:droites_carac}.
+  Prouver la proposition~\ref{prop:droites_carac}.
 \end{exercise}
 
 
 Notons que la proposition \ref{prop:droites_carac} est valable pour tout $a \in \R$
-et pour n'importe quelles conditions aux limites. Nous allons maintenant prouver
-le th\'eor\`eme \ref{thm:transport_existence}.
+et pour n'importe quelles conditions aux limites. 
+Elle montre que si l'on se d\'eplace sur une droite caract\'eristique
+tout en restant dans le domaine $(0,T) \times (0,1)$, alors la valeur
+de $u$ se conserve.
+
+
+Pour calculer la valeur de $u(t,x)$, il suffit de d\'eterminer la droite caract\'eristique passant
+en $(t,x)$ et chercher son intersection avec le bord du domaine sur lequel on conna\^it
+la valeur de $u$ (il s'agit de $\big((0,T) \times \{0\}\big) \cup \big( \{0\} \times (0,1)\big)$,
+en gras sur la figure~\ref{fig:D_carac}).
+Nous allons utiliser cette m\'ethode pour prouver
+le th\'eor\`eme~\ref{thm:transport_existence}.
 
 \begin{proof}[Preuve du th\'eor\`eme \ref{thm:transport_existence}]
   Commen\c{c}ons par montrer que la fonction $u$ donn\'ee dans \eqref{eq:transport_sol}
@@ -1440,9 +1479,9 @@ le th\'eor\`eme \ref{thm:transport_existence}.
   \eqref{eq:transport}.
   Si $x \leq a t$, on applique la proposition \ref{prop:droites_carac}
   avec $s=x/a$, avec la condition de Dirichlet
-  on obtient $u(t,x) = \alpha(t-x/a)$.
+  on obtient $v(t,x) = \alpha(t-x/a)$.
   Si $x \geq a t$, on applique la proposition \ref{prop:droites_carac}
-  avec $s=t$, avec la condition initiale on obtient $u(t,x) = u_0(x-at)$.
+  avec $s=t$, avec la condition initiale on obtient $v(t,x) = u_0(x-at)$.
   Nous avons donc prouv\'e l'unicit\'e de la solution.
 \end{proof}
 
@@ -1541,22 +1580,22 @@ Comme nous l'avons vu pr\'ec\'edemment, lorsque l'on consid\`ere
 l'\'equation de transport avec une condition de Dirichlet,
 l'information de la donn\'ee initiale sort progressivement du domaine
 en \'etant remplac\'ee par la donn\'ee de Dirichlet.
-On pourrait vouloir s'int\'eresser au traitement sur le temps long de 
+On pourrait vouloir s'int\'eresser \`a l'\'evolution sur le temps long de 
 l'information issue de la donn\'ee initiale.
-Pour cela, on peut essayer de suivre le d\'eplacement de cette donn\'ee
-initiale dans un domaine infini en consid\'erant des conditions p\'eriodiques.
-Dans cette section, on s'int\'eresse au probl\`eme
-\eqref{eq:transport_per}.
+Pour cela, on peut essayer de suivre cette donn\'ee
+initiale en consid\'erant des conditions p\'eriodiques.
+C'est ce que nous faisons dans cette section.
+On s'int\'eresse donc au probl\`eme~\eqref{eq:transport_per}.
+
 Avec ces conditions fronti\`eres, l'information qui sort en 
 $x=1$ r\'eentre imm\'ediatement en $x=0$.
 On peut donc la suivre au cours de sa propagation dans le domaine
 et observer la qualit\'e de l'approximation que nous avons faite.
 Nous allons donc comparer nos approximations num\'eriques avec la solution
-exacte donn\'ee par $u(t,x) = u_0(f(x-at))$ (voir exercice \ref{exo:carac_per}).
+exacte donn\'ee par $u(t,x) = u_0(f(x-at))$ (voir exercice~\ref{exo:carac_per}).
 
 
-Nous proposons maintenant deux discr\'ertisations de l'\'equation
-\eqref{eq:transport_per}.
+Nous proposons maintenant deux discr\'etisations du probl\`eme~\eqref{eq:transport_per}.
 La m\'ethode consiste \`a approcher les d\'eriv\'ees partielles
 (en temps et en espace) par des taux d'accroissement.
 Nous comparons le comportement de deux discr\'etisations diff\'erentes.
@@ -1616,12 +1655,12 @@ On obtient le sch\'ema num\'erique
 o\`u, pour simplifier l'\'ecriture, nous avons introduit $u_{-1}^n = u_{M-1}^n$.
 
 
-Nous reportons sur la figure \ref{fig:trans_per} 
+Nous reportons sur la figure~\ref{fig:trans_per} 
 les r\'esultats num\'eriques obtenus \`a partir de ces deux sch\'emas.
 Lorsque l'on raffine le maillage (quand on augmente $N$ et $M$),
-la solution obtenue par le sch\'ema d\'ecentr\'e \eqref{eq:transport_DF_decentre_AM}
+la solution obtenue par le sch\'ema d\'ecentr\'e~\eqref{eq:transport_DF_decentre_AM}
 tend vers la solution exacte
-tandis que la solution obtenue par le sch\'ema centr\'e \eqref{eq:transport_DF_centre}
+tandis que la solution obtenue par le sch\'ema centr\'e~\eqref{eq:transport_DF_centre}
 se d\'egrade de plus en plus. La solution obtenue par le sch\'ema centr\'e semble
 diverger quand $N, M \to +\infty$.
 
@@ -1635,7 +1674,8 @@ diverger quand $N, M \to +\infty$.
     l'instant final) et
     solutions (\`a l'instant final) 
     obtenues par les sch\'emas d\'ecentr\'e et centr\'e pour $T=0.5$, $a=1$ et
-    $(N,M) = (15,20)$, $(30,40)$, $(60,80)$ et $(120,160)$.}
+    $(N,M) = (15,20)$, $(30,40)$, $(60,80)$ et $(120,160)$.
+    La condition initiale est $u_0(x) = x^2(1-x)^2$.}
   \label{fig:trans_per}
 \end{figure}
 
@@ -1663,11 +1703,10 @@ il faut v\'erifier certaines propri\'et\'es que nous allons aborder dans la sect
 \label{subsubsec:analyse_def}
 
 Nous d\'efinissons maintenant des notions que nous
-utilisons ensuite pour analyser les deux sch\'emas introduits pr\'ec\'edemment.
-Pour cela, repr\'esentons la suite $(u_j^n)_{\substack{0 \leq n \leq N \\ 0 \leq j \leq M}}$
-par un vecteur $U^n$
-tel que $u_j^n$ soit \'egal \`a la $j$-\`eme coordonn\'ee du vecteur
-$U^n$ g\'en\'er\'e par r\'ecurrence comme suit:
+utilisons plus loin pour analyser les deux sch\'emas introduits pr\'ec\'edemment.
+Pour cela, \`a $n$ donn\'e, nous introduisons $U^n = (u_j^n)_{1 \leq j \leq M}$:
+$u_j^n$ est \'egal \`a la $j$-\`eme coordonn\'ee du vecteur $U^n$.
+On peut montrer que $U^n$ v\'erifie la relation de r\'ecurrence
 \begin{align}
   \label{eq:schema_1pas}
   U^0 = U_0 \qquad \text{et} \qquad \forall n \geq 0, \quad U^{n+1} = A U^n + h_t F^n ,
@@ -1675,7 +1714,7 @@ $U^n$ g\'en\'er\'e par r\'ecurrence comme suit:
 o\`u $U_0$ est donn\'e par $(U_0)_j = u(0,x_j)$, $A$ est une matrice
 et $F^n$ est un vecteur.
 Afin de simplifier notre propos, nous consid\'erons que le syst\`eme \`a inverser 
-a $M$ inconnues que l'on num\'erotera de $1$ \`a $M$.
+a $M$ inconnues que l'on num\'erote de $1$ \`a $M$.
 Ainsi, pour tout $0 \leq n \leq N$,
 $U^n \in \R^M$ avec $\forall 1 \leq j \leq M$, $(U^n)_j = u_j^n$ et de m\^eme
 $A \in \R^{M \times M}$ et $F^n \in \R^M$.
@@ -1690,7 +1729,7 @@ ais\'ement adapter notre propos.
   En pratique, certains sch\'emas n\'ecessitent plusieurs pas de temps pr\'ec\'edents.
   Le sch\'ema \eqref{eq:schema_1pas} ainsi que les notions que nous abordons dans cette
   section peuvent \^etre adapt\'es \`a ce cas de figure.
-  Nous verrons ceci plus loin dans ce cours.
+  Nous verrons ceci plus loin dans le cours.
 \end{remark}
 
 D\'efinissons maintenant un certain nombre de notions utiles pour
@@ -1707,9 +1746,9 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
     \leq C_1 \max_{1 \leq j \leq M} | (U_0)_j | 
     + C_2 \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | F_j^n | ,
   \end{align}
-  o\`u $u_j^n = (U^n)_j$ avec $(U^n)$ l'unique suite v\'erifiant \eqref{eq:schema_1pas}.
+  o\`u $u_j^n = (U^n)_j$ avec $(U^n)$ l'unique suite v\'erifiant~\eqref{eq:schema_1pas}.
 
-  On dit \'egalement que le sch\'ema \eqref{eq:schema_1pas} 
+  On dit \'egalement que le sch\'ema~\eqref{eq:schema_1pas} 
   est inconditionnellement stable
   si la d\'efinition pr\'ec\'edente
   s'applique avec $\Stab = \R_+^* \times \R_+^*$.
@@ -1717,7 +1756,7 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
 
 \begin{definition}[Erreur de troncature]
   \label{def:troncature}
-  L'erreur de troncature (ou erreur de consistance) du sch\'ema \eqref{eq:schema_1pas}
+  L'erreur de troncature (ou erreur de consistance) du sch\'ema~\eqref{eq:schema_1pas}
   au temps $t_n$ est un vecteur $\varepsilon^n \in \R^{M}$
   ($1 \leq n \leq N$)
   d\'efini par
@@ -1726,14 +1765,13 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
     \varepsilon^{n+1} := \tu^{n+1} - A \tu^n - h_t F^n ,
   \end{align}
   o\`u $\tu^n \in \R^{M}$ est d\'efini par
-  $(\tu^n)_j = u(t_n,x_j)$ avec $u$ la solution du probl\`eme exact associ\'e \`a
-  \eqref{eq:schema_1pas}.
+  $(\tu^n)_j = u(t_n,x_j)$ avec $u$ la solution exacte du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}.
 \end{definition}
 
 \begin{definition}[Consistance]
   \label{def:consistance}
-  On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} est consistant si pour toute
-  solution r\'eguli\`ere $u$ du probl\`eme exact on a
+  On dit que le sch\'ema num\'erique~\eqref{eq:schema_1pas} est consistant si pour toute
+  solution exacte r\'eguli\`ere $u$ du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}, on a
   \begin{align}
     \lim_{\substack{N \to +\infty\\ M \to +\infty}} \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} 
     \dfrac{| \varepsilon_j^n|}{h_t} = 0 ,
@@ -1742,7 +1780,7 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
   (et $h_t = T/N$).
 
   On dit de plus que le sch\'ema \eqref{eq:schema_1pas} est consistant d'ordre $p \in \N^*$
-  en temps et $q \in \N^*$ en espace si pour toute solution r\'eguli\`ere $u$ (du probl\`eme exact)
+  en temps et $q \in \N^*$ en espace si pour toute solution r\'eguli\`ere $u$ (du probl\`eme avant discr\'etisation)
   il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$ telle que
   \begin{align}
     \forall N, M \geq 2 , \quad \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}}
@@ -1752,7 +1790,7 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
 
 \begin{remark}
   Notons que la constante $C$ dans la d\'efinition \ref{def:consistance}
-  peut d\'ependre de la solution $u$ du probl\`eme exact.
+  peut d\'ependre de la solution $u$ du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}.
 \end{remark}
 
 \begin{definition}[Convergence]
@@ -1764,7 +1802,7 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
     \lim_{\substack{(h_t,h_x) \in \Stab \\ (h_t,h_x) \to (0,0)}} \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} 
     | u(t_n , x_j) - u_j^n | = 0 ,
   \end{align}
-  avec $Nh_t = T$ et $Mh_x = 1$ o\`u $u$ est la solution du probl\`eme exact.
+  avec $Nh_t = T$ et $Mh_x = 1$ o\`u $u$ est la solution du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}.
   
   De mani\`ere similaire, on dit que le sch\'ema num\'erique 
   \eqref{eq:schema_1pas} converge (ou est convergent) 
@@ -1881,7 +1919,7 @@ En pratique, la convergence est la propri\'et\'e que l'on veut avoir
 car elle garantit que le sch\'ema consid\'er\'e fournit une approximation
 raisonnable du probl\`eme exact (sous r\'eserve que les pas de temps
 et d'espace sont suffisamment petits).
-Cependant, cette propri\'et\'e n'est pas ais\'ee \`a d\'emontrer.
+Cependant, cette propri\'et\'e n'est pas ais\'ee \`a d\'emontrer directement.
 C'est pourquoi nous utilisons le th\'eor\`eme \ref{thm:convergence}
 qui assure la convergence \`a partir de la stabilit\'e et 
 de la consistance.
@@ -1902,7 +1940,7 @@ s'il manque la consistance ou la stabilit\'e.
 \begin{remark}
   Toutes ces d\'efinitions caract\'erisent le comportement du sch\'ema 
   lorsque $(h_t,h_x) \to (0,0)$.
-  En g\'en\'eral, l'analyse num\'erique n'est men\'ee que dans cette limite.
+  La plupart des r\'esultats d'analyse num\'erique se concentrent sur cette limite.
 \end{remark}
 
 Nous allons maintenant prouver la premi\`ere partie du th\'eor\`eme \ref{thm:convergence}
@@ -2221,7 +2259,7 @@ $\frac{\partial u}{\partial x} (t_n , x_j) \simeq \frac{u(t_n,x_{j+1}) - u(t_n,x
 est instable pour 
 $a>0$ et qu'il faut changer le sens du d\'ecentrage si $a<0$.
 En fait, il faut d\'ecentrer la d\'eriv\'ee en espace en utilisant les donn\'ees qui correspondent
-\`a de l'information qui arrive et non de l'information qui part.
+\`a de l'information qui arrive et non \`a de l'information qui part. (!! Expliquer plus clairement cette phrase !!)
 
 
 De plus, nous avons vu dans la proposition \ref{prop:stabilite_transport_AM} que
@@ -2301,7 +2339,8 @@ Remarquons que la condition de Dirichlet a \'et\'e prise en compte
 dans le terme "second membre" $F^n$.
 Si l'on compare la matrice $A$ avec la matrice $A_{AM}$ dans le cas de conditions
 p\'eriodiques (voir \eqref{eq:trans_mat_per_AM}), on voit que le terme $c$
-de la matrice $A_{AM}$ a \'et\'e retir\'e et remplac\'e par la pr\'esence d'un second
+de la premi\`ere ligne de
+la matrice $A_{AM}$ a \'et\'e retir\'e et remplac\'e par la pr\'esence d'un second
 membre.
 Ce terme $c$ correspondait au fait que la valeur qui entrait en $0$ dans le cas des conditions
 p\'eriodiques \'etait celle de la valeur de la solution en $1$.
@@ -2323,6 +2362,7 @@ sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
 
 !! faut-il parler des propri\'et\'es de positivit\'e ??
 -- OUI ET LE RELIER AVEC LA NOTION DE STABILITE !!
+(en particulier stabilit\'e en norme $\infty$)
 
 
 
@@ -2511,6 +2551,7 @@ les espaces de Sobolev (...) !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
+\label{subsec:chaleur_prop}
 
 
 \begin{proposition}
