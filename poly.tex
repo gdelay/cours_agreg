@@ -84,8 +84,8 @@ Vous vous rendrez compte que le jury insiste notamment sur le fait que :
 
 Ce cours sera compos\'e de :
 \begin{itemize}
-\item cinq s\'eances de cours de deux heures chacune.
-\item une s\'eance de programmation de deux heures.
+\item quatre s\'eances de cours de trois heures chacune.
+\item une s\'eance de programmation de trois heures.
 \end{itemize}
 Dans une premi\`ere partie, nous pr\'esenterons les \'equations \'etudi\'ees
 dans ce cours ainsi que les probl\`emes physiques associ\'es.
@@ -832,7 +832,7 @@ Pour utiliser ce th\'eor\`eme, \'ecrivons le probl\`eme \eqref{eq:ell_Dir} sous
 sa forme variationnelle.
 On introduit l'espace de Sobolev
 \begin{align}
-  H_0^1(\Omega) := \{ v \in L^2(\Omega) \st \GRAD v \in L^2(\Omega) 
+  H_0^1(\Omega) := \{ v \in L^2(\Omega) \st \GRAD v \in [L^2(\Omega)]^d
   \text{ et } v_{| \partial \Omega} = 0 \sur \partial \Omega \} ,
 \end{align}
 o\`u $\GRAD v$, le gradient de $v$, est d\'efini au sens des distributions et $v_{|\partial \Omega}$
@@ -856,7 +856,7 @@ Nous avons donc \'etabli la proposition suivante.
   \begin{equation}
     \label{eq:LM2}
     \text{Trouver $u \in H_0^1(\Omega)$, tel que $\forall v \in H_0^1(\Omega)$, } 
-    \int_{\Omega} \GRAD v \SCAL \GRAD v \deriv x = \int_{\Omega} f v \deriv x .
+    \int_{\Omega} \GRAD u \SCAL \GRAD v \deriv x = \int_{\Omega} f v \deriv x .
   \end{equation}
 \end{proposition}
 
@@ -914,8 +914,8 @@ Nous avons donc \'etabli la proposition suivante.
 
 
 \begin{exercise}
-  On note $H^1 = \{ v \in L^2(\Omega) \st \GRAD v \in L^2(\Omega) \}$
-  et $H_{\bullet}^1 = \{ v \in H^1(\Omega) \st \int_{\Omega} v \deriv x = 0 \}$.
+  On note $H^1(\Omega) = \{ v \in L^2(\Omega) \st \GRAD v \in [L^2(\Omega)]^d \}$
+  et $H_{\bullet}^1(\Omega) = \{ v \in H^1(\Omega) \st \int_{\Omega} v \deriv x = 0 \}$.
   Prouver que toute solution du probl\`eme \eqref{eq:ell_Neu}
   est solution de la formulation variationnelle
   \begin{align}
@@ -2744,7 +2744,7 @@ On prolonge \'egalement $U_0$ sur $\R$ par $2$-p\'eriodicit\'e.
 La fonction obtenue est $C^1(\R)$.
 D'apr\`es le th\'eor\`eme de Dirichlet, cette fonction est donc \'egale \`a 
 sa s\'erie de Fourier (qui converge).
-De plus, comme $U_0$ est impaire, cette s\'erie de Fourier ne comprends que 
+De plus, comme $U_0$ est impaire, cette s\'erie de Fourier ne comprend que 
 des sinus.
 
 Donc, en particulier, sur $[0,1]$ on a 
@@ -2887,7 +2887,7 @@ respectivement en $N$ et $M$ sous-intervalles.
 On note $t_n$ ($0 \leq n \leq N$) et $x_j$ ($0 \leq j \leq M$)
 les bornes de ces sous-intervalles.
 Nous cherchons \`a approcher la solution de \eqref{eq:chaleur_Dir}
-en $t_n$ et $x_j$, i.e. $u(t_n,x_j)$ par le terme $u_j^n$ d'une suite
+en $t_n$ et $x_j$, i.e. $u(t_n,x_j)$, par le terme $u_j^n$ d'une suite
 $(u_j^n)$. 
 Nous proposons plusieurs sch\'emas.
 Leurs propri\'et\'es seront \'etudi\'ees en utilisant les 
@@ -2919,7 +2919,7 @@ Nous obtenons ainsi le sch\'ema suivant
     \forall 0 \leq n \leq N, u_0^n = u_M^n = 0 ,
     \\
     \forall 0 \leq n \leq N-1, \forall 1 \leq j \leq M-1,
-    u_j^{n+1} = u_j^{n} - \dfrac{\nu h_t}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n} + u_{j-1}^{n} ) 
+    u_j^{n+1} = u_j^{n} + \dfrac{\nu h_t}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n} + u_{j-1}^{n} ) 
     + h_t f(t_n,x_j) .
   \end{array}
   \right.
@@ -2931,7 +2931,7 @@ Nous obtenons ainsi le sch\'ema suivant
 \begin{exercise}
   La figure \ref{fig:chaleur_nu} 
   a \'et\'e obtenue gr\^ace au sch\'ema \eqref{eq:chaleur_DF_exp_centre}.
-  Coder ce sch\'ema est retrouver cette figure.
+  Coder ce sch\'ema et retrouver cette figure.
   
   !! donner les param\`etres !!
 \end{exercise}
@@ -3025,7 +3025,8 @@ Pour rappel, cette matrice est exigible.
 
 Pour montrer qu'il existe une unique solution \`a ce probl\`eme discret,
 il faut montrer que la matrice $\widetilde{A}$ est inversible.
-Cela a \'et\'e fait par un calcul direct dans l'exercice \ref{exo:transport_implicite}.
+Cela a \'et\'e fait par un calcul direct dans l'exercice \ref{exo:transport_implicite}
+dans le cadre de l'\'equation de transport.
 Cependant ce calcul est bien plus difficile dans le cas pr\'esent.
 La m\'ethode utilis\'ee consiste alors \`a calculer les valeurs propres de cette matrice.
 
@@ -3127,7 +3128,7 @@ Von Neumann et celle avec la norme $\| . \|_{L^2}$ ??
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\'Etude du probl\`eme de Neumann}
 
-Le but de cette section est d\'etudier le probl\`eme de la chaleur
+Le but de cette section est d'\'etudier le probl\`eme de la chaleur
 avec des conditions aux limites de Neumann.
 Toutes les preuves sont laiss\'ees en exercice.
 
@@ -3283,7 +3284,7 @@ des solutions de la forme
 $(t,x) \mapsto (A \sin(k\pi c t) + B \cos(k\pi c t)) \sin(k \pi x)$.
 
 
-Pour \^etre plus g\'en\'eral et ainsi v\'erifier les conditions intiiales impos\'ees,
+Pour \^etre plus g\'en\'eral et ainsi v\'erifier les conditions initiales impos\'ees,
 on va consid\'erer des solutions 
 sous la forme de s\'eries de Fourier utilisant ces termes.
 
