@@ -1734,22 +1734,23 @@ ais\'ement adapter notre propos.
 
 D\'efinissons maintenant un certain nombre de notions utiles pour
 \'etudier le comportement du sch\'ema \eqref{eq:schema_1pas}.
+On introduit notamment $\| \cdot \|$ une norme sur $\R^M$.
 \begin{definition}[Stabilit\'e]
   \label{def:stabilite}
   Soit $\Stab \subset \R_+^* \times \R_+^*$ tel que $(0,0) \in \overline{\Stab}$.
-  On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} est stable 
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} est stable pour la norme $\| \cdot \|$
   sous la condition $\Stab$ s'il existe $C_1 , C_2 > 0$ qui ne d\'ependent que de $T$
   tels que $\forall (h_x , h_t) \in \Stab$, $\forall U_0 \in \R^{M}$, 
   $\forall (F^n)_{0 \leq n \leq N} \in \R^{(N+1) \times M}$, on a
   \begin{align}
-    \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | u_j^n | 
-    \leq C_1 \max_{1 \leq j \leq M} | (U_0)_j | 
-    + C_2 \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | F_j^n | ,
+    \max_{0\leq n \leq N} \| U^n \| 
+    \leq C_1 \| U_0 \| 
+    + C_2 \max_{0\leq n \leq N} \| F^n \| ,
   \end{align}
-  o\`u $u_j^n = (U^n)_j$ avec $(U^n)$ l'unique suite v\'erifiant~\eqref{eq:schema_1pas}.
+  o\`u $(U^n)$ est l'unique suite v\'erifiant~\eqref{eq:schema_1pas}.
 
   On dit \'egalement que le sch\'ema~\eqref{eq:schema_1pas} 
-  est inconditionnellement stable
+  est inconditionnellement stable pour la norme $\| \cdot \|$
   si la d\'efinition pr\'ec\'edente
   s'applique avec $\Stab = \R_+^* \times \R_+^*$.
 \end{definition}
@@ -1770,70 +1771,75 @@ D\'efinissons maintenant un certain nombre de notions utiles pour
 
 \begin{definition}[Consistance]
   \label{def:consistance}
-  On dit que le sch\'ema num\'erique~\eqref{eq:schema_1pas} est consistant si pour toute
-  solution exacte r\'eguli\`ere $u$ du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}, on a
+  On dit que le sch\'ema num\'erique~\eqref{eq:schema_1pas} est consistant pour la norme $\| \cdot \|$
+  si pour toute solution exacte r\'eguli\`ere $u$ du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}, on a
   \begin{align}
-    \lim_{\substack{N \to +\infty\\ M \to +\infty}} \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} 
-    \dfrac{| \varepsilon_j^n|}{h_t} = 0 ,
+    \lim_{\substack{N \to +\infty\\ M \to +\infty}} \max_{0\leq n \leq N} 
+    \dfrac{\| \varepsilon^n \|}{h_t} = 0 ,
   \end{align}
-  o\`u $\varepsilon_j^n = (\varepsilon^n)_j$ est l'erreur de troncature
-  (et $h_t = T/N$).
+  o\`u $\varepsilon^n$ est l'erreur de troncature (et $h_t = T/N$).
 
-  On dit de plus que le sch\'ema \eqref{eq:schema_1pas} est consistant d'ordre $p \in \N^*$
-  en temps et $q \in \N^*$ en espace si pour toute solution r\'eguli\`ere $u$ (du probl\`eme avant discr\'etisation)
+  On dit, de plus, que le sch\'ema \eqref{eq:schema_1pas} est consistant d'ordre $p \in \N^*$
+  en temps et $q \in \N^*$ en espace pour la norme $\| \cdot \|$
+  si pour toute solution r\'eguli\`ere $u$ (du probl\`eme avant discr\'etisation)
   il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$ telle que
   \begin{align}
-    \forall N, M \geq 2 , \quad \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}}
-    \dfrac{| \varepsilon_j^n|}{h_t} \leq C (h_t^p + h_x^q) .
+    \forall N, M \geq 2 , \quad \max_{0\leq n \leq N}
+    \dfrac{\| \varepsilon^n \|}{h_t} \leq C (h_t^p + h_x^q) .
   \end{align}
 \end{definition}
 
 \begin{remark}
   Notons que la constante $C$ dans la d\'efinition \ref{def:consistance}
-  peut d\'ependre de la solution $u$ du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}.
+  d\'epend de la solution $u$ du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}.
+  La condition importante sur cette constante est qu'elle ne doit pas d\'ependre de la discr\'etisation
+  ($h_t$, $h_x$, $N$, $M$).
 \end{remark}
 
 \begin{definition}[Convergence]
   \label{def:convergence}
-  On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} converge (ou est convergent) 
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_1pas} converge (ou est convergent)
+  pour la norme $\| \cdot \|$
   sous la condition $\Stab \subset \R_+^* \times \R_+^*$
   si 
   \begin{align}
-    \lim_{\substack{(h_t,h_x) \in \Stab \\ (h_t,h_x) \to (0,0)}} \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} 
-    | u(t_n , x_j) - u_j^n | = 0 ,
+    \lim_{\substack{(h_t,h_x) \in \Stab \\ (h_t,h_x) \to (0,0)}} \max_{0\leq n \leq N} 
+    \| \tilde{u}^n - U^n \| = 0 ,
   \end{align}
-  avec $Nh_t = T$ et $Mh_x = 1$ o\`u $u$ est la solution du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}.
+  avec $(\tilde{u}^n)_j = u(t_n,x_j)$,
+  $Nh_t = T$ et $Mh_x = 1$ o\`u $u$ est la solution du probl\`eme associ\'e \`a~\eqref{eq:schema_1pas}.
   
   De mani\`ere similaire, on dit que le sch\'ema num\'erique 
   \eqref{eq:schema_1pas} converge (ou est convergent) 
-  \`a l'ordre $p\in\N^*$ en temps et $q\in\N^*$ en espace
+  \`a l'ordre $p\in\N^*$ en temps et $q\in\N^*$ en espace pour la norme $\| \cdot \|$
   sous la condition $\Stab \subset \R_+^* \times \R_+^*$
   s'il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$
   telle que
   \begin{align}
-    \forall (h_t , h_x) \in \Stab , \quad \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}}
-    | u(t_n,x_j) - u_j^n | \leq C (h_t^p + h_x^q) .
+    \forall (h_t , h_x) \in \Stab , \quad \max_{0\leq n \leq N}
+    \| \tilde{u}^n - U^n \| \leq C (h_t^p + h_x^q) .
   \end{align}
 
   On dit enfin que le sch\'ema est convergent (resp. convergent \`a l'ordre $p$
-  en temps et $q$ en espace) si la d\'efinition ci-dessus est v\'erifi\'ee
+  en temps et $q$ en espace) pour la norme $\| \cdot \|$ si la d\'efinition ci-dessus est v\'erifi\'ee
   avec $\Stab = \R_+^* \times \R_+^*$.
 \end{definition}
 
 Ces d\'efinitions sont reli\'ees par le th\'eor\`eme de Lax.
 \begin{theorem}[Th\'eor\`eme de Lax]
   \label{thm:convergence}
-  Si le sch\'ema \eqref{eq:schema_1pas} est stable sous la condition
-  $\Stab \subset \R_+^* \times \R_+^*$ et consistant 
-  (respectivement consistant d'ordre $p$ en temps et $q$ en espace),
+  Si le sch\'ema \eqref{eq:schema_1pas} est stable pour la norme $\| \cdot \|$
+  sous la condition $\Stab \subset \R_+^* \times \R_+^*$ et consistant 
+  (respectivement consistant d'ordre $p$ en temps et $q$ en espace)
+  pour la norme $\| \cdot \|$,
   alors le sch\'ema \eqref{eq:schema_1pas} est convergent
   (respectivement convergent d'ordre $p$ en temps et $q$ en espace)
-  sous la condition $\Stab$.
+  pour la norme $\| \cdot \|$ sous la condition $\Stab$.
 
 
   De plus, si le probl\`eme exact (le probl\`eme v\'erifi\'e par $u$) 
   est bien pos\'e, alors la consistance et la stabilit\'e du sch\'ema 
-  sont n\'ecessaires \`a sa convergence.
+  sont n\'ecessaires \`a sa convergence (en norme $\| \cdot \|$ pour les trois notions).
 \end{theorem}
 Le th\'eor\`eme \ref{thm:convergence} s'applique aussi avec $\Stab = \R_+^* \times \R_+^*$.
 Avant d'exposer une preuve de ce th\'eor\`eme 
@@ -1841,10 +1847,11 @@ faisons quelques remarques sur les d\'efinitions pr\'ec\'edentes.
 
 
 Concernant la stabilit\'e (cf d\'efinition \ref{def:stabilite}),
-les quantit\'es $\max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | u_j^n |$, 
-$\max_{1\leq j \leq M} | (U_0)_j |$ et $\max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | F_j^n |$ 
-sont des normes portant sur $(u_j^n)$, $U_0$ et $(F^n)$.
-On peut dire que la stabilit\'e du sch\'ema correspond \`a
+% les quantit\'es $\max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | u_j^n |$, 
+% $\max_{1\leq j \leq M} | (U_0)_j |$ et $\max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | F_j^n |$ 
+% sont des normes portant sur $(u_j^n)$, $U_0$ et $(F^n)$.
+% O
+on peut dire que la stabilit\'e du sch\'ema correspond \`a
 la continuit\'e de l'application lin\'eaire qui \`a 
 $U_0$ et $(F^n)$ associe $(u_j^n)$ 
 avec une constante de continuit\'e que ne d\'epend pas
@@ -1868,15 +1875,19 @@ n'est stable que sous une certaine condition
 que nous expliciterons.
 
 
+Concernant la norme $\| \cdot \|$, nous verrons dans cette section que la norme
+$\| \cdot \|_{\infty}$ d\'efinie par $\| U \|_{\infty} := \max_{1 \leq j \leq M} |U_j|$
+est adapt\'ee \`a l'\'equation de transport.
 On pourrait consid\'erer d'autres normes pour exprimer cette stabilit\'e.
 Par exemple, on pourrait consid\'erer la norme
-$\max_{0\leq n \leq N} \sqrt{h_x} (\sum_{0\leq j \leq M} (u_j^n)^2)^{1/2}$
-pour $(u_j^n)$.
+$\| U \|_{L^2} := \sqrt{h_x} (\sum_{0\leq j \leq M} (U_j)^2)^{1/2}$.
 La d\'efinition propos\'ee ne serait alors pas n\'ecessairement
 \'equivalente \`a celle de la d\'efinition \ref{def:stabilite}.
 En effet, si toutes les normes sont \'equivalentes en dimension
 finie, rien ne prouve que les constantes de la relation
 d'\'equivalence ne d\'ependent pas de $h_t$ et $h_x$.
+La norme $\| \cdot \|_{L^2}$ sera consid\'er\'ee pour mener l'analyse
+num\'erique de l'\'equation de la chaleur.
 
 
 
@@ -1923,7 +1934,7 @@ Cependant, cette propri\'et\'e n'est pas ais\'ee \`a d\'emontrer directement.
 C'est pourquoi nous utilisons le th\'eor\`eme \ref{thm:convergence}
 qui assure la convergence \`a partir de la stabilit\'e et 
 de la consistance.
-Notons \'egalement que si le probl\`eme exact est bien pos\'e
+Notons \'egalement que, si le probl\`eme exact est bien pos\'e,
 alors avoir la convergence est \'equivalent \`a avoir
 la stabilit\'e et la consistance.
 Ceci signifie qu'en pratique, on ne peut pas esp\'erer avoir un sch\'ema convergent
@@ -1955,8 +1966,8 @@ qui est celle que l'on utilise en pratique.
   $w^{n+1} = A w^n + \varepsilon^{n+1}$.
 
   Par stabilit\'e du sch\'ema, on obtient
-  $\max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} | w_j^n |
-  \leq C_2 \max_{\substack{0\leq n \leq N\\ 1 \leq j \leq M}} \dfrac{| \varepsilon_j^n |}{h_t}$.
+  $\max_{0\leq n \leq N} \| w^n \|
+  \leq C_2 \max_{0\leq n \leq N} \dfrac{\| \varepsilon^n \|}{h_t}$.
   On conclut en utilisant la d\'efinition de la consistance.
 \end{proof}
 
@@ -1971,12 +1982,12 @@ nous en donnons maintenant des conditions n\'ecessaires et des conditions
 suffisantes.
 Pour $A \in \R^{M \times M}$, on note 
 $\tn A \tn = \sup_{V \in \R^{M} \backslash\{0\}} \dfrac{\| A V \|}{\| V \|}$,
-o\`u $\| V \| = \max\limits_{1 \leq j \leq M} | V_j |$.
+o\`u $\| \cdot \|$ est la norme consid\'er\'ee sur les vecteurs.
 Rappelons que $\tn \cdot \tn$ est une norme sur $\R^{M \times M}$.
 Commen\c{c}ons d'abord par le r\'esultat suivant.
 \begin{proposition}
   \label{prop:carac_stab}
-  Le sch\'ema \eqref{eq:schema_1pas} est stable si et seulement si
+  Le sch\'ema \eqref{eq:schema_1pas} est stable pour la norme $\| \cdot \|$ si et seulement si
   il existe $C>0$ d\'ependant uniquement de $T$ tel que
   \begin{align}
     \label{eq:carac_stab}
@@ -1986,7 +1997,7 @@ Commen\c{c}ons d'abord par le r\'esultat suivant.
 
 \begin{corrolary}
   \label{corro:stability}
-  Si $\tn A \tn \leq 1$, alors le sch\'ema est stable.
+  Si $\tn A \tn \leq 1$, alors le sch\'ema est stable pour la norme $\| \cdot \|$.
 \end{corrolary}
 
 \begin{proof}[Preuve de la proposition \ref{prop:carac_stab}]
@@ -2030,10 +2041,16 @@ Commen\c{c}ons d'abord par le r\'esultat suivant.
 \end{exercise}
 
 
+\begin{remark}
+  Une cons\'equence de la proposition~\ref{prop:carac_stab} est que
+  la stabilit\'e du sch\'ema ne d\'epend que de $A$ et non de $F$.
+\end{remark}
+
+
 Nous introduisons une derni\`ere d\'efinition: la stabilit\'e
 au sens de Von Neumann.
 Lorsque l'on veut prouver qu'un sch\'ema de la forme \eqref{eq:schema_1pas}
-est instable, la fa\c{c}on standard
+est instable pour les normes $\| \cdot \|_{\infty}$ et $\| \cdot \|_{L^2}$, la fa\c{c}on standard
 de proc\'eder est de montrer qu'il n'est pas stable au sens de Von Neumann.
 On consid\`ere alors $F^n = 0$ et une condition initiale sous la forme
 d'une onde spatiale: $u_j^0 = e^{2 i \pi k x_j}$ avec $i$ la racine carr\'e de l'unit\'e
@@ -2051,8 +2068,9 @@ que $\forall 1\leq j \leq M, \;  u_j^{1} = \calA_j(k) u_j^0$ avec $\calA_j(k) \i
 \end{definition}
 \begin{proposition}
   \label{prop:Von_Neumann_nec}
-  La stabilit\'e au sens de Von Neumann est n\'ecessaire \`a la stabilit\'e du sch\'ema.
-  Dit autrement, la stabilit\'e du sch\'ema implique la stabilit\'e au sens de 
+  La stabilit\'e au sens de Von Neumann est n\'ecessaire \`a la stabilit\'e du sch\'ema
+  pour la norme $\| \cdot \|_{\infty}$.
+  Dit autrement, la stabilit\'e du sch\'ema pour la norme $\| \cdot \|_{\infty}$ implique la stabilit\'e au sens de 
   Von Neumann.
 \end{proposition}
 \begin{proof}
@@ -2062,7 +2080,7 @@ que $\forall 1\leq j \leq M, \;  u_j^{1} = \calA_j(k) u_j^0$ avec $\calA_j(k) \i
   Idem, si $u_j^0 = \Im (e^{2 i \pi k x_j})$, 
   alors $\forall 0 \leq n \leq N, u_j^n = \Im ((\calA_j(k))^n e^{2 i \pi k x_j})$.
   
-  Ainsi, si le sch\'ema \eqref{eq:schema_1pas} est stable alors
+  Ainsi, si le sch\'ema \eqref{eq:schema_1pas} est stable pour la norme $\| \cdot \|_{\infty}$, alors
   $\max_{\substack{0 \leq n \leq N \\ 1 \leq j \leq M}} 
   | \Re ((\calA_j(k))^n e^{2 i \pi k x_j})| \leq C$ o\`u $C>0$ ne d\'epend que de $T$.
   En faisant le m\^eme raisonnement sur la partie imaginaire,
@@ -2077,23 +2095,25 @@ que $\forall 1\leq j \leq M, \;  u_j^{1} = \calA_j(k) u_j^0$ avec $\calA_j(k) \i
 
 
 Par la suite nous utilisons la stabilit\'e de Von Neumann lorsque nous voulons 
-prouver qu'un sch\'ema n'est pas stable.
+prouver qu'un sch\'ema n'est pas stable pour la norme $\| \cdot \|_{\infty}$ .
 
-\begin{remark}
-  On peut prouver que la
-  stabilit\'e de Von Neumann correspond \`a la stabilit\'e du sch\'ema 
-  dans le sens $\| (u_j^n) \|_{*} \leq C_1 \| U_0 \|_{\#} + C_2 \| (F^n) \|_{*}$,
-  avec $C_1$ et $C_2$ ne d\'ependant que de $T$
-  et des normes $\| \cdot \|_{*}$ et $\| \cdot \|_{\#}$ diff\'erentes de celles
-  de la d\'efinition \ref{def:stabilite}.
-\end{remark}
+
+%%%%%  Reprendre cette remarque (en clarifiant)
+% \begin{remark}
+%   On peut prouver que la
+%   stabilit\'e de Von Neumann correspond \`a la stabilit\'e du sch\'ema 
+%   dans le sens $\| (u_j^n) \|_{*} \leq C_1 \| U_0 \|_{\#} + C_2 \| (F^n) \|_{*}$,
+%   avec $C_1$ et $C_2$ ne d\'ependant que de $T$
+%   et des normes $\| \cdot \|_{*}$ et $\| \cdot \|_{\#}$ diff\'erentes de celles
+%   de la d\'efinition \ref{def:stabilite}.
+% \end{remark}
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Analyse des deux sch\'emas donn\'es en introduction}
 
 
 Nous allons montrer dans cette section que le sch\'ema num\'erique 
-propos\'e en \eqref{eq:transport_DF_centre} n'est pas stable
+propos\'e en \eqref{eq:transport_DF_centre} n'est pas stable pour la norme $\| \cdot \|_{\infty}$
 contrairement au sch\'ema \eqref{eq:transport_DF_decentre_AM}.
 C'est ce d\'efaut de stabilit\'e qui explique son mauvais comportement.
 
@@ -2147,11 +2167,11 @@ $\co = \frac{a h_t}{h_x}$.
 \begin{proposition}
   \label{prop:consistance_2_schemas}
   Les sch\'emas \eqref{eq:transport_DF_centre} et \eqref{eq:transport_DF_decentre_AM}
-  sont tous les deux consistants.
+  sont tous les deux consistants pour la norme $\| \cdot \|_{\infty}$.
   De plus, le sch\'ema \eqref{eq:transport_DF_centre} est consistant d'ordre 1
   en temps et 2 en espace;
   le sch\'ema \eqref{eq:transport_DF_decentre_AM} est consistant d'ordre 1
-  en temps et 1 en espace.
+  en temps et 1 en espace (pour la norme $\| \cdot \|_{\infty}$).
 \end{proposition}
 
 
@@ -2201,15 +2221,15 @@ $\co = \frac{a h_t}{h_x}$.
   \label{exo:consistance_trans_AM}
   Terminer la preuve de la proposition \ref{prop:consistance_2_schemas}:
   prouver que le sch\'ema \eqref{eq:transport_DF_decentre_AM} est consistant
-  d'ordre 1 en temps et en espace. 
+  d'ordre 1 en temps et en espace (pour la norme $\| \cdot \|_{\infty}$). 
 \end{exercise}
 
 
 \begin{proposition}
   \label{prop:stabilite_transport_AM}
-  Le sch\'ema \eqref{eq:transport_DF_decentre_AM} est stable
+  Le sch\'ema \eqref{eq:transport_DF_decentre_AM} est stable pour la norme $\| \cdot \|_{\infty}$
   sous la condition $c = \dfrac{a h_t}{h_x} \leq 1$.
-  De plus, ce sch\'ema est instable si $c > 1$.
+  De plus, ce sch\'ema est instable si $c > 1$ (pour la norme $\| \cdot \|_{\infty}$).
 \end{proposition}
 \begin{proof}
   Supposons $c \leq 1$ et montrons que le sch\'ema est stable.
@@ -2241,6 +2261,7 @@ La mauvais comportement du sch\'ema centr\'e provient d'un d\'efaut
 de stabilit\'e. La preuve de ce r\'esultat est laiss\'ee en exercice.
 \begin{exercise}[Instabilit\'e du sch\'ema explicite centr\'e]
   Montrer que le sch\'ema \eqref{eq:transport_DF_centre} est instable
+  pour la norme $\| \cdot \|_{\infty}$
   (c'est-\`a-dire n'est stable sous aucune condition $\Stab$).
 \end{exercise}
 
@@ -2257,9 +2278,11 @@ on peut montrer que le sch\'ema d\'ecentr\'e aval
 issu de l'approximation 
 $\frac{\partial u}{\partial x} (t_n , x_j) \simeq \frac{u(t_n,x_{j+1}) - u(t_n,x_{j})}{h_x}$ 
 est instable pour 
-$a>0$ et qu'il faut changer le sens du d\'ecentrage si $a<0$.
-En fait, il faut d\'ecentrer la d\'eriv\'ee en espace en utilisant les donn\'ees qui correspondent
-\`a de l'information qui arrive et non \`a de l'information qui part. (!! Expliquer plus clairement cette phrase !!)
+$a>0$ (toujours pour la norme $\| \cdot \|_{\infty}$) et qu'il faut changer le sens du d\'ecentrage si $a<0$.
+Les num\'ericiens commentent ce ph\'enom\`ene en disant
+qu'il faut d\'ecentrer la d\'eriv\'ee en espace en utilisant les donn\'ees qui correspondent
+\`a de l'information qui arrive et non \`a de l'information qui part.
+Cela signifie que si $a>0$, l'information vient de la gauche, il faut donc d\'ecentrer la d\'eriv\'ee vers la gauche.
 
 
 De plus, nous avons vu dans la proposition \ref{prop:stabilite_transport_AM} que
