@@ -2254,19 +2254,16 @@ $\co = \frac{a h_t}{h_x}$.
   $| \calA | > 1$ (on montre que $\cos(2\pi k h_x) < 1$). 
   Le sch\'ema n'est pas stable au sens 
   de Von Neumann donc, d'apr\`es la proposition \ref{prop:Von_Neumann_nec},
-  il n'est pas stable au sens de la d\'efinition \ref{def:stabilite}.
+  il n'est pas stable au sens de la d\'efinition~\ref{def:stabilite}.
 \end{proof}
 
 La mauvais comportement du sch\'ema centr\'e provient d'un d\'efaut
 de stabilit\'e. La preuve de ce r\'esultat est laiss\'ee en exercice.
 \begin{exercise}[Instabilit\'e du sch\'ema explicite centr\'e]
-  Montrer que le sch\'ema \eqref{eq:transport_DF_centre} est instable
+  Montrer que le sch\'ema~\eqref{eq:transport_DF_centre} est instable
   pour la norme $\| \cdot \|_{\infty}$
   (c'est-\`a-dire n'est stable sous aucune condition $\Stab$).
 \end{exercise}
-
-
-!! FIN DE L'ENVOI !!
 
 
 
@@ -2285,8 +2282,8 @@ qu'il faut d\'ecentrer la d\'eriv\'ee en espace en utilisant les donn\'ees qui c
 Cela signifie que si $a>0$, l'information vient de la gauche, il faut donc d\'ecentrer la d\'eriv\'ee vers la gauche.
 
 
-De plus, nous avons vu dans la proposition \ref{prop:stabilite_transport_AM} que
-le sch\'ema \eqref{eq:transport_DF_decentre_AM} est stable
+De plus, nous avons vu dans la proposition~\ref{prop:stabilite_transport_AM} que
+le sch\'ema~\eqref{eq:transport_DF_decentre_AM} est stable
 uniquement sous la condition $a h_t \leq h_x$
 qui lie les pas de temps et d'espace.
 On appelle une telle condition "condition de CFL" pour 
@@ -2306,7 +2303,7 @@ Il faut donc \^etre tr\`es prudent quand on discr\'etise une EDP.
 
 
 %%%%%%%%%%%%%%%%%%
-\subsubsection{Conditions de Dirichlet}
+\subsubsection{Discr\'etisation des conditions de Dirichlet}
 
 On s'int\'eresse dans cette section \`a la prise en compte des conditions de Dirichlet.
 On cherche donc \`a discr\'etiser le probl\`eme \eqref{eq:transport}.
@@ -2376,20 +2373,26 @@ montrer que ce sch\'ema est stable si et seulement la condition de CFL ``$c \leq
 est v\'erifi\'ee (vous pouvez chercher cette d\'emonstration pour vous convaincre
 que vous avez compris la section pr\'ec\'edente).
 
-!! VERIFIER QUE CA SE PROUVE FACILEMENT !!
 
+\begin{proposition}
+  Pour un nombre de CFL $c \leq 1$,
+  le sch\'ema d\'ecentr\'e amont conserve les bornes:
+  s'il existe $A$ et $B$ r\'eels tels que
+  pour tout $j \in < 0 , M>$, $A \leq u_0(x_j) \leq B$
+  et pour tout $n \in < 1 , N >$, $A \leq \alpha(t_n) \leq B$,
+  alors pour tout $n \in < 0 , N >$ et tout $j \in <0,M>$,
+  on a $A \leq u_j^n \leq B$.
+\end{proposition}
 
+\begin{proof}
+  On a $u_j^{n+1} = u_j^n - \frac{a h_t}{h_x} (u_j^n - u_{j-1}^n) = (1-c) u_j^n + c u_{j-1}^n$
+  avec $c = \frac{a h_t}{h_x}$.
+  Maintenant, si $A \leq u_j^{n} \leq B$ et $A \leq u_{j-1}^n \leq B$ alors
+  en utilisant $c \geq 0$ et $1-c \geq 0$, on a
+  $A \leq u_j^{n+1} \leq B$.
 
-!! dessin repr\'esentant l'endroit o\`u on va chercher l'information :
-sch\'ema centr\'e / d\'ecentr\'e + effet de la cfl !!
-
-!! faut-il parler des propri\'et\'es de positivit\'e ??
--- OUI ET LE RELIER AVEC LA NOTION DE STABILITE !!
-(en particulier stabilit\'e en norme $\infty$)
-
-
-
-
+  On compl\`ete la preuve avec un argument de r\'ecurence.
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Diffusion num\'erique}
@@ -2416,11 +2419,11 @@ dans le cas num\'erique et les valeurs ont tendance \`a s'applatir.
 On appelle ce ph\'enom\`ene la diffusion num\'erique:
 tout se passe comme s'il y avait un terme de diffusion suppl\'ementaire dans l'\'equation.
 Quand $c \geq 1$, le sch\'ema est instable et des ph\'enom\`enes similaires \`a ceux 
-du sch\'ema centr\'e apparaissent (voir figure \ref{fig:trans_per}).
+du sch\'ema centr\'e apparaissent (voir figure~\ref{fig:trans_per}).
 
 
 
-Nous y avons \'etudi\'e le probl\`eme de transport--Dirichlet
+Nous avons \'etudi\'e le probl\`eme de transport--Dirichlet
 avec $\alpha(t) = 2$, $u_0(x) = 1$ et $a = 1$.
 La solution exacte est 
 \begin{align*}
@@ -2474,9 +2477,6 @@ num\'erique, il ne faut pas s'attendre \`a ce que le sch\'ema fournisse la solut
   pour v\'erifier vos r\'esultats.
 \end{exercise}
 
-!! VERIFIER QUE CET EXERCICE EST FAISABLE !!
-
-
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Sch\'ema implicite}
@@ -2497,7 +2497,7 @@ num\'erique, il ne faut pas s'attendre \`a ce que le sch\'ema fournisse la solut
   \end{align}
   
   \begin{enumerate}
-  \item En consid\'erant la condition de Dirichlet $u(t_n,0) = \alpha(t_n)$, 
+  \item En consid\'erant la condition de Dirichlet $u(t_n,0) = \alpha(t_n)$ (donc pour $a>0$), 
     \'ecrire le sch\'ema num\'erique issu de \eqref{eq:der_decentre_AM2}.
     Montrer qu'il peut se mettre sous la forme $\widetilde{A} U^{n} = U^{n-1} + h_t \widetilde{F}^n$.
     Donner $\widetilde{A}$ et $\widetilde{F}^n$.
@@ -2505,40 +2505,37 @@ num\'erique, il ne faut pas s'attendre \`a ce que le sch\'ema fournisse la solut
     \eqref{eq:schema_1pas} en donnant $A$ et $F^n$.
     On pourra donc utiliser les d\'efinitions de la section \ref{subsubsec:analyse_def}.
   \item Soit $V \in \R^M$, on note $U = A V$. 
-    Calculer les coordonn\'ees de $U$ en fonction de $V$.
-    En d\'eduire que $\tn A \tn \leq 1$ et que
-    ce sch\'ema est inconditionnellement stable.
+    Calculer les coordonn\'ees de $U$ en fonction de celles de $V$.
+    En d\'eduire que $\tn A \tn \leq 1$ (pour $\| \cdot \|_{\infty}$) et que
+    ce sch\'ema est inconditionnellement stable pour la norme $\| \cdot \|_{\infty}$.
     
-  \item Montrer que ce sch\'ema est consistant d'ordre 1 en temps et en espace.
+  \item Montrer que ce sch\'ema est consistant d'ordre 1 en temps et en espace
+    pour la norme $\| \cdot \|_{\infty}$.
     Que peut-on dire de la convergence de ce sch\'ema?
 
-  \item Coder le sch\'ema propos\'e. On peut soit inverser la matrice \`a l'ext\'erieur
-    de la boucle en temps, soit r\'esoudre un syst\`eme lin\'eaire \`a chaque pas de temps.
-    Comparer les deux m\'ethodes, laquelle est la plus efficace ?
-    
-    !! Coder ca !!
-
-    NB : commandes scilab
+  \item Coder le sch\'ema propos\'e.
+    Tester plusieurs nombres de CFL.
+    V\'erifier que le sch\'ema converge m\^eme quand $c > 1$.
 
 
   \item On consid\`ere $a=1$, $u_0 = 0$ et $\alpha(t) = t^2$.
     Quelle est la solution exacte du probl\`eme?
-    approcher la solution gr\^ace au sch\'ema implicite.
-    Pour $(N,M) = (...)$, que remarquez-vous en $(t,x)=(0.1,0.5)$?
+    Approcher la solution gr\^ace au sch\'ema implicite.
+    Que remarquez-vous en $(t,x)=(0.1,0.5)$?
     Si vous l'avez cod\'e, comparez avec le sch\'ema explicite.
     Comment expliquez-vous ceci ?
     
-  \item D\'eterminer num\'eriquement le taux de convergence de ce sch\'ema.
-    On prendra par exemple la solution du cas test pr\'ec\'edent \`a $T=1$ pour
-    estimer la convergence du sch\'ema. Calculer l'erreur et la tracer sur une figure
-    \`a l'\'echelle logarithmique comme sur la figure (...).
-    Quels ordres de convergence trouvez-vous num\'eriquement ?
+  % \item D\'eterminer num\'eriquement le taux de convergence de ce sch\'ema.
+  %   On prendra par exemple la solution du cas test pr\'ec\'edent \`a $T=1$ pour
+  %   estimer la convergence du sch\'ema. Calculer l'erreur et la tracer sur une figure
+  %   \`a l'\'echelle logarithmique comme sur la figure (...).
+  %   Quels ordres de convergence trouvez-vous num\'eriquement ?
   \end{enumerate}
   
-  NB : si vous avez des difficult\'es pour l'une de ces questions, vous pouvez \'eventuellement
-  lire la section \ref{subsubsec:chaleur_DF_implicite}.
+  % NB : si vous avez des difficult\'es pour l'une de ces questions, vous pouvez \'eventuellement
+  % lire la section \ref{subsubsec:chaleur_DF_implicite}.
 
-  !! Ajouter une question sur la stabilit\'e de Von Neumann : comparer les preuves des deux stabilit\'es + remarque : Von Neumann plus simple, sera \'etudi\'e dans le chapire suivant (...)
+  % !! Ajouter une question sur la stabilit\'e de Von Neumann : comparer les preuves des deux stabilit\'es + remarque : Von Neumann plus simple, sera \'etudi\'e dans le chapire suivant (...)
 \end{exercise}
 
 
