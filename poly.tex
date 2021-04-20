@@ -2542,14 +2542,11 @@ num\'erique, il ne faut pas s'attendre \`a ce que le sch\'ema fournisse la solut
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de la chaleur}
 
-!! definition des espaces de fonctions utiles : nombre de d\'eriv\'ees en x et en t
-peut \^etre diff\'erent !!
-
-!! La m\'ethode utilis\'ee par B. Lucquin est de ne pas donner les espaces :
-on dit juste qu'on cherche $u : [0,T] \times [0,1]$ telle que ... !!
+Nous consid\'erons le domaine $\Omega = (0,1)$.
+Nous \'etudions dans ce chapitre les solutions au probl\`eme
 \begin{equation}
   \label{eq:chaleur_Dir}
-  \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
+  \text{Trouver $u : (0,T) \times (0,1)$ v\'erifiant }
   \left\{
     \begin{array}{l l}
       \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = f 
@@ -2562,32 +2559,49 @@ on dit juste qu'on cherche $u : [0,T] \times [0,1]$ telle que ... !!
     \end{array}
   \right.
 \end{equation}
-avec (...)
-
-
-!! Voir si on \'ecrit le pb avec les espaces de fonctions $C^k$ ou bien avec
-les espaces de Sobolev (...) !!
-
+o\`u $f$ et $u_0$ sont des fonctions donn\'ees.
+Notons que l'on a impos\'e des conditions de Dirichlet homog\`enes sur tout le bord du domaine
+(ici $x=0$ et $x=1$).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
 \label{subsec:chaleur_prop}
 
 
+!! Ca serait peut-\^etre plus intelligent de mettre cette proposition \`a la fin de la section !!
+
+!! Faut-il introduire un param\`etre $\nu$ ??
+
+!! Est-ce qu'il ne faudrait pas s\'eparer solutions faibles et solutions fortes ??
+
+On peut montrer l'existence d'une unique solution faible au probl\`eme de Chaleur-Dirichlet.
+
+
 \begin{proposition}
   \label{prop:chal_sol_faibles}
   Soit $f \in L^2(0,T;L^2(0,1))$ et $u_0 \in L^2(0,1)$.
-  Alors il existe une solution $u$ au probl\`eme \eqref{eq:chaleur_Dir}
+  Alors il existe une unique solution $u$ au probl\`eme~\eqref{eq:chaleur_Dir}
   dans $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$.
 \end{proposition}
-Une preuve \`a cette proposition est propos\'ee en Section \ref{subsec:chal_sol_faibles}.
+Les arguments de la preuve de cette proposition sont hors programme.
+Cette preuve est donc propos\'ee en annexe, en Section~\ref{subsec:chal_sol_faibles}.
 
+Notons tout de m\^eme que nous avons un gain de r\'egularit\'e de la solution
+dans $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$
+par rapport au second membre qui est dans $L^2(0,T;L^2(0,1))$
+(ce gain de r\'egularit\'e est plus important en espace qu'en temps).
+Notons \'egalement que le fait que la solution soit dans $C^0([0,T];L^2(0,1))$
+est en accord avec la donn\'ee initiale qui est dans $L^2(0,1)$.
 
+La proposition suivante prouve la d\'ependance continue de la solution
+par rapport aux donn\'ees.
+Notons que cette proposition est ind\'ependante de la
+proposition~\ref{prop:chal_sol_faibles}.
 
 \begin{proposition}
   \label{prop:chaleur_continuite_donnees}
   Soit $u \in C^0([0,T];L^2(0,1))$ une solution de \eqref{eq:chaleur_Dir}.
-  Si $u_0 \in L^2(0,1)$ et $f \in L^2(]0,T[ \times ]0,1[)$,
+  Si $u_0 \in L^2(0,1)$ et $f \in L^2(0,T; L^2(0,1))$,
   alors 
   \begin{align*}
     \sup_{t \in [0,T]} \| u(t,.) \|_{L^2(0,1)} \leq \| u_0 \|_{L^2(0,1)} + \| f \|_{L^2(]0,T[ \times ]0,1[)} .
@@ -2630,22 +2644,20 @@ Une preuve \`a cette proposition est propos\'ee en Section \ref{subsec:chal_sol_
   On obtient le r\'esultat en prenant le $\sup$ sur $t$.
 \end{proof}
 
-En combinant les propositions \ref{prop:chal_sol_faibles} et
-\ref{prop:chaleur_continuite_donnees}, on obtient le r\'esultat suivant.
-\begin{corrolary}
-  Si $u_0 \in L^2(0,1)$ et $f \in L^2(0,T;L^2(0,1))$ alors le probl\`eme
-  \eqref{eq:chaleur_Dir} admet une unique solution dans 
-  $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$.
-\end{corrolary}
+\begin{remark}
+  On peut utiliser la proposition~\ref{prop:chaleur_continuite_donnees}
+  pour prouver l'unicit\'e de la solution dans la
+  proposition~\ref{prop:chal_sol_faibles}.
+\end{remark}
 
 \begin{proposition}[Effet r\'egularisant de l'\'equation de la chaleur]
   Si $u \in C^2(]0,T] \times ]0,1[)$ est solution de
   $\dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = 0$,
   alors $u \in C^{\infty}(]0,T] \times ]0,1[)$.
 \end{proposition}
-!! PREUVE : Proposition II.10 du poly ENS !!
--- DEMANDER REF A MURIEL POUR MEILLEUR RESULTAT !!
-
+!! Le plus simple est de d\'eplacer cette propriete dans la section sol fortes.
+On doit ensuite pouvoir utiliser l'expression analytique de la sol
+pour prouver l'effet r\'egularisant !!
 
 !! ON PEUT CONSTRUIRE UNE PREUVE DE REGULARITE EN CHERCHANT DES SOLUTIONS REGULIERES
 (VOIR NOTES MURIEL) !! 
@@ -2701,7 +2713,12 @@ du sup en espace de la donn\'ee initiale et du sup en temps des donn\'ees de Dir
   tend exponentiellement vers la valeur moyenne de la donn\'ee initiale.
 \end{exercise}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+!! V\'erifier cet exercice !!
+
+
+!! Est-ce que \c{c}a ne serait pas plus naturel de traiter d'abord les solutions fortes ??
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection{Analyse de Fourier}
 
 !! chapeau !!

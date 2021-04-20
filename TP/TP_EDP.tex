@@ -1,0 +1,135 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[frenchb]{babel}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{times}    
+\usepackage{amsfonts,amssymb,amsmath,amsthm}
+%
+\newtheorem{exercice}{\color{coul2}{\bf Exercice}} 
+\newenvironment{exo}{
+%\vskip .1cm
+\begin{exercice}\smallskip\normalfont}{\end{exercice}
+%\vskip .1cm
+} 
+ 
+% \definecolor{coul2}{rgb}{.0,0.2,0.8}
+% \definecolor{coul1}{rgb}{.49,0.98,0.96}
+% \def\titre{\centerline{
+% \includegraphics[width=3cm]{su.png}
+% \hfill \begin{tabular}{r}
+% {\color{coul1}{\bf Master Math\'ematiques et Applications}}\\ 
+% {\color{coul2}{\bf Approfondissement C/C++}} \\ \\{}\end{tabular}     } 
+% }
+
+
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\R}{\mathbb{R}}
+
+\newif\ifcorrige\corrigetrue
+%\newif\ifcorrige\corrigefalse 
+\begin{document}
+% \titre
+\begin{center}
+  \underline{\underline{\LARGE TP EDP : Laplacien et \'equation de transport}}
+\end{center}
+\vskip .5cm 
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Probl\`eme de Laplace et diff\'erentes conditions aux limites}
+
+On se place dans le cadre d'un domaine unidimensionnel $\Omega = (0,1)$.
+On s'int\'eresse \`a l'\'equation de Laplace
+\begin{equation}
+  \label{eq:Laplace}
+  - u''(x) = f(x) ,
+\end{equation}
+o\`u on cherche $u$ et $f$ est une fonction connue.
+Cette \'equation est compl\'et\'ee par des conditions aux limites (on consid\'erera
+plusieurs possibilit\'es).
+Le domaine $(0,1)$ est maill\'e en $M > 0$ sous-divisions de longueur $h = 1/M$.
+On d\'efinit les points $x_j = jh$ ($0 \leq j \leq M$).
+On veut ensuite construire une suite $(u_j)$ dont le terme g\'en\'eral approche la valeur
+de $u$ au point $x_j$.
+Le sch\'ema de diff\'erences finies choisi consiste \`a approcher
+$u''(x_j) \simeq \frac{u(x_{j+1}) - 2 u(x_j) + u(x_{j-1})}{h^2}$.
+
+Pour chaque condition aux limites consid\'er\'ee ci-dessous, on vous demande
+de coder la matrice $A$ et le vecteur $F$.
+On pourra ensuite calculer num\'eriquement $U$ et afficher sur un graphe la solution obtenue $(u_j)$
+(en ordonn\'ees) en fonction de la position des points $(x_j)$ (en abscisses).
+On pourra aussi comparer ce r\'esultat aux valeurs exactes $(u(x_j))$ (sur le m\^eme graphe).
+
+
+%%%%%%%
+\subsection{Conditions de Dirichlet homog\`enes}
+
+
+On consid\`ere les conditions aux limites
+\begin{equation}
+  \label{eq:Dir_hom}
+  u(0) = 0 , \qquad u(1) = 0 .
+\end{equation}
+La m\'ethode de diff\'erences finies consiste alors \`a r\'esoudre le probl\`eme
+$A U = F$ avec
+\begin{equation}
+  \label{eq:matDir}
+  A = \dfrac{1}{h^2} 
+  \begin{pmatrix} 
+    2 & -1 & 0 & \cdots
+    \\
+    -1 & 2 & -1 & 0 & \cdots
+    \\
+    0 & -1 & 2 & \ddots &
+    \\
+    \vdots & & \ddots & \ddots & \ddots
+    \\
+    & & &  \ddots & 2 & -1
+    \\
+    & &  & & -1 & 2
+  \end{pmatrix} , \qquad U = 
+  \begin{pmatrix}
+    u_1 \\ u_2 \\ \vdots \\ u_{M-1}
+  \end{pmatrix} , \qquad F = 
+  \begin{pmatrix}
+    f(x_1) \\ f(x_2) \\ \vdots \\ f(x_{M-1})
+  \end{pmatrix} .
+\end{equation}
+La suite $(u_j)$ est alors donn\'ee par le vecteur $U$ ainsi que $u_0 = u_M = 0$.
+
+On pourra par exemple consid\'erer $f(x)=x$ avec pour solution associ\'ee
+$u(x) = \frac{x}{6}(1-x^2)$ (dans ce cas v\'erifier que l'on retrouve la solution exacte
+par la m\'ethode des DF).
+On pourra aussi consid\'erer $f(x) = x^2$ et $u(x) = \frac{x}{12}(1-x^3)$
+(dans ce cas v\'erifier que l'on n'obtient pas exactement la solution exacte du probl\`eme).
+
+%%%%%%%
+\subsection{Conditions de Dirichlet non homog\`enes}
+
+%%%%%%%
+\subsection{Conditions mixtes}
+
+%%%%%%%
+\subsection{Conditions de Neumann (facultatif)}
+(facultatif : \`a faire seulement apr\`es avoir trait\'e les autres sections)
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\'Equation de transport}
+
+Dirichlet
+
+%%%%%%%
+\subsection{Sch\'ema centr\'e}
+
+%%%%%%%
+\subsection{Sch\'ema d\'ecentr\'e}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\'Equation de la chaleur et des ondes (facultatif)}
+(facultatif : \`a faire seulement apr\`es avoir trait\'e les autres sections)
+
+Utiliser le code d\'evelopp\'e pour le Laplacien pour simuler l'\'equation des ondes
+et de la chaleur (se reporter au cours pour la discr\'etisation).
+
+\end{document}
