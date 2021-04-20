@@ -98,6 +98,7 @@ $A U = F$ avec
 \end{equation}
 La suite $(u_j)$ est alors donn\'ee par le vecteur $U$ ainsi que $u_0 = u_M = 0$.
 
+
 On pourra par exemple consid\'erer $f(x)=x$ avec pour solution associ\'ee
 $u(x) = \frac{x}{6}(1-x^2)$ (dans ce cas v\'erifier que l'on retrouve la solution exacte
 par la m\'ethode des DF).
@@ -106,10 +107,70 @@ On pourra aussi consid\'erer $f(x) = x^2$ et $u(x) = \frac{x}{12}(1-x^3)$
 
 %%%%%%%
 \subsection{Conditions de Dirichlet non homog\`enes}
+On consid\`ere les conditions aux limites
+\begin{equation}
+  \label{eq:Dir_non_hom}
+  u(0) = \alpha , \qquad u(1) = \beta ,
+\end{equation}
+o\`u $\alpha$ et $\beta$ sont des r\'eels connus.
+On a vu (cf cours) que, dans ce cas, la solution exacte est celle du probl\`eme homog\`ene
+\`a laquelle on ajoute le rel\`evement $\alpha (1-x) + \beta x$.
+
+La m\'ethode des diff\'erences finies consiste \`a r\'esoudre le probl\`eme
+$A U = F$ avec $A$ et $U$ donn\'es par~\eqref{eq:matDir} et $F$ donn\'e par
+\begin{equation}
+  \label{eq:F_Dir_non_hom}
+  F = 
+  \begin{pmatrix}
+    f(x_1) + \frac{\alpha}{h^2}\\ f(x_2) \\ \vdots \\ f(x_{M-2}) \\ f(x_{M-1}) + \frac{\beta}{h^2}
+  \end{pmatrix} .
+\end{equation}
+Les valeurs de la suite sont alors celles de $U$ que l'on compl\`ete par
+$u_0 = \alpha$ et $u_M = \beta$.
+
+On pourra, par exemple, consid\'erer
+$\alpha = 0$, $\beta = \frac1{12}$, $f(x) = x^2$ et $u(x) = \frac{x}{12}(1-x^3) + \frac{x}{12}$.
+(N'h\'esitez pas \`a essayer d'autres valeurs.)
 
 %%%%%%%
 \subsection{Conditions mixtes}
+On consid\`ere les conditions aux limites
+\begin{equation}
+  \label{eq:mixte}
+  u(0) = 0 , \qquad u'(1) = 0 .
+\end{equation}
+On parle de conditions mixtes car il y a une condition de Dirichlet \`a gauche
+et une condition de Neumann \`a droite.
+On impose $u_0 = 0$ et $\frac{u_{M-1} - u_{M}}{h} = 0$.
 
+On r\'esout le probl\`eme $A U = F$ avec
+\begin{equation}
+  \label{eq:matMixte}
+  A = \dfrac{1}{h^2} 
+  \begin{pmatrix} 
+    2 & -1 & 0 & \cdots
+    \\
+    -1 & 2 & -1 & 0 & \cdots
+    \\
+    0 & -1 & 2 & \ddots &
+    \\
+    \vdots & & \ddots & \ddots & \ddots
+    \\
+    & & &  \ddots & 2 & -1
+    \\
+    & &  & & -1 & 1
+  \end{pmatrix} , \qquad U = 
+  \begin{pmatrix}
+    u_1 \\ u_2 \\ \vdots \\ u_{M-1}
+  \end{pmatrix} , \qquad F = 
+  \begin{pmatrix}
+    f(x_1) \\ f(x_2) \\ \vdots \\ f(x_{M-1})
+  \end{pmatrix} .
+\end{equation}
+La suite $(u_j)$ est alors donn\'ee par le vecteur $U$ ainsi que $u_0 = 0$
+et $u_M = u_{M-1}$.
+
+On pourra, par exemple, consid\'erer $f(x) = x^2$ et $u(x) = \frac{x}{3}(1-\frac{x^3}{4})$.
 %%%%%%%
 \subsection{Conditions de Neumann (facultatif)}
 (facultatif : \`a faire seulement apr\`es avoir trait\'e les autres sections)
