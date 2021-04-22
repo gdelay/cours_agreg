@@ -172,10 +172,10 @@ et $u_M = u_{M-1}$.
 
 On pourra, par exemple, consid\'erer $f(x) = x^2$ et $u(x) = \frac{x}{3}(1-\frac{x^3}{4})$.
 %%%%%%%
-\subsection{Conditions de Neumann (facultatif)}
-(facultatif : \`a faire seulement apr\`es avoir trait\'e les autres sections)
+% \subsection{Conditions de Neumann (facultatif)}
+% (facultatif : \`a faire seulement apr\`es avoir trait\'e les autres sections)
 
-A voir si on l'ajoute ...
+% A voir si on l'ajoute ...
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de transport}
@@ -231,11 +231,29 @@ V\'erifier que lorsque l'on rafine $(h_t,h_x)$, la solution se d\'egrade.
 %%%%%%%
 \subsection{Sch\'ema d\'ecentr\'e}
 
-%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\'Equation de la chaleur et des ondes (facultatif)}
-(facultatif : \`a faire seulement apr\`es avoir trait\'e les autres sections)
+Pour tout $n \geq 0$, on calcule la solution au pas de temps suivant par
+\begin{equation}
+  \label{eq:transport_decentre}
+  u_j^{n+1} = u_j^n - \dfrac{a h_t}{h_x} (u_{j}^n - u_{j-1}^n) , \qquad 1 \leq j \leq M ,
+\end{equation}
+avec $u_0^{n+1} = \alpha$.
 
-Utiliser le code d\'evelopp\'e pour le Laplacien pour simuler l'\'equation des ondes
-et de la chaleur (se reporter au cours pour la discr\'etisation).
+Ce sch\'ema est cens\'e \^etre stable sous la condition de CFL $c = \dfrac{a h_t}{h_x} \leq 1$.
+V\'erifier que lorsque l'on rafine $(h_t,h_x)$ en respectant cette condition,
+la solution converge vers la bonne valeur.
+V\'erifier que si on ne respecte pas cette condition, alors la solution se d\'egrade.
+
+
+Ce sch\'ema est d'ordre 1 en espace et en temps.
+Lorsque vous multipliez $N$ et $M$ par deux, comment \'evolue l'erreur?
+Est-ce que cela correspond \`a la th\'eorie ?
+Reprenez cette question avec $u_0(x) = x^2$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{\'Equation de la chaleur et des ondes (facultatif)}
+% (facultatif : \`a faire seulement apr\`es avoir trait\'e les autres sections)
+
+% Utiliser le code d\'evelopp\'e pour le Laplacien pour simuler l'\'equation des ondes
+% et de la chaleur (se reporter au cours pour la discr\'etisation).
 
 \end{document}
