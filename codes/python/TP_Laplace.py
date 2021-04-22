@@ -24,6 +24,7 @@ def sol_mixte(x):
 ## step
 h = 1./M
 
+## Dirichlet data
 alpha = sol_ex(0)
 beta = sol_ex(1)
 
