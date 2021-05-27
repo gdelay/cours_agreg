@@ -551,11 +551,6 @@ o\`u $\nu = k/c > 0$ est la diffusivit\'e thermique
 (qui d\'epend du mat\'eriau consid\'er\'e et de sa g\'eom\'etrie).
 
 
-% De mani\`ere similaire \`a ce qui a \'et\'e expliqu\'e dans la section \ref{subsec:elliptique},
-% cette l'\'equation de la chaleur, en plus de repr\'esenter l'\'evolution de la temp\'erature
-% dans un milieu peut aussi repr\'esenter l'\'evolution de la densit\'e d'une population
-% ou encore l'\'evolution d'une concentration chimique d'une esp\`ece au sein d'un diluant.
-
 Les conditions aux limites classiques sont les m\^emes que celles \'evoqu\'ees pour le probl\`eme
 stationnaire (voir tableau \ref{tab:pb_ell}).
 
@@ -2563,6 +2558,251 @@ o\`u $f$ et $u_0$ sont des fonctions donn\'ees.
 Notons que l'on a impos\'e des conditions de Dirichlet homog\`enes sur tout le bord du domaine
 (ici $x=0$ et $x=1$).
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsection{Recherche de solutions r\'eguli\`eres}
+
+Le but de cette section est de mettre en \'evidence la forme que peuvent avoir
+les solutions du probl\`eme~\eqref{eq:chaleur_Dir}.
+Pour cela, nous supposerons que les donn\'ees $f$ et $u_0$ sont suffisamment r\'eguli\`eres.
+On traitera d'abord le cas du domaine $\Omega = (0,1)$, puis nous \'etudierons les solutions
+du probl\`eme sur la droite r\'eelle $\Omega = \R$.
+
+!! parler de l'approche historique par Fourier !!
+
+!! parler aussi de s\'eparation des variables !! --- C'est \'ecrit dans le programme officiel !!
+
+%%%%%%%%%%%%%%%%
+\subsubsection{Cas du domaine born\'e $\Omega = (0,1)$}
+
+Le but de cette section est de construire une solution explicite
+au probl\`eme~\eqref{eq:chaleur_Dir}.
+Nous commen\c{c}ons tout d'abord par appliquer la m\'ethode de s\'eparation des variables.
+On cherche donc une solution de la forme
+$u(t,x) = \Phi(t) \Psi(x)$ o\`u $\Phi$ et $\Psi$ sont des fonctions \`a d\'eterminer.
+Pour simplifier nous supposons que $f$ est nul, on a alors $\Phi'(t) \Psi(x) = \Phi(t) \Psi''(x)$.
+On pourrait se passer de cette hypoth\`ese (voir par exemple le texte B1 de la session 2006).
+
+
+Tant que les fonctions $\Phi$ et $\Psi$ ne s'annulent pas, on peut \'ecrire
+$\frac{\Phi'(t)}{\Phi(t)} = \frac{\Psi''(x)}{\Psi(x)}$.
+\'Etant donn\'e que le premier terme d\'epend uniquement de $t$
+et le second uniquement de $x$, on peut dire que ces deux termes sont constants.
+On suppose que cette constante est non nulle (sinon on a une solution
+identiquement nulle).
+Pour satisfaire les conditions de Dirichlet, on impose aussi $\Psi(0) = \Psi(1) = 0$.
+
+
+Les fonctions $\Phi$ et $\Psi$ v\'erifient donc
+\begin{align*}
+  \Phi'(t)
+  &= K \Phi(t) , \quad 0 \leq t \leq T,
+  \\
+  \Psi''(x)
+  &= K \Psi(x) , \quad 0 \leq x \leq 1, \quad
+  \Psi(0)
+  = 0 , \quad
+  \Psi(1)
+  = 0 .
+\end{align*}
+La fonction $\Phi$ vaut donc $\Phi(t) = e^{K t}$. Discutons maintenant de $\Psi$ et du signe de $K$.
+
+Si $K>0$, alors $\Psi(x) = a e^{\sqrt{K} x} + b e^{- \sqrt{K} x}$.
+Les conditions aux limites donnent
+$a+b=0$ et $a(e^{\sqrt{K}} - e^{-\sqrt{K}}) = 0$.
+La seule solution est donc la solution nulle.
+
+
+On suppose maintenant $K < 0$.
+Dans ce cas, $\Psi(x) = a e^{i\sqrt{|K|} x} + b e^{- i\sqrt{|K|} x}$.
+Les conditions aux limites donnent alors $a + b = 0$
+et $a \sin(\sqrt{|K|}) = 0$.
+La seule fa\c{c}on d'avoir une solution non identiquement nulle
+est d'imposer $\sin(\sqrt{|K|}) = 0$ et donc de prendre $K = - \pi^2 k^2$ avec $k \in \Z^*$
+(rappelons qu'on a suppos\'e $K<0$).
+On remarque ainsi
+que les fonctions de la forme $u(t,x) = \sin(k \pi x) e^{-k^2 \pi^2 t}$
+v\'erifient le probl\`eme~\eqref{eq:chaleur_Dir} (avec $f = 0$ et $u_0(x) = \sin(k \pi x)$).
+
+
+Nous venons de trouver des solutions pour des donn\'ees initiales sous la forme particuli\`ere
+$u_0(x) = \sin(k \pi x)$.
+Pour g\'en\'eraliser ce raisonnement \`a d'autres donn\'ees initiales, nous allons maintenant
+chercher des solutions sous la forme d'une s\'erie de Fourier dont chaque terme
+sera de la forme de la solution particuli\`ere trouv\'ee pr\'ec\'edemment.
+
+On suppose que la donn\'ee initiale $u_0$ est $C^2([0,1])$ avec $u_0(0) = u_0(1) = 0$.
+On note $U_0$ la fonction d\'efinie sur $[-1,1]$ par
+\begin{align*}
+  U_0(x) =
+  \begin{cases}
+    u_0(x) \qquad \text{si } x \in [0,1] ,
+    \\
+    -u_0(-x) \qquad \text{sinon} .
+  \end{cases}
+\end{align*}
+On prolonge \'egalement $U_0$ sur $\R$ par $2$-p\'eriodicit\'e.
+La fonction obtenue est $C^1(\R)$.
+D'apr\`es le th\'eor\`eme de Dirichlet, cette fonction est donc \'egale \`a 
+sa s\'erie de Fourier (qui converge).
+De plus, comme $U_0$ est impaire, cette s\'erie de Fourier ne comprend que 
+des sinus.
+
+Donc, en particulier, sur $[0,1]$ on a 
+\begin{align*}
+  u_0(x) = \sum_{k \in \N^*} b_k \sin(k \pi x) ,
+\end{align*}
+avec
+\begin{align*}
+  b_k
+  = \int_{-1}^1 U_0(x) \sin(k \pi x) \deriv x 
+  = 2 \int_{0}^1 u_0(x) \sin(k \pi x) \deriv x .
+\end{align*}
+On obtient une autre expression de $b_k$ par deux int\'egrations par parties
+(et on utilise $u_0 \in C^2([0,1])$)
+\begin{align*}
+  b_k
+  = \dfrac{2}{k \pi} \int_{0}^1 u_0'(x) \cos(k \pi x) \deriv x
+  = \dfrac{-2}{k^2 \pi^2} \int_{0}^1 u_0''(x) \sin(k \pi x) \deriv x .
+\end{align*}
+Cette derni\`ere expression permet de donner la majoration suivante sur la valeur
+des coefficients $b_k$
+\begin{align*}
+  | b_k | \leq \frac{C}{k^2} ,
+\end{align*}
+avec $C > 0$ une constante ind\'ependante de $k$.
+Pour $t \geq 0$, on a $e^{-k^2 \pi^2 t} \leq 1$, la s\'erie 
+$u(t,x) = \sum_{k\in\N^*} b_k \sin(k \pi x) e^{- k^2 \pi^2 t}$ est donc normalement
+convergente sur $[0,T] \times [0,1]$.
+
+De plus, pour $0 < t$, $e^{-k^2 \pi^2 t} < 1$, la s\'erie
+$\sum_{k\in\N^*} - k^2 \pi^2 b_k \sin(k \pi x) e^{- k^2 \pi^2 t}$ est donc normalement
+convergente sur $[a,T] \times [0,1]$ pour tout $a>0$.
+La fonction $u$ est donc d\'erivable par rapport \`a la variable $t$
+et sa d\'eriv\'ee est donn\'ee par
+\begin{align*}
+  \dfrac{\partial u}{\partial t} (t,x) 
+  = - \sum_{k \in \N^*} k^2 \pi^2 b_k \sin(k \pi x) e^{-k^2 \pi^2 t} .
+\end{align*}
+On peut \'egalement montrer que $u$ est d\'erivable deux fois par rapport
+\`a la variable $x$ et que cette d\'eriv\'ee seconde \`a la m\^eme
+valeur que la d\'eriv\'ee premi\`ere en $t$.
+Cette s\'erie de Fourier v\'erifie donc l'\'equation de la chaleur.
+
+
+Enfin, en utilisant des arguments pr\'esent\'es dans la section~\ref{subsec:chaleur_prop},
+on peut montrer que cette solution est unique.
+
+Nous avons prouv\'e le th\'eor\`eme suivant.
+\begin{theorem}
+  Si $u_0 \in C^2([0,1])$ v\'erifie $u_0(0) = u_0(1) = 0$ et si $f=0$,
+  alors le probl\`eme~\eqref{eq:chaleur_Dir} admet une unique solution.
+  De plus, cette solution est donn\'ee explicitement par
+  \begin{align*}
+    u(t,x) = \sum_{k\in\N^*} b_k \sin(k \pi x) e^{- k^2 \pi^2 t} ,
+  \end{align*}
+  avec
+  $b_k = 2 \int_{0}^1 u_0(x) \sin(k \pi x) \deriv x$.
+
+\end{theorem}
+
+
+
+
+%%%%%%%%%%%%%%%%
+\subsubsection{Probl\`eme dans $\R$ entier : 
+  utilisation de la transform\'ee de Fourier}
+
+
+On s'int\'eresse ici au probl\`eme
+\begin{equation}
+  \label{eq:chaleur_R}
+  % \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
+  \left\{
+    \begin{array}{l l}
+      \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = f 
+      &\dans (0,T) \times \R ,
+      \\
+      u(0,.) = u_0 
+      & \dans \R .
+    \end{array}
+  \right.
+\end{equation}
+Notons que comme le domaine spatial $\R$ n'a pas de bord, l'\'equation 
+n'a pas de conditions aux limites.
+
+
+!! ENONCER UN THEOREME D'EXISTENCE ET UNICITE !!
+
+
+On peut utiliser la transform\'ee de Fourier de $u$ par rapport \`a $x$ 
+pour r\'esoudre ce probl\`eme. On la note
+\begin{align*}
+  \calF(u)(t,\omega) := \hu(t,\omega) := \int_{\R} e^{- i \omega x} u(t,x) \deriv x .
+\end{align*}
+On notera la transform\'ee de Fourier inverse
+\begin{align*}
+  \calF^{-1}(v)(t,x) = \dfrac{1}{2\pi} \int_{\R} e^{2 i \omega x} v(t,\omega) \deriv \omega .
+\end{align*}
+
+
+!! HYPOTHESES DE LA TRANSFORMEE DE FOURIER ??
+
+
+En utilisant les propri\'et\'es classiques de la transform\'ee de Fourier,
+on montre que $\hu(t,\omega)$ est solution du probl\`eme
+\begin{align*}
+  \dfrac{\partial \hu}{\partial t}(t,\omega) + \omega^2 \hu(t , \omega) = \hf(t,\omega) 
+  & \dans (0,T) \times \R ,
+  \\
+  \hu(0 , \omega) = \hu_0(\omega)
+  & \dans \R .
+\end{align*}
+Ainsi 
+\begin{align*}
+  \hu(t,\omega) = \hu_0(\omega) e^{- \omega^2 t} 
+  + \int_0^t \hf(s,\omega) e^{- \omega^2 (t - s)} \deriv s . 
+\end{align*}
+Apr\`es quoi, on applique la transform\'ee de Fourier inverse pour trouver
+une solution \`a l'\'equation \eqref{eq:chaleur_R}.
+En utilisant les propri\'et\'es de la transform\'ee de Fourier, on obtient donc
+\begin{align*}
+  u(t,x) 
+  =& \calF^{-1}(\hu_0) * \calF^{-1} (e^{-\omega^2 t})
+  + \calF^{-1} (\int_0^t \hf(s,\omega) e^{- \omega^2(t-s)} \deriv s)
+  \\
+  =& (u_0 * G(t,.))(t,x) + ...
+\end{align*}
+avec $G(t,x) = \dfrac{1}{2 \pi} \sqrt{\dfrac{\pi}{t}} e^{- \frac{x^2}{4t}}$
+le noyau de la chaleur et $*$ le produit de convolution.
+Pour rappel
+$(u_0 * G(t,.))(t,x) := \int_{\R} u_0(y) G(t,x-y) \deriv y$.
+
+\begin{exercise}
+  Pour $t > 0$, calculer $\calF^{-1}(e^{-\omega^2 t})$.
+
+  Indice : utiliser des int\'egrations par parties et les propri\'et\'es de la transform\'ee
+  de Fourier pour prouver que pour tout $t > 0$, $x \mapsto \calF^{-1}(e^{-\omega^2 t})$ est solution
+  d'une EDO d'ordre 2.
+  Prouver que le probl\`eme de Cauchy v\'erifi\'e par cette fonction admet une unique solution
+  et v\'erifier que le noyau de la chaleur est cette unique solution.
+\end{exercise}
+
+% \begin{lemma}
+%   Il existe des solutions \`a \eqref{eq:chaleur_R} qui n'appartiennent pas 
+%   \`a $L^2(\R)$.
+% \end{lemma}
+
+
+!! propagation de l'info \`a vitesse infinie !!
+(+exo num\'erique avec version sch\'ema implicite/explicite)
+
+
+
+!! NON UNICITE DANS $\R$ ?? -- VOIR POLY MIRONESCU !! --- C'est peut-\^etre trop compliqu\'e !!
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
 \label{subsec:chaleur_prop}
@@ -2717,198 +2957,6 @@ du sup en espace de la donn\'ee initiale et du sup en temps des donn\'ees de Dir
 
 
 !! Est-ce que \c{c}a ne serait pas plus naturel de traiter d'abord les solutions fortes ??
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\subsection{Analyse de Fourier}
-
-!! chapeau !!
-
-!! parler de l'approche historique par Fourier !!
-
-!! parler aussi de s\'eparation des variables !! --- C'est \'ecrit dans le programme officiel !!
-
-%%%%%%%%%%%%%%%%
-\subsubsection{Recherche d'une solution sous la forme de s\'eries de Fourier}
-
-On cherche une solution r\'eguli\`ere par la m\'ethode de s\'eparation des variables.
-On cherche donc une solution de la forme
-$u(t,x) = \Phi(t) \Psi(x)$.
-Si $f$ est nul, alors on a $\Phi'(t) \Psi(x) = \Phi(t) \Psi''(x)$.
-Tant que ces fonctions sont non nulles, on peut \'ecrire
-$\frac{\Phi'(t)}{\Phi(t)} = \frac{\Psi''(x)}{\Psi(x)}$.
-\'Etant donn\'e que le premier terme d\'epend uniquement de $t$
-et le second uniquement de $x$, on peut dire que ces deux termes sont constants.
-On suppose que cette constante est non nulle (sinon on a une solution
-identiquement nulle).
-
-
-On a donc les \'equations
-$\Phi'(t) = K \Phi(t)$ et $\Psi''(x) = K \Psi(x)$.
-Si $K>0$, alors $\Psi(x) = a e^{\sqrt{K} x} + b e^{- \sqrt{K} x}$.
-Les conditions aux limites donnent
-$a+b=0$ et $a(e^{\sqrt{K}} - e^{-\sqrt{K}}) = 0$.
-La seule solution est donc la solution nulle.
-
-
-On suppose maintenant $K < 0$.
-Dans ce cas, $\Psi(x) = a e^{i\sqrt{|K|} x} + b e^{- i\sqrt{|K|} x}$.
-Les conditions aux limites donnent alors $a + b = 0$
-et $a \sin(\sqrt{|K|}) = 0$.
-La seule fa\c{c}on d'avoir une solution non identiquement nulle
-est de prendre $K = - \pi^2 k^2$ avec $k \in \Z^*$.
-
-
-On remarque r\'eciproquement
-que les fonctions de la forme $\sin(k \pi x) e^{-k^2 \pi^2 t}$
-v\'erifient l'\'equation de la chaleur (avec $f = 0$).
-L'approche que nous allons pr\'esenter consiste donc \`a 
-chercher une solution au probl\`eme \eqref{eq:chaleur_Dir} sous la forme
-d'une s\'erie de ces termes.
-
-On se place ici dans le cas de conditions de Dirichlet homog\`enes
-$\alpha = \beta = 0$ et sans terme source $f=0$.
-On suppose que la donn\'ee initiale $u_0$ est $C^2([0,1])$ avec $u_0(0) = u_0(1) = 0$.
-On note $U_0$ la fonction d\'efinie sur $[-1,1]$ par
-\begin{align*}
-  U_0(x) =
-  \begin{cases}
-    u_0(x) \qquad \text{si } x \in [0,1] ,
-    \\
-    -u_0(-x) \qquad \text{sinon} .
-  \end{cases}
-\end{align*}
-On prolonge \'egalement $U_0$ sur $\R$ par $2$-p\'eriodicit\'e.
-La fonction obtenue est $C^1(\R)$.
-D'apr\`es le th\'eor\`eme de Dirichlet, cette fonction est donc \'egale \`a 
-sa s\'erie de Fourier (qui converge).
-De plus, comme $U_0$ est impaire, cette s\'erie de Fourier ne comprend que 
-des sinus.
-
-Donc, en particulier, sur $[0,1]$ on a 
-\begin{align*}
-  u_0(x) = \sum_{k \in \N^*} b_k \sin(k \pi x) ,
-\end{align*}
-avec
-\begin{align*}
-  b_k = \dfrac{2}{k \pi} \int_{0}^1 u_0'(x) \cos(k \pi x) \deriv x .
-\end{align*}
-Comme, pour $t \geq 0$, on a $e^{-k^2 \pi^2 t} \leq 1$, la s\'erie 
-$u(t,x) = \sum_{k\in\N^*} b_k \sin(k \pi x) e^{- k^2 \pi^2 t}$ est normalement
-convergente sur tout intervalle de la forme
-$[a,T] \times [0,1]$ pour tout $a > 0$.
-La fonction $u$ est donc d\'erivable par rapport \`a la variable $t$
-et sa d\'eriv\'ee est donn\'ee par
-\begin{align*}
-  \dfrac{\partial u}{\partial t} (t,x) 
-  = - \sum_{k \in \N^*} k^2 \pi^2 b_k \sin(k \pi x) e^{-k^2 \pi^2 t} .
-\end{align*}
-On peut \'egalement montrer que $u$ est d\'erivable deux fois par rapport
-\`a la variable $x$ et que cette d\'eriv\'ee seconde \`a la m\^eme
-valeur que la d\'eriv\'ee premi\`ere en $t$.
-Cette s\'erie de Fourier v\'erifie donc l'\'equation de la chaleur.
-
-Pour plus de d\'etails, on pourra se reporter aux pages 157--158
-du livre de Brigitte Lucquin.
-
-!! parler du ph\'enom\`ene de Gibbs + figure + exo num\'erique !!
-
-!! v\'erifier th\'eor\`emes sur les s\'eries de Fourier
-+ les int\'egrer au cours !!
-
-
-
-
-%%%%%%%%%%%%%%%%
-\subsubsection{Probl\`eme dans $\R$ entier : 
-  utilisation de la transform\'ee de Fourier}
-
-
-On s'int\'eresse ici au probl\`eme
-\begin{equation}
-  \label{eq:chaleur_R}
-  % \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
-  \left\{
-    \begin{array}{l l}
-      \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = f 
-      &\dans (0,T) \times \R ,
-      \\
-      u(0,.) = u_0 
-      & \dans \R .
-    \end{array}
-  \right.
-\end{equation}
-Notons que comme le domaine spatial $\R$ n'a pas de bord, l'\'equation 
-n'a pas de conditions aux limites.
-
-
-!! ENONCER UN THEOREME D'EXISTENCE ET UNICITE !!
-
-
-On peut utiliser la transform\'ee de Fourier de $u$ par rapport \`a $x$ 
-pour r\'esoudre ce probl\`eme. On la note
-\begin{align*}
-  \calF(u)(t,\omega) := \hu(t,\omega) := \int_{\R} e^{- i \omega x} u(t,x) \deriv x .
-\end{align*}
-On notera la transform\'ee de Fourier inverse
-\begin{align*}
-  \calF^{-1}(v)(t,x) = \dfrac{1}{2\pi} \int_{\R} e^{2 i \omega x} v(t,\omega) \deriv \omega .
-\end{align*}
-
-
-!! HYPOTHESES DE LA TRANSFORMEE DE FOURIER ??
-
-
-En utilisant les propri\'et\'es classiques de la transform\'ee de Fourier,
-on montre que $\hu(t,\omega)$ est solution du probl\`eme
-\begin{align*}
-  \dfrac{\partial \hu}{\partial t}(t,\omega) + \omega^2 \hu(t , \omega) = \hf(t,\omega) 
-  & \dans (0,T) \times \R ,
-  \\
-  \hu(0 , \omega) = \hu_0(\omega)
-  & \dans \R .
-\end{align*}
-Ainsi 
-\begin{align*}
-  \hu(t,\omega) = \hu_0(\omega) e^{- \omega^2 t} 
-  + \int_0^t \hf(s,\omega) e^{- \omega^2 (t - s)} \deriv s . 
-\end{align*}
-Apr\`es quoi, on applique la transform\'ee de Fourier inverse pour trouver
-une solution \`a l'\'equation \eqref{eq:chaleur_R}.
-En utilisant les propri\'et\'es de la transform\'ee de Fourier, on obtient donc
-\begin{align*}
-  u(t,x) 
-  =& \calF^{-1}(\hu_0) * \calF^{-1} (e^{-\omega^2 t})
-  + \calF^{-1} (\int_0^t \hf(s,\omega) e^{- \omega^2(t-s)} \deriv s)
-  \\
-  =& (u_0 * G(t,.))(t,x) + ...
-\end{align*}
-avec $G(t,x) = \dfrac{1}{2 \pi} \sqrt{\dfrac{\pi}{t}} e^{- \frac{x^2}{4t}}$
-le noyau de la chaleur et $*$ le produit de convolution.
-Pour rappel
-$(u_0 * G(t,.))(t,x) := \int_{\R} u_0(y) G(t,x-y) \deriv y$.
-
-\begin{exercise}
-  Pour $t > 0$, calculer $\calF^{-1}(e^{-\omega^2 t})$.
-
-  Indice : utiliser des int\'egrations par parties et les propri\'et\'es de la transform\'ee
-  de Fourier pour prouver que pour tout $t > 0$, $x \mapsto \calF^{-1}(e^{-\omega^2 t})$ est solution
-  d'une EDO d'ordre 2.
-  Prouver que le probl\`eme de Cauchy v\'erifi\'e par cette fonction admet une unique solution
-  et v\'erifier que le noyau de la chaleur est cette unique solution.
-\end{exercise}
-
-% \begin{lemma}
-%   Il existe des solutions \`a \eqref{eq:chaleur_R} qui n'appartiennent pas 
-%   \`a $L^2(\R)$.
-% \end{lemma}
-
-
-!! propagation de l'info \`a vitesse infinie !!
-(+exo num\'erique avec version sch\'ema implicite/explicite)
-
-
-
-!! NON UNICITE DANS $\R$ ?? -- VOIR POLY MIRONESCU !! --- C'est peut-\^etre trop compliqu\'e !!
 
 
 
