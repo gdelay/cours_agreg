@@ -2568,10 +2568,6 @@ Pour cela, nous supposerons que les donn\'ees $f$ et $u_0$ sont suffisamment r\'
 On traitera d'abord le cas du domaine $\Omega = (0,1)$, puis nous \'etudierons les solutions
 du probl\`eme sur la droite r\'eelle $\Omega = \R$.
 
-!! parler de l'approche historique par Fourier !!
-
-!! parler aussi de s\'eparation des variables !! --- C'est \'ecrit dans le programme officiel !!
-
 %%%%%%%%%%%%%%%%
 \subsubsection{Cas du domaine born\'e $\Omega = (0,1)$}
 
@@ -2703,36 +2699,32 @@ Nous avons prouv\'e le th\'eor\`eme suivant.
   \end{align*}
   avec
   $b_k = 2 \int_{0}^1 u_0(x) \sin(k \pi x) \deriv x$.
-
 \end{theorem}
 
 
 
 
 %%%%%%%%%%%%%%%%
-\subsubsection{Probl\`eme dans $\R$ entier : 
-  utilisation de la transform\'ee de Fourier}
+\subsubsection{Cas de la droite r\'eelle $\Omega = \R$}
 
 
 On s'int\'eresse ici au probl\`eme
 \begin{equation}
   \label{eq:chaleur_R}
-  % \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
+  \text{Trouver $u : (0,T) \times (0,1) $ v\'erifiant  }
   \left\{
     \begin{array}{l l}
       \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = f 
       &\dans (0,T) \times \R ,
       \\
       u(0,.) = u_0 
-      & \dans \R .
+      & \dans \R ,
     \end{array}
   \right.
 \end{equation}
+o\`u $f$ et $u_0$ sont donn\'es.
 Notons que comme le domaine spatial $\R$ n'a pas de bord, l'\'equation 
 n'a pas de conditions aux limites.
-
-
-!! ENONCER UN THEOREME D'EXISTENCE ET UNICITE !!
 
 
 On peut utiliser la transform\'ee de Fourier de $u$ par rapport \`a $x$ 
@@ -2742,14 +2734,19 @@ pour r\'esoudre ce probl\`eme. On la note
 \end{align*}
 On notera la transform\'ee de Fourier inverse
 \begin{align*}
-  \calF^{-1}(v)(t,x) = \dfrac{1}{2\pi} \int_{\R} e^{2 i \omega x} v(t,\omega) \deriv \omega .
+  \calF^{-1}(v)(t,x) := \dfrac{1}{2\pi} \int_{\R} e^{i \omega x} v(t,\omega) \deriv \omega .
 \end{align*}
 
+Ces transformations peuvent \^etre appliqu\'ees \`a des fonctions $L^1(\R)$ en espace.
+On rappelle que si, de plus, $u$ est d\'erivable par rapport \`a $x$ et de d\'eriv\'ee
+int\'egrable alors $\calF(\partial_x u)(t,\omega) = i \omega \calF(u)(t,\omega)$.
 
-!! HYPOTHESES DE LA TRANSFORMEE DE FOURIER ??
+La d\'efinition de la transform\'ee de Fourier et de son inverse peut \^etre \'etendue
+aux fonctions de $L^2(\R)$. De plus, si $u \in L^2(\R)$, alors $\hu \in L^2(\R)$.
 
-
-En utilisant les propri\'et\'es classiques de la transform\'ee de Fourier,
+Dans la suite, on suppose que $f \in L^2(\R)$
+et que $u \in L^2(\R)$ est d\'erivable par rapport \`a $x$ et v\'erifie
+$\partial_x u \in L^2(\R)$,
 on montre que $\hu(t,\omega)$ est solution du probl\`eme
 \begin{align*}
   \dfrac{\partial \hu}{\partial t}(t,\omega) + \omega^2 \hu(t , \omega) = \hf(t,\omega) 
@@ -2758,11 +2755,15 @@ on montre que $\hu(t,\omega)$ est solution du probl\`eme
   \hu(0 , \omega) = \hu_0(\omega)
   & \dans \R .
 \end{align*}
-Ainsi 
+Il s'agit d'une famille d'EDO lin\'eaires index\'ee par $\omega$.
+Si $f$ est continue alors, d'apr\`es le th\'eor\`eme de Cauchy--Lipschitz global,
+chacune de ces EDO admet une unique solution donn\'ee par
 \begin{align*}
   \hu(t,\omega) = \hu_0(\omega) e^{- \omega^2 t} 
   + \int_0^t \hf(s,\omega) e^{- \omega^2 (t - s)} \deriv s . 
 \end{align*}
+
+\'Etant donn\'e que $u(t,.) \in L^2(\R)$, on a $\hu(t,.) \in L^2(\R)$.
 Apr\`es quoi, on applique la transform\'ee de Fourier inverse pour trouver
 une solution \`a l'\'equation \eqref{eq:chaleur_R}.
 En utilisant les propri\'et\'es de la transform\'ee de Fourier, on obtient donc
@@ -2771,12 +2772,27 @@ En utilisant les propri\'et\'es de la transform\'ee de Fourier, on obtient donc
   =& \calF^{-1}(\hu_0) * \calF^{-1} (e^{-\omega^2 t})
   + \calF^{-1} (\int_0^t \hf(s,\omega) e^{- \omega^2(t-s)} \deriv s)
   \\
-  =& (u_0 * G(t,.))(t,x) + ...
+  =& (u_0 * G(t,.))(t,x) + \int_{\R} \int_0^t G(t-s, x-y) f(s,y) \deriv s \deriv y ,
 \end{align*}
 avec $G(t,x) = \dfrac{1}{2 \pi} \sqrt{\dfrac{\pi}{t}} e^{- \frac{x^2}{4t}}$
 le noyau de la chaleur et $*$ le produit de convolution.
 Pour rappel
 $(u_0 * G(t,.))(t,x) := \int_{\R} u_0(y) G(t,x-y) \deriv y$.
+
+
+On a donc \'etabli le r\'esultat suivant.
+\begin{theorem}
+  Supposons que $u \in L^2(0,T;H^2(\R)) \cap H^1(0,T;L^2(\R))$ est solution
+  du probl\`eme~\eqref{eq:chaleur_R}.
+  Alors $u(t,x) = (u_0 * G(t,.))(t,x) + \int_{\R} \int_0^t G(t-s, x-y) f(s,y) \deriv s \deriv y$,
+  avec $G(t,x) = \dfrac{1}{2 \pi} \sqrt{\dfrac{\pi}{t}} e^{- \frac{x^2}{4t}}$.
+\end{theorem}
+
+
+\begin{remark}
+  A $t>0$ fix\'e, $G(t,.)$ est une Gaussienne.
+  Quand $t \to 0^+$, le pic de la Gaussienne devient singulier et on retrouve une masse de Dirac.
+\end{remark}
 
 \begin{exercise}
   Pour $t > 0$, calculer $\calF^{-1}(e^{-\omega^2 t})$.
@@ -2787,21 +2803,6 @@ $(u_0 * G(t,.))(t,x) := \int_{\R} u_0(y) G(t,x-y) \deriv y$.
   Prouver que le probl\`eme de Cauchy v\'erifi\'e par cette fonction admet une unique solution
   et v\'erifier que le noyau de la chaleur est cette unique solution.
 \end{exercise}
-
-% \begin{lemma}
-%   Il existe des solutions \`a \eqref{eq:chaleur_R} qui n'appartiennent pas 
-%   \`a $L^2(\R)$.
-% \end{lemma}
-
-
-!! propagation de l'info \`a vitesse infinie !!
-(+exo num\'erique avec version sch\'ema implicite/explicite)
-
-
-
-!! NON UNICITE DANS $\R$ ?? -- VOIR POLY MIRONESCU !! --- C'est peut-\^etre trop compliqu\'e !!
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
