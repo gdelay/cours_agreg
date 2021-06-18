@@ -2570,6 +2570,7 @@ du probl\`eme sur la droite r\'eelle $\Omega = \R$.
 
 %%%%%%%%%%%%%%%%
 \subsubsection{Cas du domaine born\'e $\Omega = (0,1)$}
+\label{subsubsec:chal_born}
 
 Le but de cette section est de construire une solution explicite
 au probl\`eme~\eqref{eq:chaleur_Dir}.
@@ -2841,48 +2842,27 @@ On a donc \'etabli le r\'esultat suivant.
 \subsection{Propri\'et\'es g\'en\'erales}
 \label{subsec:chaleur_prop}
 
+!! Voir si on dit qu'on interprete l'equation au sens des distributions ...
 
-!! Ca serait peut-\^etre plus intelligent de mettre cette proposition \`a la fin de la section !!
-
-!! Faut-il introduire un param\`etre $\nu$ ??
-
-!! Est-ce qu'il ne faudrait pas s\'eparer solutions faibles et solutions fortes ??
-
-On peut montrer l'existence d'une unique solution faible au probl\`eme de Chaleur-Dirichlet.
-
-
-\begin{proposition}
-  \label{prop:chal_sol_faibles}
-  Soit $f \in L^2(0,T;L^2(0,1))$ et $u_0 \in L^2(0,1)$.
-  Alors il existe une unique solution $u$ au probl\`eme~\eqref{eq:chaleur_Dir}
-  dans $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$.
-\end{proposition}
-Les arguments de la preuve de cette proposition sont hors programme.
-Cette preuve est donc propos\'ee en annexe, en Section~\ref{subsec:chal_sol_faibles}.
-
-Notons tout de m\^eme que nous avons un gain de r\'egularit\'e de la solution
-dans $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$
-par rapport au second membre qui est dans $L^2(0,T;L^2(0,1))$
-(ce gain de r\'egularit\'e est plus important en espace qu'en temps).
-Notons \'egalement que le fait que la solution soit dans $C^0([0,T];L^2(0,1))$
-est en accord avec la donn\'ee initiale qui est dans $L^2(0,1)$.
-
-La proposition suivante prouve la d\'ependance continue de la solution
-par rapport aux donn\'ees.
-Notons que cette proposition est ind\'ependante de la
-proposition~\ref{prop:chal_sol_faibles}.
-
+On consid\`ere \`a nouveau le domaine born\'e $\Omega := (0,1)$
+et le probl\`eme~\eqref{eq:chaleur_Dir}.
+On peut montrer qu'une solution d\'epend contin\^ument des donn\'ees $u_0$ et $f$.
 \begin{proposition}
   \label{prop:chaleur_continuite_donnees}
-  Soit $u \in C^0([0,T];L^2(0,1))$ une solution de \eqref{eq:chaleur_Dir}.
+  Soit $u \in C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$ une solution de~\eqref{eq:chaleur_Dir}.
   Si $u_0 \in L^2(0,1)$ et $f \in L^2(0,T; L^2(0,1))$,
   alors 
-  \begin{align*}
-    \sup_{t \in [0,T]} \| u(t,.) \|_{L^2(0,1)} \leq \| u_0 \|_{L^2(0,1)} + \| f \|_{L^2(]0,T[ \times ]0,1[)} .
-  \end{align*}
+  \begin{align}
+    \label{eq:chaleur_continuite_donnees}
+    \sup_{t \in [0,T]} \| u(t,.) \|_{L^2(0,1)} + \frac12 \| \partial_x u \|_{L^2(0,T;L^2(0,1))}
+    \leq \| u_0 \|_{L^2(0,1)} + \| f \|_{L^2(]0,T[ \times ]0,1[)} .
+  \end{align}
 \end{proposition}
 
 \begin{proof}
+  On suppose tout d'abord la fonction $u$ r\'eguli\`ere, le r\'esultat final
+  sera obtenu par densit\'e.
+  
   Multiplions la premi\`ere ligne de \eqref{eq:chaleur_Dir} par $u$
   et int\'egrons en espace sur le domaine $\Omega = (0,1)$,
   on obtient
@@ -2909,55 +2889,106 @@ proposition~\ref{prop:chal_sol_faibles}.
   $\| u (t,\cdot) \|_{L^2(\Omega)}^2 \leq \| \dfrac{\partial u}{\partial x} (t,\cdot) \|_{L^2(\Omega)}^2$.
   On a donc 
   \begin{align*}
-    \dfrac{\deriv}{\deriv t} \| u(t,\cdot) \|_{L^2(\Omega)}^2 \leq \| f (t,\cdot) \|_{L^2(\Omega)}^2 .
+    \dfrac{\deriv}{\deriv t} \| u(t,\cdot) \|_{L^2(\Omega)}^2
+    + \frac12 \left\| \dfrac{\partial u}{\partial x} (t,\cdot) \right\|_{L^2(\Omega)}^2
+    \leq \| f (t,\cdot) \|_{L^2(\Omega)}^2 .
   \end{align*}
   On int\`egre selon $t$, ce qui donne
   \begin{align*}
-    \| u(t,\cdot) \|_{L^2(\Omega)}^2 \leq \| u_0 \|_{L^2(\Omega)}^2 + \| f \|_{L^2((0,t) \times \Omega)}^2 .
+    \| u(t,\cdot) \|_{L^2(\Omega)}^2 + \frac12 \| \partial_x u \|_{L^2(0,t;L^2(0,1))}^2
+    \leq \| u_0 \|_{L^2(\Omega)}^2 + \| f \|_{L^2((0,t) \times \Omega)}^2 .
   \end{align*}
-  On obtient le r\'esultat en prenant le $\sup$ sur $t$.
+  On obtient la borne sur $\sup_{t \in [0,T]} \| u(t,.) \|_{L^2(0,1)}$ en prenant le $\sup$ sur $t$
+  et la borne sur $\frac12 \| \partial_x u \|_{L^2(0,T;L^2(0,1))}^2$ en prenant $t=T$.
 \end{proof}
 
+
+On peut utiliser ce r\'esultat pour montrer l'existence d'une unique solution faible
+au probl\`eme de Chaleur-Dirichlet.
+
+
+\begin{proposition}
+  \label{prop:chal_sol_faibles}
+  Le probl\`eme~\eqref{eq:chaleur_Dir} est bien pos\'e:
+  si $f \in L^2(0,T;L^2(0,1))$ et $u_0 \in L^2(0,1)$,
+  alors il existe une unique solution $u$
+  dans $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$
+  et cette solution d\'epend contin\^ument des donn\'ees d'apr\`es
+  l'estim\'ee~\eqref{eq:chaleur_continuite_donnees}.
+\end{proposition}
+L'unicit\'e et la continuit\'e par rapport aux donn\'ees sont une cons\'equence directe
+de la Proposition~\ref{prop:chaleur_continuite_donnees}
+(pour l'unicit\'e: consid\'erer deux solutions, leur diff\'erence v\'erifie~\eqref{eq:chaleur_Dir}
+avec des donn\'ees nulles, d'apr\`es~\eqref{eq:chaleur_continuite_donnees}
+cette diff\'erence est nulle).
+L'existence est plus d\'elicate et on ne la pr\'esentera pas ici.
+Le lecteur currieux peut regarder la Section~\ref{subsec:chal_sol_faibles}.
+
+Notons que nous avons un gain de r\'egularit\'e de la solution
+dans $C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$
+par rapport au second membre qui est dans $L^2(0,T;L^2(0,1))$
+(ce gain de r\'egularit\'e est plus important en espace qu'en temps).
+Notons \'egalement que le fait que la solution soit dans $C^0([0,T];L^2(0,1))$
+est en accord avec la donn\'ee initiale qui est dans $L^2(0,1)$.
+
+
+On s'int\'eresse maintenant \`a la question de la r\'eversibilit\'e de l'\'equation
+de la chaleur. On consid\`ere une solution $u$ de~\eqref{eq:chaleur_Dir}
+et $\tu(t,x) := u(T-t,x)$.
+La fonction $\tu$ v\'erifie l'\'equation de la chaleur r\'etrograde:
+\begin{equation}
+  \label{eq:chaleur_retro}
+  \text{Trouver $\tu : (0,T) \times (0,1)$ v\'erifiant }
+  \left\{
+    \begin{array}{l l}
+      -\dfrac{\partial \tu}{\partial t} - \dfrac{\partial^2 \tu}{\partial x^2} = \tf 
+      &\dans (0,T) \times (0,1) ,
+      \\
+      \tu(0,.) = u_T 
+      & \dans (0,1) ,
+      \\
+      \tu(t,0) = 0 , \quad \tu(t,1) = 0 & \forall t \in (0,T) ,
+    \end{array}
+  \right.
+\end{equation}
+o\`u $\tf(t,x) := f(T-t,x)$ et $u_T(x) := u(T,x)$.
+Ce probl\`eme est mal pos\'e, on dit alors que l'\'equation de la chaleur n'est pas r\'eversible.
+
+
+\begin{proposition}[Non r\'eversibilit\'e de l'\'equation de la chaleur]
+  Le probl\`eme~\eqref{eq:chaleur_Dir} n'est pas r\'eversible:
+  le probl\`eme~\eqref{eq:chaleur_retro} est mal pos\'e.
+\end{proposition}
+
+\begin{proof}
+  On peut montrer l'existence d'une unique solution au probl\`eme~\eqref{eq:chaleur_retro}.
+  Son caract\`ere mal pos\'e vient de la d\'ependance non continue aux donn\'ees.
+  Pour prouver cela, on va utiliser les r\'esutats de la Section~\ref{subsubsec:chal_born}.
+
+  On consid\`ere $\tf = 0$ et on suppose par l'absurde qu'il existe une constante $C>0$ telle que
+  pour toute solution $\tu$ de~\eqref{eq:chaleur_retro}, on a
+  \begin{align*}
+    \sup_{0 \leq t \leq T} \| \tu(t,.) \|_{L^2(0,1)} \leq C \| \tu(0,.) \|_{L^2(0,1)} .
+  \end{align*}
+  En adaptant le raisonnement de la Section~\ref{subsubsec:chal_born}, on peut montrer que
+  les fonctions $\tu_k (t,x) := \sin(k\pi x) e^{k^2 \pi^2 t}$ sont solution pour tout $k \in \N^*$.
+  On a $\sup_{0 \leq t \leq T} \| \tu_k(t,.) \|_{L^2(0,1)} = \frac12 e^{k^2 \pi^2 T}$ et 
+  $\| \tu(0,.) \|_{L^2(0,1)} = \frac12$. On obtient une contradiction en faisant tendre $k$
+  vers $+ \infty$.
+\end{proof}
+
+
 \begin{remark}
-  On peut utiliser la proposition~\ref{prop:chaleur_continuite_donnees}
-  pour prouver l'unicit\'e de la solution dans la
-  proposition~\ref{prop:chal_sol_faibles}.
+  La non-r\'eversibilit\'e de l'\'equation peut \^etre interpr\'et\'ee comme l'impossibilit\'e
+  pratique de retrouver la solution \`a partir de la donn\'ee finale.
+  En effet, si cette donn\'ee est, ne serait-ce qu'un peu, bruit\'ee, alors les bruits
+  ind\'esirables peuvent exploser aussi vite qu'on veut et polluer la solution.
 \end{remark}
 
-\begin{proposition}[Effet r\'egularisant de l'\'equation de la chaleur]
-  Si $u \in C^2(]0,T] \times ]0,1[)$ est solution de
-  $\dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = 0$,
-  alors $u \in C^{\infty}(]0,T] \times ]0,1[)$.
-\end{proposition}
-!! Le plus simple est de d\'eplacer cette propriete dans la section sol fortes.
-On doit ensuite pouvoir utiliser l'expression analytique de la sol
-pour prouver l'effet r\'egularisant !!
-
-!! ON PEUT CONSTRUIRE UNE PREUVE DE REGULARITE EN CHERCHANT DES SOLUTIONS REGULIERES
-(VOIR NOTES MURIEL) !! 
--- ON DOIT POUVOIR COMBINER CA AVEC LA PREUVE DE LA RECHERCHE DE SOLUTIONS FAIBLES !!
-
-Voir Figure (...) !! TODO !!
-
-
-!! VOIR COMMENT EXPRIMER LA NON-REVERSIBILIT\'E DE L'\'EQUATION !!
-
-\begin{proposition}[Non r\'eversibilit\'e de l'\'equation]
-  Le probl\`eme \eqref{eq:chaleur_Dir} n'est pas r\'eversible:
-  (...)
-\end{proposition}
-
-
-
-% \begin{remark}
-%   !! \'Energie du syst\`eme (utilis\'e aussi dans le livre de Brigitte Lucquin) !!
-%   -- Ne correspond pas \`a l'\'energie physique !!
-% \end{remark}
-
-\begin{remark}
-  La continuit\'e par rapport aux donn\'ees traduit une forme de stabilit\'e
-  (...)
-\end{remark}
+\begin{exercise}
+  L'\'equation des ondes est-elle r\'eversible ?
+  La r\'eponse est donn\'ee dans le chapitre suivant.
+\end{exercise}
 
 \begin{remark}[Conditions de Dirichlet non homog\`enes]
   On peut utiliser un rel\`evement comme dans (...) --- A DONNER EN EXERCICE !!
