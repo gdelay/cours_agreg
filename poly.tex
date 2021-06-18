@@ -2804,6 +2804,39 @@ On a donc \'etabli le r\'esultat suivant.
   et v\'erifier que le noyau de la chaleur est cette unique solution.
 \end{exercise}
 
+
+\begin{proposition}
+  Pour tout $t > 0$, pour tout $x \in \R$, on a
+  $\dfrac{\partial G}{\partial t}(t,x) - \dfrac{\partial^2 G}{\partial x^2}(t,x) = 0$.
+\end{proposition}
+
+\begin{remark}
+  En fait, on peut montrer que
+  $\dfrac{\partial G}{\partial t} - \dfrac{\partial^2 G}{\partial x^2} = \delta_{(0,0)}$
+  au sens des distributions.
+  La fonction $G$ est donc aussi appel\'ee solution \'el\'ementaire de la chaleur.
+\end{remark}
+
+\begin{proposition}[Effet r\'egularisant de la chaleur]
+  Si $f=0$ et $u_0 \in L^2(\R)$, alors $u \in C^{\infty}([a,T] \times \R)$ pour tout $a$ v\'erifiant
+  $0 < a < T$.
+\end{proposition}
+
+\begin{proof}
+  C'est une cons\'equence de $u(t,x) = (G(t,.) * u_0)(x)$,
+  $\dfrac{\deriv^n}{\deriv x^n}(G(t,.) * u_0) = \dfrac{\partial^n G}{\partial x^n}(t,.) * u_0$
+  et $G \in C^{\infty}([a,T] \times \R)$.
+\end{proof}
+
+\begin{remark}
+  L'effet r\'egularisant s'observe aussi sur un domaine born\'e.
+\end{remark}
+
+\begin{proposition}[Propagation de la chaleur \`a vitesse infinie]
+  Si $u_0 \geq 0$ a un support born\'e, alors pour tous $t > 0$ et $x \in \R$,
+  on a $u(t,x) > 0$.
+\end{proposition}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
 \label{subsec:chaleur_prop}
