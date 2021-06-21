@@ -3292,7 +3292,7 @@ Les valeurs propres de cette matrice sont donc les
 $\lambda_k = 1 - \frac{2h_t}{h_x^2}(1-\cos(\frac{k \pi}{M}))$ ($1 \leq k \leq M-1$).
 Sous la condition de CFL $2h_t \leq h_x^2$, on a $| \lambda_k | \leq 1$ et donc
 $\rho(A) \leq 1$.
-En applicant la Proposition~\ref{prop:stabL2} et le Corrolaire~\ref{corro:stability}, on
+En appliquant la Proposition~\ref{prop:stabL2} et le Corrolaire~\ref{corro:stability}, on
 \'etablit le r\'esultat suivant
 \begin{proposition}
   Le sch\'ema explicite centr\'e~\eqref{eq:chaleur_DF_exp_centre}
@@ -3334,15 +3334,16 @@ Le sch\'ema implicite centr\'e est donc d\'efini comme
 \begin{align}
   \label{eq:chaleur_DF_imp_centre}
   \left\{
-  \begin{array}{l}
-    \forall 1 \leq j \leq M-1 , 
+  \begin{array}{l l}
     u_j^0 = u_0(x_j) ,
+    &1 \leq j \leq M-1,
     \\
-    \forall 0 \leq n \leq N, u_0^n = u_M^n = 0 ,
+    u_0^n = u_M^n = 0 ,
+    &    0 \leq n \leq N, 
     \\
-    \forall 1 \leq n \leq N, \forall 1 \leq j \leq M-1,
-    u_j^{n} = u_j^{n-1} - \dfrac{\nu h_t}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n} + u_{j-1}^{n} ) 
-    + h_t f(t_n,x_j) .
+    u_j^{n} = u_j^{n-1} - \dfrac{h_t}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n} + u_{j-1}^{n} ) 
+    + h_t f(t_n,x_j) ,
+    & 1 \leq n \leq N, 1 \leq j \leq M-1 .
   \end{array}
   \right.
 \end{align}
@@ -3352,8 +3353,8 @@ Le sch\'ema peut donc \^etre \'ecrit sous la forme
   \widetilde{A} U^n = U^{n-1} + h_t \widetilde{F}^n ,
 \end{align*}
 avec $U^n$ le vecteur des $u_j^n$ pour $1 \leq j \leq N-1$ et $(\widetilde{F}^n)_j = f(t_n,x_j)$. 
-De plus, $\widetilde{A} = I - \nu h_t \widehat{A}$ o\`u $\widehat{A}$ est la matrice
-du probl\`eme de Laplace-Dirichlet (la matrice $A$ dans \eqref{eq:mat_DF_Laplacien}).
+De plus, $\widetilde{A} = I - h_t A_{\Delta}$ o\`u $A_{\Delta}$ est la matrice
+du probl\`eme de Laplace-Dirichlet (cf~\eqref{eq:mat_DF_Laplacien}).
 Pour rappel, cette matrice est exigible.
 
 
@@ -3364,56 +3365,73 @@ dans le cadre de l'\'equation de transport.
 Cependant ce calcul est bien plus difficile dans le cas pr\'esent.
 La m\'ethode utilis\'ee consiste alors \`a calculer les valeurs propres de cette matrice.
 
-Les valeurs propres de la matrice $\widetilde{A}$ sont donc de la forme
+En utilisant la Proposition~\ref{prop:VP}, les valeurs propres de la matrice $\widetilde{A}$
+sont de la forme
 \begin{align*}
-  \lambda_k = 1 + \dfrac{2 \nu h_t}{h_x^2} \left(1 - \cos \left(\frac{k \pi}{M} \right) \right)
+  \lambda_k = 1 + \dfrac{2 h_t}{h_x^2} \left(1 - \cos \left(\frac{k \pi}{M} \right) \right)
   \qquad (1 \leq k \leq M-1) .
 \end{align*}
 Toutes ces valeurs propres sont strictement positives pour tous $h_t , h_x > 0$. 
-La matrice $\widetilde{A}$ est donc inversible.
+La matrice $\widetilde{A}$ est donc inversible et le sch\'ema est bien d\'efini.
+De plus, nous avons
+\begin{equation*}
+  U^{n+1} = (\widetilde{A})^{-1} U^n + h_t (\widetilde{A})^{-1} \widetilde{F}^n .
+\end{equation*}
+Nous sommes donc bien dans le cadre de la Section~\ref{subsubsec:analyse_def}.
+Nous pouvons ainsi appliquer tous les r\'esultats de cette section
+(notamment le Th\'eore\`eme de Lax).
+
+Nous allons \'etudier la stabilit\'e de ce sch\'ema en norme $\| \cdot \|_{L^2}$.
+Pour cela, nous devons donc \'etudier les valeurs propres de la matrice associ\'ee au sch\'ema,
+i.e. la matrice $(\widetilde{A})^{-1}$.
+
+Nous avons not\'e $(\lambda_k)$ les valeurs propres de $\widetilde{A}$, notons $(V_k)$
+les vecteurs propres associ\'es. Nous avons
+$V_k = (\widetilde{A})^{-1} \widetilde{A} V_k = \lambda_k (\widetilde{A})^{-1} V_k$
+et donc les valeurs propres de $(\widetilde{A})^{-1}$ sont les
+$(\lambda_k^{-1})$. De plus, on a $\lambda_k \geq 1$ pour tout $k$.
+Donc $\rho((\widetilde{A})^{-1}) \leq 1$ et en appliquant
+la Proposition~\ref{prop:stabL2} et le Corrolaire~\ref{corro:stability}, on
+\'etablit la stabilit\'e du sch\'ema pour la norme $\| \cdot \|_{L^2}$.
+Notons que cette stabilit\'e est inconditionnelle (il n'y a pas de CFL \`a respecter),
+ce qui est attendu pour un sch\'ema implicite.
 
 
-On peut donc r\'e\'ecrire le sch\'ema num\'erique sous la forme
-(...)
+On peut \'egalement montrer que ce sch\'ema est consistant d'ordre 1 en temps
+et 2 en espace en norme $\| \cdot \|_{\infty}$ (et donc aussi en norme $\| \cdot \|_{L^2}$).
+D'apr\`es le th\'eor\`eme de Lax, ce sch\'ema converge inconditionnellement avec un ordre
+1 en temps et 2 en espace.
 
 
-
-!! est-ce qu'on ne pourrait pas faire une preuve avec la stabilit\'e en norme
-$\| . \|_{\infty}$ puis montrer que c'est beaucoup plus simple
-en norme $\| . \|_{L^2}$ ??
---> De toutes fa\c{c}ons, il va falloir introduire la norme $\|.\|_{L^2}$ !!
-
-!! La stabilit\'e du sch\'ema implicite se fait bien pour la norme
-$L^2$ mais \c{c}a a l'air bien plus difficile pour la norme $\max$ !!
-
-!! Une possibilit\'e serait d'introduire ici la notion de stabilit\'e pour une autre
-norme, en particulier la norme $L^2$ !!
-
-!! Du coup quelle est la diff\'erence entre la norme $L^2$ du livre
-et la stabilit\'e au sens de Von Neumann ??
-
-!! stabilit\'e avec d'autres normes ?? -> a priori, ce serait plus adapt\'e
-en "bonus" !!
+\begin{proposition}[Convergence]
+  Le sch\'ema implicite centr\'e est inconditionnellement stable pour la norme $\| \cdot \|_{L^2}$.
+  De plus, il est consistant \`a l'ordre 1 en temps et 2 en espace.
+  Il est donc inconditionnellement convergent \`a l'ordre 1 en temps et 2 en espace
+  pour la norme $\| \cdot \|_{L^2}$.
+\end{proposition}
 
 
-!! Peut-\^etre faudrait-il aussi \'ecrire l'\'equivalence entre la stabilit\'e de
-Von Neumann et celle avec la norme $\| . \|_{L^2}$ ??
+!! Ecrire la preuve de la consistance !!
 
 \begin{remark}
-  La preuve de stabilit\'e fait ici appel \`a des r\'esultats qui peuvent \^etre
-  difficiles \`a v\'erifier dans le cas g\'en\'eral.
-  En comparaison, la preuve de la stabilit\'e au sens de Von Neumann est bien plus ais\'ee.
-  Ainsi, parfois en pratique, on se contentera de la stabilit\'e de Von Neumann.
+  Le temps de r\'esolution d'un pas de temps pour un sch\'ema implicite est un peu plus long
+  que pour un sch\'ema explicite car il faut r\'esoudre un syst\`eme lin\'eaire.
+  Ceci est compens\'e par le fait qu'il n'y a pas de restriction sur le pas de temps et on
+  peut donc prendre des pas plus grand, impliquant moins de pas de temps.
 \end{remark}
 
 
 \begin{remark}
-  !! sch\'ema plus difficile \`a impl\'ementer !!
-
-  !! mettre r\'esultats num\'eriques !!
-
-  !! comparer avec sch\'ema explicite, notamment loin d'une condition non nulle !!
+  On pourrait prouver la stabilit\'e de ce sch\'ema en norme $\| \cdot \|_{\infty}$
+  mais ce serait plus difficile, c'est pour cela que l'on pr\'ef\`ere la norme
+  $\| \cdot \|_{L^2}$. Dans certains cas o\`u la stabilit\'e pour la norme $\| \cdot \|_{L^2}$
+  est aussi difficile \`a \'etablir, on se contente de la stabilit\'e au sens de Von Neumann
+  (bien que ce soit moins rigoureux d'un point de vue math\'ematique).
 \end{remark}
+
+!! mettre r\'esultats num\'eriques !!
+
+!! comparer avec sch\'ema explicite, notamment loin d'une condition non nulle !!
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{$\theta$-sch\'emas}
