@@ -681,6 +681,7 @@ o\`u on note $\partial \Omega$ le bord du domaine $\Omega$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales de l'\'equation}
+\label{subsec:Lap_prop}
 
 \begin{theorem}[Existence et unicit\'e de la solution]
   \label{thm:ell_existence}
@@ -2972,8 +2973,8 @@ Ce probl\`eme est mal pos\'e, on dit alors que l'\'equation de la chaleur n'est 
   \end{align*}
   En adaptant le raisonnement de la Section~\ref{subsubsec:chal_born}, on peut montrer que
   les fonctions $\tu_k (t,x) := \sin(k\pi x) e^{k^2 \pi^2 t}$ sont solution pour tout $k \in \N^*$.
-  On a $\sup_{0 \leq t \leq T} \| \tu_k(t,.) \|_{L^2(0,1)} = \frac12 e^{k^2 \pi^2 T}$ et 
-  $\| \tu(0,.) \|_{L^2(0,1)} = \frac12$. On obtient une contradiction en faisant tendre $k$
+  On a $\sup_{0 \leq t \leq T} \| \tu_k(t,.) \|_{L^2(0,1)} = \frac1{\sqrt2} e^{k^2 \pi^2 T}$ et 
+  $\| \tu(0,.) \|_{L^2(0,1)} = \frac1{\sqrt2}$. On obtient une contradiction en faisant tendre $k$
   vers $+ \infty$.
 \end{proof}
 
@@ -2981,7 +2982,7 @@ Ce probl\`eme est mal pos\'e, on dit alors que l'\'equation de la chaleur n'est 
 \begin{remark}
   La non-r\'eversibilit\'e de l'\'equation peut \^etre interpr\'et\'ee comme l'impossibilit\'e
   pratique de retrouver la solution \`a partir de la donn\'ee finale.
-  En effet, si cette donn\'ee est, ne serait-ce qu'un peu, bruit\'ee, alors les bruits
+  En effet, si cette donn\'ee est bruit\'ee, ne serait-ce qu'un peu, alors les bruits
   ind\'esirables peuvent exploser aussi vite qu'on veut et polluer la solution.
 \end{remark}
 
@@ -2990,41 +2991,60 @@ Ce probl\`eme est mal pos\'e, on dit alors que l'\'equation de la chaleur n'est 
   La r\'eponse est donn\'ee dans le chapitre suivant.
 \end{exercise}
 
-\begin{remark}[Conditions de Dirichlet non homog\`enes]
-  On peut utiliser un rel\`evement comme dans (...) --- A DONNER EN EXERCICE !!
-\end{remark}
-
-\begin{remark}[Condition de Neumann]
-  Conservation de la valeur moyenne ??
-  (...)
-\end{remark}
 
 \begin{proposition}[Principe du maximum]
-  Supposons $\forall (t,x) \in (0,T) \times (0,1)$,
-  $f(t,x) \leq 0$. On note $u$ la solution de \eqref{eq:chaleur_Dir}.
-  Alors, pour tout $(t,x) \in [0,T] \times (0,1)$, on a 
-  \begin{align*}
-    \sup_{(t,x) \in [0,T] \times [0,1]} u(t,x) = \max(\sup_{x \in (0,1)} u_0(x) , 0 ) .
-  \end{align*}
+  Si pour tous $t \in (0,T)$ et $x \in (0,1)$, on a $f(t,x) \leq 0$.
+  Alors $\sup_{(t,x) \in [0,T] \times [0,1]} u(t,x) = \max(0, \sup_{x \in [0,1]} u_0(x))$
+  avec $u$ la solution de~\eqref{eq:chaleur_Dir}.
 \end{proposition}
-Notons que nous avons utilis\'e le fait que les conditions de Dirichlet sont homog\`enes.
-Dans le cas de conditions de Dirichlet non homog\`enes, il faudrait prendre le max
-du sup en espace de la donn\'ee initiale et du sup en temps des donn\'ees de Dirichlet.
+Notons que nous avons utilis\'e le fait que les conditions de Dirichlet \'etaient homog\`enes.
+Dans le cas de conditions non homog\`enes, il faut aussi prendre en compte
+les donn\'ees de Dirichlet.
 
-
+\begin{remark}[Conditions de Dirichlet non homog\`enes]
+  Dans le probl\`eme~\eqref{eq:chaleur_Dir}, on a utilis\'e des conditions de Dirichlet homog\`enes.
+  Pour r\'esoudre le probl\`eme
+  \begin{equation*}
+    \text{Trouver $u : (0,T) \times (0,1)$ v\'erifiant }
+    \left\{
+      \begin{array}{l l}
+        \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = f 
+        &\dans (0,T) \times (0,1) ,
+        \\
+        u(0,.) = u_0 
+        & \dans (0,1) ,
+        \\
+        u(t,0) = \alpha(t) , \quad u(t,1) = \beta(t) & \forall t \in (0,T) ,
+      \end{array}
+    \right.
+  \end{equation*}
+  on peut utiliser un rel\`evement (comme dans la Section~\ref{subsec:Lap_prop}).
+  Pour cela, il faut choisir une fonction $g$ v\'erifiant $g(t,0) = \alpha(t)$
+  et $g(t,1) = \beta(t)$,
+  puis r\'esoudre le probl\`eme avec conditions de Dirichlet homog\`enes
+  \begin{equation*}
+    \text{Trouver $\tu : (0,T) \times (0,1)$ v\'erifiant }
+    \left\{
+      \begin{array}{l l}
+        \dfrac{\partial \tu}{\partial t} - \dfrac{\partial^2 \tu}{\partial x^2}
+        = f - \dfrac{\partial g}{\partial t} + \dfrac{\partial^2 g}{\partial x^2}
+        &\dans (0,T) \times (0,1) ,
+        \\
+        \tu(0,.) = u_0 - g(0,.)
+        & \dans (0,1) ,
+        \\
+        \tu(t,0) = 0 , \quad \tu(t,1) = 0 & \forall t \in (0,T) .
+      \end{array}
+    \right.
+  \end{equation*}
+  La solution du premier probl\`eme sera alors donn\'ee par $u(t,x) = \tu(t,x) + g(t,x)$.
+  Au passage, pour le domaine (1d) $\Omega = (0,1)$, on peut facilement
+  choisir $g(t,x) = (1-x) \alpha(t) + x \beta(t)$.
+\end{remark}
 
 \begin{exercise}
-  Montrer que la solution du pb de Neumann sans terme source
-  tend exponentiellement vers la valeur moyenne de la donn\'ee initiale.
+  V\'erifier que $u(t,x) = \tu(t,x) + g(t,x)$ est bien solution du premier probl\`eme.
 \end{exercise}
-
-!! V\'erifier cet exercice !!
-
-
-!! Est-ce que \c{c}a ne serait pas plus naturel de traiter d'abord les solutions fortes ??
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Approximation par diff\'erences finies}
@@ -3281,6 +3301,25 @@ Von Neumann et celle avec la norme $\| . \|_{L^2}$ ??
 Le but de cette section est d'\'etudier le probl\`eme de la chaleur
 avec des conditions aux limites de Neumann.
 Toutes les preuves sont laiss\'ees en exercice.
+
+
+
+
+\begin{remark}[Condition de Neumann]
+  Conservation de la valeur moyenne ??
+  (...)
+\end{remark}
+
+
+\begin{exercise}
+  Montrer que la solution du pb de Neumann sans terme source
+  tend exponentiellement vers la valeur moyenne de la donn\'ee initiale.
+\end{exercise}
+
+!! V\'erifier cet exercice !!
+
+
+
 
 !! autre gros exo sur conditions de Neumann ??
 
