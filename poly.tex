@@ -1020,10 +1020,10 @@ Nous construisons donc une suite $(u_j)_{0\leq j \leq M}$ v\'erifiant
 \begin{proposition}
   La relation \eqref{eq:ell_DF} d\'efinit une unique suite $(u_j)_{0\leq j \leq M}$ dont les valeurs
   peuvent \^etre d\'etermin\'ees en r\'esolvant le syst\`eme lin\'eaire
-  $A U = F$, avec 
+  $A_{\Delta} U = F$, avec 
   \begin{equation}
     \label{eq:mat_DF_Laplacien}
-    A = \dfrac{1}{h^2} 
+    A_{\Delta} = \dfrac{1}{h^2} 
     \begin{pmatrix} 
       2 & -1 & 0 & \cdots
       \\
@@ -1048,7 +1048,7 @@ Nous construisons donc une suite $(u_j)_{0\leq j \leq M}$ v\'erifiant
 \end{proposition}
 
 \begin{proof}
-  La relation \eqref{eq:ell_DF} est \'equivalente au syst\`eme lin\'eaire $AU = F$.
+  La relation \eqref{eq:ell_DF} est \'equivalente au syst\`eme lin\'eaire $A_{\Delta} U = F$.
   Pour prouver cela, on \'ecrit les \'equations discr\`etes
   \begin{align*}
     &\dfrac{-u_0 + 2 u_1 - u_2}{h^2} = f(x_1) ,
@@ -1061,23 +1061,23 @@ Nous construisons donc une suite $(u_j)_{0\leq j \leq M}$ v\'erifiant
     \\
     &\dfrac{-u_{M-2} + 2 u_{M-1} - u_M}{h^2} = f(x_{M-1}) .
   \end{align*}
-  En prenant en compte $u_0 = u_M = 0$, on obtient bien $AU = F$.
+  En prenant en compte $u_0 = u_M = 0$, on obtient bien $A_{\Delta} U = F$.
   La r\'eciproque se prouve de mani\`ere similaire.
 
   Maintenant, le fait que ce syst\`eme admet une unique solution vient de l'inversibilit\'e
-  de la matrice $A$ qui est une cons\'equence de la proposition \ref{prop:matSDP}.
+  de la matrice $A_{\Delta}$ qui est une cons\'equence de la proposition \ref{prop:matSDP}.
 \end{proof}
 
 
 \begin{remark}
-  La matrice $A$ doit absolument \^etre connue par c\oe{}ur.
+  La matrice $A_{\Delta}$ doit absolument \^etre connue par c\oe{}ur.
   En effet, ceci est exigible et le jury du concours se plaint dans ses rapports
   que beaucoup trop de candidats ne connaissent pas cette matrice.
 \end{remark}
 
 \begin{proposition}
   \label{prop:matSDP}
-  La matrice $A$ est sym\'etrique d\'efinie positive.
+  La matrice $A_{\Delta}$ est sym\'etrique d\'efinie positive.
 \end{proposition}
 
 
@@ -1121,9 +1121,9 @@ Nous construisons donc une suite $(u_j)_{0\leq j \leq M}$ v\'erifiant
   \end{align*}
   o\`u $\delta_j = u_j - u(x_j)$.
   En notant $\underline{\delta}$ le vecteur des $\delta_j$,
-  on a $\underline{\delta} = A^{-1} \underline{\epsilon}$
+  on a $\underline{\delta} = A_{\Delta}^{-1} \underline{\epsilon}$
   avec $(\underline{\epsilon})_j = O(h^2)$.
-  En supposant que $\sup_{X \in \R^{M-1}\backslash \{0\}} \dfrac{\max_{j} |(A^{-1}X)_j|}{\max_j |X_j|}$
+  En supposant que $\sup_{X \in \R^{M-1}\backslash \{0\}} \dfrac{\max_{j} |(A_{\Delta}^{-1}X)_j|}{\max_j |X_j|}$
   est born\'e quand $h$ tend vers $0$ (on ne le montre pas ici), on obtient le r\'esultat attendu.
 \end{proof}
 
@@ -1166,7 +1166,7 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
 
 \begin{exercise}[Coefficient de raideur]
   On peut d\'ecider d'ajouter un coefficient de raideur $k>0$ constant.
-  La nouvelle matrice devient alors $k A$ o\`u $A$ est la matrice 
+  La nouvelle matrice devient alors $k A_{\Delta}$ o\`u $A_{\Delta}$ est la matrice 
   pr\'ec\'edente.
   La figure \ref{fig:ell_k} a \'et\'e obtenue pour $f(x) = 1$
   et $M=10$ ($h=1/10$).
@@ -2106,6 +2106,7 @@ prouver qu'un sch\'ema n'est pas stable pour la norme $\| \cdot \|_{\infty}$ .
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Analyse des deux sch\'emas donn\'es en introduction}
+\label{subsubsec:deux_schemas}
 
 
 Nous allons montrer dans cette section que le sch\'ema num\'erique 
@@ -3051,25 +3052,25 @@ les donn\'ees de Dirichlet.
 
 
 Nous nous pla\c{c}ons ici dans le m\^eme cadre que celui utilis\'e pour 
-l'\'equation de transport en section \ref{subsec:transport_DF}.
+l'\'equation de transport en Section~\ref{subsec:transport_DF}.
 Nous d\'ecomposons les intervalles de temps et d'espace
 respectivement en $N$ et $M$ sous-intervalles.
 On note $t_n$ ($0 \leq n \leq N$) et $x_j$ ($0 \leq j \leq M$)
 les bornes de ces sous-intervalles.
-Nous cherchons \`a approcher la solution de \eqref{eq:chaleur_Dir}
+On rappelle $x_j = j h_x$, $h_x = 1/M$, $t_n = n h_t$ et $h_t = T / N$.
+Nous cherchons \`a approcher la solution de~\eqref{eq:chaleur_Dir}
 en $t_n$ et $x_j$, i.e. $u(t_n,x_j)$, par le terme $u_j^n$ d'une suite
 $(u_j^n)$. 
-Nous proposons plusieurs sch\'emas.
+Nous proposons plusieurs sch\'emas pour calculer cette suite.
 Leurs propri\'et\'es seront \'etudi\'ees en utilisant les 
-\'el\'ements de la section \ref{subsubsec:analyse_def}.
-
+\'el\'ements de la Section~\ref{subsubsec:analyse_def}.
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Sch\'ema explicite centr\'e}
 
 Le sch\'ema le plus intuitif \`a utiliser est un sch\'ema 
 explicite centr\'e.
-Pour cela, consid\'erons d'approcher les d\'eriv\'ees de la fa\c{c}on suivante:
+Pour cela, approchons les d\'eriv\'ees de la fa\c{c}on suivante:
 \begin{align*}
   \dfrac{\partial u}{\partial t}(t_n,x_j) \simeq \dfrac{u(t_{n+1},x_j) - u(t_n,x_j)}{h_t} ,
   \qquad 
@@ -3083,20 +3084,22 @@ Nous obtenons ainsi le sch\'ema suivant
   \label{eq:chaleur_DF_exp_centre}
   \left\{
   \begin{array}{l}
-    \forall 1 \leq j \leq M-1 , 
-    u_j^0 = u_0(x_j) ,
+    u_j^0
+    = u_0(x_j) ,
+    \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \;\;\quad
+    (1 \leq j \leq M-1) , 
     \\
-    \forall 0 \leq n \leq N, u_0^n = u_M^n = 0 ,
+    u_0^n = u_M^n = 0 ,
+    \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \quad
+    (0 \leq n \leq N), 
     \\
-    \forall 0 \leq n \leq N-1, \forall 1 \leq j \leq M-1,
-    u_j^{n+1} = u_j^{n} + \dfrac{\nu h_t}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n} + u_{j-1}^{n} ) 
-    + h_t f(t_n,x_j) .
+    u_j^{n+1}
+    = u_j^{n} + \dfrac{h_t}{h_x^2} (u_{j+1}^{n} - 2 u_{j}^{n} + u_{j-1}^{n} ) 
+    + h_t f(t_n,x_j) ,
+    \quad (0 \leq n \leq N-1, 1 \leq j \leq M-1).
   \end{array}
   \right.
 \end{align}
-
-!! FAUT-IL INTRODUIRE $\nu$ PLUS HAUT ??
-
 
 \begin{exercise}
   La figure \ref{fig:chaleur_nu} 
@@ -3108,36 +3111,197 @@ Nous obtenons ainsi le sch\'ema suivant
 
 
 Nous allons maintenant \'etudier les propri\'et\'es de ce sch\'ema.
-Nous pouvons prouver que ce sch\'ema est consistant d'ordre 1 en temps et 2 en espace.
-De plus, il est stable sous la condition de CFL $2 \nu h_t \leq h_x^2$ 
+Nous pouvons prouver que ce sch\'ema est consistant d'ordre 1 en temps et 2 en espace
+pour la norme $\| \cdot \|_{\infty}$.
+De plus, il est stable sous la condition de CFL $2 h_t \leq h_x^2$ 
 et instable si cette condition n'est
-pas remplie.
+pas remplie (pour la norme $\| \cdot \|_{\infty}$).
 Ces r\'esultats peuvent \^etre prouv\'es en adaptant ce qui a \'et\'e fait dans
-la section \ref{subsec:transport_DF}.
+la Section~\ref{subsec:transport_DF}.
 
 \begin{exercise}
-  Nous consid\'erons le sch\'ema \eqref{eq:chaleur_DF_exp_centre}.
+  \label{exo:chaleur_explicite}
+  Dans cet exercice, nous \'etudions le sch\'ema~\eqref{eq:chaleur_DF_exp_centre}
+  avec la norme $\| \cdot \|_{\infty}$.
   \begin{enumerate}
+  \item Montrer que nous sommes bien dans le cadre de la Section~\ref{subsubsec:analyse_def},
+    i.e. montrer que $U^n = (u_j^n)_{j=1}^{M-1}$ v\'erifie~\eqref{eq:schema_1pas}
+    (avec $U_0$, $A$ et $F^n$ \`a d\'eterminer).
   \item Prouver que ce sch\'ema est consistant d'ordre 1 en temps et 2 en espace.
   \item Prouver que ce sch\'ema est stable sous la condition de CFL
-    $2 \nu h_t \leq h_x^2$.
+    $2 h_t \leq h_x^2$.
   \item Prouver que ce sch\'ema est instable si la condition de CFL
     pr\'ec\'edente n'est pas v\'erifi\'ee.
   \end{enumerate}
+  NB: On pourra adapter ce qui a \'et\'e fait dans la Section~\ref{subsubsec:deux_schemas}.
 \end{exercise}
 
+\begin{remark}[CFL parabolique]
+  Ici, la condition de CFL associ\'ee \`a ce sch\'ema explicite est
+  $2 h_t \leq h_x^2$ (\`a comparer avec la CFL de l'\'equation de transport
+  $a h_t \leq h_x$). Le carr\'e au dessus du pas d'espace rend cette condition plus restrictive
+  que celle de l'\'equation de transport. Par exemple, pour rester \`a CFL constante,
+  si on divise le pas d'espace par deux, il faut diviser le pas de temps par deux pour l'\'equation
+  de transport et par quatre pour l'\'equation de la chaleur.
+  Cette CFL plus restrictive est une des raisons pour lesquelles on pr\'ef\`ere g\'en\'eralement
+  utiliser un sch\'ema implicite pour r\'esoudre l'\'equation de la chaleur.
+\end{remark}
+
+Bien que, comme nous venons de le voir, on peut \'etudier le sch\'ema explicite centr\'e
+avec la norme $\| \cdot \|_{\infty}$, nous allons introduire une nouvelle norme:
+la norme $\| \cdot \|_{L^2}$. Cette norme sera utile pour la suite
+(en particulier pour le sch\'ema implicite et pour l'\'equation des ondes).
+\begin{definition}[Norme $\| \cdot \|_{L^2}$ pour les suites]
+  Pour $V \in \R^{M-1}$, on d\'efinit
+  \begin{align}
+    \| V \|_{L^2} := \Big( h_x \sum_{j=1}^{M-1} |V_j|^2 \Big)^{\frac12}.
+  \end{align}
+\end{definition}
+
+\begin{remark}
+  Notons qu'il s'agit de la norme $\| \cdot \|_{\ell^2}$ classique multipli\'ee par un
+  facteur $h_x^{\frac12}$. Ce facteur permet de donner \`a cette norme un comportement similaire
+  \`a celui de la norme $\| \cdot \|_{L^2}$ des fonctions.
+\end{remark}
+
+Nous montrons maintenant que la norme $\| \cdot \|_{\infty}$ domine la norme $\| \cdot \|_{L^2}$.
+
+\begin{proposition}
+  La norme $\| \cdot \|_{\infty}$ domine la norme $\| \cdot \|_{L^2}$:
+  il existe $C > 0$ telle que
+  \begin{align*}
+    \| V \|_{L^2} \leq C \| V \|_{\infty}
+    \quad \forall V \in \R^{M-1} .
+  \end{align*}
+\end{proposition}
+
+\begin{proof}
+  Par un calcul direct
+  \begin{align*}
+    \| V \|_{L^2}^2 = h_x \sum_{j=1}^{M-1} |V_j|^2
+    \leq h_x (M-1) \| V \|_{\infty}^2 \leq \| V \|_{\infty}^2 .
+  \end{align*}
+  Notons qu'ici on peut prendre $C = 1$ par ce que $\Omega = (0,1)$.
+  Dans un cadre plus g\'en\'eral, il faudrait prendre $C = | \Omega |^{\frac12}$.
+\end{proof}
+
+\begin{remark}
+  Ceci sera utilis\'e en particulier pour prouver la consistance d'un sch\'ema:
+  on la prouvera pour la norme $\| \cdot \|_{\infty}$ et ce sera imm\'ediatement valable
+  pour la norme $\| \cdot \|_{L^2}$.
+\end{remark}
+
+Nous voulons maintenant \'etudier la convergence du sch\'ema~\eqref{eq:chaleur_DF_exp_centre}
+pour la norme $\| \cdot \|_{L^2}$.
+Comme nous l'avons vu dans l'exercice~\ref{exo:chaleur_explicite},
+le sch\'ema est consistant et stable pour la norme $\| \cdot \|_{\infty}$.
+D'apr\`es le th\'eor\`eme de Lax, il est donc convergent (d'ordre 1 en temps et 2 en espace)
+pour cette m\^eme norme (sous la condition de CFL $2 h_t \leq h_x^2$).
+On peut donc tr\`es rapidement \'etablir que ce sch\'ema est convergent pour la norme
+$\| \cdot \|_{L^2}$ sous la m\^eme condition de CFL.
+Ceci vient du fait que la norme $\| \cdot \|_{\infty}$ domine la norme $\| \cdot \|_{L^2}$:
+\[
+  \max_{0 \leq n \leq N} \| \tu^n - U^n \|_{L^2}
+  \leq C \max_{0 \leq n \leq N} \| \tu^n - U^n \|_{\infty}
+  \leq C (h_t + h_x^2) .
+\]
+Cependant, pour de nombreux sch\'emas, la convergence en norme $\| \cdot \|_{\infty}$
+est plus difficile \`a \'etablir qu'en norme $\| \cdot \|_{L^2}$.
+Nous allons donc chercher \`a \'etablir la convergence en norme $\| \cdot \|_{L^2}$
+sans utiliser la stabilit\'e en norme $\| \cdot \|_{\infty}$ (en pratique c'est tr\`es souvent
+la stabilit\'e qui est plus difficile \`a \'etablir).
 
 
+Comme nous l'avons vu dans l'exercice~\ref{exo:chaleur_explicite},
+le sch\'ema~\eqref{eq:chaleur_DF_exp_centre} v\'erifie le cadre
+de la Section~\ref{subsubsec:analyse_def} et il est consistant pour la norme $\| \cdot \|_{\infty}$
+d'ordre 1 en temps et 2 en espace (donc aussi consistant au m\^eme ordre pour la norme
+$\| \cdot \|_{L^2}$). Si nous prouvons la stabilit\'e en norme $\| \cdot \|_{L^2}$
+alors nous pourrons utiliser le Th\'eor\`eme de Lax.
+Comme nous allons le voir, l'\'etude de la stabilit\'e pour la norme $\| \cdot \|_{L^2}$
+passe par l'\'etude des valeurs propres de la matrice du sch\'ema.
 
-!! Donner la preuve ??
-Un exemple de plus ne ferait pas de mal ...
--- une bonne solution serait de donner une correction en fin de section --
+\begin{proposition}
+  \label{prop:stabL2}
+  On se place dans le cadre de la Section~\ref{subsubsec:analyse_def}.
+  Si $A \in \R^{(M-1)^2}$ est sym\'etrique alors
+  \begin{equation*}
+    \tn A \tn_{L^2} = \rho(A) ,
+  \end{equation*}
+  o\`u $\rho(A) := \sup_{1 \leq j \leq M-1} |\lambda_j|$ est le rayon spectral de la matrice $A$
+  avec $(\lambda_j)$ les valeurs propres de $A$.
+\end{proposition}
 
-!! peut-\^etre modifier la def de la stabilit\'e de Von Neumann en permettant
-\`a la fr\'equence de parcourir $\R$ entier !!
+\begin{proof}
+  Si $A$ est sym\'etrique \`a valeurs r\'eelles, alors elle est diagonalisable dans $\R$.
+  Il existe donc une base de vecteurs propres $(V_j)$.
+  Pour tout vecteur $V$, on peut \'ecrire $V = \sum_{j=1}^{M-1} \alpha_j V_j$ et on a
+  \begin{align*}
+    \tn A \tn_{L^2} = \sup_{V \in \R^{M-1}\setminus\{0\}} \dfrac{\| A V \|_{L^2}}{\| V \|_{L^2}}
+    = \sup_{\alpha \in \R^{M-1}\setminus\{0\}}
+    \dfrac{(\sum_j (\alpha_j \lambda_j)^2 \| V_j \|^2)^{\frac12}}{(\sum_j \alpha_j^2 \| V_j \|^2)^{\frac12}}
+    \leq \rho(A) .
+  \end{align*}
+  % On a $\tn A \tn_{L^2} \leq \rho(A)$.
+  De plus, pour $j$ tel que $\rho(A) = | \lambda_j |$,
+  on a $\| A V_j \|_{L^2} | \lambda_j | \| V_j \|_{L^2}$.
+  On a donc montr\'e $\tn A \tn_{L^2} = \rho(A)$.
+\end{proof}
 
-!! CFL tr\`es co\^uteuse dans ce cas pr\'ecis !!
 
+L'id\'ee est donc de calculer les valeurs propres de $A$ et d'utiliser
+le Corrolaire~\ref{corro:stability} pour prouver la stabilit\'e su sch\'ema.
+Pour le calcul des valeurs propres, nous pouvons utiliser le r\'esultat suivant
+\begin{proposition}
+  \label{prop:VP}
+  Soit $A \in \R^{(M-1)^2}$ une matrice tridiagonale d\'efinie par
+  \begin{equation*}
+    A =
+    \begin{pmatrix}
+      a & b &
+      \\
+      b & \ddots & \ddots
+      \\
+      & \ddots & \ddots & b
+      \\
+      & & b & a
+    \end{pmatrix} ,
+  \end{equation*}
+  avec $a, b \in \R$. Les valeurs propres de $A$ sont les 
+  $\lambda_k = a + 2b \cos \left( \dfrac{k \pi}{M} \right)$ avec $1 \leq k \leq M-1$.
+  Le vecteur propre associ\'e $V_k$ a pour composantes 
+  $(V_k)_j = \sin \left( j \dfrac{k \pi}{M} \right)$.
+
+  NB: les vecteurs propres ne d\'ependent pas de $a$ et $b$.
+\end{proposition}
+
+
+\begin{proof}
+  Pour une d\'emonstration de cette proposition, le lecteur pourra se r\'ef\'erer au 
+  Lemme 2.2 du livre 
+  de Brigitte Lucquin, "\'Equations aux d\'eriv\'ees partielles et leurs approximations", 2004.
+\end{proof}
+
+
+On peut montrer que nous sommes dans le cadre de la Section~\ref{subsubsec:analyse_def}
+avec $A = I - h_t A_{\Delta}$ o\`u $A_{\Delta}$ est la matrice discr\'etisant le Laplacien
+donn\'ee en~\eqref{eq:mat_DF_Laplacien}.
+On applique donc la Proposition~\ref{prop:VP} avec $a = 1 - \frac{2h_t}{h_x^2}$
+et $b = \frac{h_t}{h_x^2}$.
+Les valeurs propres de cette matrice sont donc les
+$\lambda_k = 1 - \frac{2h_t}{h_x^2}(1-\cos(\frac{k \pi}{M}))$ ($1 \leq k \leq M-1$).
+Sous la condition de CFL $2h_t \leq h_x^2$, on a $| \lambda_k | \leq 1$ et donc
+$\rho(A) \leq 1$.
+En applicant la Proposition~\ref{prop:stabL2} et le Corrolaire~\ref{corro:stability}, on
+\'etablit le r\'esultat suivant
+\begin{proposition}
+  Le sch\'ema explicite centr\'e~\eqref{eq:chaleur_DF_exp_centre}
+  est stable pour la norme $\| \cdot \|_{L^2}$ sous la condition de CFL $2 h_t \leq h_x^2$.
+\end{proposition}
+
+Comme nous l'avons indiqu\'e pr\'ec\'edemment, ce sch\'ema est consistant pour la norme
+$\| \cdot \|_{L^2}$. Il est donc convergent sous la condition de CFL $2 h_t \leq h_x^2$
+(ordre 1 en temps et 2 en espace).
 
 !! FAUT-IL FAIRE UNE REMARQUE SUR LE PRINCIPE DU MAXIMUM DISCRET ??
 -- A QUEL ENDROIT ?? ON POURRAIT AUSSI LA FAIRE POUR LES AUTRES EQUATIONS !!
@@ -3199,38 +3363,6 @@ Cela a \'et\'e fait par un calcul direct dans l'exercice \ref{exo:transport_impl
 dans le cadre de l'\'equation de transport.
 Cependant ce calcul est bien plus difficile dans le cas pr\'esent.
 La m\'ethode utilis\'ee consiste alors \`a calculer les valeurs propres de cette matrice.
-
-Montrons le r\'esultat suivant qui nous servira \`a plusieurs endroits dans ce cours.
-\begin{proposition}[Valeurs propres d'une matrice tridiagonale sym\'etrique]
-  %% citer Lemme 2.2 du livre de B. Lucquin
-  Soit $M \geq 2$.
-  Consid\'erons une matrice de taille $(M-1) \times (M-1)$ de la forme 
-  \begin{align*}
-    A = 
-    \begin{pmatrix}
-      a & b 
-      \\
-      b & \ddots & \ddots
-      \\
-      & \ddots & \ddots & \ddots 
-      \\
-      &&\ddots & \ddots & b
-      \\
-      &&& b & a
-    \end{pmatrix} ,
-  \end{align*}
-  avec $a$ et $b$ des r\'eels.
-  Alors les valeurs propres de $A$ sont les 
-  $\lambda_k = a + 2b \cos \left( \dfrac{k \pi}{M} \right)$ avec $1 \leq k \leq M-1$.
-  Le vecteur propre associ\'e $V_k$ a pour composantes 
-  $(V_k)_j = \sin \left( j \dfrac{k \pi}{M} \right)$.
-\end{proposition}
-
-\begin{proof}
-  Pour une d\'emonstration de cette proposition, le lecteur pourra se r\'ef\'erer au 
-  Lemme 2.2 du livre 
-  de Brigitte Lucquin, "\'Equations aux d\'eriv\'ees partielles et leurs approximations", 2004.
-\end{proof}
 
 Les valeurs propres de la matrice $\widetilde{A}$ sont donc de la forme
 \begin{align*}
