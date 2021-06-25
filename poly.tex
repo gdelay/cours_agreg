@@ -2709,6 +2709,7 @@ Nous avons prouv\'e le th\'eor\`eme suivant.
 
 %%%%%%%%%%%%%%%%
 \subsubsection{Cas de la droite r\'eelle $\Omega = \R$}
+\label{subsubsec:chaleur_R}
 
 
 On s'int\'eresse ici au probl\`eme
@@ -3600,12 +3601,12 @@ OU EST-CE UTILIS\'E ?? (idem pour la chaleur)
 !! CLARIFIER CE QU'ON ENTEND PAR ``l'\'equation est v\'erifi\'ee au sens des distributions'' !!
 
 %%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Formule de d'Alembert}
+\subsubsection{Cas de la droite r\'eelle}
 
-On consid\`ere le probl\`eme sur $\R$ entier:
+On consid\`ere le probl\`eme sur $\R$ entier ($\Omega = \R$) et on consid\`ere aussi $T = + \infty$
 \begin{equation}
   \label{eq:ondes_R}
-  \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
+  \text{Trouver $u : \R_+ \times \R$ v\'erifiant  }
   \left\{
     \begin{array}{l l}
       \dfrac{\partial^2 u}{\partial t^2} - c^2 \dfrac{\partial^2 u}{\partial x^2} = f 
@@ -3619,12 +3620,13 @@ On consid\`ere le probl\`eme sur $\R$ entier:
     \end{array}
   \right.
 \end{equation}
-o\`u (...)
+o\`u, \`a nouveau, $c > 0$ est la c\'el\'erit\'e des ondes, $f$ est le terme source
+et $u_0$ et $u_1$ sont les donn\'ees initiales.
 
 
-\begin{theorem}
+\begin{theorem}[Formule de d'Alembert]
   \label{thm:d_Alembert}
-  Si $u_0 \in C^2(\R)$, $u_1 \in C^1(\R)$ et $f \in C^1(\R)$,
+  Si $u_0 \in C^2(\R)$, $u_1 \in C^1(\R)$ et $f \in C^1(\R_+ \times \R)$,
   alors le probl\`eme \eqref{eq:ondes_R} admet une unique solution 
   $u \in C^2(\R_+ \times \R)$ donn\'ee par 
   \begin{align*}
@@ -3637,16 +3639,18 @@ o\`u (...)
 
 
 \begin{proof}
-  On prouve ce th\'eor\`eme en supposant que $u$ est une solution de \eqref{eq:ondes_R}.
+  On prouve ce th\'eor\`eme par analyse et synth\`ese.
+  On suppose que $u$ est une solution de \eqref{eq:ondes_R}.
   L'id\'ee de la preuve consiste \`a s'int\'eresser aux droites $(t,x) \mapsto x-ct$
   et $(t,x) \mapsto x+ct$ selon lesquelles les ondes se d\'eplacent.
   On introduit donc le changement de variables $y = x+ct$ et $z = x-ct$,
-  on note $v(y,z) := u(\dfrac{y-z}{2c} , \dfrac{y+z}{2})$ la repr\'esentation
+  on note $v(y,z) := u\left(\dfrac{y-z}{2c} , \dfrac{y+z}{2}\right)$ la repr\'esentation
   de $u$ selon ces nouvelles variables.
 
   On prouve ensuite que $v$ v\'erifie l'\'equation
   \begin{align*}
-    \dfrac{\partial^2 v}{\partial y \partial z} = - \dfrac{1}{4 c^2} f (\dfrac{y-z}{2c} , \dfrac{y+z}{2}) .
+    \dfrac{\partial^2 v}{\partial y \partial z}
+    = - \dfrac{1}{4 c^2} f\left(\dfrac{y-z}{2c} , \dfrac{y+z}{2} \right) .
   \end{align*}
   Cela se fait ais\'ement en calculant cette d\'eriv\'ee crois\'ee et en rappelant que $u$ 
   est solution de \eqref{eq:ondes_R}.
@@ -3655,7 +3659,8 @@ o\`u (...)
   une fois selon $y$ et une fois selon $z$.
   On obtient
   \begin{align*}
-    v(y,z) = G(z) + F(y) - \dfrac{1}{4c^2} \int_0^z \int_0^y f(\dfrac{s-r}{2c} , \dfrac{s+r}{2})
+    v(y,z) = G(z) + F(y)
+    - \dfrac{1}{4c^2} \int_0^z \int_0^y f \left(\dfrac{s-r}{2c} , \dfrac{s+r}{2} \right)
     \deriv s \deriv r ,
   \end{align*}
   o\`u $F$ et $G$ sont des fonctions \`a d\'eterminer.
@@ -3664,7 +3669,8 @@ o\`u (...)
     u(t,x) 
     =& v(x+ct,x-ct)
     \\
-    =& G(x-ct) + F(x+ct) - \dfrac{1}{4c^2} \int_{0}^{x-ct} \int_0^{x+ct} f(\dfrac{s-r}{2c} , \dfrac{s+r}{2}) 
+    =& G(x-ct) + F(x+ct)
+       - \dfrac{1}{4c^2} \int_{0}^{x-ct} \int_0^{x+ct} f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2}\right) 
        \deriv s \deriv r .
   \end{align*}
 
@@ -3673,7 +3679,8 @@ o\`u (...)
   les conditions initiales, on obtient
   \begin{align}
     \label{eq:proof_DAlembert_u0}
-    u_0(x) = G(x) + F(x) - \dfrac{1}{4c^2} \int_{0}^{x} \int_0^{x} f(\dfrac{s-r}{2c} , \dfrac{s+r}{2})
+    u_0(x) = G(x) + F(x)
+    - \dfrac{1}{4c^2} \int_{0}^{x} \int_0^{x} f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2}\right)
     \deriv s \deriv r .
   \end{align}
   Pour obtenir une deuxi\`eme relation, on suppose que $F$ et $G$ sont
@@ -3682,48 +3689,51 @@ o\`u (...)
   \begin{align}
     \label{eq:proof_DAlembert_u1}
     u_1(x) = - c G'(x) + c F'(x) - \dfrac{1}{4c} \Big( 
-    \int_{0}^x f(\dfrac{x-r}{2c},\dfrac{x+r}{2}) \deriv r
-    - \int_0^x f(\dfrac{s-x}{2c},\dfrac{s+x}{2}) \deriv s
+    \int_{0}^x f\left(\dfrac{x-r}{2c},\dfrac{x+r}{2}\right) \deriv r
+    - \int_0^x f\left(\dfrac{s-x}{2c},\dfrac{s+x}{2}\right) \deriv s
     \Big) .
   \end{align}
 
+  Les fonctions $F$ et $G$ correspondent \`a des constantes d'int\'egration
+  (chacune par rapport \`a une variable diff\'erente).
+  On peut donc imposer la valeur de leur constante avec la relation $F(0) = G(0)$.
   En combinant les relations \eqref{eq:proof_DAlembert_u0}
-  et \eqref{eq:proof_DAlembert_u1}, on peut montrer
-  $F(0) = 0$, $G(0) = 0$ et
+  et \eqref{eq:proof_DAlembert_u1}, on peut montrer que
   \begin{align*}
     F(x) &= \dfrac{u_0(x)}{2} + \int_{0}^{x} \dfrac{u_1(s)}{2c} \deriv s
     + \dfrac{1}{8c^2} \Big(
-    \int_0^x \!\!\!\int_0^x f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r
-    + \int_0^x \!\!\!\int_0^s f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv r \deriv s
+    \int_0^x \!\!\!\int_0^x f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2} \right) \deriv s \deriv r
+    + \int_0^x \!\!\!\int_0^s f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2} \right) \deriv r \deriv s
     \\
     & \qquad \qquad \qquad \qquad \qquad \qquad \qquad 
-      - \int_0^x \!\!\!\int_0^r f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r
+      - \int_0^x \!\!\!\int_0^r f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2} \right) \deriv s \deriv r
     \Big) ,
     \\
     G(x) &= \dfrac{u_0(x)}{2} - \int_{0}^{x} \dfrac{u_1(s)}{2c} \deriv s
     + \dfrac{1}{8c^2} \Big(
-    \int_0^x \!\!\!\int_0^x f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r
-    - \int_0^x \!\!\!\int_0^s f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv r \deriv s
+    \int_0^x \!\!\!\int_0^x f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2} \right) \deriv s \deriv r
+    - \int_0^x \!\!\!\int_0^s f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2} \right) \deriv r \deriv s
     \\
     & \qquad \qquad \qquad \qquad \qquad \qquad \qquad 
-      + \int_0^x \!\!\!\int_0^r f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r
+      + \int_0^x \!\!\!\int_0^r f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2} \right) \deriv s \deriv r
     \Big) .
   \end{align*}
   On peut maintenant simplifier les int\'egrales pour obtenir
   \begin{align*}
     F(x) &= \dfrac{u_0(x)}{2} + \int_{0}^{x} \dfrac{u_1(s)}{2c} \deriv s
            + \dfrac{1}{4c^2} 
-           \int_0^x \!\!\!\int_0^s f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv r \deriv s ,
+           \int_0^x \!\!\!\int_0^s f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2} \right)
+           \deriv r \deriv s ,
     \\
     G(x) &= \dfrac{u_0(x)}{2} - \int_{0}^{x} \dfrac{u_1(s)}{2c} \deriv s
            + \dfrac{1}{4c^2}
-           \int_0^x \!\!\!\int_0^r f(\dfrac{s-r}{2c} , \dfrac{s+r}{2} ) \deriv s \deriv r .
+           \int_0^x \!\!\!\int_0^r f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2} \right) \deriv s \deriv r .
   \end{align*}
   On peut maintenant injecter $F(x)$ et $G(x)$ dans l'expression de $u(t,x)$.
   Apr\`es simplification des int\'egrales, on obtient
   \begin{align*}
     u(t,x) = \dfrac{u_0(x+ct) + u_0(x-ct)}{2} + \dfrac{1}{2c} \int_{x-ct}^{x+ct} u_1(s) \deriv s
-    + \dfrac{1}{4c^2} \int_{x-ct}^{x+ct} \int_{x-ct}^{s} f(\dfrac{s-r}{2c} , \dfrac{s+r}{2})
+    + \dfrac{1}{4c^2} \int_{x-ct}^{x+ct} \int_{x-ct}^{s} f\left(\dfrac{s-r}{2c} , \dfrac{s+r}{2}\right)
     \deriv r \deriv s .
   \end{align*}
 
@@ -3738,36 +3748,45 @@ o\`u (...)
 \end{proof}
 
 
-
-!! prouver ce thm !!
-
-!! donner une interpretation de ces termes ??
-En particulier si $f=0$ !!
-
-\begin{remark}
-  L'information se propage \`a vitesse finie (...)
-  !! TODO !! !! Comparer avec l'\'equation de la chaleur !!
+\begin{remark}[Forme de la solution]
+  Pour $f=0$, on a $u(t,x) = F(x+ct) + G(x-ct)$.
+  Sans terme source, la solution correspond donc \`a une onde se d\'epla\c{c}ant vers la gauche
+  (terme $F(x+ct)$) et une onde se d\'epla\c{c}ant vers la droite (terme $G(x-ct)$), les deux
+  \`a vitesse constante $c$.
+  En fait, m\^eme dans le cas d'un domaine born\'e, comme $\Omega = (0,1)$,
+  la solution peut se mettre sous cette forme tant que l'onde ne touche pas les bords du domaine
+  (car alors des interactions plus compliqu\'ees apparaissent).
+  On peut voir ici que l'\'equation des ondes se comporte (un peu)
+  comme deux \'equation de transport.
+  On peut pousser cette similitude en montrant l'\'ecriture
+  $\partial_t^2 - c^2 \partial_x^2 = (\partial_t - c \partial_x)(\partial_t + c \partial_x)$.
+  Notons \'egalement que la preuve pr\'ec\'edente peut \^etre vue
+  comme une m\'ethode des caract\'eristiques o\`u on s'est int\'eress\'e aux droites
+  $x-ct = a$ et $x+ct = b$ (pour $a$ et $b$ fix\'es) en introduisant les changements de variables
+  $y = x+ct$ et $z = x-ct$.
 \end{remark}
 
-\begin{exercise}
-  Si $f=0$, reprendre le r\'esultat du th\'eor\`eme \ref{thm:d_Alembert}.
-  Prouver qu'on a $u(t,x) = u^+(t,x) + u^-(t,x)$
-  avec (...).
-  Ces deux fonctions repr\'esentent des ondes se d\'epla\c{c}ant
-  dans les deux directions.
+\begin{remark}[Propagation de l'information \`a vitesse finie]
+  Une cons\'equence de la remarque pr\'ec\'edente est que l'information se d\'eplace dans les
+  deux directions $+x$ et $-x$ \`a vitesse constante $c$.
+  On a donc un comportement diff\'erent de celui de l'\'equation de la chaleur pour laquelle
+  l'information se d\'eplace \`a vitesse infinie.
+\end{remark}
 
-  !! donner la forme de $u^+$ et $u^-$ !!
+!! Commenter la m\'ethode des caract\'eristiques avec un sch\'ema !! + domaine d'influence
++ domaine de d\'ependance !!
+
+!! Illustrer le cas $f= 0$ et $u_1 = 0$ avec un sch\'ema !! + cas domaine born\'e
++ p\'eriodicit\'e de la sol !!
+
+\begin{exercise}
+  On suppose que $f = 0$.
+  Retrouver le r\'esultat du Th\'eor\`eme~\ref{thm:d_Alembert}
+  en utilisant la m\'ethode de la transform\'ee de Fourier comme dans
+  la Section~\ref{subsubsec:chaleur_R}.
 \end{exercise}
 
-\begin{exercise}
-  Retrouver le r\'esultat du th\'eor\`eme \ref{thm:d_Alembert}
-  en utilisant la transform\'ee de Fourier comme dans (...).
-  !! TODO !!
-\end{exercise}
-
-
-!! faire la mont\'ee en r\'egularit\'e ??
-
+!! V\'erifier que cet exo est faisable !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
