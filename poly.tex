@@ -2962,10 +2962,14 @@ Ce probl\`eme est mal pos\'e, on dit alors que l'\'equation de la chaleur n'est 
   le probl\`eme~\eqref{eq:chaleur_retro} est mal pos\'e.
 \end{proposition}
 
+!! EST-CE SUR QU'ON PEUT PROUVER L'EXISTENCE D'UNE UNIQUE SOL ??
+-- VERIFIER ET METTRE A JOUR LA PREUVE !!
+
 \begin{proof}
   On peut montrer l'existence d'une unique solution au probl\`eme~\eqref{eq:chaleur_retro}.
   Son caract\`ere mal pos\'e vient de la d\'ependance non continue aux donn\'ees.
   Pour prouver cela, on va utiliser les r\'esutats de la Section~\ref{subsubsec:chal_born}.
+
 
   On consid\`ere $\tf = 0$ et on suppose par l'absurde qu'il existe une constante $C>0$ telle que
   pour toute solution $\tu$ de~\eqref{eq:chaleur_retro}, on a
@@ -3476,12 +3480,11 @@ Toutes les preuves sont laiss\'ees en exercice.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation des ondes}
 
-!! definition des espaces de fonctions utiles : nombre de d\'eriv\'ees en x et en t
-peut \^etre diff\'erent !!
-
+On se place dans le domaine $\Omega = (0,1)$.
+On s'int\'eresse au probl\`eme de l'\'equation des ondes avec des conditions de Dirichlet homog\`enes
 \begin{equation}
   \label{eq:ondes_Dir}
-  \text{Trouver $u \in C^2(\Omega)$(...) telle que  }
+  \text{Trouver $u : (0,T) \times (0,1)$ v\'erifiant }
   \left\{
     \begin{array}{l l}
       \dfrac{\partial^2 u}{\partial t^2} - c^2 \dfrac{\partial^2 u}{\partial x^2} = f 
@@ -3493,106 +3496,41 @@ peut \^etre diff\'erent !!
       \dfrac{\partial u}{\partial t}(0,.) = u_1 
       & \dans (0,1) ,
       \\
-      u(t,0) = 0 , \quad u(t,1) = 0 & \forall t \in (0,T) ,
+      u(t,0) = 0 , \quad u(t,1) = 0 & \;\: \forall t \in (0,T) ,
     \end{array}
   \right.
 \end{equation}
-avec (...)
+avec $c>0$ la c\'el\'erit\'e des ondes, $f$ un terme source et $u_0$, $u_1$ des conditions initiales.
+Notons que si l'on compare avec l'\'equation de la chaleur,
+l'\'equation des ondes poss\`ede une d\'eriv\'ee seconde en temps.
+Cette d\'eriv\'ee seconde (au lieu de premi\`ere) demande donc une
+condition aux limites (en temps) suppl\'ementaire.
+On a donc besoin, en plus de conna\^itre la valeur de la solution \`a l'instant initial ($u_0$),
+de conna\^itre la valeur de la d\'eriv\'ee en temps de la solution \`a l'instant initial ($u_1$).
+On peut comparer avec des probl\`emes classiques 1d d\'erivant des lois de Newton
+(par exemple la chute d'un objet soumis uniquement \`a son propre poids):
+on a une d\'eriv\'ee seconde en temps et il faut une donn\'ee initiale sur la solution
+et sa d\'eriv\'ee.
 
-
-!! Remarque sur le lien entre d\'eriv\'ees et conditions initiales / aux limites !!
--> !! comparer avec les autres chapitres !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Propri\'et\'es g\'en\'erales}
+\subsection{Recherche de solutions r\'eguli\`eres}
 
-% \begin{theorem}[Existence et unicit\'e de la solution]
-%   \label{thm:ondes_existence}
-%   Supposons que (...).
-%   Le probl\`eme \eqref{eq:ondes_Dir} est bien pos\'e:
-%   il admet une unique solution $u \in $(...)
-%   et $\| u \| \leq (...)$.
+Comme pour l'\'equation de la chaleur, on cherche ici \`a construire des solutions
+r\'eguli\`eres \`a l'\'equation des ondes.
+On consid\`ere d'abord le cas du domaine born\'e $\Omega = (0,1)$
+puis le cas de la droite r\'eelle $\Omega = \R$.
 
-%   De plus, cette solution appartient \`a l'espace (...)
-% \end{theorem}
+%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Cas du domaine born\'e $\Omega = (0,1)$}
 
+Le but de cette section est de construire une solution explicite au
+probl\`eme~\eqref{eq:ondes_Dir}.
+On adapte ce qui a \'et\'e fait dans la Section~\ref{subsubsec:chal_born}
+(le lecteur pourra comparer).
+Pour simplifier, on se restreint au cas particulier o\`u $f = 0$.
+Notons que cette m\'ethode peut \^etre adapt\'ee au cas o\`u $f$ n'est pas nul.
 
-% \begin{remark}[Pas d'effet r\'egularisant]
-%   Commenter la r\'egularit\'e du th\'eor\`eme. (...)
-%   -- M\^eme r\'egularit\'e que celle des donn\'ees.
-% \end{remark}
-
-
-\begin{proposition}[R\'eversibilit\'e de l'\'equation des ondes]
-  Soit $u$ une solution du probl\`eme \eqref{eq:ondes_Dir}.
-  Alors $\tu(t,x) := u(T-t,x)$ est l'unique solution du probl\`eme
-  r\'etrograde
-  \begin{align*}
-    \dfrac{\partial^2 \tu}{\partial t^2} - c^2 \dfrac{\partial^2 \tu}{\partial x^2} = f 
-    &\dans (0,T) \times (0,1) ,
-    \\
-    \tu(T,\cdot) = u(T,\cdot) 
-    & \dans (0,1) ,
-    \\
-    \dfrac{\partial \tu}{\partial t}(T,\cdot) = - \dfrac{\partial u}{\partial t}(T,\cdot) 
-    & \dans (0,1) ,
-    \\
-    \tu(t,0) = 0 , \quad \tu(t,1) = 0 
-    \quad& \forall t \in (0,T) ,
-  \end{align*}
-  et ce probl\`eme est bien pos\'e.
-\end{proposition}
-Ceci signifie que retrouver la solution initiale \`a partir des donn\'ees
-finales n'est pas une difficult\'e avec cette \'equation.
-
-\begin{proposition}[Conservation de l'\'energie]
-  \label{prop:ondes_energie}
-  Soit $u$ une solution de \eqref{eq:ondes_Dir}.
-  On note
-  \begin{align*}
-    E(t) := \dfrac{1}{2} \int_0^1 \left( \dfrac{\partial u}{\partial t}
-    \right)^2 \deriv x + \dfrac{c^2}{2} \int_0^1 \left( \dfrac{\partial u}{\partial x}
-    \right)^2 \deriv x .
-  \end{align*}
-  Si $f = 0$, alors on a pour tout $t \in [0,T]$,
-  \begin{align*}
-    E(t) = \dfrac{1}{2} \int_0^1 (u_1)^2 \deriv x
-    + \dfrac{c^2}{2} \int_0^1 \left(\dfrac{\partial u_0}{\partial x} \right)^2 \deriv x .
-  \end{align*}
-\end{proposition}
-
-Le premier terme de $E(t)$ correspond \`a l'\'energie
-cin\'etique du syst\`eme et le second terme son \'enegie potentielle.
-Lorsqu'il n'y a pas d'effort dans le domaine ($f=0$),
-cette \'energie conserve la valeur qu'elle avait \`a l'instant initial.
-
-\begin{proof}
-  En multipliant l'\'equation de la chaleur par $\dfrac{\partial u}{\partial t}$
-  et en int\'egrant sur $(0,1)$, on obtient
-  \begin{align*}
-    0 = 
-    \int_0^1 \dfrac{\partial^2 u}{\partial t^2} \dfrac{\partial u}{\partial t} \deriv x
-    + c^2 
-    \int_0^1 \dfrac{\partial^2 u}{\partial x \partial t} \dfrac{\partial u}{\partial x} \deriv x
-    = \dfrac{\deriv E}{\deriv t} .
-  \end{align*}
-  On conclut en utilisant les conditions initiales.
-\end{proof}
-
-Ce r\'esultat de conservation d'\'energie implique que le probl\`eme 
-\eqref{eq:ondes_Dir} admet une unique solution.
-\begin{corrolary}
-  Le probl\`eme \eqref{eq:ondes_Dir} admet une unique solution r\'eguli\`ere.
-\end{corrolary}
-En effet, si on consid\`ere deux solutions $u$ et $v$,
-alors $u-v$ v\'erifie \eqref{eq:ondes_Dir} avec $u_0 = 0$, $u_1 = 0$ et $f=0$. 
-Avec la Proposition \ref{prop:ondes_energie}, on peut alors
-montrer que $u=v$.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Construction de solutions r\'eguli\`eres}
-
-On s'int\'eresse \`a l'\'equation \eqref{eq:ondes_Dir} avec $f = 0$.
 On utilise la m\'ethode de s\'eparation des variables.
 On cherche donc une solution de la forme $u(t,x) = \Phi(t) \Psi(x)$.
 En reportant cette expression dans l'\'equation, on s'aper\c{c}oit 
@@ -3604,11 +3542,13 @@ avec $C$ une constante (puisque ces deux expressions sont \'egales
 et d\'ependent du temps pour l'une et de l'espace pour l'autre).
 De plus, nous ne sommes pas int\'eress\'es par le cas o\`u cette
 constante serait nulle car la solution associ\'ee serait alors triviale.
-Les fonctions $\Phi$ et $\Psi$ v\'erifient donc les \'equations
+Les fonctions $\Phi$ et $\Psi$ v\'erifient donc les conditions
 \begin{align*}
   \Phi''(t) - C \Phi(t) = 0 , 
   \qquad
-  c^2 \Psi''(x) - C \Psi(x) = 0 .
+  c^2 \Psi''(x) - C \Psi(x) = 0 ,
+  \qquad
+  \Psi(0) = \Psi(1) = 0 .
 \end{align*}
 
 Si $C > 0$, on peut montrer en utilisant les conditions de Dirichlet homog\`enes
@@ -3626,7 +3566,6 @@ $(t,x) \mapsto (A \sin(k\pi c t) + B \cos(k\pi c t)) \sin(k \pi x)$.
 Pour \^etre plus g\'en\'eral et ainsi v\'erifier les conditions initiales impos\'ees,
 on va consid\'erer des solutions 
 sous la forme de s\'eries de Fourier utilisant ces termes.
-
 Supposons que $u_0$ et $u_1$ sont dans $C^{2}([0,1])$
 avec $u_0(0) = u_0(1) = 0$
 et $u_1(0) = u_1(1) = 0$.
@@ -3638,9 +3577,8 @@ On peut alors \'ecrire
 \end{align*}
 avec $b_k = 2 \int_0^1 u_0(x) \sin(k \pi x) \deriv x$
 et $c_k = 2 \int_0^1 u_1(x) \sin(k \pi x) \deriv x$.
-
 On peut montrer que ces coefficients sont en $O(1/k^2)$ de sorte que les s\'eries
-pr\'ec\'edentes sont normalement convergentes.
+pr\'ec\'edentes sont normalement convergentes (voir Section~\ref{subsubsec:chal_born}).
 
 La fonction d\'efinie par
 \begin{align*}
@@ -3650,8 +3588,19 @@ La fonction d\'efinie par
 est alors continue et solution de l'\'equation des ondes au sens des distributions
 (les d\'eriv\'ees sont \`a consid\'erer au sens des distributions).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Formule de d'Alembert}
+
+\begin{remark}
+  La solution $u$ est p\'eriodique en temps, on a $u(\frac{2}{c}, x) = u_0(x)$
+  et $\partial_t u(\frac{2}{c}, x) = u_1(x)$.
+\end{remark}
+
+
+!! A-T-ON BESOIN DE $C^2$ POUR LES CONDITIONS INITIALES ??
+OU EST-CE UTILIS\'E ?? (idem pour la chaleur)
+!! CLARIFIER CE QU'ON ENTEND PAR ``l'\'equation est v\'erifi\'ee au sens des distributions'' !!
+
+%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Formule de d'Alembert}
 
 On consid\`ere le probl\`eme sur $\R$ entier:
 \begin{equation}
@@ -3818,6 +3767,94 @@ En particulier si $f=0$ !!
 
 
 !! faire la mont\'ee en r\'egularit\'e ??
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Propri\'et\'es g\'en\'erales}
+
+% \begin{theorem}[Existence et unicit\'e de la solution]
+%   \label{thm:ondes_existence}
+%   Supposons que (...).
+%   Le probl\`eme \eqref{eq:ondes_Dir} est bien pos\'e:
+%   il admet une unique solution $u \in $(...)
+%   et $\| u \| \leq (...)$.
+
+%   De plus, cette solution appartient \`a l'espace (...)
+% \end{theorem}
+
+
+% \begin{remark}[Pas d'effet r\'egularisant]
+%   Commenter la r\'egularit\'e du th\'eor\`eme. (...)
+%   -- M\^eme r\'egularit\'e que celle des donn\'ees.
+% \end{remark}
+
+
+\begin{proposition}[R\'eversibilit\'e de l'\'equation des ondes]
+  Soit $u$ une solution du probl\`eme \eqref{eq:ondes_Dir}.
+  Alors $\tu(t,x) := u(T-t,x)$ est l'unique solution du probl\`eme
+  r\'etrograde
+  \begin{align*}
+    \dfrac{\partial^2 \tu}{\partial t^2} - c^2 \dfrac{\partial^2 \tu}{\partial x^2} = f 
+    &\dans (0,T) \times (0,1) ,
+    \\
+    \tu(T,\cdot) = u(T,\cdot) 
+    & \dans (0,1) ,
+    \\
+    \dfrac{\partial \tu}{\partial t}(T,\cdot) = - \dfrac{\partial u}{\partial t}(T,\cdot) 
+    & \dans (0,1) ,
+    \\
+    \tu(t,0) = 0 , \quad \tu(t,1) = 0 
+    \quad& \forall t \in (0,T) ,
+  \end{align*}
+  et ce probl\`eme est bien pos\'e.
+\end{proposition}
+Ceci signifie que retrouver la solution initiale \`a partir des donn\'ees
+finales n'est pas une difficult\'e avec cette \'equation.
+
+\begin{proposition}[Conservation de l'\'energie]
+  \label{prop:ondes_energie}
+  Soit $u$ une solution de \eqref{eq:ondes_Dir}.
+  On note
+  \begin{align*}
+    E(t) := \dfrac{1}{2} \int_0^1 \left( \dfrac{\partial u}{\partial t}
+    \right)^2 \deriv x + \dfrac{c^2}{2} \int_0^1 \left( \dfrac{\partial u}{\partial x}
+    \right)^2 \deriv x .
+  \end{align*}
+  Si $f = 0$, alors on a pour tout $t \in [0,T]$,
+  \begin{align*}
+    E(t) = \dfrac{1}{2} \int_0^1 (u_1)^2 \deriv x
+    + \dfrac{c^2}{2} \int_0^1 \left(\dfrac{\partial u_0}{\partial x} \right)^2 \deriv x .
+  \end{align*}
+\end{proposition}
+
+Le premier terme de $E(t)$ correspond \`a l'\'energie
+cin\'etique du syst\`eme et le second terme son \'enegie potentielle.
+Lorsqu'il n'y a pas d'effort dans le domaine ($f=0$),
+cette \'energie conserve la valeur qu'elle avait \`a l'instant initial.
+
+\begin{proof}
+  En multipliant l'\'equation de la chaleur par $\dfrac{\partial u}{\partial t}$
+  et en int\'egrant sur $(0,1)$, on obtient
+  \begin{align*}
+    0 = 
+    \int_0^1 \dfrac{\partial^2 u}{\partial t^2} \dfrac{\partial u}{\partial t} \deriv x
+    + c^2 
+    \int_0^1 \dfrac{\partial^2 u}{\partial x \partial t} \dfrac{\partial u}{\partial x} \deriv x
+    = \dfrac{\deriv E}{\deriv t} .
+  \end{align*}
+  On conclut en utilisant les conditions initiales.
+\end{proof}
+
+Ce r\'esultat de conservation d'\'energie implique que le probl\`eme 
+\eqref{eq:ondes_Dir} admet une unique solution.
+\begin{corrolary}
+  Le probl\`eme \eqref{eq:ondes_Dir} admet une unique solution r\'eguli\`ere.
+\end{corrolary}
+En effet, si on consid\`ere deux solutions $u$ et $v$,
+alors $u-v$ v\'erifie \eqref{eq:ondes_Dir} avec $u_0 = 0$, $u_1 = 0$ et $f=0$. 
+Avec la Proposition \ref{prop:ondes_energie}, on peut alors
+montrer que $u=v$.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Approximation par diff\'erences finies}
