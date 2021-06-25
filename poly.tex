@@ -3778,6 +3778,7 @@ et $u_0$ et $u_1$ sont les donn\'ees initiales.
 
 !! Illustrer le cas $f= 0$ et $u_1 = 0$ avec un sch\'ema !! + cas domaine born\'e
 + p\'eriodicit\'e de la sol !!
+(on peut aussi remplacer le sch\'ema par des r\'esultats de simulation, c'est plus int\'eressant)
 
 \begin{exercise}
   On suppose que $f = 0$.
@@ -3789,24 +3790,101 @@ et $u_0$ et $u_1$ sont les donn\'ees initiales.
 !! V\'erifier que cet exo est faisable !!
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Propri\'et\'es g\'en\'erales}
+\subsection{Principales propri\'et\'es des solutions}
 
-% \begin{theorem}[Existence et unicit\'e de la solution]
-%   \label{thm:ondes_existence}
-%   Supposons que (...).
-%   Le probl\`eme \eqref{eq:ondes_Dir} est bien pos\'e:
-%   il admet une unique solution $u \in $(...)
-%   et $\| u \| \leq (...)$.
+On se place dans $\Omega = (0,1)$.
+On d\'efinit l'\'energie du syst\`eme
+\begin{align*}
+  E(t) := \frac12 \int_0^1 \left( \frac{\partial u}{\partial t} \right)^2 \deriv x
+  + \frac{c^2}{2} \int_0^1 \left( \frac{\partial u}{\partial x} \right)^2 \deriv x
+  = \frac12 \| \partial_t u (t,.)\|_{L^2(0,1)}^2 + \frac{c^2}2 \| \partial_x u (t,.)\|_{L^2(0,1)}^2.
+\end{align*}
+Nous rappelons que l'\'equation des ondes peut repr\'esenter un mouvement de corde.
+Le premier terme correspond alors \`a l'\'energie cin\'etique de la corde
+et le second \`a  l'\'energie potentielle associ\'ee \`a la force de tension de la corde.
+Nous montrons que la d\'eriv\'ee de l'\'energie m\'ecanique totale $E(t)$ est \'egale
+\`a la puissance des efforts ext\'erieurs $f$.
+En particulier, sans effort ext\'erieur cette \'energie se conserve.
+On peut aussi borner cette \'energie.
 
-%   De plus, cette solution appartient \`a l'espace (...)
-% \end{theorem}
+\begin{proposition}[Conservation et borne de l'\'energie]
+  \label{prop:ondes_donnees}
+  Si $u \in H^1(0,T;L^2(0,1)) \cap L^2(0,T;H^1_0(0,1))$ est une solution de \eqref{eq:ondes_Dir},
+  alors pour presque tout $t \in (0,T)$
+  on a 
+  \begin{align*}
+    E'(t) = \int_0^1 f \partial_t u \deriv x .
+  \end{align*}
+  On peut de plus montrer que pour presque tout $t \in (0,T)$
+  \begin{align*}
+    E(t) \leq E(0) e^T
+    + \frac{1}{2} \int_0^T \left[ \int_0^1 (f(s,x))^2 \deriv x \right] e^{T-s} \deriv s.
+  \end{align*}
+\end{proposition}
 
 
-% \begin{remark}[Pas d'effet r\'egularisant]
-%   Commenter la r\'egularit\'e du th\'eor\`eme. (...)
-%   -- M\^eme r\'egularit\'e que celle des donn\'ees.
-% \end{remark}
+\begin{proof}
+  En multipliant l'\'equation de la chaleur par $\dfrac{\partial u}{\partial t}$
+  et en int\'egrant sur $(0,1)$, on obtient
+  \begin{align*}
+    \int_0^1 f \partial_t u \deriv x
+    &=
+    \int_0^1 \dfrac{\partial^2 u}{\partial t^2} \dfrac{\partial u}{\partial t} \deriv x
+    - c^2 
+    \int_0^1 \dfrac{\partial u}{\partial t} \dfrac{\partial^2 u}{\partial x^2} \deriv x
+    \\
+    &=
+    \int_0^1 \dfrac{\partial^2 u}{\partial t^2} \dfrac{\partial u}{\partial t} \deriv x
+    + c^2 
+    \int_0^1 \dfrac{\partial^2 u}{\partial x \partial t} \dfrac{\partial u}{\partial x} \deriv x
+    = E'(t) .
+  \end{align*}
+  Notons qu'on a utilis\'e $\partial_t u(t,0) = \partial_t u(t,1)$ pour int\'egrer par parties.
 
+  En utilisant les in\'egalit\'es de Cauchy--Schwarz et de Young, on obtient
+  \begin{align*}
+    | E'(t) |
+    &\leq \| f(t,.) \|_{L^2(0,1)} \| \partial_t u(t,.) \|_{L^2(0,1)}
+    \\
+    &\leq \| f(t,.) \|_{L^2(0,1)}^2 +  \| \partial_t u(t,.) \|_{L^2(0,1)}^2
+    \\
+    &\leq \| f(t,.) \|_{L^2(0,1)}^2 +  E(t) .
+  \end{align*}
+
+  Pour rappel, le Lemme de Gr\"onwall nous dit que si une fonction $\eta$ v\'erifie
+  $\eta'(t) \leq \phi(t) \eta(t) + \psi(t)$ alors on a
+  $\eta(t) \leq \exp(\int_0^t \phi(s) \deriv s) \eta(0)
+  + \int_0^t \exp(\int_s^t \phi(u) \deriv u) \psi(s) \deriv s$.
+
+  !! Verifier le lemme de Gronwall + donner ses hypotheses precises !!
+
+  On obtient le r\'esultat en appliquant le Lemme de Gr\"onwall
+  ($\phi = 1$ et $\psi = \| f \|^2_{L^2(0,1)}$).
+\end{proof}
+
+On peut maintenant utiliser ce r\'esultat sur l'\'energie pour montrer
+que le probl\`eme des ondes avec conditions de Dirichlet est bien pos\'e.
+
+\begin{proposition}[Caract\`ere bien pos\'e du probl\`eme]
+  Pour $u_0 \in H_0^1(\Omega)$, $u_1 \in L^2(\Omega)$ et $f \in L^2(0,T;L^2(\Omega))$,
+  la probl\`eme~\eqref{eq:ondes_Dir} admet une unique solution $u$
+  dans $H^1(0,T;L^2(\Omega)) \cap L^2(0,T;H^1_0(\Omega))$.
+  De plus, il existe une constante $C > 0$ (ind\'ependante de $u$, $u_0$, $u_1$ et $f$)
+  telle que
+  \begin{align*}
+    \| u \|_{H^1(0,T;L^2(\Omega))} + \| u \|_{L^2(0,T;H^1_0(\Omega))}
+    \leq C (\| u_0 \|_{H^1_0(\Omega)} + \| u_1 \|_{L^2(\Omega)} + \| f \|_{L^2(0,T;L^2(\Omega))}) .
+  \end{align*}
+
+  !! Est-ce qu'il s'agit des normes ou bien plutôt des semi-normes \`a gauche ??
+\end{proposition}
+
+\begin{proof}
+  !! TODO !!
+\end{proof}
+
+
+!! R\'e\'ecrire la r\'eversibilit\'e de l'\'equation !!
 
 \begin{proposition}[R\'eversibilit\'e de l'\'equation des ondes]
   Soit $u$ une solution du probl\`eme \eqref{eq:ondes_Dir}.
@@ -3829,50 +3907,6 @@ et $u_0$ et $u_1$ sont les donn\'ees initiales.
 \end{proposition}
 Ceci signifie que retrouver la solution initiale \`a partir des donn\'ees
 finales n'est pas une difficult\'e avec cette \'equation.
-
-\begin{proposition}[Conservation de l'\'energie]
-  \label{prop:ondes_energie}
-  Soit $u$ une solution de \eqref{eq:ondes_Dir}.
-  On note
-  \begin{align*}
-    E(t) := \dfrac{1}{2} \int_0^1 \left( \dfrac{\partial u}{\partial t}
-    \right)^2 \deriv x + \dfrac{c^2}{2} \int_0^1 \left( \dfrac{\partial u}{\partial x}
-    \right)^2 \deriv x .
-  \end{align*}
-  Si $f = 0$, alors on a pour tout $t \in [0,T]$,
-  \begin{align*}
-    E(t) = \dfrac{1}{2} \int_0^1 (u_1)^2 \deriv x
-    + \dfrac{c^2}{2} \int_0^1 \left(\dfrac{\partial u_0}{\partial x} \right)^2 \deriv x .
-  \end{align*}
-\end{proposition}
-
-Le premier terme de $E(t)$ correspond \`a l'\'energie
-cin\'etique du syst\`eme et le second terme son \'enegie potentielle.
-Lorsqu'il n'y a pas d'effort dans le domaine ($f=0$),
-cette \'energie conserve la valeur qu'elle avait \`a l'instant initial.
-
-\begin{proof}
-  En multipliant l'\'equation de la chaleur par $\dfrac{\partial u}{\partial t}$
-  et en int\'egrant sur $(0,1)$, on obtient
-  \begin{align*}
-    0 = 
-    \int_0^1 \dfrac{\partial^2 u}{\partial t^2} \dfrac{\partial u}{\partial t} \deriv x
-    + c^2 
-    \int_0^1 \dfrac{\partial^2 u}{\partial x \partial t} \dfrac{\partial u}{\partial x} \deriv x
-    = \dfrac{\deriv E}{\deriv t} .
-  \end{align*}
-  On conclut en utilisant les conditions initiales.
-\end{proof}
-
-Ce r\'esultat de conservation d'\'energie implique que le probl\`eme 
-\eqref{eq:ondes_Dir} admet une unique solution.
-\begin{corrolary}
-  Le probl\`eme \eqref{eq:ondes_Dir} admet une unique solution r\'eguli\`ere.
-\end{corrolary}
-En effet, si on consid\`ere deux solutions $u$ et $v$,
-alors $u-v$ v\'erifie \eqref{eq:ondes_Dir} avec $u_0 = 0$, $u_1 = 0$ et $f=0$. 
-Avec la Proposition \ref{prop:ondes_energie}, on peut alors
-montrer que $u=v$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
