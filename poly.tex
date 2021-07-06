@@ -3524,6 +3524,7 @@ puis le cas de la droite r\'eelle $\Omega = \R$.
 
 %%%%%%%%%%%%%%%%%%%%
 \subsubsection{Cas du domaine born\'e $\Omega = (0,1)$}
+\label{subsubsec:ondes_01}
 
 Le but de cette section est de construire une solution explicite au
 probl\`eme~\eqref{eq:ondes_Dir}.
@@ -3809,17 +3810,18 @@ On peut aussi borner cette \'energie.
 
 \begin{proposition}[Conservation et borne de l'\'energie]
   \label{prop:ondes_donnees}
-  Si $u \in H^1(0,T;L^2(0,1)) \cap L^2(0,T;H^1_0(0,1))$ est une solution de \eqref{eq:ondes_Dir},
+  Si $u \in H^1(0,T;L^2(0,1)) \cap L^2(0,T;H^1_0(0,1))$ est une solution de~\eqref{eq:ondes_Dir},
   alors pour presque tout $t \in (0,T)$
   on a 
   \begin{align*}
     E'(t) = \int_0^1 f \partial_t u \deriv x .
   \end{align*}
   On peut de plus montrer que pour presque tout $t \in (0,T)$
-  \begin{align*}
+  \begin{align}
+    \label{eq:energy}
     E(t) \leq E(0) e^T
     + \frac{1}{2} \int_0^T \left[ \int_0^1 (f(s,x))^2 \deriv x \right] e^{T-s} \deriv s.
-  \end{align*}
+  \end{align}
 \end{proposition}
 
 
@@ -3866,48 +3868,82 @@ On peut maintenant utiliser ce r\'esultat sur l'\'energie pour montrer
 que le probl\`eme des ondes avec conditions de Dirichlet est bien pos\'e.
 
 \begin{proposition}[Caract\`ere bien pos\'e du probl\`eme]
+  \label{prop:ondes_bien_pose}
   Pour $u_0 \in H_0^1(\Omega)$, $u_1 \in L^2(\Omega)$ et $f \in L^2(0,T;L^2(\Omega))$,
   la probl\`eme~\eqref{eq:ondes_Dir} admet une unique solution $u$
   dans $H^1(0,T;L^2(\Omega)) \cap L^2(0,T;H^1_0(\Omega))$.
   De plus, il existe une constante $C > 0$ (ind\'ependante de $u$, $u_0$, $u_1$ et $f$)
   telle que
-  \begin{align*}
+  \begin{align}
+    \label{eq:ondes_donnees}
     \| u \|_{H^1(0,T;L^2(\Omega))} + \| u \|_{L^2(0,T;H^1_0(\Omega))}
     \leq C (\| u_0 \|_{H^1_0(\Omega)} + \| u_1 \|_{L^2(\Omega)} + \| f \|_{L^2(0,T;L^2(\Omega))}) .
-  \end{align*}
+  \end{align}
 
   !! Est-ce qu'il s'agit des normes ou bien plutôt des semi-normes \`a gauche ??
 \end{proposition}
 
 \begin{proof}
-  !! TODO !!
+  L'existence utilise une analyse similaire \`a celle de la Section~\ref{subsubsec:ondes_01},
+  mais dans un cadre plus g\'en\'eral au sens des distributions.
+  On ne la d\'eveloppera pas ici.
+
+  L'unicit\'e est une cons\'equence de la lin\'earit\'e du probl\`eme et
+  de la d\'ependance aux donn\'ees (consid\'erer la diff\'erence entre deux solutions).
+
+  Il reste \`a prouver l'in\'egalit\'e~\eqref{eq:ondes_donnees}.
+  On part de l'in\'egalit\'e~\eqref{eq:energy}.
+  On a ainsi
+  \begin{align*}
+    \| u \|_{H^1(0,T; L^2(\Omega))}^2 + \| u \|_{L^2(0,T; H^1_0(\Omega))}^2
+    &\leq 2\max(1,c^{-2}) \int_0^T E(t) \deriv t
+    \\
+    &\leq 2\max(1,c^{-2}) e^T T (E(0) + \| f \|_{L^2(0,T; L^2(\Omega))}^2) .
+  \end{align*}
+  De plus, $E(0) \leq \frac12 \max(1,c) (\| u_0 \|_{H^1_0(\Omega)}^2 + \| u_1 \|_{L^2(\Omega)}^2)$.
+  On conclut avec l'in\'egalit\'e de Young.
+
+  !! V\'erifier que l'on peut prouver l'existence ainsi ...
 \end{proof}
 
 
-!! R\'e\'ecrire la r\'eversibilit\'e de l'\'equation !!
+On s'int\'eresse maintenant \`a la r\'eversibilit\'e de l'\'equation des ondes.
+Pour $u$ une solution de~\eqref{eq:ondes_Dir}, on pose $\tu(t,x) := u(T-t, x)$.
+La fonction $\tu$ v\'erifie le probl\`eme r\'etrograde
+\begin{align}
+  \nonumber
+  \dfrac{\partial^2 \tu}{\partial t^2} - c^2 \dfrac{\partial^2 \tu}{\partial x^2} = \tf 
+  &\dans (0,T) \times (0,1) ,
+  \\
+  \label{eq:ondes_retro}
+  \tu(0,\cdot) = u(T,\cdot) 
+  & \dans (0,1) ,
+  \\
+  \nonumber
+  \dfrac{\partial \tu}{\partial t}(0,\cdot) = - \dfrac{\partial u}{\partial t}(T,\cdot) 
+  & \dans (0,1) ,
+  \\
+  \nonumber
+  \tu(t,0) = 0 , \quad \tu(t,1) = 0 
+  \quad& \;\; \forall t \in (0,T) ,
+\end{align}
+avec $\tf(t,x) := f(T-t, x)$.
+Il s'agit du probl\`eme~\eqref{eq:ondes_Dir} avec des donn\'ees diff\'erentes.
+Ce probl\`eme est donc bien pos\'e d'apr\`es la Proposition~\ref{prop:ondes_bien_pose}.
+L'\'equation des ondes est donc r\'eversible.
 
 \begin{proposition}[R\'eversibilit\'e de l'\'equation des ondes]
-  Soit $u$ une solution du probl\`eme \eqref{eq:ondes_Dir}.
-  Alors $\tu(t,x) := u(T-t,x)$ est l'unique solution du probl\`eme
-  r\'etrograde
-  \begin{align*}
-    \dfrac{\partial^2 \tu}{\partial t^2} - c^2 \dfrac{\partial^2 \tu}{\partial x^2} = f 
-    &\dans (0,T) \times (0,1) ,
-    \\
-    \tu(T,\cdot) = u(T,\cdot) 
-    & \dans (0,1) ,
-    \\
-    \dfrac{\partial \tu}{\partial t}(T,\cdot) = - \dfrac{\partial u}{\partial t}(T,\cdot) 
-    & \dans (0,1) ,
-    \\
-    \tu(t,0) = 0 , \quad \tu(t,1) = 0 
-    \quad& \forall t \in (0,T) ,
-  \end{align*}
-  et ce probl\`eme est bien pos\'e.
+  L'\'equation des ondes est r\'eversible : le probl\`eme r\'etrograde~\eqref{eq:ondes_retro}
+  est bien pos\'e.
 \end{proposition}
 Ceci signifie que retrouver la solution initiale \`a partir des donn\'ees
-finales n'est pas une difficult\'e avec cette \'equation.
+finales n'est pas particuli\`erement difficile pour cette \'equation.
 
+
+\begin{remark}[Conditions de Dirichlet non homog\`enes]
+  On peut g\'erer des conditions de Dirichlet non homog\`enes par un rel\`evement
+  (voir la m\^eme remarque pour l'\'equation de Poisson et l'\'equation de la chaleur).
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Approximation par diff\'erences finies}
