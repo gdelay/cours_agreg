@@ -1,0 +1,296 @@
+%% Fichier contenant des sources pour des parties non conservees sur l'equation des ondes
+%% (discretisation par les differences finies)
+
+\section{Equation des ondes}
+\subsection{Analyse num\'erique}
+
+!! INTRO DU SCHEMA EXPLICITE CENTRE !!
+
+Plus g\'en\'eralement, les sch\'emas \`a deux pas sont de la forme
+\begin{align}
+  \label{eq:schema_2pas}
+  U^0 = U_0 , \quad U^1 = U_0 + h_t V_0 \quad \text{et} 
+  \quad \forall n \geq 1, \quad U^{n+1} = A_1 U^n + A_2 U^{n-1} + h_t^2 F^n ,
+\end{align}
+avec $A_1$ et $A_2$ deux matrices et $U_0$ et $V_0$ des vecteurs tels que (...)
+
+La but de cette section est d'adapter les d\'efinitions des sections \ref{subsubsec:analyse_def}
+et !!(...)!! au contexte des sch\'emas \`a deux pas de temps.
+Nous adaptons tout d'abord les d\'efinitions et les th\'eor\`emes d'analyse num\'erique.
+Nous analysons ensuite diff\'erents sch\'emas dont \eqref{eq:ondes_DF_exp}.
+%%%%%%%%%%%%%%%%%
+\subsubsection{D\'efinitions et th\'eor\`emes 
+  pour les sch\'emas \`a deux pas de temps}
+
+Nous donnons maintenant sans commentaire les d\'efinitions et th\'eor\`emes de la section
+\ref{subsubsec:analyse_def} adapt\'es au cadre d'un sch\'ema \`a deux pas de temps.
+Notons les similitudes avec les d\'efinitions pour un pas de temps.
+Nous consid\'erons $\|\cdot\|$ une norme de $\R^M$ (cette norme d\'epend de $M$).
+
+\begin{definition}[Stabilit\'e en norme $\|\cdot\|$]
+  \label{def:stabilite_2pas}
+  Soit $\Stab \subset \R_+^* \times \R_+^*$ tel que $(0,0) \in \overline{\Stab}$.
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_2pas} est stable 
+  (en norme $\|\cdot\|$)
+  sous la condition $\Stab$ s'il existe $C_1 , C_2 , C_3 > 0$ qui ne d\'ependent que de $T$
+  tels que $\forall (h_x , h_t) \in \Stab$, $\forall U_0 , U^1 \in \R^{M}$, 
+  $\forall (F^n)_{0 \leq n \leq N} \in \R^{(N+1) \times M}$, on a
+  \begin{align}
+    \max_{0\leq n \leq N} \| U^n \| 
+    \leq C_1 \| U^0 \| + C_2 \| U^1 \| 
+    + C_3 \max_{0\leq n \leq N} \| F^n \| ,
+  \end{align}
+  o\`u $(U^n)$ est l'unique suite v\'erifiant \eqref{eq:schema_2pas}.
+
+  On dit \'egalement que le sch\'ema \eqref{eq:schema_2pas} 
+  est inconditionnellement stable
+  si la d\'efinition pr\'ec\'edente
+  s'applique avec $\Stab = \R_+^* \times \R_+^*$.
+\end{definition}
+
+\begin{definition}[Erreur de troncature]
+  \label{def:troncature_2pas}
+  L'erreur de troncature (ou erreur de consistance) du sch\'ema \eqref{eq:schema_2pas}
+  au temps $t_n$ est un vecteur $\varepsilon^n \in \R^{M}$
+  ($2 \leq n \leq N$)
+  d\'efini par
+  \begin{align}
+    \label{eq:troncature_2pas}
+    \varepsilon^{n+1} := \tu^{n+1} - A_1 \tu^n - A_2 \tu^{n-1} - h_t^2 F^n ,
+  \end{align}
+  o\`u $\tu^n \in \R^{M}$ est d\'efini par
+  $(\tu^n)_j = u(t_n,x_j)$ avec $u$ la solution du probl\`eme exact associ\'e \`a
+  \eqref{eq:schema_2pas}.
+\end{definition}
+
+\begin{definition}[Consistance en norme $\|\cdot\|$]
+  \label{def:consistance_2pas}
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_2pas} est consistant 
+  (en norme $\|\cdot\|$) si pour toute
+  solution r\'eguli\`ere $u$ du probl\`eme exact on a
+  \begin{align}
+    \lim_{\substack{N \to +\infty\\ M \to +\infty}} \max_{0\leq n \leq N} 
+    \dfrac{\| \varepsilon^n \|}{h_t^2} = 0 ,
+  \end{align}
+  o\`u $\varepsilon^n$ est l'erreur de troncature (et $h_t = T/N$).
+
+  On dit de plus que le sch\'ema \eqref{eq:schema_2pas} est consistant d'ordre $p \in \N^*$
+  en temps et $q \in \N^*$ en espace (en norme $\|\cdot\|$)
+  si pour toute solution r\'eguli\`ere $u$ (du probl\`eme exact)
+  il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$ telle que
+  \begin{align}
+    \forall N, M \geq 2 , \quad \max_{0\leq n \leq N}
+    \dfrac{\| \varepsilon^n \|}{h_t^2} \leq C (h_t^p + h_x^q) .
+  \end{align}
+\end{definition}
+
+\begin{remark}
+  Notons que la constante $C$ dans la d\'efinition \ref{def:consistance}
+  peut d\'ependre de la solution $u$ du probl\`eme exact.
+\end{remark}
+
+\begin{definition}[Convergence en norme $\| \cdot \|$]
+  \label{def:convergence_2pas}
+  On dit que le sch\'ema num\'erique \eqref{eq:schema_2pas} converge (ou est convergent) 
+  en norme $\| \cdot \|$
+  sous la condition $\Stab \subset \R_+^* \times \R_+^*$
+  si 
+  \begin{align}
+    \lim_{\substack{(h_t,h_x) \in \Stab \\ (h_t,h_x) \to (0,0)}} \max_{0\leq n \leq N} 
+    \| \tu^n - u^n \| = 0 ,
+  \end{align}
+  avec $Nh_t = T$ et $Mh_x = 1$ o\`u $u$ est la solution du probl\`eme exact
+  et $(\tu^n)_j = u(t_n,x_j)$.
+  
+  De mani\`ere similaire, on dit que le sch\'ema num\'erique 
+  \eqref{eq:schema_2pas} converge (ou est convergent) en norme $\|\cdot\|$
+  \`a l'ordre $p\in\N^*$ en temps et $q\in\N^*$ en espace
+  sous la condition $\Stab \subset \R_+^* \times \R_+^*$
+  s'il existe une constante $C>0$ ind\'ependante de $h_t$ et $h_x$
+  telle que
+  \begin{align}
+    \forall (h_t , h_x) \in \Stab , \quad \max_{0\leq n \leq N}
+    \| \tu^n - u_j^n \| \leq C (h_t^p + h_x^q) .
+  \end{align}
+
+  On dit enfin que le sch\'ema est convergent (resp. convergent \`a l'ordre $p$
+  en temps et $q$ en espace) en norme $\|\cdot\|$ 
+  si la d\'efinition ci-dessus est v\'erifi\'ee
+  avec $\Stab = \R_+^* \times \R_+^*$.
+\end{definition}
+
+Ces d\'efinitions sont reli\'ees par le th\'eor\`eme de Lax.
+\begin{theorem}[Th\'eor\`eme de Lax]
+  \label{thm:convergence_2pas}
+  Si le sch\'ema \eqref{eq:schema_2pas} est stable en norme $\|\cdot\|$ sous la condition
+  $\Stab \subset \R_+^* \times \R_+^*$ et consistant en norme $\|\cdot\|$
+  (respectivement consistant d'ordre $p$ en temps et $q$ en espace),
+  alors le sch\'ema \eqref{eq:schema_2pas} est convergent en norme $\|\cdot\|$
+  (respectivement convergent d'ordre $p$ en temps et $q$ en espace)
+  sous la condition $\Stab$.
+
+
+  De plus, si le probl\`eme exact (le probl\`eme v\'erifi\'e par $u$) 
+  est bien pos\'e, alors la consistance et la stabilit\'e du sch\'ema 
+  sont n\'ecessaires \`a sa convergence.
+\end{theorem}
+Le th\'eor\`eme \ref{thm:convergence_2pas} s'applique aussi avec $\Stab = \R_+^* \times \R_+^*$.
+
+
+\begin{remark}
+  On peut imaginer des sch\'emas avec un nombre de pas de temps sup\'erieur \`a deux.
+  Ces d\'efinitions peuvent alors \^etre adapt\'ees \`a ce cas de figure.
+\end{remark}
+
+
+!! FAIRE ATTENTION A CE QUE CETTE SECTION SOIT ADAPTEE POUR L'ETUDE DES SCHEMAS
+MULTI-PAS DANS LE CAS D'UN PB D'ORDRE UN EN TEMPS 
+(en particulier faut-il un $h_t^2$ devant $F^n$ et dans la consistance) !!
+
+
+!! Remarque : on pourrait construire des caract\'erisations de la stabilit\'e comme
+nous l'avons fait en section 3 !!
+
+
+!! adapter ce qui vient d'\^etre fait \`a l'analyse des sch\'emas \`a venir !!
+---- Enlever toute cette partie ... 
+(en la reportant dans la partie \'equation de la chaleur)
+(faire quand m\^eme une remarque quelque part sur ce qu'est la convergence)
+
+%%%%%%%%%%%%%%%%%
+\subsubsection{Analyse de quelques sch\'emas}
+
+
+
+Une m\'ethode classique pour \'etudier des sch\'emas \`a plusieurs pas de temps est
+de les r\'e\'ecriture comme un sch\'ema "vectoriel" \`a un pas de temps.
+Pour cela, introduisons les inconnues 
+\begin{align}
+  v_j^n = \dfrac{u_j^n - u_j^{n-1}}{h_t} , \qquad w_j^n = c \dfrac{u_j^n - u_{j-1}^n}{h_x} .
+\end{align}
+Nous pouvons montrer que ces inconnues v\'erifient
+\begin{align}
+  \dfrac{v_j^{n+1} - v_j^n}{h_t} - c \dfrac{w_{j+1}^n - w_j^n}{h_x} = f(t_n,x_j) ,
+  \\
+  \dfrac{w_j^{n+1} - w_j^n}{h_t} = c \dfrac{v_j^{n+1} - v_{j-1}^{n+1}}{h_x} .
+\end{align}
+Nous pouvons donc r\'e\'ecrire le sch\'ema \eqref{eq:ondes_DF_exp}
+comme le sch\'ema \`a un pas de temps de la forme \eqref{eq:schema_1pas}
+(nous ne donnons pas ici l'expression de la matrice et du second membre).
+
+Il s'agit d'un sch\'ema explicite o\`u \`a chaque pas de temps,
+$V^{n+1}$ et $W^{n+1}$ sont calcul\'es comme
+\begin{align*}
+  &v_j^{n+1} = v_j^n + \dfrac{c h_t}{h_x} ( w_{j+1}^n - w_j^n ) + h_t f_j^n ,
+  \\
+  &w_j^{n+1} = w_j^n + \dfrac{c h_t}{h_x} ( v_j^n - v_{j-1}^n ) 
+  + \left( \dfrac{c h_t}{h_x} \right)^2 (w_{j+1}^n - 2 w_j^n + w_{j-1}^n ) 
+  + \dfrac{c h_t^2}{h_x} (f_j^n - f_{j-1}^n ) . 
+\end{align*}
+
+!! Donner l'initialisation de ce sch\'ema !!
+
+
+Nous voulons \'etudier la stabilit\'e de ce sch\'ema au sens de Von Neumann.
+On consid\`ere donc que $V^n$ et $W^n$ sont donn\'es par des ondes spatiales et
+on calcule le facteur d'amplification qui appara\^it au pas de temps suivant.
+Si pour $k \in \Z$, $v_j^n = w_j^n = e^{2 i \pi k x_j}$ et $f_j^n = 0$, alors
+$v_j^{n+1} = v_j^n + \dfrac{c h_t}{h_x} ( e^{2 i \pi k h_x} - 1 ) w_j$
+et $w_j^{n+1} = w_j^n + \dfrac{c h_t}{h_x} (1-e^{-2 i \pi k h_x}) v_j^n
++ 2 \left(\dfrac{c h_t}{h_x}\right)^2 (\cos(2 \pi k h_x) - 1) w_j^n$.
+Ainsi, nous avons la relation
+\begin{align*}
+  \begin{pmatrix}
+    v_j^{n+1} \\ w_j^{n+1}
+  \end{pmatrix}
+  = A(k)
+  \begin{pmatrix}
+    v_j^{n} \\ w_j^{n}
+  \end{pmatrix} ,
+\end{align*}
+o\`u $A(k)$ est la matrice d'amplification associ\'ee \`a ce probl\`eme.
+Elle est donn\'ee par
+\begin{align*}
+  A(k) = 
+  \begin{pmatrix}
+    1 & i e^{i \pi k h_x} a(k)
+    \\
+    i e^{-i \pi k h_x} a(k) & 1 - (a(k))^2
+  \end{pmatrix} ,
+\end{align*}
+avec $a(k) = 2 \frac{c h_t}{h_x} \sin(\pi k h_x)$.
+
+
+Nous admettons le fait qu'une condition n\'ecessaire de stabilit\'e soit
+que les valeurs propres de cette matrice aient un module $\leq 1$.
+Le discriminant de cette matrice vaut
+$\Delta(k) = (a(k))^2 [(a(k))^2 - 4]$.
+\'Etant donn\'e que le d\'eterminant de cette matrice vaut $1$,
+le produit de ses deux valeurs propres vaut aussi $1$.
+Il est donc n\'ecessaire que le discrimant reste $\leq 0$ pour tout $k \in \Z$.
+Nous avons donc la condition n\'ecessaire de stabilit\'e
+\begin{align*}
+  \frac{c h_t}{h_x} \leq 1 .
+\end{align*}
+
+
+Cette condition ne correspond pas \`a une condition suffisante de stabilit\'e.
+On peut prouver qu'une condition suffisante est
+\begin{align*}
+  \exists \delta \in ]0,1[, \qquad
+  \text{$\delta$ ind\'ependant de $h_t$ et $h_x$ tel que  }
+  \dfrac{c h_t}{h_x} \leq \delta .
+\end{align*}
+Pour plus de d\'etails, le lecteur peut se reporter au livre de B. Lucquin
+(p. 196--201).
+
+
+!! difficult\'e : dans le livre de B. Lucquin, il faut r\'e\'ecrire les 
+sch\'emas comme des sch\'emas d'ordre 1 !!
+-- Utilise-t-on les def au dessus ??
+!! Il y aurait moyen de les utiliser mais il faudrait refaire toutes les 
+caract\'erisations !!
+
+!! Une tr\`es bonne fa\c{c}on de faire serait de faire les premi\`eres d\'emos avec
+les nouvelles defs et de laisser en exercice un raisonnement sur le syst\`eme vectoriel
+---- On pourrait ainsi inclure la partie "continue" dans l'exo !!
+
+
+!! Une autre fa\c{c}on de proc\'eder serait de faire toute l'analyse num\'erique comme dans
+le livre puis de faire une section "liens avec l'\'equation de transport"
+o\`u on ferait l'\'etude continue avec la m\'ethode des caract\'eristiques !!
+---- On va choisir cette option : l'analyse avec plusieurs pas de temps est tr\`es compliqu\'ee !!
+
+
+
+!! toute cette analyse a l'air compliqu\'ee : une possibilit\'e serait 
+de juste \'evoquer les sch\'emas sans les analyser !!
+
+!! analyse sch\'ema intro !!
+
+!! interpretation CFL !!
+
+!! v\'erifier qu'il n'y a pas besoin de stabilit\'e dans d'autres normes
+que celle propos\'ee !!
+
+
+!! sch\'ema implicite !!
++ $\theta$-sch\'ema en exo
+
+
+!! exo final sur formulation mixte !!
++ derniere question : legere modif rend le sch\'ema instable !!
+
+!! exercice avec conditions de Dirichlet non homogenes ??
+
+
+
+
+%%%%%%%%%%%%%%%%%%
+\subsubsection{D\'etermination pratique des ordres de convergence}
+
+
+!! expliquer comment ca marche + figures + exo : retrouver les figures !!
+
+
+!! exercice sur les ordre de convergence : figure avec echelle logarithmique !!
