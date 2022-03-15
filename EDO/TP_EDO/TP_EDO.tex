@@ -1,0 +1,214 @@
+\documentclass[12pt]{article}
+\usepackage[french]{babel}
+\usepackage{amssymb,times,amsmath,amsfonts}
+\usepackage{a4,epic,eepic}
+\usepackage{color,graphicx,alltt}
+\usepackage{hyperref,eurosym}
+\usepackage{caption}
+
+
+\textwidth=17cm
+\textheight=23cm
+\topmargin=-1cm
+\oddsidemargin=-1cm
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+ 
+ 
+\input{TitreDateEtc}
+\begin{document}
+
+
+
+\setcounter{page}{1}\noindent 
+\univ\hfill
+\annee \\
+\cours\hfill \\
+\coursbis \hfill
+\par\bigskip
+
+%\titre
+\par\bigskip
+\begin{center}
+\Large{ \bf TP : Equations diff\'erentielles}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Dans ce TP, on aura besoin des modules suivants : \\ 
+\texttt{
+import numpy as np \\
+import scipy as sc\\
+import numpy.linalg as LA\\
+import matplotlib.pyplot as plt \\
+import scipy.integrate as integrate \vspace{0.3cm}\\
+}
+Le dernier module sera utilis\'e pour r\'esoudre des \'equations diff\'erentielles avec la commande \texttt{odeint}. 
+\begin{exo} \textbf{Sch\'ema d'Euler, calcul d'erreur} \\
+On consid\`ere le probl\`eme suivant :
+$$
+\left\{
+\begin{array}{rl}
+x'(t)&=x(t)+2y(t)\\
+y'(t)&=2x(t)+y(t)
+\end{array}
+\right.
+$$
+sur l'intervalle $[0,1]$ avec la condition initiale $x(0)=5$ et $y(0)=0$.
+\begin{enumerate}
+\item Faire un programme afin de d\'eterminer la solution approch\'ee de ce syst\`eme \`a l'aide d'un sch\'ema d'Euler explicite. 
+\item En prenant un pas de temps $\Delta t = 0.01$, tracer la solution approch\'ee de ce syst\`eme en fonction du temps.
+\item On rappelle que la solution exacte de ce syst\`eme est donn\'ee par
+  $x(t) = \frac52 (e^{-t} + e^{3t})$ et $y(t) = \frac52 (-e^{-t} + e^{3t})$. Comparer graphiquement la solution exacte et la solution approch\'ee pour diff\'erentes valeurs de $\Delta t$.
+\item Pour $0\leq n \leq N$, on note $t_n=n\Delta t$ les points de discr\'etisation et $X_n$ la solution approch\'ee au temps $t_n$. \'Ecrire une routine calculant l'erreur $\max_{0\leq n \leq N}\|X(t_n)-X_n\|_{\infty}$. On pourra utiliser la commande \texttt{norm} du module \texttt{numpy.linalg} (avec l'option \texttt{np.inf}). 
+\item Tracer  l'erreur en fonction de $\Delta t$ en \'echelle logarithmique. 
+\item Utiliser la commande \texttt{np.polyfit} pour d\'eterminer la droite qui approche au sens des moindres carr\'es les points de la courbe tracée à la question précédente  (il s'agit de la droite de r\'egression). 
+\item On observe que la pente de la droite est proche de $1$. Comment l'interpr\'eter ?
+\item Facultatif : reprendre les trois derni\`eres questions
+  pour le sch\'ema du point milieu d\'efini dans l'exercice~\ref{ex:pt_milieu}.
+\end{enumerate}
+\end{exo}
+\newpage
+
+\begin{exo}\textbf{Portrait de phase, stabilit\'e des points critiques}\\
+On consid\`ere le probl\`eme suivant sur l'intervalle $[0,10]$ :
+$$
+\left\{
+\begin{array}{rl}
+x'(t)&=-2x(t)-y(t)+6\\
+y'(t)&=3x(t)-4y(t)-7
+\end{array}
+\right.
+$$
+avec les conditions initiales $(x(0),y(0))=(3,1)$.
+\begin{enumerate}
+\item D\'eterminer num\'eriquement les solutions de ce syst\`eme en utilisant la commande \texttt{odeint} du module \texttt{scipy.integrate}. \\
+
+\begin{tabular}{|l|}
+ \hline
+La syntaxe pour la commande  \texttt{odeint}  est :\\
+ \hspace{2cm}\texttt{sol=integrate.odeint(f,X0,t)}\\
+o\`u \\
+$\bullet$ \texttt{f} a \'et\'e d\'efinie de la fa\c con suivante : \\
+ \texttt{ def f(X,t): ... }\\
+(m\^eme si  \texttt{f}  ne d\'epend pas de \texttt{t}, il faut que l'argument apparaisse en seconde position en entr\'ee).\\ 
+$\bullet$ \texttt{X0} correspond \`a la condition initiale \\
+$\bullet$ \texttt{t}  est le vecteur contenant les temps en lesquels la solution est \'evalu\'ee (le premier c\oe fficient\\  du vecteur est le 
+temps initial)\\
+$\bullet$ \texttt{sol} est le vecteur contenant les valeurs prises par la solution \'evalu\'ee aux temps du vecteur \texttt{t}. \\
+ \hline
+\end{tabular}
+ \vspace{0.3cm}
+\item Tracer $x$ et $y$ en fonction du temps.
+\item Tracer la solution dans le plan de phases.
+\item Tester diff\'erentes conditions initiales. 
+\item Calculer \`a la main les points critiques de ce syst\`eme. Etudier leur stabilit\'e. Ce r\'esultat est-il coh\'erent avec le comportement observ\'e num\'eriquement ?  %point critique = (31/11,4/11)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}\textbf{Syst\`eme de Lotka-Volterra}\\
+On consid\`ere le syst\`eme de Lotka-Volterra sur l'intervalle $[0,30]$ :
+$$
+\left\{
+\begin{array}{rl}
+x'(t)&=x(t)(2-y(t)/10)\\
+y'(t)&=y(t)(x(t)/10-4)
+\end{array}
+\right.
+$$
+avec les conditions initiales $x(0)=100$ et $y(0)=70$.
+\begin{enumerate}
+\item Tracer $x$ et $y$ en fonction du temps.
+\item Tracer la solution dans le plan de phase.
+\item Tracer les isoclines dans le plan de phase. 
+\item Tester d'autres conditions initiales.
+\end{enumerate}
+\end{exo}
+
+
+%
+%\begin{exo}
+%On consid\`ere le syst\`eme sur l'intervalle $[0,50]$ :
+%$$
+%\left\{
+%\begin{array}{rl}
+%x'&=-y-x(x^2+y^2)\\
+%y'&=x-y(x^2+y^2)
+%\end{array}
+%\right.
+%$$
+%compl\'et\'e par la condition initiale $x(0)=1$ et $y(0)=0$.
+%Tracer la solution en fonction du  temps et dans le plan de phase.
+%\end{exo}
+
+\newpage
+\begin{exo}
+  \label{ex:pt_milieu}
+On consid\`ere un pendule de longueur $l$. L'\'evolution de $\theta$ l'angle du pendule par rapport \`a la verticale est donn\'ee par l'\'equation suivante :
+$$
+\theta''(t)+\frac{g}{l}\sin(\theta(t))=0.
+$$
+On d\'efinit $\omega=\theta'$, on a ainsi le syst\`eme 
+\begin{equation*}
+\left\{
+\begin{array}{l}
+\theta'(t)=\omega(t) \vspace{0.1cm}\\
+\omega'(t)=-\displaystyle\frac{g}{l}\sin(\theta(t)).
+\end{array}
+\right.
+\end{equation*}
+On suppose que $\theta(0)$ et  $\omega(0)$ sont donn\'es. 
+Pour r\'esoudre ce probl\`eme sur $[0,T]$, on prend $N \in \mathbb{N}^*$, puis on d\'efinit le pas de discr\'etisation $h=\frac TN$ et  les temps de discr\'etisation $t_n=nh$ pour $0 \leq n \leq N$.  
+
+
+\begin{enumerate}
+\item D\'eterminer la solution approch\'ee de ce syst\`eme \`a l'aide d'un sch\'ema d'Euler explicite :
+\begin{equation*}
+\left\{
+\begin{array}{l}
+\theta_{n+1}=\theta_n+h\omega_{n}\vspace{0.1cm}\\
+\omega_{n+1}=\omega_n-h\displaystyle\frac{g}{l}\sin(\theta_{n}).
+\end{array}
+\right.
+\end{equation*}
+
+On prendra $T=2,\, N=200,\,l=0.1,\,g=9.81$
+et les conditions initiales 
+$\theta(0)=\frac{\pi}{3},\,$ \\ $\omega(0)=0.$
+\item Tracer $\theta$ et $\omega$ en fonction du temps.
+\item Mettre en \oe uvre le sch\'ema du point-milieu. \vspace{0.2cm}\\
+\begin{tabular}{|c|}
+ \hline
+Le \textbf{sch\'ema du point-milieu} pour approcher l'EDO $y'(t)=f(t,y(t))$ est donn\'e par :\\
+$y_{n+1}=y_n+h f\displaystyle\left(t_n+\frac h2,y_n+\frac h2 f(t_n,y_n)\right)$\\
+ \hline
+\end{tabular}
+\item Comparer  la solution donn\'ee par la fonction \texttt{odeint} et les solutions donn\'ees par ces deux méthodes (on pr\'esentera $\theta$ et $\omega$ sur deux graphes diff\'erents). 
+\item Comparer les solutions sur le portrait de phases. 
+\end{enumerate}
+
+
+
+ 
+\end{exo}
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
