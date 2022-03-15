@@ -70,19 +70,31 @@ sur l'intervalle $[0,1]$ avec la condition initiale $x(0)=5$ et $y(0)=0$.
 \end{exo}
 \newpage
 
-\begin{exo}\textbf{Portrait de phase, stabilit\'e des points critiques}\\
-On consid\`ere le probl\`eme suivant sur l'intervalle $[0,10]$ :
+\begin{exo}\textbf{\'Etude d'un pendule : Portrait de phase}
+  \label{ex:pendule}
+  \\
+  On consid\`ere un pendule de longueur $l$. L'\'evolution de $\theta$ l'angle du pendule par rapport \`a la verticale est donn\'ee par l'\'equation suivante :
 $$
+\theta''(t)+\frac{g}{l}\sin(\theta(t))=0.
+$$
+On d\'efinit $\omega=\theta'$, on a ainsi le syst\`eme 
+\begin{equation*}
 \left\{
-\begin{array}{rl}
-x'(t)&=-2x(t)-y(t)+6\\
-y'(t)&=3x(t)-4y(t)-7
+\begin{array}{l}
+\theta'(t)=\omega(t) \vspace{0.1cm}\\
+\omega'(t)=-\displaystyle\frac{g}{l}\sin(\theta(t)).
 \end{array}
 \right.
-$$
-avec les conditions initiales $(x(0),y(0))=(3,1)$.
+\end{equation*}
+On suppose que $\theta(0)$ et  $\omega(0)$ sont donn\'es. 
+On veut tracer le portrait de phase de ce probl\`eme pour les param\`etres
+$l=5$ et $g=9.81$.
+
 \begin{enumerate}
-\item D\'eterminer num\'eriquement les solutions de ce syst\`eme en utilisant la commande \texttt{odeint} du module \texttt{scipy.integrate}. \\
+\item Tracer la solution de ce probl\`eme dans le plan des phases pour la donn\'ee initiale
+  $(\theta(0),\omega(0)) = (\theta_0,0)$ avec $\theta_0 \in [0 , 2\pi]$
+  (prendre de nombreuses valeurs de $\theta_0$ et tracer toutes les solutions sur le m\^eme graphe).
+  On pourra r\'esoudre le syst\`eme en utilisant la commande \texttt{odeint} du module \texttt{scipy.integrate}. \\
 
 \begin{tabular}{|l|}
  \hline
@@ -99,29 +111,20 @@ $\bullet$ \texttt{sol} est le vecteur contenant les valeurs prises par la soluti
  \hline
 \end{tabular}
  \vspace{0.3cm}
-\item Tracer $x$ et $y$ en fonction du temps.
-\item Tracer la solution dans le plan de phases.
-\item Tester diff\'erentes conditions initiales. 
-\item Calculer \`a la main les points critiques de ce syst\`eme. Etudier leur stabilit\'e. Ce r\'esultat est-il coh\'erent avec le comportement observ\'e num\'eriquement ?  %point critique = (31/11,4/11)
-\end{enumerate}
-\end{exo}
+\item Pour compl\'eter le portrait de phase, ajouter plusieurs
+  courbes issues des donn\'ees initiales
+  $(-\pi , \omega_0)$ avec $\omega_0 > 0$ et $(3\pi , \omega_0)$ avec $\omega_0 < 0$.
+\item Ajouter les points critiques sur cette figure.
+\item Faisons maintenant un zoom pr\`es du point $(0,0)$.
+  Sur une autre figure, repr\'esenter le diagramme des phases pr\`es du point $(0,0)$.
+  Ajouter les isoclines.
+\item Enfin, nous allons repr\'esenter $f$ sur cette figure.
+  Pour cela, on pourra utiliser les commandes \texttt{np.meshgrid}, \texttt{np.hypot}
+  et \texttt{plt.quiver}.
 
-\begin{exo}\textbf{Syst\`eme de Lotka-Volterra}\\
-On consid\`ere le syst\`eme de Lotka-Volterra sur l'intervalle $[0,30]$ :
-$$
-\left\{
-\begin{array}{rl}
-x'(t)&=x(t)(2-y(t)/10)\\
-y'(t)&=y(t)(x(t)/10-4)
-\end{array}
-\right.
-$$
-avec les conditions initiales $x(0)=100$ et $y(0)=70$.
-\begin{enumerate}
-\item Tracer $x$ et $y$ en fonction du temps.
-\item Tracer la solution dans le plan de phase.
-\item Tracer les isoclines dans le plan de phase. 
-\item Tester d'autres conditions initiales.
+  \textbf{NB :} si vous essayez de repr\'esenter $f$ comme ici sur la premi\`ere figure,
+  vous pourriez avoir des difficult\'es dues au fait que $\omega$ et $\theta$
+  n'ont pas le m\^eme ordre de grandeur.
 \end{enumerate}
 \end{exo}
 
@@ -142,22 +145,10 @@ avec les conditions initiales $x(0)=100$ et $y(0)=70$.
 %\end{exo}
 
 \newpage
-\begin{exo}
+\begin{exo}\textbf{\'Etude d'un pendule : simulations num\'eriques.}
   \label{ex:pt_milieu}
-On consid\`ere un pendule de longueur $l$. L'\'evolution de $\theta$ l'angle du pendule par rapport \`a la verticale est donn\'ee par l'\'equation suivante :
-$$
-\theta''(t)+\frac{g}{l}\sin(\theta(t))=0.
-$$
-On d\'efinit $\omega=\theta'$, on a ainsi le syst\`eme 
-\begin{equation*}
-\left\{
-\begin{array}{l}
-\theta'(t)=\omega(t) \vspace{0.1cm}\\
-\omega'(t)=-\displaystyle\frac{g}{l}\sin(\theta(t)).
-\end{array}
-\right.
-\end{equation*}
-On suppose que $\theta(0)$ et  $\omega(0)$ sont donn\'es. 
+  \\
+  Reprenons le syst\`eme consid\'er\'e dans l'exercice~\ref{ex:pendule}.
 Pour r\'esoudre ce probl\`eme sur $[0,T]$, on prend $N \in \mathbb{N}^*$, puis on d\'efinit le pas de discr\'etisation $h=\frac TN$ et  les temps de discr\'etisation $t_n=nh$ pour $0 \leq n \leq N$.  
 
 
@@ -192,6 +183,25 @@ $y_{n+1}=y_n+h f\displaystyle\left(t_n+\frac h2,y_n+\frac h2 f(t_n,y_n)\right)$\
  
 \end{exo}
 
+
+\begin{exo}\textbf{Syst\`eme de Lotka-Volterra}\\
+On consid\`ere le syst\`eme de Lotka-Volterra sur l'intervalle $[0,30]$ :
+$$
+\left\{
+\begin{array}{rl}
+x'(t)&=x(t)(2-y(t)/10)\\
+y'(t)&=y(t)(x(t)/10-4)
+\end{array}
+\right.
+$$
+avec les conditions initiales $x(0)=100$ et $y(0)=70$.
+\begin{enumerate}
+\item Tracer $x$ et $y$ en fonction du temps.
+\item Tracer la solution dans le plan de phase.
+\item Tracer les isoclines dans le plan de phase. 
+\item Tester d'autres conditions initiales.
+\end{enumerate}
+\end{exo}
 
 
 
