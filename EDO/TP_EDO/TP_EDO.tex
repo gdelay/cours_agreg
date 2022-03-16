@@ -44,7 +44,9 @@ import matplotlib.pyplot as plt \\
 import scipy.integrate as integrate \vspace{0.3cm}\\
 }
 Le dernier module sera utilis\'e pour r\'esoudre des \'equations diff\'erentielles avec la commande \texttt{odeint}. 
-\begin{exo} \textbf{Sch\'ema d'Euler, calcul d'erreur} \\
+\begin{exo}
+  \label{ex:sch_exp}
+  \textbf{Sch\'ema d'Euler, calcul d'erreur} \\
 On consid\`ere le probl\`eme suivant :
 $$
 \left\{
@@ -64,7 +66,7 @@ sur l'intervalle $[0,1]$ avec la condition initiale $x(0)=5$ et $y(0)=0$.
 \item Tracer  l'erreur en fonction de $\Delta t$ en \'echelle logarithmique. 
 \item Utiliser la commande \texttt{np.polyfit} pour d\'eterminer la droite qui approche au sens des moindres carr\'es les points de la courbe tracée à la question précédente  (il s'agit de la droite de r\'egression). 
 \item On observe que la pente de la droite est proche de $1$. Comment l'interpr\'eter ?
-\item Facultatif : reprendre les trois derni\`eres questions
+\item Reprendre les trois derni\`eres questions
   pour le sch\'ema du point milieu d\'efini dans l'exercice~\ref{ex:pt_milieu}.
 \end{enumerate}
 \end{exo}
@@ -145,6 +147,23 @@ $\bullet$ \texttt{sol} est le vecteur contenant les valeurs prises par la soluti
 %\end{exo}
 
 \newpage
+\begin{exo}\textbf{Sch\'emas implicites}\\
+  Dans cet exercice, nous allons utiliser les sch\'emas d'Euler implicite et de Crank--Nicolson
+  pour r\'esoudre le probl\`eme de l'exercice~\ref{ex:sch_exp}.
+\begin{enumerate}
+\item Coder une routine \texttt{Newton(F,dF,X0,tol,maxiter)}
+  qui renvoie la solution $X \in \R^2$ de l'\'equation $F(X) = 0$
+  calcul\'ee par la m\'ethode de Newton (\texttt{dF} est la jacobienne de \texttt{F}).
+\item En utilisant la question pr\'ec\'edente, coder le sch\'ema d'Euler implicite donn\'e par
+  $X_{n+1} = X_n + h f(t_{n+1} , X_{n+1})$.
+\item Coder le sch\'ema de Crank--Nicolson donn\'e par
+  $X_{n+1} = X_n + \frac{h}2 (f(t_{n+1} , X_{n+1}) + f(t_{n} , X_{n}))$.
+\item Retrouver num\'eriquement les taux de convergence de ces deux sch\'emas
+  (voir la fin de l'exercice~\ref{ex:sch_exp}).
+\end{enumerate}
+\end{exo}
+
+
 \begin{exo}\textbf{\'Etude d'un pendule : simulations num\'eriques.}
   \label{ex:pt_milieu}
   \\
@@ -202,6 +221,8 @@ avec les conditions initiales $x(0)=100$ et $y(0)=70$.
 \item Tester d'autres conditions initiales.
 \end{enumerate}
 \end{exo}
+
+
 
 
 

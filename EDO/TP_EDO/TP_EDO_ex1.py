@@ -59,10 +59,11 @@ def pt_milieu(X0,N,T):
         t += dt
     return X
 
+##################  affichage des resultats
+
 sol_Euler = Euler_exp(X0, N, T)
 x_Euler, y_Euler = sol_Euler[:,0] , sol_Euler[:,1]
 t_Euler = np.linspace(0,1,N+1)
-
 
 ## solution exacte :
 sol_exacte = sol(t_Euler)
