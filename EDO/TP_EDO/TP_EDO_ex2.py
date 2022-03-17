@@ -23,13 +23,13 @@ tps = np.linspace(0,T,N+1)
 ###### portrait de phase
 plt.figure()
 tps = np.linspace(0,T,N+1)
-## premier noeud (0)
+## premier point critique (0)
 for k in np.linspace(0.2,3.,10):
     X0 = np.array([k,0])
     sol_ODE = integrate.odeint(f,X0,tps)
     theta_ode , omega_ode = sol_ODE[:,0] , sol_ODE[:,1]
     plt.plot(theta_ode,omega_ode)
-## deuxieme noeud (2pi)
+## troisieme point critique (2pi)
 for k in np.linspace(0.2,3.,10):
     X0 = np.array([2*np.pi+k,0])
     sol_ODE = integrate.odeint(f,X0,tps)
