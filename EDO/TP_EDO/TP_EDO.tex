@@ -62,9 +62,11 @@ sur l'intervalle $[0,1]$ avec la condition initiale $x(0)=5$ et $y(0)=0$.
 \item En prenant un pas de temps $\Delta t = 0.01$, tracer la solution approch\'ee de ce syst\`eme en fonction du temps.
 \item On rappelle que la solution exacte de ce syst\`eme est donn\'ee par
   $x(t) = \frac52 (e^{-t} + e^{3t})$ et $y(t) = \frac52 (-e^{-t} + e^{3t})$. Comparer graphiquement la solution exacte et la solution approch\'ee pour diff\'erentes valeurs de $\Delta t$.
-\item Pour $0\leq n \leq N$, on note $t_n=n\Delta t$ les points de discr\'etisation et $X_n$ la solution approch\'ee au temps $t_n$. \'Ecrire une routine calculant l'erreur $\max_{0\leq n \leq N}\|X(t_n)-X_n\|_{\infty}$. On pourra utiliser la commande \texttt{norm} du module \texttt{numpy.linalg} (avec l'option \texttt{np.inf}). 
+\item Pour $0\leq n \leq N$, on note $t_n=n\Delta t$ les points de discr\'etisation et $X_n$ la solution approch\'ee au temps $t_n$. \'Ecrire un programme
+  calculant l'erreur $\max_{0\leq n \leq N}\|X(t_n)-X_n\|_{\infty}$. On pourra utiliser la commande \texttt{norm} du module \texttt{numpy.linalg} (avec l'option \texttt{np.inf}). 
 \item Tracer  l'erreur en fonction de $\Delta t$ en \'echelle logarithmique. 
-\item Utiliser la commande \texttt{np.polyfit} pour d\'eterminer la droite qui approche au sens des moindres carr\'es les points de la courbe tracée à la question précédente  (il s'agit de la droite de r\'egression). 
+\item Utiliser la commande \texttt{np.polyfit} pour d\'eterminer la droite qui approche au sens des moindres carr\'es les points de la courbe tracée à la question précédente
+  (il s'agit de la droite de r\'egression lin\'eaire).
 \item On observe que la pente de la droite est proche de $1$. Comment l'interpr\'eter ?
 \item Reprendre les trois derni\`eres questions
   pour le sch\'ema du point milieu d\'efini dans l'exercice~\ref{ex:pt_milieu}.
@@ -120,7 +122,7 @@ $\bullet$ \texttt{sol} est le vecteur contenant les valeurs prises par la soluti
 \item Faisons maintenant un zoom pr\`es du point $(0,0)$.
   Sur une autre figure, repr\'esenter le diagramme des phases pr\`es du point $(0,0)$.
   Ajouter les isoclines.
-\item Enfin, nous allons repr\'esenter $f$ sur cette figure.
+\item Enfin, nous allons repr\'esenter la fonction second membre $f(\theta,\omega) = (\omega, -\frac{g}{l}\sin(\theta))$ sur cette figure.
   Pour cela, on pourra utiliser les commandes \texttt{np.meshgrid}, \texttt{np.hypot}
   et \texttt{plt.quiver}.
 
@@ -151,7 +153,7 @@ $\bullet$ \texttt{sol} est le vecteur contenant les valeurs prises par la soluti
   Dans cet exercice, nous allons utiliser les sch\'emas d'Euler implicite et de Crank--Nicolson
   pour r\'esoudre le probl\`eme de l'exercice~\ref{ex:sch_exp}.
 \begin{enumerate}
-\item Coder une routine \texttt{Newton(F,dF,X0,tol,maxiter)}
+\item Coder un programme \texttt{Newton(F,dF,X0,tol,maxiter)}
   qui renvoie la solution $X \in \R^2$ de l'\'equation $F(X) = 0$
   calcul\'ee par la m\'ethode de Newton (\texttt{dF} est la jacobienne de \texttt{F}).
 \item En utilisant la question pr\'ec\'edente, coder le sch\'ema d'Euler implicite donn\'e par
@@ -214,7 +216,9 @@ y'(t)&=y(t)(x(t)/10-4)
 \end{array}
 \right.
 $$
-avec les conditions initiales $x(0)=100$ et $y(0)=70$.
+avec %les conditions initiales
+$x(0)=100$ et $y(0)=70$.
+On pourra utiliser \texttt{odeint} pour calculer la solution de ce probl\`eme.
 \begin{enumerate}
 \item Tracer $x$ et $y$ en fonction du temps.
 \item Tracer la solution dans l'espace des phases.
