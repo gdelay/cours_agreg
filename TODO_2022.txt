@@ -1,0 +1,5 @@
+TODO :
+- corriger l'enonce du TD EDO : il semble qu'il y ait une erreur dans l'exercice 3
+  En effet, l'argument utilise ne fonctionne pas pour les temps negatifs et il est tres probable
+  que la solution explose en temps fini pour les temps negatifs.
+  Il faut egalement voir si le probleme n'est pas aussi present pour l'exercice 2.
