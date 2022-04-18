@@ -103,7 +103,8 @@ On pourra par exemple consid\'erer $f(x)=x$ avec pour solution associ\'ee
 $u(x) = \frac{x}{6}(1-x^2)$ (dans ce cas v\'erifier que l'on retrouve la solution exacte
 par la m\'ethode des DF).
 On pourra aussi consid\'erer $f(x) = x^2$ et $u(x) = \frac{x}{12}(1-x^3)$
-(dans ce cas v\'erifier que l'on n'obtient pas exactement la solution exacte du probl\`eme).
+(dans ce cas v\'erifier que l'on n'obtient pas exactement la solution du probl\`eme
+mais que le sch\'ema converge \`a l'ordre deux quand on raffine le maillage).
 
 %%%%%%%
 \subsection{Conditions de Dirichlet non homog\`enes}
@@ -180,21 +181,21 @@ On pourra, par exemple, consid\'erer $f(x) = x^2$ et $u(x) = \frac{x}{3}(1-\frac
 %%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de transport}
 
-On s'int\'eresse au probl\`eme de transport-Dirichlet
+On s'int\'eresse au probl\`eme de transport-Dirichlet sur $(0,T) \times (0,1)$
 \begin{equation}
   \label{eq:transport}
   \left\{
-    \begin{array}{l}
-      \partial_t u + a \partial_x u = 0 ,
+    \begin{array}{l l}
+      \partial_t u + a \partial_x u = 0 &\text{ sur $(0,T) \times (0,1)$, }
       \\
-      u(t,0) = \alpha ,
+      u(t,0) = \alpha , \quad &\forall t \in (0,T) ,
       \\
-      u(0,x) = u_0(x) ,
+      u(0,x) = u_0(x) , \quad &\forall x \in (0,1) ,
     \end{array}
   \right.
 \end{equation}
 o\`u $u$ est une fonction que l'on cherche \`a d\'eterminer et
-$\alpha$ et $u_0$ sont donn\'es. On consid\`ere, de plus, que $a > 0$.
+$\alpha \in \R$ et $u_0$ (une fonction de $(0,1)$) sont donn\'es. On consid\`ere, de plus, que $a > 0$.
 
 On se propose de comparer le comportement du sch\'ema centr\'e (instable)
 avec le sch\'ema d\'ecentr\'e amont (stable sous condition CFL).
@@ -213,7 +214,8 @@ calculer les pas de temps suivants.
 
 
 Pour juger de la qualit\'e du r\'esultat, on affichera la solution au temps final $T$.
-Pour simplifier, on pourra par exemple consid\'erer $\alpha = 0$, $a=1$, $T=1$ et $u_0(x) = x$.
+Pour simplifier, on pourra par exemple consid\'erer $\alpha = 0$, $a=1$, $T=1$ et $u_0(x) = x$
+(n'h\'esitez pas \`a tester d'autres valeurs).
 
 %%%%%%%
 \subsection{Sch\'ema centr\'e}
@@ -221,9 +223,9 @@ Pour simplifier, on pourra par exemple consid\'erer $\alpha = 0$, $a=1$, $T=1$ e
 Pour tout $n \geq 0$, on calcule la solution au pas de temps suivant par
 \begin{equation}
   \label{eq:transport_centre}
-  u_j^{n+1} = u_j^n - \dfrac{a h_t}{2 h_x} (u_{j+1}^n - u_{j-1}^n) , \qquad 1 \leq j \leq M-1 ,
+  u_j^{n+1} = u_j^n - \dfrac{a h_t}{2 h_x} (u_{j+1}^n - u_{j-1}^n) , \qquad 1 \leq j \leq M-1 .
 \end{equation}
-avec $u_0^{n+1} = \alpha$ et $u_M^{n+1} = u_M^n - \dfrac{a h_t}{2 h_x} (u_{M}^n - u_{M-1}^n)$.
+Ces valeurs sont compl\'et\'ees par $u_0^{n+1} = \alpha$ et $u_M^{n+1} = u_M^n - \dfrac{a h_t}{2 h_x} (u_{M}^n - u_{M-1}^n)$.
 
 Ce sch\'ema est cens\'e \^etre instable.
 V\'erifier que lorsque l'on rafine $(h_t,h_x)$, la solution se d\'egrade.
@@ -234,9 +236,9 @@ V\'erifier que lorsque l'on rafine $(h_t,h_x)$, la solution se d\'egrade.
 Pour tout $n \geq 0$, on calcule la solution au pas de temps suivant par
 \begin{equation}
   \label{eq:transport_decentre}
-  u_j^{n+1} = u_j^n - \dfrac{a h_t}{h_x} (u_{j}^n - u_{j-1}^n) , \qquad 1 \leq j \leq M ,
+  u_j^{n+1} = u_j^n - \dfrac{a h_t}{h_x} (u_{j}^n - u_{j-1}^n) , \qquad 1 \leq j \leq M .
 \end{equation}
-avec $u_0^{n+1} = \alpha$.
+On compl\`ete avec $u_0^{n+1} = \alpha$.
 
 Ce sch\'ema est cens\'e \^etre stable sous la condition de CFL $c = \dfrac{a h_t}{h_x} \leq 1$.
 V\'erifier que lorsque l'on rafine $(h_t,h_x)$ en respectant cette condition,
