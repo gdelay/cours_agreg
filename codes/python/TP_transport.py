@@ -43,8 +43,12 @@ for n in range(N):
     U[M] -= CFL * (U[M] - oldj)
 ## plot final solution
 plt.plot(X,U)
+plt.title("Solution obtenue par le schema centre (temps final T)")
+plt.xlabel("x")
+plt.ylabel("solution")
 plt.show()
 
+## but : observer la presence d'oscillations lorsqu'on raffine (quelque soit le ratio N/M)
 
 ################  SCHEMA DECENTRE  ##########
 
@@ -68,5 +72,6 @@ for n in range(N):
 plt.plot(X,U)
 plt.show()
 
-
-
+## but :
+## 1. observer la presence d'oscillations lorsqu'on raffine sans respecter la condition CFL: CFL > 1
+## 2. observer que l'on converge vers la bonne solution lorsqu'on raffine avec CFL <= 1
