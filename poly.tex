@@ -2578,10 +2578,10 @@ Nous \'etudions dans ce chapitre les solutions au probl\`eme
   \left\{
     \begin{array}{l l}
       \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = f 
-      &\dans (0,T) \times (0,1) ,
+      & \!\!\!\! \dans (0,T) \times (0,1) ,
       \\
       u(0,.) = u_0 
-      & \dans (0,1) ,
+      & \!\!\!\! \dans (0,1) ,
       \\
       u(t,0) = 0 , \quad u(t,1) = 0 & \forall t \in (0,T) ,
     \end{array}
@@ -2746,7 +2746,7 @@ Nous avons prouv\'e le th\'eor\`eme suivant.
 On s'int\'eresse ici au probl\`eme
 \begin{equation}
   \label{eq:chaleur_R}
-  \text{Trouver $u : (0,T) \times (0,1) $ v\'erifiant  }
+  \text{Trouver $u : (0,T) \times \R $ v\'erifiant  }
   \left\{
     \begin{array}{l l}
       \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = f 
@@ -2758,7 +2758,7 @@ On s'int\'eresse ici au probl\`eme
   \right.
 \end{equation}
 o\`u $f$ et $u_0$ sont donn\'es.
-Notons que comme le domaine spatial $\R$ n'a pas de bord, l'\'equation 
+Notons que comme le domaine spatial $\R$ n'a pas de bord, le probl\`eme~\eqref{eq:chaleur_R}
 n'a pas de conditions aux limites.
 
 
@@ -2779,9 +2779,9 @@ int\'egrable alors $\calF(\partial_x u)(t,\omega) = i \omega \calF(u)(t,\omega)$
 La d\'efinition de la transform\'ee de Fourier et de son inverse peut \^etre \'etendue
 aux fonctions de $L^2(\R)$. De plus, si $u \in L^2(\R)$, alors $\hu \in L^2(\R)$.
 
-Dans la suite, on suppose que $f \in L^2(\R)$
-et que $u \in L^2(\R)$ est d\'erivable par rapport \`a $x$ et v\'erifie
-$\partial_x u \in L^2(\R)$,
+Dans la suite, on suppose que $f(t,.) \in L^2(\R)$
+et que $u(t,.) \in L^2(\R)$ est d\'erivable par rapport \`a $x$ et v\'erifie
+$\partial_x u(t,.) \in L^2(\R)$,
 on montre que $\hu(t,\omega)$ est solution du probl\`eme
 \begin{align*}
   \dfrac{\partial \hu}{\partial t}(t,\omega) + \omega^2 \hu(t , \omega) = \hf(t,\omega) 
@@ -2791,7 +2791,7 @@ on montre que $\hu(t,\omega)$ est solution du probl\`eme
   & \dans \R .
 \end{align*}
 Il s'agit d'une famille d'EDO lin\'eaires index\'ee par $\omega$.
-Si $f$ est continue alors, d'apr\`es le th\'eor\`eme de Cauchy--Lipschitz global,
+Si $f$ est continue en temps, alors, d'apr\`es le th\'eor\`eme de Cauchy--Lipschitz global,
 chacune de ces EDO admet une unique solution donn\'ee par
 \begin{align*}
   \hu(t,\omega) = \hu_0(\omega) e^{- \omega^2 t} 
@@ -2809,10 +2809,11 @@ En utilisant les propri\'et\'es de la transform\'ee de Fourier, on obtient donc
   \\
   =& (u_0 * G(t,.))(t,x) + \int_{\R} \int_0^t G(t-s, x-y) f(s,y) \deriv s \deriv y ,
 \end{align*}
-avec $G(t,x) = \dfrac{1}{2 \pi} \sqrt{\dfrac{\pi}{t}} e^{- \frac{x^2}{4t}}$
+avec $G(t,x) = \calF^{-1} (e^{-\omega^2 t})(x) = \dfrac{1}{2 \pi} \sqrt{\dfrac{\pi}{t}} e^{- \frac{x^2}{4t}}$
 le noyau de la chaleur et $*$ le produit de convolution.
 Pour rappel
 $(u_0 * G(t,.))(t,x) := \int_{\R} u_0(y) G(t,x-y) \deriv y$.
+Pour le calcul de l'expression de $G(t,x)$, on pourra faire l'exercice~\ref{exo:noyau_chaleur}.
 
 
 On a donc \'etabli le r\'esultat suivant.
@@ -2830,6 +2831,7 @@ On a donc \'etabli le r\'esultat suivant.
 \end{remark}
 
 \begin{exercise}
+  \label{exo:noyau_chaleur}
   Pour $t > 0$, calculer $\calF^{-1}(e^{-\omega^2 t})$.
 
   Indice : utiliser des int\'egrations par parties et les propri\'et\'es de la transform\'ee
@@ -2868,34 +2870,45 @@ On a donc \'etabli le r\'esultat suivant.
 \end{remark}
 
 \begin{proposition}[Propagation de la chaleur \`a vitesse infinie]
-  Si $u_0 \geq 0$ a un support born\'e, alors pour tous $t > 0$ et $x \in \R$,
+  Si $u_0 \geq 0$ (non uniform\'ement nulle)
+  a un support born\'e et $f=0$, alors pour tous $t > 0$ et $x \in \R$,
   on a $u(t,x) > 0$.
 \end{proposition}
+
+\begin{proof}
+  Utiliser l'expression $u(t,x) = (G(t,.) * u_0)(x)$.
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Propri\'et\'es g\'en\'erales}
 \label{subsec:chaleur_prop}
 
-!! Voir si on dit qu'on interprete l'equation au sens des distributions ...
 
 On consid\`ere \`a nouveau le domaine born\'e $\Omega := (0,1)$
 et le probl\`eme~\eqref{eq:chaleur_Dir}.
+Dans cette section, on interpr\`ete l'\'equation de la chaleur au sens des distributions :
+les d\'eriv\'ees sont des d\'eriv\'ees faibles et les \'egalit\'es sont des \'egalit\'es
+entre distributions.
+Ceci permet de donner des r\'esultats plus g\'en\'eraux notamment en utilisant
+les espaces de Sobolev $H^k(0,1)$.
+
 On peut montrer qu'une solution d\'epend contin\^ument des donn\'ees $u_0$ et $f$.
 \begin{proposition}
   \label{prop:chaleur_continuite_donnees}
-  Soit $u \in C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$ une solution de~\eqref{eq:chaleur_Dir}.
-  Si $u_0 \in L^2(0,1)$ et $f \in L^2(0,T; L^2(0,1))$,
-  alors 
+  Il existe $C>0$ tel que toute fonction
+  $u \in C^0([0,T];L^2(0,1)) \cap L^2(0,T;H_0^1(0,1))$ solution de~\eqref{eq:chaleur_Dir}
+  avec $u_0 \in L^2(0,1)$ et $f \in L^2(0,T; L^2(0,1))$
+  v\'erifie
   \begin{align}
     \label{eq:chaleur_continuite_donnees}
-    \sup_{t \in [0,T]} \| u(t,.) \|_{L^2(0,1)} + \frac12 \| \partial_x u \|_{L^2(0,T;L^2(0,1))}
-    \leq \| u_0 \|_{L^2(0,1)} + \| f \|_{L^2(]0,T[ \times ]0,1[)} .
+    \sup_{t \in [0,T]} \| u(t,.) \|_{L^2(0,1)} + \| \partial_x u \|_{L^2(0,T;L^2(0,1))}
+    \leq C (\| u_0 \|_{L^2(0,1)} + \| f \|_{L^2(]0,T[ \times ]0,1[)}) .
   \end{align}
 \end{proposition}
 
 \begin{proof}
   On suppose tout d'abord la fonction $u$ r\'eguli\`ere, le r\'esultat final
-  sera obtenu par densit\'e.
+  sera obtenu par densit\'e. Les d\'eriv\'ees de $u$ sont donc consid\'er\'ees au sens usuel.
   
   Multiplions la premi\`ere ligne de \eqref{eq:chaleur_Dir} par $u$
   et int\'egrons en espace sur le domaine $\Omega = (0,1)$,
@@ -2916,29 +2929,38 @@ On peut montrer qu'une solution d\'epend contin\^ument des donn\'ees $u_0$ et $f
   On obtient ainsi
   \begin{align*}
     \dfrac{1}{2} \dfrac{\deriv}{\deriv t} \| u(t,\cdot) \|_{L^2(\Omega)}^2
+    = \int_{\Omega} \dfrac{\partial u}{\partial t} u
+    = - \int_{\Omega} \left(\dfrac{\partial u}{\partial x} \right)^2
+    + \int_{\Omega} f u ,
+  \end{align*}
+  et
+  \begin{align*}
+    \dfrac{1}{2} \dfrac{\deriv}{\deriv t} \| u(t,\cdot) \|_{L^2(\Omega)}^2
     \leq - \left\| \dfrac{\partial u}{\partial x} (t,\cdot) \right\|_{L^2(\Omega)}^2
     + \dfrac{1}{2}  (\| f (t,\cdot) \|_{L^2(\Omega)}^2 +  \| u (t,\cdot) \|_{L^2(\Omega)}^2) .
   \end{align*}
   De plus, d'apr\`es l'in\'egalit\'e de Poincar\'e, on a 
   $\| u (t,\cdot) \|_{L^2(\Omega)}^2 \leq \| \dfrac{\partial u}{\partial x} (t,\cdot) \|_{L^2(\Omega)}^2$.
+  Notons que la constante de cette in\'egalit\'e vaut $1$ car on s'est plac\'es
+  dans le domaine $\Omega = (0,1)$.
   On a donc 
   \begin{align*}
     \dfrac{\deriv}{\deriv t} \| u(t,\cdot) \|_{L^2(\Omega)}^2
-    + \frac12 \left\| \dfrac{\partial u}{\partial x} (t,\cdot) \right\|_{L^2(\Omega)}^2
+    + \left\| \dfrac{\partial u}{\partial x} (t,\cdot) \right\|_{L^2(\Omega)}^2
     \leq \| f (t,\cdot) \|_{L^2(\Omega)}^2 .
   \end{align*}
   On int\`egre selon $t$, ce qui donne
   \begin{align*}
-    \| u(t,\cdot) \|_{L^2(\Omega)}^2 + \frac12 \| \partial_x u \|_{L^2(0,t;L^2(0,1))}^2
+    \| u(t,\cdot) \|_{L^2(\Omega)}^2 + \| \partial_x u \|_{L^2(0,t;L^2(0,1))}^2
     \leq \| u_0 \|_{L^2(\Omega)}^2 + \| f \|_{L^2((0,t) \times \Omega)}^2 .
   \end{align*}
   On obtient la borne sur $\sup_{t \in [0,T]} \| u(t,.) \|_{L^2(0,1)}$ en prenant le $\sup$ sur $t$
-  et la borne sur $\frac12 \| \partial_x u \|_{L^2(0,T;L^2(0,1))}^2$ en prenant $t=T$.
+  et la borne sur $\| \partial_x u \|_{L^2(0,T;L^2(0,1))}^2$ en prenant $t=T$.
 \end{proof}
 
 
 On peut utiliser ce r\'esultat pour montrer l'existence d'une unique solution faible
-au probl\`eme de Chaleur-Dirichlet.
+au probl\`eme de Chaleur--Dirichlet.
 
 
 \begin{proposition}
@@ -2976,10 +2998,10 @@ La fonction $\tu$ v\'erifie l'\'equation de la chaleur r\'etrograde:
   \left\{
     \begin{array}{l l}
       -\dfrac{\partial \tu}{\partial t} - \dfrac{\partial^2 \tu}{\partial x^2} = \tf 
-      &\dans (0,T) \times (0,1) ,
+      &\!\!\!\! \dans (0,T) \times (0,1) ,
       \\
       \tu(0,.) = u_T 
-      & \dans (0,1) ,
+      &\!\!\!\! \dans (0,1) ,
       \\
       \tu(t,0) = 0 , \quad \tu(t,1) = 0 & \forall t \in (0,T) ,
     \end{array}
@@ -2994,11 +3016,9 @@ Ce probl\`eme est mal pos\'e, on dit alors que l'\'equation de la chaleur n'est 
   le probl\`eme~\eqref{eq:chaleur_retro} est mal pos\'e.
 \end{proposition}
 
-!! EST-CE SUR QU'ON PEUT PROUVER L'EXISTENCE D'UNE UNIQUE SOL ??
--- VERIFIER ET METTRE A JOUR LA PREUVE !!
-
 \begin{proof}
-  On peut montrer l'existence d'une unique solution au probl\`eme~\eqref{eq:chaleur_retro}.
+  En utilisant les m\^emes arguments que ceux \'evoqu\'es pr\'ec\'edemment,
+  on doit pouvoir montrer l'existence d'une unique solution au probl\`eme~\eqref{eq:chaleur_retro}.
   Son caract\`ere mal pos\'e vient de la d\'ependance non continue aux donn\'ees.
   Pour prouver cela, on va utiliser les r\'esutats de la Section~\ref{subsubsec:chal_born}.
 
@@ -3020,7 +3040,8 @@ Ce probl\`eme est mal pos\'e, on dit alors que l'\'equation de la chaleur n'est 
   La non-r\'eversibilit\'e de l'\'equation peut \^etre interpr\'et\'ee comme l'impossibilit\'e
   pratique de retrouver la solution \`a partir de la donn\'ee finale.
   En effet, si cette donn\'ee est bruit\'ee, ne serait-ce qu'un peu, alors les bruits
-  ind\'esirables peuvent exploser aussi vite qu'on veut et polluer la solution.
+  ind\'esirables peuvent exploser aussi vite qu'on veut et polluer la solution
+  (\`a cause de l'exponentielle croissante en temps).
 \end{remark}
 
 \begin{exercise}
