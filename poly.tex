@@ -26,6 +26,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\Ni}[1]{{\left\|#1\right\|}_\infty}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} %% pour la page de garde
 \input{def.tex}
 % \noindent
 % {\rule{\textwidth}{.2mm}}\\
@@ -33,14 +34,38 @@
 % \input{entete}
 % {\rule{\textwidth}{.2mm}}\\
 
-\begin{center}
-{\bf \Huge Introduction aux \'equations aux d\'eriv\'ees partielles}
-\end{center}
+% \begin{center}
+% {\bf \Huge Introduction aux \'equations aux d\'eriv\'ees partielles}
+% \end{center}
 
 % \title{Introduction aux \'equations aux d\'eriv\'ees partielles}
 
 %\vfill
 %===================================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+  \begin{sffamily}
+    \begin{center}
+      \includegraphics[width = 8cm]{Figures/logo_SU.png}
+      \\[1cm]
+      \textsc{\LARGE Pr\'eparation \`a l'agr\'egation externe de math\'ematiques}
+      \\[1cm]
+      \textsc{\Large \'Epreuve de mod\'elisation -- option B : calcul scientifique}
+      \\[2cm]
+      \HRule \\[0.4cm]
+      {\Large \bfseries Introduction aux \'equations aux d\'eriv\'ees partielles}
+      \HRule \\[4cm]
+      \textsc{\LARGE \bfseries Guillaume Delay}
+      \\[2cm]
+      \textsc{\Large Laboratoire Jacques-Louis Lions}
+      \\[0.5cm]
+      \textsc{\Large Sorbonne Universit\'e}
+      \\[3cm]
+      \today
+    \end{center}
+  \end{sffamily}
+\end{titlepage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Avant-propos}
@@ -56,7 +81,8 @@ nous aborderons notamment:
 \begin{itemize}
 \item des notions \'el\'ementaires portant sur les EDP classiques en dimension 1.
 \item l'\'equation de transport lin\'eaire avec la m\'ethode des caract\'eristiques.
-\item l'\'equation des ondes et de la chaleur. Une r\'esolution par s\'erie de Fourier
+\item l'\'equation des ondes et l'\'equation de la chaleur.
+  Une r\'esolution par s\'erie de Fourier
   et transform\'ee de Fourier sera propos\'ee ainsi qu'une m\'ethode de s\'eparation
   des variables.
   Les aspects qualitatifs seront abord\'es.
@@ -98,6 +124,8 @@ l'\'equation des ondes.
 Une derni\`ere section sera consacr\'ee \`a des \'el\'ements de cours
 hors-programme destin\'es aux candidats souhaitant approfondir
 leurs connaissances sur ce sujet.
+
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Pr\'esentation des EDP du cours}
@@ -659,6 +687,7 @@ les m\^emes que celles du cas stationnaire
   Prouver que l'\'equation \eqref{eq:ondes} est hyperbolique.
 \end{exercise}
 
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de Poisson}
 
@@ -1286,6 +1315,7 @@ $\log(\varepsilon) = 2 \log(h) + \log(C)$.
   \end{enumerate}
 \end{exercise}
 
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de transport}
 
@@ -2536,6 +2566,7 @@ num\'erique, il ne faut pas s'attendre \`a ce que le sch\'ema fournisse la solut
 \end{exercise}
 
 
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation de la chaleur}
 
@@ -3478,6 +3509,8 @@ Toutes les preuves sont laiss\'ees en exercice.
 
 !! autre gros exo sur conditions de Neumann ??
 
+
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\'Equation des ondes}
 
