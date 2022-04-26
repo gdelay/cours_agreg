@@ -3573,13 +3573,13 @@ On s'int\'eresse au probl\`eme de l'\'equation des ondes avec des conditions de 
   \left\{
     \begin{array}{l l}
       \dfrac{\partial^2 u}{\partial t^2} - c^2 \dfrac{\partial^2 u}{\partial x^2} = f 
-      &\dans (0,T) \times (0,1) ,
+      & \!\!\!\! \dans (0,T) \times (0,1) ,
       \\
       u(0,.) = u_0 
-      & \dans (0,1) ,
+      & \!\!\!\! \dans (0,1) ,
       \\
       \dfrac{\partial u}{\partial t}(0,.) = u_1 
-      & \dans (0,1) ,
+      & \!\!\!\! \dans (0,1) ,
       \\
       u(t,0) = 0 , \quad u(t,1) = 0 & \;\: \forall t \in (0,T) ,
     \end{array}
@@ -3668,7 +3668,7 @@ pr\'ec\'edentes sont normalement convergentes (voir Section~\ref{subsubsec:chal_
 
 La fonction d\'efinie par
 \begin{align*}
-  u(t,x) = \sum\limits_{k=1}^{+\infty} ( b_k \cos(k \pi c t) + \dfrac{c_k}{k \pi} \sin(k \pi c t) ) 
+  u(t,x) = \sum\limits_{k=1}^{+\infty} ( b_k \cos(k \pi c t) + \dfrac{c_k}{k \pi c} \sin(k \pi c t) ) 
   \sin(k \pi x) ,
 \end{align*}
 est alors continue et solution de l'\'equation des ondes au sens des distributions
@@ -3680,10 +3680,6 @@ est alors continue et solution de l'\'equation des ondes au sens des distributio
   et $\partial_t u(\frac{2}{c}, x) = u_1(x)$.
 \end{remark}
 
-
-!! A-T-ON BESOIN DE $C^2$ POUR LES CONDITIONS INITIALES ??
-OU EST-CE UTILIS\'E ?? (idem pour la chaleur)
-!! CLARIFIER CE QU'ON ENTEND PAR ``l'\'equation est v\'erifi\'ee au sens des distributions'' !!
 
 %%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Cas de la droite r\'eelle}
@@ -3824,12 +3820,6 @@ et $u_0$ et $u_1$ sont les donn\'ees initiales.
 
   On termine cette preuve en remaniant le dernier terme par les changements de variables
   $\tilde{t} = \dfrac{s-r}{2c}$ et $\tilde{x} = s - c \tilde{t}$.
-
-  !! PEUT-ON SUPPOSER QUE $F$ et $G$ sont d\'erivables ??
-  -- RAPPELER QU'ON EST DANS UNE PREUVE PAR ANALYSE--SYNTHESE !!
-
-  !! FAIRE A UN MOMENT UNE REMARQUE SUR LA REGULARITE DE $f$
-  QUI PERMET D'UTILISER FUBINI !!
 \end{proof}
 
 
@@ -3858,21 +3848,20 @@ et $u_0$ et $u_1$ sont les donn\'ees initiales.
   l'information se d\'eplace \`a vitesse infinie.
 \end{remark}
 
-!! Commenter la m\'ethode des caract\'eristiques avec un sch\'ema !! + domaine d'influence
-+ domaine de d\'ependance !!
-
-!! Illustrer le cas $f= 0$ et $u_1 = 0$ avec un sch\'ema !! + cas domaine born\'e
-+ p\'eriodicit\'e de la sol !!
-(on peut aussi remplacer le sch\'ema par des r\'esultats de simulation, c'est plus int\'eressant)
-
 \begin{exercise}
   On suppose que $f = 0$.
   Retrouver le r\'esultat du Th\'eor\`eme~\ref{thm:d_Alembert}
   en utilisant la m\'ethode de la transform\'ee de Fourier comme dans
   la Section~\ref{subsubsec:chaleur_R}.
-\end{exercise}
 
-!! V\'erifier que cet exo est faisable !!
+  La premi\`ere \'etape consiste \`a prouver que la transform\'ee de Fourier
+  de la solution v\'erifie
+  $\hu(t,\omega) = \hu_0(\omega) \cos(c \omega t) + \frac{\hu_1(\omega)}{c \omega} \sin(c \omega t)$.
+  La deuxi\`eme \'etape consiste \`a calculer la transform\'ee de Fourier inverse de
+  $\cos(c \omega t)$ et $\sin(c \omega t)$ (au sens des distributions bien s\^ur).
+  Enfin, on peut utiliser les propri\'et\'es de la transform\'ee de Fourier pour retrouver
+  le r\'esultat de l'\'enonc\'e du Th\'eor\`eme~\ref{thm:d_Alembert}.
+\end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Principales propri\'et\'es des solutions}
@@ -3942,8 +3931,6 @@ On peut aussi borner cette \'energie.
   $\eta(t) \leq \exp(\int_0^t \phi(s) \deriv s) \eta(0)
   + \int_0^t \exp(\int_s^t \phi(u) \deriv u) \psi(s) \deriv s$.
 
-  !! Verifier le lemme de Gronwall + donner ses hypotheses precises !!
-
   On obtient le r\'esultat en appliquant le Lemme de Gr\"onwall
   ($\phi = 1$ et $\psi = \| f \|^2_{L^2(0,1)}$).
 \end{proof}
@@ -3977,17 +3964,32 @@ que le probl\`eme des ondes avec conditions de Dirichlet est bien pos\'e.
 
   Il reste \`a prouver l'in\'egalit\'e~\eqref{eq:ondes_donnees}.
   On part de l'in\'egalit\'e~\eqref{eq:energy}.
+  On d\'efinit les semi-normes
+  \begin{align*}
+    | u |_{H^1(0,T; L^2(\Omega))}
+    := \left( \int_0^T \int_0^1 \Big( \dfrac{\partial u}{\partial t}(t,x) \Big)^2 \deriv x \deriv t \right)^{\frac12} ,
+    \\
+    | u |_{L^2(0,T; H^1_0(\Omega))}
+    := \left( \int_0^T \int_0^1 \Big( \dfrac{\partial u}{\partial x}(t,x) \Big)^2 \deriv x \deriv t \right)^{\frac12} .
+  \end{align*}
   On a ainsi
   \begin{align*}
-    \| u \|_{H^1(0,T; L^2(\Omega))}^2 + \| u \|_{L^2(0,T; H^1_0(\Omega))}^2
+    | u |_{H^1(0,T; L^2(\Omega))}^2 + | u |_{L^2(0,T; H^1_0(\Omega))}^2
     &\leq 2\max(1,c^{-2}) \int_0^T E(t) \deriv t
     \\
     &\leq 2\max(1,c^{-2}) e^T T (E(0) + \| f \|_{L^2(0,T; L^2(\Omega))}^2) .
   \end{align*}
   De plus, $E(0) \leq \frac12 \max(1,c) (\| u_0 \|_{H^1_0(\Omega)}^2 + \| u_1 \|_{L^2(\Omega)}^2)$.
-  On conclut avec l'in\'egalit\'e de Young.
 
-  !! V\'erifier que l'on peut prouver l'existence ainsi ...
+  On utilise ensuite l'in\'egalit\'e de Poincar\'e
+  \begin{align*}
+    \| u \|_{L^2(0,T;L^2(\Omega))} \leq C | u |_{L^2(0,T;H^1_0(\Omega))} ,
+  \end{align*}
+  et $\| u \|_{L^2(0,T;H^1_0(\Omega))}^2 = | u |_{L^2(0,T;H^1_0(\Omega))}^2 + \| u \|_{L^2(0,T;L^2(\Omega))}^2$
+  et de la m\^eme fa\c{c}on
+  $\| u \|_{H^1(0,T;L^2(\Omega))}^2 = | u |_{H^1(0,T;L^2(\Omega))}^2 + \| u \|_{L^2(0,T;L^2(\Omega))}^2$.
+  
+  On conclut avec l'in\'egalit\'e de Young.
 \end{proof}
 
 

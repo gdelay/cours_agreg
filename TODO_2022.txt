@@ -3,3 +3,8 @@ TODO :
   En effet, l'argument utilise ne fonctionne pas pour les temps negatifs et il est tres probable
   que la solution explose en temps fini pour les temps negatifs.
   Il faut egalement voir si le probleme n'est pas aussi present pour l'exercice 2.
+
+- poly EDP : equation des ondes : - ajouter domaine d'influence et domaine de dependance
+                                  - illustrer le cas f=0 et u_1=0 dans la section Omega = R
+                                  - passer au cas d'un domaine borne avec periodicite de la solution
+                                  - mettre des resultats de simu pour illustrer ces concepts
