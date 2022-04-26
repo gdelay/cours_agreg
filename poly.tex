@@ -593,7 +593,7 @@ stationnaire (voir tableau \ref{tab:pb_ell}).
   Milieu: $\nu = 1$. Droite: $\nu = 2$.
   Les courbes repr\'esentent la solution \`a $t=0$ (bleu), $t=0.05$ (rouge) et $t=0.1$ (noir).
   On a impos\'e les conditions de Dirichlet $u(t,0) = u(t,1) = 0$.
-  La condition initiale est la solution stationnaire de ce probl\`eme avec $f=1$.}
+  La condition initiale est $u_0(x) = x(1-x)$.}
   \label{fig:chaleur_nu}
 \end{figure}
 
@@ -3116,7 +3116,7 @@ On note $t_n$ ($0 \leq n \leq N$) et $x_j$ ($0 \leq j \leq M$)
 les bornes de ces sous-intervalles.
 On rappelle $x_j = j h_x$, $h_x = 1/M$, $t_n = n h_t$ et $h_t = T / N$.
 Nous cherchons \`a approcher la solution de~\eqref{eq:chaleur_Dir}
-en $t_n$ et $x_j$, i.e. $u(t_n,x_j)$, par le terme $u_j^n$ d'une suite
+en $t_n$ et $x_j$, i.e. $u(t_n,x_j)$, par le terme g\'en\'eral $u_j^n$ d'une suite
 $(u_j^n)$. 
 Nous proposons plusieurs sch\'emas pour calculer cette suite.
 Leurs propri\'et\'es seront \'etudi\'ees en utilisant les 
@@ -3160,10 +3160,9 @@ Nous obtenons ainsi le sch\'ema suivant
 
 \begin{exercise}
   La figure \ref{fig:chaleur_nu} 
-  a \'et\'e obtenue gr\^ace au sch\'ema \eqref{eq:chaleur_DF_exp_centre}.
-  Coder ce sch\'ema et retrouver cette figure.
-  
-  !! donner les param\`etres !!
+  a \'et\'e obtenue gr\^ace au sch\'ema \eqref{eq:chaleur_DF_exp_centre}
+  avec $f(t,x) = -1$ et $u_0(x) = x(1-x)$.
+  Coder ce sch\'ema et retrouver la figure du milieu ($\nu = 1$).
 \end{exercise}
 
 
@@ -3301,13 +3300,14 @@ passe par l'\'etude des valeurs propres de la matrice du sch\'ema.
   \end{align*}
   % On a $\tn A \tn_{L^2} \leq \rho(A)$.
   De plus, pour $j$ tel que $\rho(A) = | \lambda_j |$,
-  on a $\| A V_j \|_{L^2} | \lambda_j | \| V_j \|_{L^2}$.
-  On a donc montr\'e $\tn A \tn_{L^2} = \rho(A)$.
+  on a $\| A V_j \|_{L^2} = | \lambda_j | \| V_j \|_{L^2}$
+  et donc $\rho(A) \leq \tn A \tn_{L^2}$.
+  On a montr\'e $\tn A \tn_{L^2} = \rho(A)$.
 \end{proof}
 
 
 L'id\'ee est donc de calculer les valeurs propres de $A$ et d'utiliser
-le Corrolaire~\ref{corro:stability} pour prouver la stabilit\'e su sch\'ema.
+le Corrolaire~\ref{corro:stability} pour prouver la stabilit\'e du sch\'ema.
 Pour le calcul des valeurs propres, nous pouvons utiliser le r\'esultat suivant
 \begin{proposition}
   \label{prop:VP}
@@ -3360,8 +3360,13 @@ Comme nous l'avons indiqu\'e pr\'ec\'edemment, ce sch\'ema est consistant pour l
 $\| \cdot \|_{L^2}$. Il est donc convergent sous la condition de CFL $2 h_t \leq h_x^2$
 (ordre 1 en temps et 2 en espace).
 
-!! FAUT-IL FAIRE UNE REMARQUE SUR LE PRINCIPE DU MAXIMUM DISCRET ??
--- A QUEL ENDROIT ?? ON POURRAIT AUSSI LA FAIRE POUR LES AUTRES EQUATIONS !!
+\begin{remark}
+  Si on prenait en compte une diffusivit\'e thermique $\nu > 0$
+  constante diff\'erente de $1$, l'\'equation
+  deviendrait $\partial_t u - \nu \partial_{xx}^2 u = f$
+  et la CFL associ\'ee pour le sch\'ema explicite serait
+  $2 \nu h_t \leq h_x^2$.
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Sch\'ema implicite centr\'e}
@@ -3369,9 +3374,10 @@ $\| \cdot \|_{L^2}$. Il est donc convergent sous la condition de CFL $2 h_t \leq
 
 
 Comme \'evoqu\'e dans la section pr\'ec\'edente, l'utilisation de sch\'emas
-explicites est tr\`es couteuse dans le cadre de l'\'equation de la chaleur.
+explicites est tr\`es couteuse dans le cadre de l'\'equation de la chaleur
+(\`a cause de la condition de CFL parabolique).
 On s'int\'eresse donc \`a la possibilit\'e d'utiliser des sch\'emas
-qui seraient inconditionnellement stable.
+qui seraient inconditionnellement stables.
 Un premier exemple d'un tel sch\'ema est donn\'e par le sch\'ema 
 implicite centr\'e.
 
@@ -3411,7 +3417,7 @@ Le sch\'ema peut donc \^etre \'ecrit sous la forme
 \end{align*}
 avec $U^n$ le vecteur des $u_j^n$ pour $1 \leq j \leq N-1$ et $(\widetilde{F}^n)_j = f(t_n,x_j)$. 
 De plus, $\widetilde{A} = I - h_t A_{\Delta}$ o\`u $A_{\Delta}$ est la matrice
-du probl\`eme de Laplace-Dirichlet (cf~\eqref{eq:mat_DF_Laplacien}).
+du probl\`eme de Laplace--Dirichlet (cf~\eqref{eq:mat_DF_Laplacien}).
 Pour rappel, cette matrice est exigible.
 
 
@@ -3436,7 +3442,7 @@ De plus, nous avons
 \end{equation*}
 Nous sommes donc bien dans le cadre de la Section~\ref{subsubsec:analyse_def}.
 Nous pouvons ainsi appliquer tous les r\'esultats de cette section
-(notamment le Th\'eore\`eme de Lax).
+(notamment le Th\'eor\`eme de Lax).
 
 Nous allons \'etudier la stabilit\'e de ce sch\'ema en norme $\| \cdot \|_{L^2}$.
 Pour cela, nous devons donc \'etudier les valeurs propres de la matrice associ\'ee au sch\'ema,
@@ -3450,7 +3456,7 @@ $(\lambda_k^{-1})$. De plus, on a $\lambda_k \geq 1$ pour tout $k$.
 Donc $\rho((\widetilde{A})^{-1}) \leq 1$ et en appliquant
 la Proposition~\ref{prop:stabL2} et le Corrolaire~\ref{corro:stability}, on
 \'etablit la stabilit\'e du sch\'ema pour la norme $\| \cdot \|_{L^2}$.
-Notons que cette stabilit\'e est inconditionnelle (il n'y a pas de CFL \`a respecter),
+Notons que cette stabilit\'e est inconditionnelle (il n'y a pas de condition de CFL \`a respecter),
 ce qui est attendu pour un sch\'ema implicite.
 
 
@@ -3468,11 +3474,11 @@ D'apr\`es le th\'eor\`eme de Lax, ce sch\'ema converge inconditionnellement avec
 \end{proposition}
 
 
-!! Ecrire la preuve de la consistance !!
-
 \begin{remark}
   Le temps de r\'esolution d'un pas de temps pour un sch\'ema implicite est un peu plus long
-  que pour un sch\'ema explicite car il faut r\'esoudre un syst\`eme lin\'eaire.
+  que pour un sch\'ema explicite car il faut r\'esoudre un syst\`eme lin\'eaire
+  (notons qu'on ne calcule pas $(\widetilde{A})^{-1}$
+  mais qu'on r\'esout plut\^ot le syst\`eme lin\'eaire associ\'e).
   Ceci est compens\'e par le fait qu'il n'y a pas de restriction sur le pas de temps et on
   peut donc prendre des pas plus grand, impliquant moins de pas de temps.
 \end{remark}
@@ -3486,49 +3492,73 @@ D'apr\`es le th\'eor\`eme de Lax, ce sch\'ema converge inconditionnellement avec
   (bien que ce soit moins rigoureux d'un point de vue math\'ematique).
 \end{remark}
 
-!! mettre r\'esultats num\'eriques !!
 
-!! comparer avec sch\'ema explicite, notamment loin d'une condition non nulle !!
-
-%%%%%%%%%%%%%%%%%%
-\subsubsection{$\theta$-sch\'emas}
-
-!! parler des $\theta$-sch\'emas -- voir poly L. !! 
--- Est-ce possible de le faire avec les defs de la section sur l'equation de transport ??
-
-!! Preuve de stabilit\'e par la m\'ethode de l'\'energie : cf B. Lucquin !!
-
-
-!! exo final sur les $\theta$-sch\'emas !!
+\begin{exercise}
+  \label{exo:chaleur_implicite}
+  Dans cet exercice, nous comparons le comportement
+  des sch\'emas~\eqref{eq:chaleur_DF_exp_centre} et~\eqref{eq:chaleur_DF_imp_centre}.
+  \begin{enumerate}
+  \item Coder le sch\'ema~\eqref{eq:chaleur_DF_exp_centre}.
+    V\'erifier que ce sch\'ema converge sous la condition $2 h_t \leq h_x^2$.
+    Observer l'apparition d'instabilit\'es si cette condition n'est pas respect\'ee.
+  \item Coder le sch\'ema~\eqref{eq:chaleur_DF_imp_centre}.
+    V\'erifier que ce sch\'ema converge m\^eme si on ne respecte pas
+    $2 h_t \leq h_x^2$.
+  \end{enumerate}
+\end{exercise}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\'Etude du probl\`eme de Neumann}
+\subsection{\'Etude du probl\`eme de Chaleur--Neumann}
 
-Le but de cette section est d'\'etudier le probl\`eme de la chaleur
-avec des conditions aux limites de Neumann.
-Toutes les preuves sont laiss\'ees en exercice.
-
+Cette section constitue un exercice portant sur le probl\`eme de Chaleur--Neumann.
+Elle est facultative.
 
 
-
-\begin{remark}[Condition de Neumann]
-  Conservation de la valeur moyenne ??
-  (...)
-\end{remark}
-
+On s'int\'eresse au probl\`eme suivant:
+\begin{equation}
+  \label{eq:chaleur_Neu}
+  \text{Trouver $u : (0,T) \times (0,1)$ v\'erifiant }
+  \left\{
+    \begin{array}{l l}
+      \dfrac{\partial u}{\partial t} - \dfrac{\partial^2 u}{\partial x^2} = 0
+      & \!\!\!\! \!\!\!\! \!\!\!\! \!\!\!\! \dans (0,T) \times (0,1) ,
+      \\
+      u(0,.) = u_0 
+      & \!\!\!\! \!\!\!\! \!\!\!\! \!\!\!\! \dans (0,1) ,
+      \\
+      \dfrac{\partial u}{\partial x}(t,0) = 0 ,
+      \quad \dfrac{\partial u}{\partial x}(t,1) = 0 & \forall t \in (0,T) ,
+    \end{array}
+  \right.
+\end{equation}
+o\`u $u_0$ est une fonction donn\'ee.
+Notez que, pour simplifier, nous n'avons pas consid\'er\'e de terme source $f$ sur l'\'equation.
 
 \begin{exercise}
-  Montrer que la solution du pb de Neumann sans terme source
-  tend exponentiellement vers la valeur moyenne de la donn\'ee initiale.
+  On s'int\'eresse ici au probl\`eme~\eqref{eq:chaleur_Neu}.
+  \begin{enumerate}
+  \item Soit $u$ une solution r\'eguli\`ere de~\eqref{eq:chaleur_Neu}.
+    On note $\bar{u}(t) = \int_0^1 u(t,x) \deriv x$ sa valeur moyenne sur le domaine.
+    Montrer que cette valeur moyenne $\bar{u}$ se conserve au cours du temps.
+  \item Appliquer la m\'ethode de s\'eparation de variables pour trouver une solution
+    particuli\`ere \`a ce probl\`eme lorsque $u_0$ a une forme particuli\`ere.
+  \item Pour $u_0$ r\'eguli\`ere v\'erifiant $\partial_x u_0(0) = \partial_x u_0(1) = 0$,
+    \'ecrire $u_0$ sous la forme d'une s\'erie de Fourier.
+    En d\'eduire l'existence d'une solution $u(t,x)$ au probl\`eme~\eqref{eq:chaleur_Neu}.
+  \item Montrer que la solution $u(t,x)$ exhib\'ee lors de la question pr\'ec\'edente v\'erifie
+    \begin{align*}
+      \| u(t,.) - \bar{u} \|_{\infty} \leq C e^{- \pi^2 t} ,
+    \end{align*}
+    avec une constante $C > 0$ d\'ependant de $u_0$ uniquement.
+    On a montr\'e que la solution converge uniform\'ement vers sa valeur moyenne
+    lorsque $t \to + \infty$.
+    De plus, cette convergence se fait \`a une vitesse exponentielle.
+  \item Adapter un des deux sch\'emas pr\'ec\'edents aux conditions de Neumann.
+    Le coder et v\'erifier num\'eriquement ce comportement lorsque $t \to + \infty$.
+  \end{enumerate}
 \end{exercise}
 
-!! V\'erifier cet exercice !!
-
-
-
-
-!! autre gros exo sur conditions de Neumann ??
 
 
 \newpage
