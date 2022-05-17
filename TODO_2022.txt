@@ -8,3 +8,8 @@ TODO :
                                   - illustrer le cas f=0 et u_1=0 dans la section Omega = R
                                   - passer au cas d'un domaine borne avec periodicite de la solution
                                   - mettre des resultats de simu pour illustrer ces concepts
+                                  - presenter l'ecriture de l'equation comme deux EDP couplees d'ordre 1
+                                  - faire lien entre CFL pour ondes et transport (cas parabolique aussi ??)
+                                  - prouver la consistance du schema pour l'equation des ondes
+                                  - eclaircir la subtilite de la condition initiale pour le schema pour l'equation des ondes (voir le poly ENSTA)
+                                  - creuser la difference entre stabilite de Von Neumann et transformee de Fourier discrete
