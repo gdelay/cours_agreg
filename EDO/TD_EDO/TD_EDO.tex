@@ -1,0 +1,552 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{fullpage}
+
+\usepackage[top=100pt,bottom=70pt,left=60pt,right=60pt]{geometry}
+
+\usepackage{amsfonts,amssymb,amsmath,amsthm} 
+\usepackage[colorlinks,urlcolor=blue,linkcolor=black,citecolor=gray]{hyperref}
+
+\usepackage{tikz}
+
+
+\newtheoremstyle{exostyle}
+{\topsep}% espace avant
+{}%{\topsep}% espace apres
+{}% Police utilisee par le style de thm
+{}% Indentation (vide = aucune, \parindent = indentation paragraphe)
+{\bfseries}% Police du titre de thm
+{.}% Signe de ponctuation apres le titre du thm
+{ }% Espace apres le titre du thm (\newline = linebreak)
+{\thmname{#1}\thmnumber{ #2}\thmnote{. \normalfont{\textit{#3}}}}% composants du titre du thm : \thmname = nom du thm, \thmnumber = numéro du thm, \thmnote = sous-titre du thm
+
+\newtheoremstyle{exostyle*}
+{\topsep}% espace avant
+{}%{\topsep}% espace apres
+{}% Police utilisee par le style de thm
+{}% Indentation (vide = aucune, \parindent = indentation paragraphe)
+{\bfseries}% Police du titre de thm
+{.}% Signe de ponctuation apres le titre du thm
+{ }% Espace apres le titre du thm (\newline = linebreak)
+{\thmname{#1}\thmnote{. \normalfont{\textit{#3}}}}% composants du titre du thm : \thmname = nom du thm, \thmnumber = numéro du thm, \thmnote = sous-titre du thm
+
+
+\newcommand{\R}{\ensuremath{\mathbb R}}
+\newcommand{\PP}{\ensuremath{\mathbb P}}
+\newcommand{\CC}{\ensuremath{\mathbb C}}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\ZZ}{\ensuremath{\mathbb Z}}
+\newcommand{\ds}{\displaystyle}
+
+\theoremstyle{exostyle}
+\newtheorem{exercice}{Exercice} 
+
+%#############################################################################################
+
+%\lhead{}  %haut de page gauche
+%\chead{}  %haut de page centre
+%\rhead{}  %haut de page droite
+%\lfoot{} %pied de page gauche
+%\cfoot{} %pied de page centré
+%\rfoot{frederique.charles@upmc.fr}  %pied de page droit
+%\renewcommand{\headrulewidth}{0pt} 
+%\renewcommand{\footrulewidth}{0.4pt} 
+
+
+\usepackage{titlesec}
+\renewcommand{\thesection}{\Roman{section}}
+\titleformat{\section}[display]
+{\large\bfseries}
+{\vspace{.5cm}\titlerule[1.pt]}
+{-10pt}
+{\filright \large \qquad \thesection\ \large\bfseries\filright}[{\vspace{1.5mm}\titlerule[1pt]\vspace{5mm}}]
+
+
+\newcommand{\ZeroRoman}[1]{% 0 + \Roman
+  \ifcase\value{#1}\relax 0\else% Chapter 0
+  \Roman{#1}\fi}% All other chapters
+\renewcommand{\thesection}{\ZeroRoman{section}}
+
+\date{} 
+\author{}
+
+
+%#############################################################################################
+\begin{document}
+
+
+\noindent Préparation à l'agrégation de mathématiques  
+\hfill
+2020-2021 \\
+Option B \hfill  ~\\ % \emph{Durée : 3h}
+Sorbonne Université \hfill  ~\\ 
+\noindent {\rule{\textwidth}{.2mm}}\\[-3mm]
+\begin{center}
+\large{\textsc{TD : \'Equations Différentielles  } }\\[-3mm]
+\end{center}
+\noindent {\rule{\textwidth}{.2mm}}\\
+
+%---------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------
+\begin{exercice}
+Soit $f:\mathbb{R}^+ \times \R^d \rightarrow \R^d$ une fonction continue et globalement Lipschitzienne par rapport à $y$. On va montrer que le problème
+$$
+\left\{ 
+\begin{aligned}
+y'(t) &=f(t,y(t))\\
+y(0)&=y_0
+\end{aligned}
+\right.
+$$
+admet une unique solution globale, c'est-à-dire définie sur $\R^+$. Pour cela, pour tout $T>0$, on introduit :
+$$
+\begin{aligned}
+\Psi : C^0([0,T];\R^d) &\rightarrow &C^0([0,T];\R^d)
+\end{aligned}
+$$
+donnée par : pour tout $z \in C^0([0,T];\R^d)$
+$$
+\Psi(z)(t)= y_0+\int_0^t f(s,z(s))\,ds.
+$$
+On munit $\R^d$ d'une norme vectorielle $\|\cdot \|$.
+\begin{enumerate}
+\item Montrer que $\Psi$ est contractante pour la norme :
+$$
+\|z\|_L=\sup_{t \in [0,T]}e^{-Lt}\|z(t)\|
+$$
+où $L$ est la constante de Lipschitz pour $f$. 
+\item En déduire l'existence et l'unicité d'un point fixe pour $\Psi$.
+\item Conclure.
+\end{enumerate}
+
+\end{exercice}
+
+\begin{exercice}~{\bf Système Proie prédateur} \\
+On note $x(t)$ le nombre de proies (lapins, sardines...) et $y(t)$ le nombre de prédateurs (renards, requins...) à l'instant $t$. \\
+On suppose que 
+\begin{itemize}
+\item en l'absence de prédateurs, la population de  proies augmente naturellement avec un taux d'accroissement $a>0$ 
+\item en l'absence de proies, la population de prédateurs diminue naturellement avec un taux $-c<0$
+\end{itemize}
+et, lorsque les populations de proies et de prédateurs interagissent,
+\begin{itemize}
+\item le taux d'accroissement des proies décroît proportionnellement au nombre de prédateurs 
+\item  le taux d'accroissement des prédateurs croît proportionnellement au nombre de proies. 
+\end{itemize}
+L'évolution de ce système proie-prédateur est ainsi modélisée par le système différentiel
+\begin{equation} \label{proiepred}
+\left\{ 
+\begin{aligned}
+x' &= x(a  -by) \\
+y' &= y(- c +dx) \\
+\end{aligned} 
+\right.
+\end{equation}
+où $a$, $b$, $c$ et $d$ sont des réels strictement positifs. A l'instant initial, on suppose que $(x(0), y(0))=(x_0 , y_0 )$ avec $x_0 > 0$ et $y_0 > 0$.
+\begin{enumerate}
+  \item  Discuter l'existence et l'unicité de solution au système  \eqref{proiepred}.
+  \item Montrer que, pour $x_0 > 0$  et $y_0 > 0$ donnés, la solution maximale vérifie $x(t) > 0$ et $y(t) > 0$ pour tout $t$ dans son intervalle
+de définition. 
+  \item Soit $H(x, y) := by+dx -a\,ln(y) -c \,ln(x)$. Montrer que $H $ est une intégrale
+première pour le système (\ref{proiepred}), c'est-à-dire que $H$ est constante le long des trajectoires.
+\item A l'aide de la question précédente, montrer que $x$ et $y$ sont bornées. En déduire que les solutions sont définies sur $[0 , +\infty[$.
+  \item  En utilisant le portrait de phase de  \eqref{proiepred}, montrer que les solutions parcourent successivement les 4 zones
+délimitées par les isoclines.
+\item Utiliser $H$ pour en déduire que toute solution de  \eqref{proiepred} de condition initiale $(x_0 , y_0 )$  est périodique.
+  \item Utiliser le système (\ref{proiepred}) pour en déduire les valeurs moyennes de $x$ et $y$ sur une période.
+ \item On modélise la pêche par un terme $-\epsilon x$ au membre de droite de l'équation en $x$, et un terme $-\epsilon y$ au membre de droite de l'équation en $y$. Quelle est l’influence de la pêche sur la population moyenne de sardines et de requins? 
+\end{enumerate}
+\end{exercice}
+\medskip
+%%---------------------------------------------------------------------------------
+%\begin{exercice}~{\bf Systèmes Hamiltoniens} \\
+%Soit $H \in \mathcal{C}^2(\R^2, \R)$ ; on considère le système
+%\begin{equation} \label{Hamilt}
+%\left\{ 
+%\begin{aligned}
+%x' &= \frac{\partial H}{\partial y}(x,y)  \\
+%y' &= - \frac{\partial H}{\partial x}(x,y)   \\
+%\end{aligned} 
+%\right.
+%\end{equation}
+%\begin{enumerate}
+%  \item  Soit $ A \in \mathcal{M}_2(\R)$. A quelle condition nécessaire et suffisante sur $A$ existe- t-il une fonction  $H \in \mathcal{C}^2(\R, \R)$  telle que le système différentiel 
+%$  X'=AX$ puisse se mettre sous la forme  \eqref{Hamilt}? Cette condition dépend-elle de la base
+%choisie sur $\R^2$ ? Exprimer $H$ lorsque la CNS est remplie.
+% \item  Discuter l’existence de solutions de \eqref{Hamilt}.
+%  \item On dit que $H$ vérifie la propriété $(P)$ si, pour tout $C\in \R$, l'ensemble de
+%niveau\\ 
+%$E_C := \{(x,y); H(x, y) = C\}$ est ou bien vide, ou bien non vide et
+%borné. Montrer que, si H vérifie la propriété $(P)$ alors les solutions maximales
+%de  \eqref{Hamilt} sont définies sur  $\R$ tout entier.
+%%
+%  \item On considère les fonctions
+% $$
+%H_1(x,y) := \frac{x^2}{2}+ \frac{y^4}{4}, \qquad
+%H_2(x,y) :=\frac{x^2}{2} -\cos(y)
+%$$
+%Les solutions maximales des systèmes différentiels \eqref{Hamilt} associés sont-elles définies sur $\R$ tout entier?
+%\end{enumerate}
+%\end{exercice}
+%\medskip
+
+
+%---------------------------------------------------------------------------------
+\begin{exercice}~{\bf Extrait de l'examen M2 2016}\\  % EXAMEN M2 2016
+On consid\`ere le syst\`eme suivant : pour $t \in \mathbb{R}$,
+$$
+\left\{
+\aligned
+x_1'(t)&=[a-2x_1(t)-x_2(t)]x_1(t)\\
+x_2'(t)&=[b-x_1(t)-2x_2(t)] x_2(t)
+\endaligned
+\right.
+$$
+avec les conditions initiales
+$$
+x_1(0)=x_{1,0},\,x_2(0)=x_{2,0}.
+$$
+On suppose que $a$, $b$, $x_{1,0}$ et $x_{2,0}$ sont des r\'eels strictement positifs fix\'es.
+\begin{enumerate}
+\item  Montrer que ce syst\`eme admet une unique solution maximale $(x_1,x_2)$ et que cette solution satisfait $x_1>0$ et $x_2>0$ sur son intervalle de d\'efinition.
+\item Montrer que cette solution maximale est born\'ee sur son intervalle de d\'efinition. 
+\item  Montrer que c'est en fait une solution globale sur $\mathbb{R}$.
+\item  D\'eterminer les points d'\'equilibre associ\'es au syst\`eme.
+\item  On prend $a=2$ et $b=1$. D\'eterminer si les points d'\'equilibre sont stables, instables ou incertains.
+\end{enumerate}
+\end{exercice}
+\medskip
+%===================================================================================
+%---------------------------------------------------------------------------------
+
+\begin{exercice}~{\bf Portait de phase $2\times 2$}\\
+Tracer le portrait de phase du système
+$$
+\left\{ 
+\begin{aligned}
+x' &=  y-x-2 \\
+y' &=  x^2 -y
+\end{aligned}
+\right.
+$$
+\end{exercice}
+\medskip
+
+\newpage
+%---------------------------------------------------------------------------------
+\begin{exercice}~{\bf  Stabilité et linéarisation}~\\
+Discuter de la stabilité des équations ou systèmes différentiels suivants ainsi que celle de leur linéarisé, autour du point d'équilibre $0$ ou $(0,0)$.  \\
+
+\begin{enumerate}
+\item $x'= -x^3$ 
+\item $x'=  x^3$  
+\item 
+$ \left\{ \begin{aligned}
+ &x'=y \\
+ & y'=-y^2
+\end{aligned} \right.
+$
+\item 
+$ \left\{  \begin{aligned}
+ &x'=y \\
+ & y'=-y^{3/2}
+\end{aligned}
+ \right.
+$
+ \end{enumerate} 
+\end{exercice}
+\medskip
+
+\begin{exercice}~{\bf  }
+Soit le système différentiel dans $\R^2$ défini par
+$$\left\{
+\begin{array}{rcl}
+x' &=& 2(x-ty)\\
+y'&=& 2y.
+\end{array}
+\right. \quad \text{pour tout }  t\geq 0.$$
+\begin{enumerate}
+\item Déterminer la solution de ce système qui passe par le point $(x_0,y_0)$ en $t=0$.
+\item
+% On utilise la méthode d'Euler explicite avec pas constant $h$ démarrant au temps $t_0=0$. Soit $(x_n,y_n)$ le point atteint au temps $t_n=nh$ ($n\in \N^*$).
+Soit $T>0$ et $N\in \N^*$. On divise l'intervalle $[0,T]$ en $N$  sous-intervalles de longueur 
+$h=\frac{T}{N}$, et on pose $t_n=n h$ pour $0\leq n\leq N$. 
+        On note $(x_n,y_n)$ l'approximation  de la solution exacte du système au temps $t_n$  donnée par le schéma d'Euler explicite de donnée initiale $(x_0,y_0)\in \R^2$.
+\begin{itemize}
+\item[a)] Ecrire la relation qui lie $(x_{n+1},y_{n+1})$ à $(x_n,y_n)$.
+\item[b)] Calculer explicitement $(x_n,y_n)$ en fonction de $n$, $h$, $x_0$ et $y_0$.
+\item[c)] Sans utiliser les théorèmes généraux du cours, vérifier que la solution approchée qui interpole linéairement les points $(x_n,y_n)$ aux temps $t_n$ converge sur $\R^+$ vers la solution exacte du système quand $h \to 0$.
+\end{itemize}
+\end{enumerate}
+\end{exercice}
+\medskip
+ %---------------------------------------------------------------------------------
+\begin{exercice}
+On considère le système différentiel 
+\begin{equation}
+ \label{EDOexo}
+ \left\{
+  \begin{array}{l}
+     y'(t)=  -150 y(t)-150 t +49, \quad t\in [0,1], \\
+     y(0)= \frac{1}{3}
+  \end{array}
+\right.
+\end{equation}
+\begin{enumerate}
+   \item Déterminer la solution $y$ de \eqref{EDOexo}.
+   \item Appliquer la méthode d'Euler explicite à  \eqref{EDOexo}, avec $t_n =nh$, $n=0,\dots, N$, $Nh=1$.
+   Calculer $e_n=y(t_n)-y_n$ en fonction de $e_0$ et donner une condition suffisante pour que 
+   $\max_{0\leq n \leq N}  |e_n| \to 0$ quand $h\to 0$ si $|e_0|=O(h)$. \newline
+  Examiner $e_N =y(1)-y_N$ pour $h=1/50$. Que se passe-t-il ?
+   \item Appliquer la méthode d'Euler implicite pour $h_n=h$ constant et exprimer $e_n$ en fonction de $e_0$. Que constate-t-on?
+\end{enumerate}
+\end{exercice}
+\medskip
+%---------------------------------------------------------------------------------
+
+\newpage
+\begin{exercice}
+On considère l'équation différentielle avec condition initiale 
+\begin{equation}
+ \label{cauchy}
+ \left\{
+  \begin{array}{l}
+     y'(t)= A y(t), \quad \textrm{pour } t\geq 0, \\
+     y(0)=y_0
+  \end{array}
+\right.
+\end{equation}
+où $y : \, \R^+ \rightarrow \R^3$ est une fonction vectorielle dérivable, $A\in \mathcal{M}_3(\R)$ et $y_0\in \R^3$ données par 
+$$ A=\begin{pmatrix} 0 & -3 & 0 \\  -3 & 3 & -3 \\ 0 & -3 & 0 \end{pmatrix},
+\quad 
+y_0 =\begin{pmatrix} 1 \\  9 \\ 13 \end{pmatrix}.$$
+\begin{enumerate}
+  \item Calculer la solution exacte du problème de Cauchy \eqref{cauchy}.
+  \item Soit $T>0$ et $N\in \N^*$. On divise l'intervalle $[0,T]$ en $N$  sous-intervalles de longueur 
+           $h=\frac{T}{N}$, et on pose $t_n=n h$ pour $0\leq n\leq N$. 
+        On note $y_n$ l'approximation  de la solution exacte au temps $t_n$ donnée par le schéma d'Euler explicite de donnée initiale $y_0$.
+       \'Ecrire la formule de récurrence de ce schéma liant $y_{n+1}$ et $y_n$, puis calculer explicitement $y_n$.
+ \item $T$ étant fixé, que peut-on dire de $\lim_{N\to +\infty} y_N$ ?
+\end{enumerate} 
+\end{exercice}
+\medskip
+
+%%---------------------------------------------------------------------------------
+%\begin{exercice}
+%Montrer que le schéma d'Euler ne permet pas d'approcher la solution 
+%$y(t)=\left(\frac{2}{3}t\right)^{3/2}$
+%de l'équation différentielle
+%   \[y'=y^{1/3}, \quad y(0)=0.\]
+%\end{exercice}
+%\medskip
+%
+%---------------------------------------------------------------------------------
+\begin{exercice}{\bf (Méthode de Heun)}\\
+Soit le problème de Cauchy
+$$\left\{
+\begin{array}{rcl}
+y'(t) & = & f(t,y(t)) \quad \text{pour tout } t \in [0,T],\\
+y(0) & = & y_0,
+\end{array}
+\right.$$
+où $f:[0,T] \times \R \to \R$ est globalement Lipschitzienne par rapport à $y$ et uniformément en $t$. On suppose que la solution $y$ de cette équation différentielle est de classe $\mathcal C^3$. 
+\begin{enumerate}
+\item Etudier l'erreur de consistance de la méthode de Heun:
+$$y_{n+1}=y_n+h \left[\frac12 f(t_n,y_n) + \frac12f(t_{n+1},y_n+hf(t_n,y_n)) \right],$$
+où $t_n=nh$ et $h=T/N$.
+\item Montrer que cette méthode est convergente d'ordre $2$.
+\end{enumerate}
+\end{exercice}
+\medskip
+%---------------------------------------------------------------------------------
+
+%\begin{exercice}~\\
+%On considère le système différentiel suivant
+%$$\left\{
+%\begin{array}{rcl}
+%u'_1(t)+2u_1(t)-u_2(t)+u_1(t) e^{u_1(t)} & = & 0,\\
+%u'_2(t)-u_1(t)+2u_2(t)+u_2(t) e^{u_2(t)} & = & 0,\\
+%\end{array}
+%\right.  \quad \text{pour tout } t >0,\\$$
+%avec la condition initiale $u_1(0)=u_2(0)=1$. Dans la suite, on pose $u(t)=\left(\!\!\!\begin{array}{l}
+%u_1(t)\\u_2(t)\!\!\! \end{array}\right)$.
+%\begin{enumerate}
+%\item Démontrer que si $u$ est solution du problème, alors la fonction $g$ définie par $g(t):=\|u(t)\|^2$ pour tout $t>0$ est décroissante.
+%\item Si $h>0$ est le pas de temps et si $t_n=nh$ pour $n \in \N$, écrire le schéma d'Euler implicite qui permettra de calculer les approximations $u^n$ de $u(t_n)$.
+%\item Démontrer que si $u^n$ est solution du schéma d'Euler implicite, alors la suite $(g_n)_{n \in \N}$ définie par $g_n=\|u^n\|^2$ pour tout $n \in \N$ est décroissante.
+%\item Expliquer la méthode de Newton-Raphson qui permettra de calculer $u^{n+1}$ à partir de $u^n$. 
+%\end{enumerate}
+%\end{exercice}
+
+
+\end{document}
+
+%---------------------------------------------------------------------------------
+\begin{exercice}{\bf Extrait de l'examen M2 2016} \\
+On note $\langle, \rangle$ le produit scalaire euclidien dans $\mathbb {R}^n$ et $\left\|\cdot\right\|$ la norme euclidienne.
+Soit $M\in {\cal M}_n(\mathbb{R})$ qui est
+antisym\'etrique, c'est-\`a-dire telle que
+$M=-M^t$ et   $U_0\in \mathbb{R}^n$.
+%
+On s'int\'eresse \`a l'int\'egration num\'erique de 
+l'\'equation diff\'erentielle
+ordinaire
+dont l'inconnue est la fonction $t\mapsto U(t)
+\in \mathbb{R}^n$
+$$
+\left\{
+\begin{array}{rcll}
+U'(t)& = & MU(t),&  t \in [0,L], \\
+U(0) & = & U_0.
+\end{array}
+\right.
+$$ 
+\begin{enumerate}
+   \item Montrer que $$\left\|U(L)\right\|=\left\|U_0\right\|.$$
+%\item[a.] Exprimer $U(L)$ \`a l'aide d'une exponentielle de
+%matrice.
+%
+%\item[b.] Rappeler pourquoi $e^{M^t}=\left( e^M\right)^t$. 
+%En d\'eduire que pour tout $Z\in \mathbb{R}^n$ alors
+%$$ \left(e^M Z,   e^M Z\right)= (Z,Z).$$
+%En d\'eduire que 
+%$$\left\|U(L)\right\|=\left\|U_0\right\|.$$
+%
+ \item On se donne  deux matrices  antisym\'etriques 
+$A$ et $B$ dans ${\cal M}_n(\mathbb{R})$ telles que  $M=A+B$ 
+et on note 
+$$\widetilde{U}(L)=e^{\frac{A L}2  } e^{BL  }e^{\frac{A L}2  }U_0. $$
+Montrer que la diff\'erence avec $U(L)$ peut se mettre sous la forme
+$$
+\widetilde{U}(L)-{U}(L)=R(L)U_0
+$$
+o\`u la fonction matricielle $R$ est
+  de classe ${\cal C}^3$
+et telle que
+$
+R(0)=R'(0)=R''(0)=0$. 
+%
+\item 
+ Montrer
+qu'il existe une constante $C>0$ que l'on pr\'ecisera
+telle que 
+$
+\left\|R(t)\right\|\leq Ct^3$. 
+%
+\item
+On se donne une subdivision $(t_n)_{n=0,\dots,N}$  de l'intervalle $[0,L]$ 
+et on d\'efinit, pour tout $0\leq n\leq N-1$
+$$
+U_{n+1}=e^{\frac{h_n }2\, A } e^{B h_n  }e^{\frac{ h_n}2 \, A }U_n, \textrm{ avec } h_n=t_{n+1}-t_n. \\[3mm]
+$$
+Soit $W_n=U_n-U(t_n)$.
+ Montrer que 
+$$ W_{n+1}=R(h_n)U_n+E^{M\, h_n}W_n.$$
+En d\'eduire l'estimation
+$$
+||U_{ N}-U(L)||\leq C h^2
+$$
+avec
+$\ds h=\max_{0\leq n\leq N}(t_{n+1}-t_n)$.
+ \end{enumerate}
+\end{exercice}
+
+\newpage 
+
+
+\section*{Autres exos}
+%---------------------------------------------------------------------------------
+\begin{exercice}~{\bf Systèmes gradients}  \\
+Soit $U \in  \mathcal{C}^2(\R^n, \R)$ telle que $\ds \lim_{\|x\| \to +\infty} U(x) =+\infty $. On considère une dynamique de type gradient, ie l'équation différentielle
+$$
+x'(t) = - \nabla U(x).
+$$
+\begin{enumerate}
+  \item Discuter l'existence de solutions.
+  \item Montrer que $U$ est une fonction de Lyapounov.
+  \item En déduire que les trajectoires sont définies sur $[0,+\infty [$.
+  \item Montrer que les points d’adhérence de $\{x(t); t \in [0,+\infty [\}$ sont des points
+critiques de $U$.
+\end{enumerate}
+\end{exercice}
+\medskip
+%---------------------------------------------------------------------------------
+\begin{exercice}~{\bf Equation de Liénard}
+
+
+\end{exercice}
+\medskip
+%---------------------------------------------------------------------------------
+\begin{exercice}~\\
+On considère l'équation différentielle du second ordre avec conditions initiales
+$$\left\{
+\begin{array}{rcl}
+y''(t) & = & f(t,y(t)) \quad \text{pour tout } t \in [0,T],\\
+y(0) & = & y_0,\\
+y'(0) & = & y_1.
+\end{array}
+\right.$$
+On suppose que $f \in \mathcal C^2([0,T] \times \R)$ et $y_0$, $y_1\in \R$. On choisit de discrétiser l'équation par le schéma à deux pas
+$$y_{n+1} -2y_n +y_{n-1} = h^2f(t_n,y_n) \quad \text{pour tout } n\in \N^*,$$
+où $t_n=nh$ et $h=T/N$. Majorer l'erreur de consistance définie par
+$$\varepsilon(h):= \sup_{1 \leq n \leq \frac{T}{N-1} } 
+                   \left| f(t_n,y(t_n)) - \frac{y(t_{n+1}) - 2y(t_n) +y(t_{n-1})}{h^2} \right|.$$
+\end{exercice}
+\medskip
+%---------------------------------------------------------------------------------
+
+
+%-------------------------------
+\begin{exercice}~{\bf Modèle d'agglomération de globules rouges} \\
+ On considère une modélisation 1d d'une population d'hématies sur l'intervalle $[0,1]$. Chacune de ces hématies (de masse $m=1$) subit l'influence de ses deux voisines, sauf la première et la dernière supposées fixées en $0$ et en $1$ respectivement. On note $x_i(t)$ la position du centre de l'hématie $i$, avec 
+$$0 =x_0(t) <x_1(t) <\dots < x_N(t) <x_{N+1}(t) =1.$$ 
+On modélise la force d'interaction exercée par la particule $i+1$ sur la particule $i$ par $\varphi(x_{i+1}-x_i)$, avec $\varphi$ donnée par 
+$$ \varphi(d) = \frac{\gamma}{d} \ln \left(\frac{d}{a} \right) $$  
+où $a$ correspond à la taille charactéristique d'une hématie. 
+De plus, on suppose que chaque particule subit du fluide environnant une force de frottement proportionnelle à sa vitesse, et qui s'oppose au mouvement. Le système dynamique résultant de ce modèle peut ainsi s'écrire :
+$$
+ x_i''(t) = \varphi(x_{i+1} -x_i) - \varphi(x_i-x_{i-1}) - \lambda x_i'(t), \qquad \forall i =1, \dots, N.
+$$
+
+\begin{itemize}
+   \item A partir de l'allure de $\varphi$, décrire qualitativement l'interaction entre deux hématies.
+   \item Montrer que ce système différentiel associé à une condition de Cauchy vérifiant que        
+$0 =x_0^0 <x_1^0 <\dots < x_N^0 <x_{N+1}^0 =1$ admet une unique solution maximale.%Est-elle globale?
+%
+ \item Montrer la relation suivante :
+  $$
+\frac{d}{dt } \left( \sum_{i=1}^N \frac{1}{2} (x_i'(t))^2 + \sum_{i=0}^N \psi (x_{i+1} - x_i) \right) = - \lambda  \sum_{i=1}^N  (x_i'(t))^2
+  $$
+où $\psi$ est une primitive de $\varphi$.
+Comment s'interprète-t-elle?
+  \item En déduire que la solution du problème de Cauchy est globale.
+\end{itemize}
+\end{exercice}
+\medskip
+%%---------------------------------------------------------------------------------
+\begin{exercice}~{\bf Modélisation de l'évolution d'un réacteur biologique}\\
+On s'intéresse à une culture de micro-organismes dans un milieu fermé, comme un fermenteur. On fait l’hypothèse simplificatrice que le fermenteur ne contient qu’une seule espèce de micro-organisme. Cette espèce se reproduit avec
+un taux de naissance $a > 0$. Comme le milieu est fermé, elle va se trouver en compétition avec
+elle-même, avec un coefficient de compétition interne $b > 0$, supposé constant. 
+%. Ce paramètre dépend bien sûr de la quantité de nourriture disponible dans le fermenteur et il est d’autant plus petit que celle-ci est grande. Dans la suite, on le supposera constant. 
+Par ailleurs, on suppose que la production de biogaz par les micro-organismes a un effet toxique sur ceux-ci. Cette production est cumulative et proportionnelle à la quantité de micro-organismes présents dans le fermenteur à tout instant. 
+%En d’autres termes, si q(t) représente cette quantité à l’instant t, la production de biogaz
+%entre t et t + ∆t sera approximativement égale à c 1 q(t)∆t, où c 1 > 0 R représente l’efficacité de la production. On est donc conduit à une production totale égale à c 1 0 t q(τ) dτ. Notant c 2 > 0 la toxicité du biogaz produit, c’est-à-dire qu’une quantité A de biogaz détruit une fraction c 2 A des micro-organismes, et effectuant le bilan des naissances et disparitions à l’instant t, on aboutit donc au modèle 
+Le modèle décrivant l'évolution de la quantité $q(t)$ de micro-organisme à l'instant $t$ à partir d'une quantité initiale $q_0$ est 
+\begin{equation} \label{microorg}
+q'(t) = a q(t) - bq(t)^2 - c q(t) \int_0^t q(\tau)d\tau, \qquad q(0)=q_0>0
+\end{equation}
+\begin{itemize}
+   \item Expliquer le modèle \eqref{microorg} à partir des hypothèses effectuées.
+   \item Montrer l'existence et l'unicité d'une solution maximale à \eqref{microorg}. \newline
+    \emph{Indication : introduire $y(t) = \int_0^t q(\tau)d\tau$}.
+\end{itemize}
+\end{exercice}
+\medskip
+
+
+\end{document}
