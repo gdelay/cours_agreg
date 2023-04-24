@@ -1,0 +1,12 @@
+TODO ete 2023 :
+- synchroniser les notes papiers avec le poly en ligne
+- modifier les notes papier pour se concentrer sur les points cle :
+   - matrice du Laplacien
+   - formulation variationnelle et Lax Milgram
+   - methode des caracteristiques
+   - analyse de stabilite d'un schema
+   - analyse de consistance
+   - construction d'un solution a l'equation de la chaleur (ou des ondes) par separation de variables et series de Fourier
+   - construction d'une solution a l'equation de la chaleur par transformation de Fourier
+
+--> l'idee serait de traiter moins d'elements et a la place de faire des exercices de TD
