@@ -1,0 +1,237 @@
+\documentclass[12pt]{article}
+\usepackage[french]{babel}
+\usepackage{times}
+\usepackage{xcolor}
+\usepackage{graphicx,epic,eepic}
+\usepackage{amsfonts,amsmath} 
+\usepackage{titlesec,color}
+\def\begincorrige #1.{\noindent{\small \bf Corrig{\'e} de l'exercice #1}}
+\def\endcorrige{ 
+\small
+
+}
+%\pagestyle{empty}
+% \oddsidemargin+2mm
+% \evensidemargin+2mm
+% \topmargin-2.5cm
+% \textheight 242mm
+%\textwidth160mm
+
+
+\usepackage{listings}
+\let\lst=\lstinline
+\lstset
+{
+    basicstyle=\small\ttfamily,
+    commentstyle=\color{magenta},
+    keywordstyle=\color{couleurpython},
+    frame=single,
+    language=python,
+    morekeywords={True, False},
+    numbers=left,
+    numbersep=10pt,
+    numberstyle=\footnotesize\color{black},
+    showstringspaces=false,
+    stringstyle=\color{magenta},
+    tabsize=3,
+    numbers=none,
+} 
+
+\definecolor{couleurpython}{rgb}{.0,0. ,1}
+\newcommand\python[1]{{\color{couleurpython}{\texttt{#1}}}}
+
+%\setlength{\parindent}{0cm} \setlength{\parskip}{5mm}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\N}{\mathbb{N}}
+%\include{abrev}
+ 
+\newtheorem{corrige}{\bf Corrig{{\'e} de
+l'exercice}}
+%\newtheorem{corrige}{} 
+\newtheorem{exercice}{Exercice} 
+
+
+\newenvironment{exo}{
+\begin{exercice}\normalfont}{\end{exercice}
+} 
+
+\newenvironment{cor}{
+\begin{corrige}\normalfont}{\end{corrige}
+} 
+ 
+\renewcommand{\thecorrige}{\empty{}} 
+\newcommand{\NV}[1]{\left|\!\left| #1 \right|\!\right|}
+
+\begin{document}
+
+\newif\ifcorrige  
+\corrigetrue%
+\corrigefalse
+ 
+
+\centerline{\Huge \bf   Travaux pratiques} 
+ 
+\section{Listes, modules numpy, scipy, \ldots}
+\begin{enumerate}
+ \item  Liste, array
+ 
+\begin{lstlisting}
+import numpy  
+L=range(7,10)
+S= numpy.array(L)         # transforme la liste L en array
+print(S)
+S= numpy.zeros(7)         # S contient 7 fois le nombre 0
+print(S)
+S= numpy.ones(7)          # que contient S ?
+print(S)
+S= 24*numpy.ones(7)       # que contient S ?
+print(S)
+S= numpy.eye(7)           # que contient S ?   
+print(S) 
+
+import numpy as np
+X=np.linspace(10,30)       # que contient X ?   
+print(X)
+X=np.linspace(10,30,10)    # que contient X ?  
+print(X)
+u = np.array(range(4,9))
+type(u)
+np.size(u)
+np.shape(u) 
+A = np.array([[1,2,3],[4,5,6]])
+type(A)
+np.size(A)
+np.shape(A)
+\end{lstlisting} 
+
+ \item Produit de matrices 
+ 
+\begin{lstlisting}
+A = np.array([[1,2], [3,4]])
+B = np.array([[1,0], [-1,1]])
+C=A*B                #   C=?
+D=np.dot(A,B)        #   D=?
+\end{lstlisting} 
+
+ \item  Exemple de fonction 
+ 
+\begin{lstlisting} 
+def ExempleA(n):
+    A=np.zeros((n,n))
+    for i in range(1,n-1):
+        A[i,i-1], A[i,i], A[i,i+1] = -1,2,-1
+    i=0
+    A[i,i], A[i,i+1] = 2,-1
+    i=n-1
+    A[i,i-1], A[i,i] = -1,2
+    return A 
+
+n=6
+X=ExempleA(n)
+print(X)
+\end{lstlisting} 
+
+ \item Graphiques
+ 
+\begin{lstlisting}
+import matplotlib.pyplot as plt
+from math import sin, exp
+x=[z/20. for z in range(21)]
+y=[sin(3*xk) for xk in x]  
+z=[exp(-xk) for xk in x]  
+plt.xlabel('x') ; plt.ylabel('sin(3x),exp(-x)') ;   # 'd' comme 'diamond'
+plt.plot(x,y, '-r',label='sin(3x)', linewidth=2, marker='d',markersize=12)
+plt.plot(x,z,'-b',label='exp(-x)', linewidth=2, marker='o', markersize=12)
+plt.legend(title='Legende', loc=8)
+plt.grid()
+plt.show() 
+\end{lstlisting}
+
+ \item  Alg\`ebre matricielle
+ 
+ \begin{enumerate}
+ \item  Inverse (d\'econseillé pour des matrices de grande taille!), 
+norme, rang, d\'eterminant, spectre, \ldots 
+
+\begin{lstlisting}
+from numpy.linalg import inv
+n=7
+A=ExempleA(n)
+B=inv(A)
+C=np.dot(A,B)
+print("||AB-I|| = ",np.linalg.norm(C-np.eye(n))) 
+
+A=ExempleA(5)
+r=np.linalg.matrix_rank(A)
+
+from scipy.linalg import expm
+A=np.zeros((2,2))
+print('np.exp(A) = \n', np.exp(A))      # Comparer
+print('expm(A)   = \n', expm(A))        # np.exp(A) et expm(A)
+
+
+from numpy.linalg import eig  # pour v.p 
+n=3
+A=ExempleA(n)
+D, V = eig(A)
+k=2
+d,u=D[k],V[:,k]
+z=np.dot(A,u)-d*u
+print(np.linalg.norm(z))
+\end{lstlisting}
+ 
+ \item  Syst\`emes lin\'eaires 
+  
+\begin{lstlisting}
+import numpy as np
+from numpy import linalg   # sous librairie algebre lineaire
+n=5
+A=np.random.rand(n,n)
+s=np.random.rand(n)
+b=np.dot(A,s)
+x=linalg.solve(A,b)
+normex=linalg.norm(s-x) 
+\end{lstlisting} 
+ \end{enumerate}
+ 
+
+ \item[$\bullet$] \'Equations non lin\'eaires
+ \begin{enumerate}
+ \item Cas scalaire
+ 
+\begin{lstlisting}
+# resoudre exp(-x)=sin(x) 
+import matplotlib.pyplot as plt
+x=np.linspace(0,10)
+plt.plot(x,np.exp(-x),'b+',x,np.sin(x),'or')
+from scipy.optimize import fsolve
+from math import exp, sin 
+def f(x):
+    return exp(-x)-sin(x)
+
+x=fsolve(f, 3)
+print('   x = ', x) 
+print('f(x) = ', f(x)) 
+\end{lstlisting} 
+
+ \item Cas vectoriel 
+ 
+\begin{lstlisting}
+# resoudre le systeme : 
+# exp(x) + x y^2 =1, 
+# sin(x+y) + x^2 =1
+
+def f(p):
+    x, y = p[0], p[1]
+    q=[exp(x)+x*y*y-1,sin(x+y)+x*x-1]
+    return q
+
+x=  fsolve(f, (0,0))
+print('   x = ', x) 
+print('f(x) = ', f(x)) 
+\end{lstlisting} 
+\end{enumerate}
+\end{enumerate}
+\end{document}
