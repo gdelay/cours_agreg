@@ -1,0 +1,210 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{version}
+%\usepackage{subcaption}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage[]{algorithm2e}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usepackage{bigints}
+\usepackage[left=2.5cm,right=2.5cm,top=2.3cm,bottom=2.3cm]{geometry}
+\usepackage{amsthm}
+\usepackage{multicol}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{authblk}
+\usepackage[most]{tcolorbox}
+\usepackage{lipsum}
+
+
+\begin{document}
+\begin{center}
+\begin{LARGE}
+\textsc{Mémo Python} 
+\end{LARGE}
+\end{center}
+
+
+\section{Structures}
+
+%\subsection{Structures de données}
+
+
+\subsection{Boucles et définition de fonction}
+
+\begin{multicols}{2}
+\textbf{Test if:}
+\begin{verbatim}
+if test :
+   commandes
+elif test :
+   commandes
+else :
+   commandes
+\end{verbatim}
+
+\textbf{Boucle while:}
+\begin{verbatim}
+while test :
+   commandes
+\end{verbatim}
+
+\columnbreak
+\textbf{Boucle for:}
+\begin{verbatim}
+for i in liste :
+   commandes
+\end{verbatim}
+La liste sera éventuellement donnée par \verb|range(a,b)| \emph{i.e.} la liste des \emph{entiers} \linebreak $\{a, a+1, ..., b-1\}$. \\
+
+\textbf{Fonction:}
+\begin{verbatim}
+def fonction(arg_1, ..., arg_n) :
+   commandes
+   return resultat
+\end{verbatim}
+\end{multicols}
+
+%\begin{multicols}{2}
+%
+%
+%\columnbreak
+%
+%\end{multicols}
+
+
+\section{Numpy}
+
+Rappel : pour utiliser le module Numpy, il faut d'abord l'importer par la commande 
+\begin{verbatim}
+import numpy as np
+\end{verbatim}
+Une fonction de la librairie Numpy sera appelée par la commande \verb|np.fonction|
+
+Pour l’algèbre linéaire numérique, Numpy contient un sous-module particulier \verb|linalg|. 
+%il faudra l'importer de façon similaire:
+%\begin{verbatim}
+%import numpy.linalg as lng
+%\end{verbatim}
+Une fonction du sous-module \verb|linalg| sera appelée par la commande \verb|np.linalg.fonction|
+
+\subsection{Matrices}
+
+Une matrice $A = (a_{ij})_{1\leq i \leq n, 1 \leq j \leq p}$ est définie par 
+\begin{verbatim}
+A = np.array([[a_11, a_12,...,a_1p], ..., [a_n1, a_n2,...,a_np]])
+\end{verbatim}
+
+Si $A$ et $B$ sont de mêmes tailles, \verb|A + B|, \verb|A - B| renvoient la somme $A+B$, la différence $A-B$. 
+
+%Attention, le produit $AB$ nécessite la fonction \verb|dot| de Scipy. \\
+
+\begin{tabular}{|l|l|}
+\hline
+Fonction Numpy & Résultat \\
+\hline
+\verb|np.zeros((n,p))| & Renvoie la matrice nulle de taille $(n,p)$ \\
+\verb|np.ones((n,p))| & Renvoie la matrice de taille $(n,p)$ où toutes les entrées sont égales à 1 \\
+\verb|np.eye(n)| & Renvoie la matrice identité de taille $(n,n)$ \\
+\verb|A@B| & Produit matriciel $AB$ \\
+\verb|np.dot(A,B)| & Produit matriciel $AB$ \\
+\verb|np.linalg.solve(A,b)| & Retourne la solution $x$ du système $Ax=b$ \\
+\verb|np.tranpose(A)| & Transposée de $A$ \\
+\verb|np.linalg.eigvals(A)| & Valeurs propres de $A$ \\
+\verb|np.linalg.eig(A)| & Vecteurs propres de $A$ \\
+\verb|np.linalg.det(A)| & Déterminant de $A$ \\
+\verb|np.linalg.inv(A)| & Inverse de $A$ \\
+\hline
+\end{tabular}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=red!75!black,title=Warning]
+   Pour deux tableaux Numpy \verb|A,B|, la commande \verb|A*B| effectue le produit \emph{terme à terme} et retourne le tableau de coordonnées $(a_{ij} b_{ij})$.
+\end{tcolorbox}
+
+
+%\subsection{Polynômes}
+%
+%Rappel : pour utiliser le module Numpy, il faut d'abord l'importer par la commande 
+%\begin{verbatim}
+%import numpy as np
+%\end{verbatim}
+%
+%Un polynôme $\sum\limits_{k=0}^n a_k X^k$ est encodé sous la forme d'une liste \verb|np.poly1d([a_n, ..., a_0])|. \\
+%
+%\begin{tabular}{|l|l|}
+%\hline
+%Fonction & Résultat \\
+%\hline
+%\verb|print(P)| &  Affiche le polynôme $P(X) = \sum\limits_{k=0}^n a_k X^k$ \\
+%\verb|np.poly(L)| & Crée le polynôme dont les racines sont les éléments de \verb|L| \\
+%\verb|np.roots(P)| ou \verb|P.r| & Donne les racines de $P$ \\
+%\verb|P + Q| & Renvoie le polynôme $P+Q$ \\
+%\verb|P*Q| & Renvoie le polynôme $PQ$ \\
+%\verb|np.polyval(P, x)| & Evalue $P$ en $x$ \\
+%\verb|np.polyder(P, k)| & Dérive $k$ fois le polynôme $P$ \\
+%\hline
+%\end{tabular}
+
+\section{Graphiques}
+
+Pour tracer des graphiques, il faut utiliser le sous-module \verb|matplotlib.pyplot| que l'on importe par : 
+\begin{verbatim}
+import matplotlib.pyplot as plt
+\end{verbatim}
+
+Pour tracer la courbe des points $(x_k,y_k)_k$, le script sera
+\begin{verbatim}
+plt.plot(X, Y)
+plt.show()
+\end{verbatim}
+où \verb|X| contient les abscisses $(x_k)_k$ et \verb|Y| contient les ordonnées $(y_k)_k$.
+\newline
+Il existe des options pour tracer en échelle log ou log-log une courbe
+
+\begin{tabular}{|l|l|}
+\hline
+Fonction & Résultat \\
+\hline
+\verb|plt.semilogx(X,Y)| & Trace la courbe passant par les points $(x_k,y_k)_k$ \\ 
+\verb|plt.ylabel('Y')| & Nomme l'axe des ordonnées \verb|Y|\\
+\verb|plt.legend(loc='best')| & Affiche une légende \\
+\hline
+\end{tabular}
+\newline
+
+Pour tracer 2 courbes sur un même graphique, on tapera:
+%plt.clf()
+\begin{verbatim}
+plt.plot(X1, Y1)
+plt.plot(X2, Y2)
+plt.show()
+\end{verbatim}
+%\verb|plt.clf()| efface les courbes précédentes. 
+
+Il existe différentes options à \verb|plt.plot| pour personnaliser les courbes : \verb|plt.plot(X1, Y1, 'r^')| affiche des triangles rouges. On peut remplacer \verb|r| par une autre lettre pour d'autres couleurs (\verb|g|, \verb|b|, \verb|y|,...) et \verb|^| par un autre symbole pour d'autres formes (\verb|o|, \verb|s|, \verb|+|,...).\\
+
+Commandes supplémentaires à ajouter avant \verb|plt.show()| : \\
+
+\begin{tabular}{|l|l|}
+\hline
+Fonction & Résultat \\
+\hline
+\verb|plt.xlabel('X')| & Nomme l'axe des abscisses \verb|X| \\ 
+\verb|plt.ylabel('Y')| & Nomme l'axe des ordonnées \verb|Y|\\
+\verb|plt.legend(loc='best')| & Affiche une légende \\
+\hline
+\end{tabular}
+\newline
+
+Pour la légende, il faut spécifier un nom pour chaque courbe par l'option \linebreak \verb|plt.plot(X1, Y1, 'r^', label='nom')|.
+
+\end{document}

@@ -1,0 +1,318 @@
+\documentclass[a4paper,francais,11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{aeguill}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+
+
+\hbadness=10000
+\vbadness=10000
+
+\oddsidemargin 2.5cm
+\evensidemargin 2.5cm
+\textheight 24truecm
+\voffset=-2.5truecm
+\textwidth 16.0truecm
+\hoffset=-2.5truecm
+\footskip 1.5truecm
+\parskip 3mm
+\flushbottom
+
+\theoremstyle{definition}
+\newtheorem{exercice}{Exercice}
+
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\K}{\mathbb K}
+\newcommand{\Pn}{\mathbb R_n[X]}
+\newcommand{\bv}{{\bf v}}
+\newcommand{\bu}{{\bf u}}
+\newcommand{\bw}{{\bf w}}
+\newcommand{\bdb}{{\bf b}}
+\newcommand{\bx}{{\bf x}}
+\newcommand{\cM}{{\mathcal M}}
+\newcommand{\cI}{{\mathcal I}}
+\newcommand{\cJ}{{\mathcal J}}
+\newcommand{\cL}{{\mathcal L}}
+\newcommand{\cB}{{\mathcal B}}
+\newcommand{\cS}{{\mathcal S}}
+\newcommand{\cE}{{\mathcal E}}
+\newcommand{\cR}{{\mathcal R}}
+\newcommand{\cF}{{\mathcal F}}
+\newcommand{\cBs}{{\mathcal B}_{\rm{sym}}}
+\newcommand{\cQ}{{\mathcal Q}}
+\newcommand{\bS}{{\bar S}}
+\newcommand{\bU}{{\bar U}}
+\newcommand{\tu}{{\tilde u}}
+\newcommand{\tU}{{\tilde U}}
+
+\newcommand{\hP}{{{\hat{P}}}}
+\newcommand{\hE}{{{\hat{E}}}}
+\newcommand{\chE}{{\mathcal{\hat{E}}}}
+\newcommand{\chP}{{\mathcal{\hat{P}}}}
+
+
+\newcommand{\deter}{ \det} %   {\rm {det}}}
+\newcommand{\ide}{{\rm {id}}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tr}{{\rm {trace}}}
+\newcommand{\rank}{{\rm {rang}}}
+\newcommand{\gradi}{{\rm {grad}}}
+\newcommand{\spanv}{{\rm {Vect}}}
+\newcommand{\dime}{{\dim{}}}
+\newcommand{\im}{{\rm{Im}}}
+\newcommand{\Ker}{\ker{}}
+\newcommand{\condi}{{\rm{cond}}}
+\newcommand{\diago}{{\rm{Diag}}}
+\newcommand{\bdiago}{{\rm{Block-Diag}}}
+\newcommand{\dista}{{\rm{dist}}}
+
+
+
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+{\large\sf  2023-2024
+\hfill
+Sorbonne Université}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bigskip
+\hrule
+\bigskip
+
+\section{ Initiation à Python}
+\subsection{Types de Données et opérations basiques}
+\begin{exercice}
+On commence par manipuler les structures de base.
+  \begin{enumerate}
+  \item  Effectuer dans python les operations suivantes :
+    \begin{enumerate}
+    \item Définir l'entier $a=1$ et le réel $b=3.$
+    \item Calculer $a+b$, $ab$, $a/b$, $a/3$, $b/3$, $b^3$, $2^{(0.5)}$
+    \end{enumerate}
+Rq : l'opérateur puissance en python est $**$.\\
+    Pour utiliser des fonctions plus avancées, on doit importer le module \verb|Numpy| de la manière suivante :
+    \begin{verbatim}
+     import numpy 
+     \end{verbatim}
+     On appelle ensuite les fonctions voulues en leur ajoutant le prefixe "numpy."
+  \item Calculer $\exp(a)$, $\cos(b\pi)$.\\
+
+    Si l'on souhaite eviter d'écrire les préfixes, on peut utiliser la méthode suivante:
+    \begin{verbatim}
+     from numpy import *
+     \end{verbatim}
+    Attention, en utilisant cette méthode, si le module contient une variable ou une fonction avec le même nom qu'une variable précédemment définie, la méthode sera écrasée. N'hésitez pas à essayer.
+
+    \item Définir le nombre complexe $z=1+i$, calculer le module et l'argument de $z$. 
+Rq: En python, l'appel d'un nombre complexe se fait avec le mot-clé $j$ et non $i$. De plus ce mot-clé doit toujours être accompagné d'un coefficient. $i$ s'écrit par exemple $1.0j$.
+    \item Calculer $a+z$, et $z^{14}$.
+    \item Définir les listes $u=(1,2,3,4,"hi")$ et $v=(1,2,(0,3))$.
+    \item Additionner les elements numériques de la liste $v$ et stocker la somme dans le premier élément de $u$.\\
+
+Rq: Les listes python sont indicées à partir de $0$. Elles sont aussi circulaires, c'est à dire que $u[-1]$ accède au dernier élément, $u[-2]$ à l'avant-dernier et ainsi de suite... .\\
+
+  \item Une fonction importante à maitriser est la fonction "range" qui permet de construire des listes. Essayez range(10), range(3,10), range(3,10,2). Le module {\tt numpy} permet de faire des range avec un pas flottant avec la fonction {\tt arange}.
+
+  \end{enumerate}
+\end{exercice}
+
+\subsection{Structures de contr\^ole et fonctions}
+Commençons par un petit rappel des structures. \\
+\begin{itemize}
+\item Les instructions de condition {\tt if, elif, else} ont la syntaxe suivante : 
+\begin{verbatim}
+if test :
+    commands
+    ...
+elif  test : 
+    commands
+    ...
+else :
+    commands
+    ...
+\end{verbatim}
+
+
+
+\item L'instruction de boucle {\tt for} a la syntaxe suivante:  
+\begin{verbatim}
+for i in liste:
+    commands
+    ...
+
+\end{verbatim}
+
+
+
+Une particularité de python est que l'instruction {\tt for} fait toujours intervenir une liste, d'où l'importance de savoir utiliser la fonction {\tt range()}.
+\item L'instruction de boucle {\tt while } a la syntaxe suivante: 
+\begin{verbatim}
+while test:
+    commands
+    ...
+\end{verbatim}
+\item Définir une fonction se fait de la manière suivante: 
+
+\begin{verbatim}
+def FunctionName (arg_1,arg_2,...,arg_n):
+    commands
+    ....
+    return result
+\end{verbatim}
+\end{itemize}
+Rq: N'oubliez pas les $:$ à la fins des instructions de contrôle et d'indenter les instructions affectées.
+\begin{exercice}
+  Définition de fonctions, boucles et tests. 
+  \begin{enumerate}
+  \item Définir une fonction {\tt prodsum} qui prend en argument deux
+    réels et renvoie un vecteur contenant le produit et la somme des
+    deux arguments.
+  \item Définir une fonction {\tt fact} qui prend en
+    argument un entier $n$ et renvoie $n!$. Utiliser pour cela une boucle
+    {\tt for}.
+  \item M\^eme question en utilisant une boucle {\tt while}.
+  \item M\^eme question en utilisant un appel récursif.
+  \end{enumerate}
+\end{exercice}
+
+\begin{exercice}
+  Mise en évidence de la précision machine. Ecrire un programme qui met
+  en \oe uvre l'algorithme suivant :\\
+$\varepsilon = 1;$\\
+$a=1;b=2;$\\
+Tant que $a\neq b$, faire :\\
+\indent $\varepsilon = \varepsilon/2;$\\
+\indent $a=1;$\\
+\indent $b=1+\varepsilon;$\\
+Fin de tant que
+
+Expliquer pourquoi cet algorithme calcule la précision machine. Le
+tester, pour obtenir cette valeur.
+\end{exercice}
+% \begin{exercice}
+% Encore la précision machine.
+% \begin{enumerate}
+% \item Démontrer que, en arithmétique flottante, la série harmonique converge.
+% \item On pose
+% $$\forall N\geq 1, \quad S_N =\sum_{n=1}^N \frac 1 n.$$ 
+% En sachant que $S_N \approx
+%   \ln(N)$ quand $N\to\infty$, estimer la valeur de $N$ à partir de
+%   laquelle $S_N = S_{N+1}$ en arithmétique flottante.
+% \item Sachant que python met $5\times 10^{-6}$ seconde pour passer de $S_N$ à
+%   $S_{N+1}$, estimer le temps d'exécution du programme suivant :
+% \begin{verbatim}
+% S=1
+% T=2
+% n=1
+% while(S!=T):
+%     n=n+1
+%     T=S
+%     S=T+1/n
+
+% \end{verbatim}
+% \end{enumerate}
+
+% \end{exercice}
+
+\section{Numpy}
+
+On a vu que les listes en python sont très libres. On peut mettre plusieurs types de données distincts dans une même liste. Cela rend la définition de fonctions sur le calcul matriciel compliqué en l'état. On utilisera donc le module {\tt numpy}, qui est dédié au calcul matriciel.\\
+
+Pour transformer une simple liste python en vecteur ou matrice numpy, il suffit de la donner en argument de la fonction {\tt array} du module.\\
+
+\begin{exercice}
+On note $A$, $B$ et $C$ les matrices suivantes
+\[A=\begin{pmatrix}1 & 3 & 2 \\ -5 & 3 & 1\\ -10 & 0 & 3\\ 1 & 0 & -2
+\end{pmatrix}
+,\;
+B=\begin{pmatrix}1 & -2 & 5 \\ 6 & 1 & -1
+\end{pmatrix}
+,\;C=\begin{pmatrix}10 & -5  \\ 3 & 1
+\end{pmatrix}
+.\]
+\begin{enumerate}
+\item Définir ces matrices.
+\item Définir la matrice  $D = 0$ (de taille $12\times 20$). (On utilisera la fonction {\tt zeros} du module  {\tt numpy}.
+\item Calculer (quand elles existent) les matrices $AB, BA$ et $AB^T$. (On utilisera les fonctions  {\tt dot} ou @ et  {\tt transpose} du module.
+\item Calculer la matrice $D=I_2-BB^T$. (On pourra utiliser la fonction {\tt identity} du module.)
+\item Calculer les déterminants des matrices $A$, $B$, $C$, $D$ et $E= AA^T$. On utilisera la fonction {\tt det} du submodule {\tt linalg}.
+\item Calculer (quand elle existe) l'inverse des matrices $A$, $B$, $C$, $D$ et $E= AA^T$. On utilisera la fonction {\tt inv} du submodule {\tt linalg}.
+\item Calculer les valeurs propres de la matrice $E$.  On utilisera la fonction {\tt eigvals} du submodule {\tt linalg}.
+\item Déterminer les vecteurs propres de la matrice $E$.  On utilisera la fonction {\tt eig} du submodule {\tt linalg}.
+
+
+\end{enumerate}
+
+\end{exercice}
+
+\begin{exercice}
+On pose 
+\[A=\begin{pmatrix}1 & -1 & 7 \\ -4 & 2 & 11\\ 8 & 0 & 3
+\end{pmatrix}
+,\;
+B=\begin{pmatrix}3 & -2 & -1\\  7 & 8 &  6\\ 5 & 1 & 3
+\end{pmatrix}
+.\]
+Que font les instructions suivantes ?
+\begin{verbatim}
+3*A,  A*B, A@B,  A/B,  A**B,  cos(A),  exp(B),  expm(A)
+\end{verbatim}
+La dernière de ces instructions fait partie du submodule {\tt linalg}.
+\end{exercice}
+
+
+\section{Matplotlib}
+On va désormais utiliser le module {\tt matplotlib}, et plus précisément son submodule {\tt matplotlib.pyplot}.
+\begin{exercice}
+Affichage de courbes graphiques. 
+\begin{enumerate}
+\item Exécuter les instructions suivantes (attention, les instructions {\tt import module} ne sont pas indiquées et les nouvelles fonctions sont dans le submodule pyplot ) (et expliquer le résultat obtenu) :
+\begin{verbatim}
+x=arange(-1,1,0.1)
+y=x**2
+plot(x,y)
+xlabel("x")
+ylabel("x^2")
+title("quadrique")
+show()
+\end{verbatim}
+\item Exécuter les commandes suivantes (et expliquer le résultat obtenu)
+  :
+\begin{verbatim}
+clf()
+plot(x,sin(3*x),'r') // 'r'
+plot(x,sin(2*x),'g--') // 'g' , style lignes brisees
+show()
+\end{verbatim}
+\item Exécuter les commandes suivantes (et expliquer le résultat obtenu)
+  :
+\begin{verbatim}
+clf()
+plot(x,x**2)
+plot(x,x**3)
+show()
+\end{verbatim}
+\item Tracer la courbe de la fonction $x\mapsto \sin(x)/x$ sur
+  l'intervalle $[0.1  \ , \  \pi].$
+\end{enumerate}
+\end{exercice}
+
+
+
+
+
+
+\end{document}
