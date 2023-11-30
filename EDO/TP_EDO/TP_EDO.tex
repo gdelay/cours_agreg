@@ -5,6 +5,8 @@
 \usepackage{color,graphicx,alltt}
 \usepackage{hyperref,eurosym}
 \usepackage{caption}
+\usepackage{enumerate}
+\usepackage{enumitem}
 
 
 \textwidth=17cm
@@ -31,7 +33,7 @@
 %\titre
 \par\bigskip
 \begin{center}
-\Large{ \bf TP : Equations diff\'erentielles}
+\Large{ \bf TP : Equations diff\'erentielles ordinaires}
 \end{center}
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -65,17 +67,24 @@ sur l'intervalle $[0,1]$ avec la condition initiale $x(0)=5$ et $y(0)=0$.
 \item Pour $0\leq n \leq N$, on note $t_n=n\Delta t$ les points de discr\'etisation et $X_n$ la solution approch\'ee au temps $t_n$. \'Ecrire un programme
   calculant l'erreur $\max_{0\leq n \leq N}\|X(t_n)-X_n\|_{\infty}$. On pourra utiliser la commande \texttt{norm} du module \texttt{numpy.linalg} (avec l'option \texttt{np.inf}). 
 \item Tracer  l'erreur en fonction de $\Delta t$ en \'echelle logarithmique. 
-\item Utiliser la commande \texttt{np.polyfit} pour d\'eterminer la droite qui approche au sens des moindres carr\'es les points de la courbe tracée à la question précédente
-  (il s'agit de la droite de r\'egression lin\'eaire).
+%\item Utiliser la commande \texttt{np.polyfit} pour d\'eterminer la droite qui approche au sens des moindres carr\'es les points de la courbe tracée à la question précédente
+%  (il s'agit de la droite de r\'egression lin\'eaire).
 \item On observe que la pente de la droite est proche de $1$. Comment l'interpr\'eter ?
 \item Reprendre les trois derni\`eres questions
   pour le sch\'ema du point milieu d\'efini dans l'exercice~\ref{ex:pt_milieu}.
+\begin{tabular}{|c|}
+ \hline
+Le \textbf{sch\'ema du point-milieu} pour approcher l'EDO $y'(t)=f(t,y(t))$ est donn\'e par :\\
+$y_{n+1}=y_n+h f\displaystyle\left(t_n+\frac h2,y_n+\frac h2 f(t_n,y_n)\right)$\\
+ \hline
+\end{tabular}
+ \vspace{0.2cm}
 \end{enumerate}
 \end{exo}
 \newpage
 
-\begin{exo}\textbf{\'Etude d'un pendule : Portrait de phase}
-  \label{ex:pendule}
+\begin{exo}\textbf{\'Etude d'un pendule : simulations num\'eriques.}
+  \label{ex:pt_milieu}
   \\
   On consid\`ere un pendule de longueur $l$. L'\'evolution de $\theta$ l'angle du pendule par rapport \`a la verticale est donn\'ee par l'\'equation suivante :
 $$
@@ -91,6 +100,81 @@ On d\'efinit $\omega=\theta'$, on a ainsi le syst\`eme
 \right.
 \end{equation*}
 On suppose que $\theta(0)$ et  $\omega(0)$ sont donn\'es. 
+
+Pour r\'esoudre ce probl\`eme sur $[0,T]$, on prend $N \in \mathbb{N}^*$, puis on d\'efinit le pas de discr\'etisation $h=\frac TN$ et  les temps de discr\'etisation $t_n=nh$ pour $0 \leq n \leq N$.  
+
+
+\begin{enumerate}
+\item D\'eterminer la solution approch\'ee de ce syst\`eme \`a l'aide d'un sch\'ema d'Euler explicite :
+\begin{equation*}
+\left\{
+\begin{array}{l}
+\theta_{n+1}=\theta_n+h\omega_{n}\vspace{0.1cm}\\
+\omega_{n+1}=\omega_n-h\displaystyle\frac{g}{l}\sin(\theta_{n}).
+\end{array}
+\right.
+\end{equation*}
+
+On prendra $T=12,\, N=200,\,l=5,\,g=9.81$
+et les conditions initiales 
+$\theta(0)=\frac{\pi}{3},\,$ \\ $\omega(0)=0.$
+\item Implémenter une résolution via \texttt{solve\_ivp} qui par défaut résout l’EDO via un schéma de Runge-Kutta explicite d’ordre 4.
+\\
+\begin{tabular}{|l|}
+ \hline
+La syntaxe pour la commande \texttt{solve\_ivp}  est \texttt{sol=integrate.solve\_ivp(f,(t0,tf),X0)} où \\
+$\bullet$ \texttt{f} a \'et\'e d\'efinie de la fa\c con suivante : \\
+ \texttt{ def f(t,X): ... }\\
+(m\^eme si  \texttt{f}  ne d\'epend pas de \texttt{t}, il faut que l'argument apparaisse en seconde position en entr\'ee).\\ 
+$\bullet$ \texttt{(t0,tf)} est l’intervalle de temps où la solution est calculée \\
+$\bullet$ \texttt{X0} correspond \`a la condition initiale \\
+$\bullet$ \texttt{sol} est un objet contenant les informations sur la solution approchée: \\
+\quad  - \texttt{sol.t} contient le vecteur des temps où la solution est calculée\\
+\quad - \texttt{sol.y} contient le tableau où la solution est calculée aux temps \texttt{sol.t}\\
+\textbf{Remarque :} \texttt{solve\_ivp} choisit automatiquement le pas de temps, pour s’en affranchir on peut utiliser\\ les mots-clefs suivants
+\\ 
+\texttt{sol=integrate.solve\_ivp(f,(t0,tf), X0, max\_step=dt, atol=1., rtol=1.)} \\ où \texttt{dt} est le pas de temps souhaité. 
+ \\
+ \hline
+\end{tabular}
+ \vspace{0.2cm}
+%La syntaxe pour la commande  \texttt{odeint}  est :\\
+% \hspace{2cm}\texttt{sol=integrate.odeint(f,X0,t)}\\
+%o\`u \\
+%$\bullet$ \texttt{f} a \'et\'e d\'efinie de la fa\c con suivante : \\
+% \texttt{ def f(X,t): ... }\\
+%(m\^eme si  \texttt{f}  ne d\'epend pas de \texttt{t}, il faut que l'argument apparaisse en seconde position en entr\'ee).\\ 
+%$\bullet$ \texttt{X0} correspond \`a la condition initiale \\
+%$\bullet$ \texttt{t}  est le vecteur contenant les temps en lesquels la solution est \'evalu\'ee (le premier c\oe fficient\\  du vecteur est le 
+%temps initial)\\
+%$\bullet$ \texttt{sol} est le vecteur contenant les valeurs prises par la solution \'evalu\'ee aux temps du vecteur \texttt{t}. \\
+
+%\item Mettre en \oe uvre le sch\'ema du point-milieu. \vspace{0.2cm}\\
+%\begin{tabular}{|c|}
+% \hline
+%Le \textbf{sch\'ema du point-milieu} pour approcher l'EDO $y'(t)=f(t,y(t))$ est donn\'e par :\\
+%$y_{n+1}=y_n+h f\displaystyle\left(t_n+\frac h2,y_n+\frac h2 f(t_n,y_n)\right)$\\
+% \hline
+%\end{tabular}
+% \vspace{0.2cm}
+%\item Comparer  la solution donn\'ee par la fonction \texttt{odeint} et les solutions donn\'ees par ces deux méthodes (on pr\'esentera $\theta$ et $\omega$ sur deux graphes diff\'erents). 
+%\item Comparer les solutions sur le portrait de phases.
+\item Mettre en \oe uvre la m\'ethode d'Euler implicite.
+\item Comparer les différentes méthodes.
+\item Illustration numérique du texte 2015-B4: on considère l’équation 
+$$
+\theta''(t)+\omega^2 (1+\varepsilon \cos(t)) \sin(\theta(t))=0,
+$$
+avec conditions initiales $\theta(0) = \frac{\pi}{8}$ et $\theta'(0)=0$ et où $\omega$ et $\varepsilon$ sont des constantes.
+
+Pour $(\omega,\varepsilon) = (\frac{1}{2},0.1)$ et $(\omega,\varepsilon) = (1,0.2)$, comparer la méthode d’Euler explicite et Runge-Kutta explicite à l’ordre 4.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}\textbf{\'Etude d'un pendule : Portrait de phase}
+  \label{ex:pendule}
+  \\
+  Reprenons le syst\`eme consid\'er\'e dans l'exercice~\ref{ex:pt_milieu}.
 On veut tracer le portrait de phase de ce probl\`eme pour les param\`etres
 $l=5$ et $g=9.81$.
 
@@ -98,23 +182,8 @@ $l=5$ et $g=9.81$.
 \item Tracer la solution de ce probl\`eme dans le plan des phases pour la donn\'ee initiale
   $(\theta(0),\omega(0)) = (\theta_0,0)$ avec $\theta_0 \in [0 , 2\pi]$
   (prendre de nombreuses valeurs de $\theta_0$ et tracer toutes les solutions sur le m\^eme graphe).
-  On pourra r\'esoudre le syst\`eme en utilisant la commande \texttt{odeint} du module \texttt{scipy.integrate}. \\
+  On pourra r\'esoudre le syst\`eme en utilisant la commande \texttt{odeint} du module \texttt{scipy.integrate}. 
 
-\begin{tabular}{|l|}
- \hline
-La syntaxe pour la commande  \texttt{odeint}  est :\\
- \hspace{2cm}\texttt{sol=integrate.odeint(f,X0,t)}\\
-o\`u \\
-$\bullet$ \texttt{f} a \'et\'e d\'efinie de la fa\c con suivante : \\
- \texttt{ def f(X,t): ... }\\
-(m\^eme si  \texttt{f}  ne d\'epend pas de \texttt{t}, il faut que l'argument apparaisse en seconde position en entr\'ee).\\ 
-$\bullet$ \texttt{X0} correspond \`a la condition initiale \\
-$\bullet$ \texttt{t}  est le vecteur contenant les temps en lesquels la solution est \'evalu\'ee (le premier c\oe fficient\\  du vecteur est le 
-temps initial)\\
-$\bullet$ \texttt{sol} est le vecteur contenant les valeurs prises par la solution \'evalu\'ee aux temps du vecteur \texttt{t}. \\
- \hline
-\end{tabular}
- \vspace{0.3cm}
 \item Pour compl\'eter le portrait de phase, ajouter plusieurs
   courbes issues des donn\'ees initiales
   $(-\pi , \omega_0)$ avec $\omega_0 > 0$ et $(3\pi , \omega_0)$ avec $\omega_0 < 0$.
@@ -148,7 +217,6 @@ $\bullet$ \texttt{sol} est le vecteur contenant les valeurs prises par la soluti
 %Tracer la solution en fonction du  temps et dans le plan de phase.
 %\end{exo}
 
-\newpage
 \begin{exo}\textbf{Sch\'emas implicites}\\
   Dans cet exercice, nous allons utiliser les sch\'emas d'Euler implicite et de Crank--Nicolson
   pour r\'esoudre le probl\`eme de l'exercice~\ref{ex:sch_exp}.
@@ -165,45 +233,6 @@ $\bullet$ \texttt{sol} est le vecteur contenant les valeurs prises par la soluti
 \end{enumerate}
 \end{exo}
 
-
-\begin{exo}\textbf{\'Etude d'un pendule : simulations num\'eriques.}
-  \label{ex:pt_milieu}
-  \\
-  Reprenons le syst\`eme consid\'er\'e dans l'exercice~\ref{ex:pendule}.
-Pour r\'esoudre ce probl\`eme sur $[0,T]$, on prend $N \in \mathbb{N}^*$, puis on d\'efinit le pas de discr\'etisation $h=\frac TN$ et  les temps de discr\'etisation $t_n=nh$ pour $0 \leq n \leq N$.  
-
-
-\begin{enumerate}
-\item D\'eterminer la solution approch\'ee de ce syst\`eme \`a l'aide d'un sch\'ema d'Euler explicite :
-\begin{equation*}
-\left\{
-\begin{array}{l}
-\theta_{n+1}=\theta_n+h\omega_{n}\vspace{0.1cm}\\
-\omega_{n+1}=\omega_n-h\displaystyle\frac{g}{l}\sin(\theta_{n}).
-\end{array}
-\right.
-\end{equation*}
-
-On prendra $T=12,\, N=200,\,l=5,\,g=9.81$
-et les conditions initiales 
-$\theta(0)=\frac{\pi}{3},\,$ \\ $\omega(0)=0.$
-\item Tracer $\theta$ et $\omega$ en fonction du temps.
-\item Mettre en \oe uvre le sch\'ema du point-milieu. \vspace{0.2cm}\\
-\begin{tabular}{|c|}
- \hline
-Le \textbf{sch\'ema du point-milieu} pour approcher l'EDO $y'(t)=f(t,y(t))$ est donn\'e par :\\
-$y_{n+1}=y_n+h f\displaystyle\left(t_n+\frac h2,y_n+\frac h2 f(t_n,y_n)\right)$\\
- \hline
-\end{tabular}
-\item Comparer  la solution donn\'ee par la fonction \texttt{odeint} et les solutions donn\'ees par ces deux méthodes (on pr\'esentera $\theta$ et $\omega$ sur deux graphes diff\'erents). 
-\item Comparer les solutions sur le portrait de phases.
-\item Refaire les questions pr\'ec\'edentes avec la m\'ethode d'Euler implicite (et comparer).
-\end{enumerate}
-
-
-
- 
-\end{exo}
 
 
 \begin{exo}\textbf{Syst\`eme de Lotka-Volterra}\\
