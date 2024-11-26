@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import scipy.integrate as integrate
 import numpy.linalg as LA
 
-#################  Exercice 4 : Etude du pendule, simulations numeriques
+#################  Exercice 2 : Etude du pendule, simulations numeriques
 ## etude du pendule
 ##### Parametres
 g = 9.81

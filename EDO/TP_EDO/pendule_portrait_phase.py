@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as integrate
 
-#################  Exercice 2 : Portrait de phase et stabilite des points critiques
+#################  Exercice 3 : Portrait de phase et stabilite des points critiques
 ## peut etre que ce serait bien de remplacer cet exercice par quelque chose qui a deja ete fait en cours comme par exemple le portrait de phase du pendule (cf exo 4)
 ##
 ##### Parametres

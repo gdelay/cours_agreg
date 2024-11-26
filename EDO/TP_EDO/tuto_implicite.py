@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import scipy.integrate as integrate
 import numpy.linalg as LA
 
-#################  Exercice 3 : Schemas implicites
+#################  Exercice 4 : Schemas implicites
 ## on resout le systeme
 ## x' = x + 2y
 ## y' = 2x + y
