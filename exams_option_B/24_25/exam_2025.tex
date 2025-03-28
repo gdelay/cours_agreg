@@ -1,0 +1,328 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{fullpage}
+
+\usepackage[top=100pt,bottom=70pt,left=60pt,right=60pt]{geometry}
+
+\usepackage{amsfonts,amssymb,amsmath,amsthm} 
+\usepackage[colorlinks,urlcolor=blue,linkcolor=black,citecolor=gray]{hyperref}
+
+\usepackage{tikz}
+
+
+\def \rd    {{\rm d}}
+\newtheoremstyle{exostyle}
+{\topsep}% espace avant
+{}%{\topsep}% espace après
+{}% Police utilisee par le style de thm
+{}% Indentation (vide = aucune, \parindent = indentation paragraphe)
+{\bfseries}% Police du titre de thm
+{.}% Signe de ponctuation apres le titre du thm
+{ }% Espace apres le titre du thm (\newline = linebreak)
+{\thmname{#1}\thmnumber{ #2}\thmnote{. \normalfont{\textit{#3}}}}% composants du titre du thm : \thmname = nom du thm, \thmnumber = numéro du thm, \thmnote = sous-titre du thm
+
+\newtheoremstyle{exostyle*}
+{\topsep}% espace avant
+{}%{\topsep}% espace après
+{}% Police utilisee par le style de thm
+{}% Indentation (vide = aucune, \parindent = indentation paragraphe)
+{\bfseries}% Police du titre de thm
+{.}% Signe de ponctuation apres le titre du thm
+{ }% Espace apres le titre du thm (\newline = linebreak)
+{\thmname{#1}\thmnote{. \normalfont{\textit{#3}}}}% composants du titre du thm : \thmname = nom du thm, \thmnumber = numéro du thm, \thmnote = sous-titre du thm
+
+
+\newcommand{\R}{\ensuremath{\mathbb R}}
+\newcommand{\PP}{\ensuremath{\mathbb P}}
+\newcommand{\CC}{\ensuremath{\mathbb C}}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\ZZ}{\ensuremath{\mathbb Z}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\Mm}{\mathcal{M}}
+\renewcommand{\Im}{{\mathrm{Im} \, }}
+\newcommand{\bR}{\mathbb R}
+\newcommand{\bN}{\mathbb N}
+\DeclareMathOperator{\tr}{\mathrm{Tr}}
+
+\theoremstyle{exostyle}
+\newtheorem{exercice}{Exercice} 
+\newtheorem{solution}{Solution}
+
+\usepackage{titlesec}
+\renewcommand{\thesection}{\Roman{section}}
+\titleformat{\section}[display]
+{\large\bfseries}
+{\vspace{.5cm}\titlerule[1.pt]}
+{-10pt}
+{\filright \large \qquad \thesection\ \large\bfseries\filright}[{\vspace{1.5mm}\titlerule[1pt]\vspace{5mm}}]
+
+
+\newcommand{\ZeroRoman}[1]{% 0 + \Roman
+  \ifcase\value{#1}\relax 0\else% Chapter 0
+  \Roman{#1}\fi}% All other chapters
+\renewcommand{\thesection}{\ZeroRoman{section}}
+
+\date{} 
+\author{}
+
+
+% #############################################################################################
+\begin{document}
+\selectlanguage{french}
+
+
+\noindent 
+Sorbonne Universit\'e - Université Paris Cité     \hfill   Ann\'ee 2024-2025 \\
+Pr\'eparation \`a  l'agr\'egation        \hfill     Vendredi 28 mars 2025 \\ % \emph{Dur\'ee : 3h}
+% \hfill \emph{Calculatrices et t\'el\'ephones interdits} \\
+\noindent {\rule{\textwidth}{.2mm}}\\[-5mm]
+\begin{center}
+  {\large \textsc{Examen option B} }\\[-5mm]
+\end{center}
+\noindent {\rule{\textwidth}{.2mm}}\\[1cm]
+
+L’examen comporte deux exercices indépendants.
+
+{\bfseries Merci de r\'ediger les deux exercices sur deux copies s\'epar\'ees.}
+
+
+
+\begin{exercice}
+
+  On considère la fonction suivante :
+
+  \[
+    J:\left\{\begin{aligned}
+        \mathbb{R}^{2} & \rightarrow \mathbb{R} \\
+        (x, y) & \mapsto x^{2}+2 y^{2}-xy
+      \end{aligned}\right.
+  \]
+
+  \subsection*{Optimisation sans contraintes}
+  
+  \begin{enumerate}
+  \item Montrer que $J$ est une fonction deux fois différentiable et donner son gradient ainsi que sa hessienne.
+    
+  \item Montrer que $J$ est une fonction $\alpha$-convexe.
+    
+  \item Montrer que le problème d’optimisation $\min_{(x,y) \in \mathbb{R}^2} J(x,y)$ admet une unique solution.
+    
+  \item Déterminer la solution au problème d’optimisation de la question précédente.
+  \end{enumerate}
+  
+  \subsection*{Optimisation avec contraintes}
+
+  On s’intéresse au problème d’optimisation avec contraintes 
+  \begin{equation}
+    \label{eq:optim_contrainte}
+    \min_{(x,y) \in \mathbb{R}^2 \ | \ xy=1} J(x,y).
+  \end{equation}
+
+  \begin{enumerate}
+    \setcounter{enumi}{4}
+  \item En utilisant la contrainte $y= \frac{1}{x}$, montrer que le problème d’optimisation~\eqref{eq:optim_contrainte} est équivalent à minimiser la fonction $x \mapsto x^2 + \frac{2}{x^2}-1$. 
+
+  \item Montrer que $x \mapsto x^2 + \frac{2}{x^2}-1$ est strictement convexe sur $]-\infty,0[$ et sur $]0,\infty[$. En déduire les solutions au problème d’optimisation~\eqref{eq:optim_contrainte}.
+
+  \item Montrer que les équations d’Euler-Lagrange (ou extrema liés) associées au problème~\eqref{eq:optim_contrainte} s’écrivent 
+    \[
+      \left\lbrace 
+        \begin{aligned}
+          2x + (\lambda-1) y = 0 \\
+          (\lambda-1)x + 4y =0
+        \end{aligned}
+      \right.
+    \]
+    et que la qualification des contraintes correspond à $(x,y) \not= (0,0)$.
+
+  \item En déduire que le système a une solution non nulle si et seulement si $\det \begin{bmatrix}
+      2 & \lambda-1 \\
+      \lambda -1 & 4
+    \end{bmatrix} = 0$.
+
+  \item Écrire les solutions des équations d’Euler-Lagrange et vérifier que l’on retrouve parmis ces solutions la solution du problème d’optimisation sous contraintes~\eqref{eq:optim_contrainte}.
+  \end{enumerate}
+\end{exercice}
+
+% #############################################################################################
+\newpage
+
+
+\begin{exercice}
+  A) D\'eterminer les solutions $t\mapsto y(t)$ ainsi que l'intervalle maximal d'existence $I_{\rm max}$ des équations différentielles suivantes : \\
+  a) $y'(t)=\exp(-y(t))$, avec  pour donn\'ee initiale $y(0)=0$.  \\
+  b)    $y'= - {2y}+t$ avec pour donn\'ee initiale $y(0)=0$.\\
+  c) $y'(t)=(y(t))^2$, avec  pour donn\'ee initiale $y(0)=1$.  \\
+  d) $y'(t)=(y(t))^3$, avec  pour donn\'ee initiale $y(0)=0$.  \\
+
+
+
+  \bigskip
+  \noindent
+  B) Soit $a>0, b>0$ des constantes positives et $x_0>0$, $y_0>0$. On considère 
+  le système différentiel
+  \begin{equation}
+    \label{cL}
+    \left\{
+      \begin{aligned}
+        x'(t)&=-(b+1) x(t)+x^2(t)y(t)+a, \forall t\in [0, T[ \\
+        y'(t)&=b x(t)-x^2(t) y(t)  \\
+        x(0)&=x_0 {\rm \ et \ }  y(0)=y_0. 
+      \end{aligned}
+    \right. 
+  \end{equation} 
+  B.I.1) Le système \eqref{cL} est-il autonome? \\
+  B.I.2) Justifier le fait que la solution de $t\mapsto (x(t), y(t))$ du problème \eqref{cL} existe et est unique  sur un intervalle maximal $[0, T_{\rm max}[$.
+
+  \medskip
+  \noindent
+  B.II.1) On  pose $A=\{t  \in [0,  T_{\rm  max}[, {\rm \ tels  \ que \ } x(t) \leq 0\}$. Montrer que $A$ est ferm\'e dans $[0, T_{\rm max}[$. \\
+  B.II.2) On suppose ({\it par l'absurde})  que $A$ est non vide. Montrer  qu'il existe $t_0\in A$ tel que
+  $t_0=\inf\{t \in A\}$,  que $t_0>0$ et que $x(t_0)=0$. \\
+  B.II.3) Montrer que $x'(t_0)>0$.  En d\'eduire une contradiction et que $A$ est vide. \\
+  B.II.4) Montrer que $x(t)>0$ , pour tout $t\in [0, T_{\rm max}[$. \\
+  B.II.5) Montrer de m\^eme que $y(t)>0$ pour tout $t \in [0, T_{\rm max}[$. 
+
+  \medskip
+  \noindent
+  B.III.1) Montrer que pour tout $t \in [0, T_{\rm max}[$,  $(x+y)'(t)\leq a$. \\
+  B.III.2) En d\'eduire que $T_{\rm max}=+\infty$. 
+
+  \medskip
+  \noindent
+  B.IV.1) Montrer que $x'(t)\geq -(b+1)x(t)+a$, et que $(x(t)\exp((b+1)t)' \geq  a\exp ((b+1)t, \forall t\geq0.$ \\
+  B.IV.2) Soit  $\gamma\in \R$ tel que  
+  \begin{equation}
+    \label{gamma}
+    0<\gamma<\frac{a}{b+1}.
+  \end{equation}
+  Montrer, en utilisant BIV1),  qu' il existe $T_\gamma>0$ tel que   $x(t)\geq \gamma$, pour $t\geq T_\gamma$.\\
+  *B.IV.3)Montrer que, si $\gamma$ v\'erifie \eqref{gamma}, alors, $y'(t)<0$, si  $t\geq T_\gamma$ et 
+  $y(t)> b\slash \gamma$.\\
+  *B.IV.4) Montrer que,  si $\gamma$ v\'erifie \eqref{gamma}, alors $y(t) \leq S_\gamma=\max\{y( T_\gamma), b\slash \gamma\}$,   pour  $t\geq T_\gamma$. \\
+  *B.IV.5)Montrer que,  si $\gamma$ v\'erifie \eqref{gamma}, alors $(x+y)'(t)\leq -(x+y)(t)+S_\gamma+ a$ pour $t\geq T_\gamma$. \\
+  *B.IV.6) En d\'eduire que la solution est bornée. \\
+  {\it *=hors bar\^eme}
+
+
+
+\end{exercice}
+
+% #############################################################################################
+\newpage
+
+\noindent {\rule{\textwidth}{.2mm}}\\[-5mm]
+\begin{center}
+{\large \textsc{Corrigé examen option B} }\\[-5mm]
+\end{center}
+\noindent {\rule{\textwidth}{.2mm}}\\[1cm]
+
+\section*{Correction exercice d’optimisation}
+
+\begin{solution}
+ \begin{enumerate}
+  \item $\nabla J(x,y) = \begin{bmatrix}
+  2x-y\\ 4y-x\end{bmatrix}$ et $HJ(x,y) = \begin{bmatrix}
+  2 & -1 \\ -1 & 4
+  \end{bmatrix}$
+  \item on vérifie que la hessienne est définie-positive donc $J$ est $\alpha$-convexe.
+  \item $J$ est $\alpha$-convexe donc elle admet un unique minimiseur qui est aussi l’unique point critique de $J$ 
+  \item on résout $\nabla J(x,y) = 0$, et on a $(x,y) = (0,0).$
+  \item immédiat
+  \item $x \mapsto x^2$ et $x \mapsto \frac{1}{x^2}$ sont convexes sur $]0,\infty[$ et $]-\infty,0[$ donc par somme (et addition d’une constante), $x \mapsto x^2 + \frac{2}{x^2} -1$ est convexe. 
+  On résout $\min_{x \not=0}(x^2 + \frac{2}{x^2} -1)$ donc par convexité, on résout $2x - \frac{4}{x^3}=0$ qui a pour solutions réelles $x=\pm 2^{\frac{1}{4}}$. 
+  Le problème~\eqref{eq:optim_contrainte} a pour solution $(2^{\frac{1}{4}},2^{-\frac{1}{4}})$ et $(-2^{\frac{1}{4}},-2^{-\frac{1}{4}})$
+  \item En notant, $g(x,y) = xy - 1$, on a $\nabla g(x,y) = \begin{bmatrix}
+  y \\ x
+  \end{bmatrix}$ donc la qualification des contraintes correspond à $(x,y) \not=(0,0)$.
+  L’équation d’Euler-Lagrange est immédiate.
+  \item on a un système linéaire dont on cherche des solutions non nulles, donc le déterminant de la matrice doit s’annuler.
+  \item L’équation $\det \begin{bmatrix}
+  2 & \lambda-1 \\
+  \lambda -1 & 4
+  \end{bmatrix} = 0$ a 2 solutions pour $\lambda$: $\lambda = 1+2\sqrt{2}$ et $\lambda = 1-2\sqrt{2}$
+  
+  Pour $\lambda = 1-2\sqrt{2}$, on obtient $x=-\sqrt{2}y$ en réinjectant dans le système linéaire donc $y$ vérifie $-\sqrt{2}y^2 = 1$ dans la contrainte. Donc pour cette valeur de $\lambda$, il n’y a pas de solution.
+
+  Pour  $\lambda = 1+2\sqrt{2}$, on obtient $x=\sqrt{2}y$, donc dans la contrainte, $y$ vérifie $\sqrt{2} y^2 = 1$. En finissant les calculs, on retrouve bien les 2 solutions du problème de minimisation avec contraintes.
+ \end{enumerate} 
+\end{solution}
+
+% #############################################################################################
+\newpage
+
+\noindent
+{\bf Correction exercice \'equations diff\'erentielles}
+
+\noindent
+A) Pour toutes les \'equations, le th\'eor\`eme de Cauchy-Lipschitz s'applique car le second membre est $C^1$ par rapport 
+\`a la variable d'\'etat, ce qui garantit l'existence et l'unicit\'e sur un intervalle maximal $I_{\rm max}$ contenant le temps initial $t_0=0$.  Pour chacun des exemples, on utilise ou bien la m\'ethode de s\'eparation des variables ou la m\'ethode de variation de la constante.
+
+\noindent
+Aa) L'\'equation s'\'ecrit $y'=f(y, t)$,  avec $f(u, t)=\exp(-u)$. Le second membre ne s'annule pas en $(u, t)=(0, 0)$ on peut donc utiliser la m\'ethode de s\'eparation de variable. On \'ecrit 
+$\exp(y) {\rm d} y={\rm d} t$, d'o\`u il r\'esulte que, pour  $t \in I_{\rm max}$,  on a   
+$\int_{y(0)}^{y(t)} \exp u \rm d u=\int_0^t dt=t$,  soit 
+$\displaystyle {[\exp u]_0^{y(t)}=t}$, ou encore $\exp(y(t))=\exp 0+t=t+1$. On en d\'eduit la solution 
+$y(t)=\log  (t+1)$, pour $t \in I_{\rm max}$. Cette solution est bien d\'efinie sur $]-1, +\infty[$, et elle tend vers $-\infty$ en $-1$. On a donc $I_{\rm max}=]-1, +\infty[$.\\
+Ab) Ici le second membre est $f(u, t)=-2u+t$, on peut donc utiliser la m\'ethode de variation de la constante. L'\'equation homog\`ene associ\'ee est $w'=-2w$, dont une solution est donn\'ee par $w(t)=\exp(-2t)$. On \'ecrit $y=cw$, ce qui conduit \`a
+$y'=c'w+cw'=c'w-2cw=c'w-2y$. L'\'equation donne alors $c'w=t$, ou encore $c'=t\exp(2t)$. On int\`egre cette \'equation par parties \\
+$\displaystyle{c(t)=\frac{t}{2}\exp(2t)-\frac{1}{2}\int \exp(2t)=\frac{t\exp(2t)}{2}-\frac{1}{4} \exp(2t)+K}$. Ainsi \\
+$y(t)=c(t)w(t)=\frac{t}{2}-\frac 14+ K\exp(-2t)$. Comme $y(0)=0$, on a $\frac 14=K$, d'o\`u \\
+$y(t)=\frac{t}{2}-\frac 14+\frac 14 \exp(-2t)$ pour $t \in I_{\rm max}=\mathbb R$. \\
+Ac)  L'\'equation s'\'ecrit $y'=f(y, t)$,  avec $f(u, t)=u^2$. Le second membre ne s'annule pas en $(u, t)=(1, 0)$ on peut donc utiliser la m\'ethode de s\'eparation de variable. On \'ecrit 
+$y^2 {\rm d} y={\rm d} t$, d'o\`u il r\'esulte que, pour  $t \in I_{\rm max}$,  on a   $\int_{y(0)}^{y(t)} u^2 \rm d u=\int_0^y dt=t$,  soit $\displaystyle {-\left[\frac{1}{u}\right]_1^{y(t)}=t}$, on encore $\displaystyle{\frac{1}{y(t)}=1-t}$. Ainsi
+$y(t)=\frac{1}{1-t}$,  pour $t \in I_{\rm max}$. Cette solution est bien d\'efinie sur $]-\infty,1[$, et elle tend vers $-\infty$ en $1$. On a donc $I_{\rm max}=]-\infty, 1[$.\\
+Ad) L'\'equation s'\'ecrit $y'=f(y, t)$,  avec $f(u, t)=u^3$. Le second membre  s'annule en $(u, t)=(0, 0)$. L'unique solution est donc $y(t)=0$, pour tout $t \in I_{\rm max}=\mathbb  R$. \\
+
+\noindent
+BI1) Le systeme est de la forme $V'(t)=F(V(t),t)$ avec $F(U, t)=(-(b+1)u_1+u_1^2u_2+a, bu_1-u_1^2u_2)$, pour $U=(u_1, u_2)\in \mathbb R^2, t \geq 0$, et $v(t)=(x(t), y(t))$.  Le syst\`eme est donc autonome puisque $F$ ne d\'epend pas de $t$. \\
+BI2) La fonction $F$ est  de classe $C^1$ par rapport \`a la variable d'\'etat $U\in \mathbb R^2$, on peut donc appliquer le th\'eor\`eme de Cauchy-Lipschitz, qui donne le r\'esultat.
+
+\smallskip
+\noindent
+BII1)  $A$ est l'image r\'eciproque du ferm\'e   $]-\infty, 0]$ de $\mathbb R$ par l'application continue $x: [0, T_{\rm max}[\to \mathbb R$. L'ensemble $A$ est donc ferm\'e dans $[0, T_{\rm max}[$. \\
+BII2) Si l'ensemble $A$ est non vide, et minor\'ee, sa borne inf\'erieure $t_0$ existe et est finie. Comme $A$ est ferm\'e $t_0 \in A$, et donc $x(t_0)\leq 0$ par d\'efinition de $A$. Supposons par l'absurde que $x(t_0)<0$. Alors,  par continuit\'e, il existerait $t_1<t_0$, tel que $x(t_1)<0$. ceci contredit la d\'efinition de $t_0$. \\
+BII3) On  a  par l'\'equation $(1)$, $x'(t_0)=-(b+1)x(t_0)+x(t_0)^2 y(t_0)+a=a>0$, car $x(t_0)=0$.   Comme 
+$x'(t_0)=\underset {h\to 0^+} \lim  h^{-1} (x(t_0)-x(t_0-h))=-h^{-1}x(t_0-h)>0$, on en d\'eduit que,  pour $h>0$ petit,  
+$x(t_0-h)<0$, ce qui contredit la d\'efinition de $t_0$, et ainsi l'hypoth\`ese de d\'epart que $A$ est non  vide.\\
+BII4) Ceci d\'ecoule imm\'ediatement du fait que $A$ est vide. \\
+BII5) Pour $y$, on reprend le m\^eme raisonnement :  on introduit  \\
+$B=\{ t \in [0, T_{\rm max}[, y(t)\leq 0[\}$, et on suppose par l'absurde que $B$ est non vide. On montre comme dans  BII2)  que la borne inf\'erieur $t'_0$ est atteinte, avec $y(t'_0)=0$. Par l'\'equation 
+$y'(t'_0)=b(x(t'_0))>0$, (par BII4). On conclut  comme dans BII4). 
+
+\smallskip
+\noindent
+BIII1) En additionnant les deux \'equations de (1), on obtient $(x+y)'(t)= -x(t)+a \leq a$, la derni\`ere in\'egalit\'e provient de BII4). \\
+BIII2) En int\'egrant l'in\'egalit\'e pr\'ec\'edente, on obtient $x(t)+y(0)\leq x_0+y_0+ at$. Supposons par l'absurde que 
+$T_{\rm max} <+\infty$. On aurait alors $x(t)+y(t) \leq x_0+y_0+a{T}_{\rm max}$, et donc
+$0<x(t)\leq x_0+y_0+a{T}_{\rm max}$ et $0<y(t)\leq x_0+y_0+a{T}_{\rm max} $,$ \forall t \in [0, T_{\rm max}[$,  ce qui contredit le fait que la solution sort de tout compact lorsque  $T_{\rm max}$ est fini. 
+
+\smallskip
+\noindent
+BIV1) Comme $y>0$, $x>0$, on a  $x^2y>0$  et  donc   $x'=-(b+1)x+x^2y+a \geq -(b+1)x+a$.  Par ailleurs
+$(x(t)\exp(b+1)t)'=[x'(t)+(b+1)x(t)] \exp(b+1)t=[(x^2(t)y(t)+a] \exp [(b+1)t]\geq a \exp(b+1)t$. \\
+BIV2) On int\`egre la derni\`ere \'equation entre  $t$ et $0$ : \\
+$x(t)\exp (b+1)t\geq x_0+ a\int_0^t \exp[(b+1)s]\rd s$. Il vient donc \\
+$x(t)\geq     x_0\exp(-(b+1) (t)+ \frac{a}{b+1}- \frac{a}{b}\exp (-(b+1)t)\geq \frac{a}{b+1}- \frac{a}{b+1}\exp (-(b+1)t)$, et donc 
+$x(t)\geq \gamma$, pour $t \geq T_\gamma= \frac{1}{b+1}\log(1-\frac{(b+1)\gamma}{a})$. \\
+*BIV3)  On a $y'(t)=x(t)(b-x(t)y(t)<x(t)[b-x(t)\frac{b}{\gamma}] \leq x(t)[b-\gamma. \frac{b}{\gamma}] \leq 0$, pour $t \geq T_\gamma$, et $y(t)\geq \frac{b}{\gamma}$, en utilisant le fait que $x(t)\geq \gamma$. \\
+*BIV4)   On raisonne, comme en BII). On  introduit $\epsilon>0$, et  on suppose par l'absurde que $C_\epsilon=\{t\geq T_\gamma, y(t)\geq  S_\gamma+ \epsilon\}$ est non vide.   On montre alors  qu'il poss\`ede un plus petit \'element $t_\epsilon \geq T_\gamma$, tel que $y(t_\epsilon)=S_\gamma+ \epsilon$. Par d\'efinition de $S_\gamma$, on a $t_\epsilon>T_\gamma$. Par la question BIV3) $y'(t_\epsilon)<0$. En raisonnant, comme en BII, on montre alors qu'il existe un \'el\'ement  $T_\gamma<t'_\epsilon<t_\epsilon$  tel que $y(t'_\epsilon) >y(t_\epsilon) \geq  S_\gamma+\epsilon$,et donc
+$t'_\epsilon \in C_\epsilon$, ce qui est absurde, car $t_\epsilon$ est le plus petit \'el\'ement.  On a donc $C_\epsilon=\emptyset$, pour tout $\epsilon >0$, ce qui donne le r\'esultat. \\
+*BIV5) On a, par BIII1) $(x+y)'(t)\leq -(x(t)+a)\leq -(x(t)+y(t))+S_\gamma+a $, si $t\geq T_\gamma$, par BIV4), car $y(t)\leq S_\gamma$. \\
+*BIV6) On raisonne comme dans BIV1). posons $w=x+y$ et $R_\gamma=S_\gamma+a$. Alors $w'\leq -w+R_\gamma$,  pour $t\geq T_\gamma$ de sorte que
+   $(w(t)\exp t)'\leq R_\gamma \exp t$,  pour $t\geq T_\gamma$,  et on conclut comme dans BIV2)  en int\'egrant entre $T_\gamma$  et $t$ que 
+   $w(t)\exp t \leq w(T_\gamma) \exp T_\gamma+ R_\gamma \exp T_\gamma-\exp T_\gamma$. On obtient ainsi  
+   $w(t) \leq  w(T_\gamma)+ R_\gamma\exp  T_\gamma$, pour $t \geq T_\gamma$. 
+   
+
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
