@@ -16,16 +16,16 @@ def k(x):
     return 1 + 0.8*np.sin(10*x) * np.cos(5*x)
 
 
-def f(a,x):
+def f(a, x):
     return p(x-a)
 
 
 N = 100  # pas de discretisation
 
 # affichage de la raideur de corde
-X = np.linspace(0,1,N)
+X = np.linspace(0, 1, N)
 K = [k(x) for x in X]
-plt.plot(X,K)
+plt.plot(X, K)
 plt.title("La tension k(x)")
 plt.xlabel("x")
 plt.ylabel("k(x)")
@@ -34,30 +34,31 @@ plt.show()
 
 def MatM(N):
     h = 1/(N+1)
-    ret = np.zeros((N,N))
-    for i in range(1,N):
-        ret[i-1,i] = - k( (i+0.5)*h ) / h**2
-    for i in range(1,N+1):
-        ret[i-1,i-1] = (k( (i+0.5)*h ) + k( (i-0.5)*h ))/ h**2
-    for i in range(1,N):
-        ret[i,i-1] = -k( (i+0.5)*h )/ h**2
+    ret = np.zeros((N, N))
+    for i in range(1, N):
+        ret[i-1, i] = - k((i+0.5)*h) / h**2
+    for i in range(1, N+1):
+        ret[i-1, i-1] = (k((i+0.5)*h) + k((i-0.5)*h)) / h**2
+    for i in range(1, N):
+        ret[i, i-1] = -k((i+0.5)*h) / h**2
 
     return ret
 
 
-def vectF(a,N):
+def vectF(a, N):
     h = 1/(N+1)
     ret = np.zeros(N)
-    for i in range(0,N):
-        ret[i] = f(a,i*h)
+    for i in range(0, N):
+        ret[i] = f(a, i*h)
     return ret
 
 
-def solveY(a,N):
+def solveY(a, N):
     M = MatM(N)
     F = vectF(a, N)
     Y = np.linalg.solve(M, F)
     return Y
+
 
 ap = 0.666
 # affichage de la charge pour a = ap
@@ -78,16 +79,17 @@ plt.ylabel("u(x)")
 plt.show()
 
 
-####### Energie de rupture et sa derivee #######
+"~~~~~~~ Energie de rupture et sa derivee ~~~~~~~~~"
 
-def RN(a,N):
+
+def RN(a, N):
     h = 1/(N+1)
     Y = solveY(a, N)
 
     return 0.5*(k(0.5*h) * Y[0] / h)**2 + 0.5*(k((N+0.5)*h) * Y[N-1] / h)**2
 
 
-def RNder(a,N):
+def RNder(a, N):
     h = 1/(N+1)
     G = np.zeros(N)
     for i in range(0, N):
@@ -97,12 +99,14 @@ def RNder(a,N):
     V = np.linalg.solve(M, G)
     Y = solveY(a, N)
 
-    return k(0.5*h)**2 * Y[0] * V[0] / h**2 + k((N+0.5)*h)**2 * Y[N-1] * V[N-1] / h**2
+    strength0 = k(0.5*h)**2 * Y[0] * V[0] / h**2
+    strengthN = k((N+0.5)*h)**2 * Y[N-1] * V[N-1] / h**2
+    return strength0 + strengthN
 
 
 # affichage de l'energie en fonction de a
 M = 20
-A = np.linspace(0.1,0.9,M)
+A = np.linspace(0.1, 0.9, M)
 R = np.zeros(M)
 for i in range(M):
     ai = A[i]
@@ -111,8 +115,7 @@ for i in range(M):
 plt.plot(A, R)
 plt.show()
 
-####### methode du grandient  #######
-
+"~~~~~~~ methode du grandient ~~~~~~~~~"
 
 
 def Gradient(N, a0, rho, tol, nstop):
@@ -126,8 +129,9 @@ def Gradient(N, a0, rho, tol, nstop):
     return a
 
 
-####### methode de Newton  ######
-##### la methode de Newton semble ne pas marcher sur ce probleme
+"~~~~~~~ methode de Newton ~~~~~~~~~"
+# la methode de Newton semble ne pas marcher sur ce probleme
+
 
 def Newton(N, a0, tol, nstop):
     a = a0
